@@ -834,11 +834,16 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 	// jason added a check for capslock
     if(diff & NSAlphaShiftKeyMask) {
-        msg.down = (m & NSAlphaShiftKeyMask) ? YES : NO;
+		/* This mCapsLock crap is a horrible hack.  I was completely unable to figure out why
+		 * sending the CAPSLOCK modifier to RealVNC wouldn't work, so my work around is to keep 
+		 * track of whether or not we're supposed to be sending a capslocked string.  If we are, 
+		 * we'll ask the OS to convert our string to uppercase for us before we send it.  Yuckage.
+		 */
+        mCapsLock = msg.down = (m & NSAlphaShiftKeyMask) ? YES : NO;
         msg.key = htonl(CAPSLOCK);
 //		fprintf(stderr, "%04X / %d\n", msg.key, msg.down);
         [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
-    }
+   }
     lastModifier = m;
 }
 
@@ -950,6 +955,9 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	else
 		characters = [theEvent charactersIgnoringModifiers];
 			
+	if ( mCapsLock )
+		characters = [characters uppercaseString];
+	
 	// if this is a key equivalent, perform it and get the rock outta here
 	if ( aFlag && characters && [[KeyEquivalentManager defaultManager] performEquivalentWithCharacters: [theEvent charactersIgnoringModifiers] modifiers: [theEvent modifierFlags] & 0xFFFF0000] )
 	{

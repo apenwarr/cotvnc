@@ -99,6 +99,7 @@
 	float _frameBufferUpdateSeconds;
 	NSTimer *_frameUpdateTimer;
 	BOOL _hasManualFrameBufferUpdates;
+	BOOL mCapsLock;
 }
 
 // jason added 'owner' for fullscreen display
