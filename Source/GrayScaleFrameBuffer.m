@@ -27,16 +27,11 @@
 - (id)initWithSize:(NSSize)aSize andFormat:(rfbPixelFormat*)theFormat
 {
     if (self = [super initWithSize:aSize andFormat:theFormat]) {
-		unsigned int sps;
-
 		rshift = gshift = bshift = 0;
 		maxValue = 255;
 		samplesPerPixel = 1;
 		bitsPerColor = 8;
 		[self setPixelFormat:theFormat];
-		sps = MIN((SCRATCHPAD_SIZE * [self getPixelSize]), (aSize.width * aSize.height * [self getPixelSize]));
-		pixels = malloc(aSize.width * aSize.height * [self getPixelSize]);
-		scratchpad = malloc(sps);
 	}
     return self;
 }

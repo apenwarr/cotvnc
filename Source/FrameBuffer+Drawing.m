@@ -68,7 +68,7 @@ unsigned int cvt_pixel(unsigned char* v, FrameBuffer *this)
 /* --------------------------------------------------------------------------------- */
 - (void) remapRect:(NSRect *) aRect
 {
-        aRect->origin.y = ([target bounds].size.height - aRect->origin.y) - aRect->size.height;
+        aRect->origin.y = ([target size].height - aRect->origin.y) - aRect->size.height;
 }
 
 - (FBColor)colorFromPixel:(unsigned char*)pixValue
@@ -118,6 +118,26 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
     [aColor set];
     NSRectFill(aRect);
     [target unlockFocus];
+    [self refreshTargetRect:aRect];
+}
+
+- (void) refreshTargetRect:(NSRect) aRect
+{
+/*
+    [target lockFocus];
+    [target compositeToPoint:aRect.origin fromRect:aRect operation:NSCompositeSourceOver];
+    [target unlockFocus];
+    */
+/* 
+Fails 
+    [target drawRect:aRect];
+     */
+    /* 
+    Dead slow 
+    [target lockFocus];
+    [target compositeToPoint:originPoint operation:NSCompositeSourceOver];
+    [target unlockFocus];
+    */
 }
 
 /*
@@ -150,12 +170,14 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
     [[NSColor whiteColor] set];
     NSRectFill(aRect);
     [target unlockFocus];
+    [self refreshTargetRect:aRect];
 }
     */
 
 /* --------------------------------------------------------------------------------- */
 - (void)putRect:(NSRect)aRect withColors:(FrameBufferPaletteIndex*)data fromPalette:(FrameBufferColor*)palette
 {
+/*
 	FBColor*		start;
 	unsigned int	stride, i, lines;
 
@@ -169,11 +191,14 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
         }
         start += stride;
     }
+    */
+    return;
 }
 
 /* --------------------------------------------------------------------------------- */
 - (void)putRun:(FrameBufferColor*)frameBufferColor ofLength:(int)length at:(NSRect)aRect pixelOffset:(int)offset
 {
+/*
 	FBColor*		start;
 	unsigned int	stride, width;
 	unsigned int	offLines, offPixels;
@@ -199,6 +224,8 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
 			width = length;
 		}
 	} while(width > 0);
+        */
+        return;
 }
 
 /* ---------------------------------------------------------------------------------
@@ -245,6 +272,7 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
     [copyRect drawAtPoint:targetRect.origin];
     [copyRect autorelease];
     [target unlockFocus];
+    [self refreshTargetRect:targetRect];
 /*
         int line_step, src_start_x, dst_start_x;
         int stride, src_start_y, dst_start_y;
@@ -302,6 +330,7 @@ printf("copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
         [target lockFocus];
 	NSDrawBitmap(aRect, aRect.size.width, aRect.size.height, 8, 3, 8 * 3, aRect.size.width * 3, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&data);
 	[target unlockFocus];
+    [self refreshTargetRect:aRect];
     } else {
         [self putRect:aRect fromData:data];
     }
@@ -310,6 +339,7 @@ printf("copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
 /* --------------------------------------------------------------------------------- */
 - (void)putRect:(NSRect)aRect fromRGBBytes:(unsigned char*)rgb
 {
+/*
 	FBColor* start;
 	unsigned int stride, i, lines, col;
 
@@ -330,6 +360,8 @@ printf("copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
 		}
 		start += stride;
 	}
+        */
+        return;
 }
 
 /* --------------------------------------------------------------------------------- */
@@ -351,23 +383,15 @@ printf("copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     putPixelCount += aRect.size.width * aRect.size.height;
     #endif
     
+    /*
     start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;
     lines = aRect.size.height;
     stride = size.width - aRect.size.width;
-    
+    */
         switch(pixelFormat.bitsPerPixel / 8) {
                 case 1:
                     NSDrawBitmap(aRect, aRect.size.width, aRect.size.height, 2, 1, 8, aRect.size.width * 1, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&data);
                     break;
-                        while(lines--) {
-                                for(i=aRect.size.width; i; i--) {
-                                        pix = *data++;
-                                        CLUT(col, pix);
-                                        *start++ = col;
-                                }
-                                start += stride;
-                        }
-                        break;
                 case 2:
                         if(pixelFormat.bigEndian) {
                                 while(lines--) {
@@ -394,11 +418,13 @@ printf("copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
                     break;
         }
 	[target unlockFocus];
+    [self refreshTargetRect:aRect];
 }
 
 /* --------------------------------------------------------------------------------- */
 - (void)drawRect:(NSRect)aRect at:(NSPoint)aPoint
 {
+/*
     NSRect r;
     int bpr;
     FBColor* start;
@@ -438,6 +464,8 @@ printf("draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
         bpr = r.size.width * [self getPixelSize];
         NSDrawBitmap(r, r.size.width, r.size.height, bitsPerColor, samplesPerPixel, [self getPixelSize] * 8, bpr, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&scratchpad);
     }
+*/
+return;
 }
 
 

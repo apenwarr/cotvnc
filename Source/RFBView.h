@@ -22,10 +22,11 @@
 
 @interface RFBView : NSView
 {
-    id delegate;
-    id cursor;
+    NSImage	*remoteScreenImage;
+    id 		delegate;
+    id 		cursor;
     FrameBuffer *fbuf;
-    unsigned buttonMask;
+    unsigned 	buttonMask;
 }
 
 - (void)setFrameBuffer:(id)aBuffer;

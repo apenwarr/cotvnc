@@ -38,13 +38,15 @@ typedef union _FrameBufferColor {
 typedef unsigned char	FrameBufferPaletteIndex;
 typedef	unsigned int	FBColor;
 
+
 @interface FrameBuffer : NSObject
 {
+    NSPoint 		originPoint; // AppKit doesn't define this for me?
     BOOL		isBig;
     NSSize		size;
     int			bytesPerPixel;
-    unsigned int	*pixels, *scratchpad;
-    NSView 		*target; // Do not retain - I'm am retained by the target
+    //unsigned int	*pixels;
+    NSImage 		*target; // Do not retain - I'm am retained by the target
 @public
     unsigned int	redClut[256];
     unsigned int	greenClut[256];
@@ -68,7 +70,7 @@ typedef	unsigned int	FBColor;
 + (BOOL)bigEndian;
 + (void)getPixelFormat:(rfbPixelFormat*)pf;
 
-- (void)setTarget:(NSView*) targetView;
+- (void)setTarget:(NSImage *) targetView;
 
 // Return the size of pixels data used in this framebuffer.
 - (int)getPixelSize;

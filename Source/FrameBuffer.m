@@ -24,8 +24,7 @@
 
 - (void)dealloc
 {
-    free(pixels);
-    free(scratchpad);
+    //free(pixels);
     [super dealloc];
 }
 
@@ -259,7 +258,7 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 {
 }
 
-- (void)setTarget:(NSView*) targetView
+- (void)setTarget:(NSImage *) targetView
 {
     target = targetView; // Note, the target owns us - we don't retain it.
 }
@@ -291,6 +290,8 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 /* --------------------------------------------------------------------------------- */
 - (id)initWithSize:(NSSize)aSize andFormat:(rfbPixelFormat*)theFormat
 {
+    originPoint.x = originPoint.y = 0.0;
+    
     union {
         unsigned char	c[2];
         unsigned short	s;

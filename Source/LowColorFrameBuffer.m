@@ -36,9 +36,6 @@
 		samplesPerPixel = 3;
 		bitsPerColor = 2;
 		[self setPixelFormat:theFormat];
-		sps = MIN((SCRATCHPAD_SIZE * [self getPixelSize]), (aSize.width * aSize.height * [self getPixelSize]));
-		pixels = malloc(aSize.width * aSize.height * [self getPixelSize]);
-		scratchpad = malloc(sps);
 	}
     return self;
 }
@@ -58,6 +55,7 @@
    aFormat->depth = 8;
 }
 
+/*
 - (void)putRect:(NSRect)aRect fromData:(unsigned char*)data
 {
     unsigned char* start;
@@ -137,7 +135,9 @@
                         }
                         break;
         }
+return;
 }
+*/
 
 #include "FrameBufferDrawing.h"
 

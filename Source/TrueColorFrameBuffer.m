@@ -42,9 +42,6 @@
 		samplesPerPixel = 3;
 		bitsPerColor = 8;
 		[self setPixelFormat:theFormat];
-		sps = MIN((SCRATCHPAD_SIZE * [self getPixelSize]), (aSize.width * aSize.height * [self getPixelSize]));
-		pixels = malloc(aSize.width * aSize.height * [self getPixelSize]);
-		scratchpad = malloc(sps);
 	}
     return self;
 }

@@ -38,8 +38,10 @@
     NSRect f = [self frame];
     
     [fbuf autorelease];
+    [remoteScreenImage autorelease];
+    remoteScreenImage = [[NSImage alloc] initWithSize:[aBuffer size]];
     fbuf = [aBuffer retain];
-    [fbuf setTarget:self];
+    [fbuf setTarget:remoteScreenImage];
     f.size = [aBuffer size];
     [self setFrame:f];
 }
@@ -48,6 +50,7 @@
 {
     [fbuf release];
     [cursor release];
+    [remoteScreenImage autorelease];
     [super dealloc];
 }
 
@@ -71,14 +74,11 @@
 	[[NSNotificationCenter defaultCenter] addObserver: delegate selector: @selector(viewFrameDidChange:) name: NSViewFrameDidChangeNotification object: self];
 }
 
+/*
+*/
 - (void)drawRect:(NSRect)destRect
 {
-    NSRect b = [self bounds];
-    NSRect r = destRect;
-    return;
-    r.origin.y = b.size.height - NSMaxY(r);
-    //[fbuf drawRect:r at:destRect.origin];
-    //[delegate queueUpdateRequest];
+    [remoteScreenImage compositeToPoint:destRect.origin fromRect:destRect operation:NSCompositeSourceOver];
 }
 
 - (void)displayFromBuffer:(NSRect)aRect
@@ -87,7 +87,7 @@
     NSRect r = aRect;
 
     r.origin.y = b.size.height - NSMaxY(r);
-    //[self displayRect:r];
+    [self displayRect:r];
 }
 
 - (void)drawRectList:(id)aList
