@@ -159,6 +159,7 @@
 {
 	[connectIndicator startAnimation:self];
 	[connectIndicatorText setStringValue:NSLocalizedString(@"Connecting...", @"Connect in process notification string")];
+	[connectIndicatorText display];
 	
 	if( nil != delegate_ )
 	{
