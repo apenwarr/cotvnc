@@ -111,7 +111,7 @@
 			subEncodingMask &= ~(rfbHextileSubrectsColoured);
 			//[frameBuffer fillColor:&foreground fromPixel:ptr];
 #warning new code
-                        foreground = [frameBuffer nsColorFromPixel24:ptr];
+                        foreground = [frameBuffer nsColorFromReversePixel24:ptr];
 			ptr += bpp;
 		}
 		if(subEncodingMask & rfbHextileAnySubrects) {

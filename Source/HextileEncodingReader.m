@@ -128,7 +128,7 @@
 #ifdef COLLECT_STATS
 	bytesTransferred += [data length];
 #endif
-    [frameBuffer putRect:currentTile fromData:(unsigned char*)[data bytes]];
+    [frameBuffer putRect:currentTile fromReversedData:(unsigned char*)[data bytes]];
     [self nextTile];
 }
 
@@ -137,13 +137,11 @@
 #ifdef COLLECT_STATS
         bytesTransferred += [data length];
 #endif
-    //[frameBuffer fillColor:&background fromPixel:(unsigned char*)[data bytes]];
-    //[frameBuffer fillRect:currentTile withFbColor:&background];
     [background autorelease];
-    background = [frameBuffer nsColorFromPixel24:(unsigned char*)[data bytes]];
+    background = [frameBuffer nsColorFromReversePixel24:(unsigned char*)[data bytes]];
     [background retain];
 #warning new code
-    [frameBuffer fillRect:currentTile withPixel:(unsigned char*)[data bytes]];
+    [frameBuffer fillRect:currentTile withNSColor:background];
     [self checkSubEncoding];
 }
 
@@ -155,7 +153,8 @@
     //[frameBuffer fillColor:&foreground fromPixel:(unsigned char*)[data bytes]];
 #warning new code
     [foreground autorelease];
-    foreground = [frameBuffer nsColorFromPixel24:(unsigned char*)[data bytes]];
+    foreground = [frameBuffer nsColorFromReversePixel24:(unsigned char*)[data bytes]];
+    //foreground = [NSColor whiteColor];
     [foreground retain];
     [self checkSubEncoding];
 }
@@ -194,7 +193,7 @@
         r.size.width = rfbHextileExtractW(*bytes);
         r.size.height = rfbHextileExtractH(*bytes);
         bytes++;
-        [frameBuffer fillRect:r withPixel:pixptr];
+        [frameBuffer fillRect:r withNSColor:[frameBuffer nsColorFromReversePixel24:pixptr]];
     }
     [self nextTile];
 }

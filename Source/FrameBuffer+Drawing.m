@@ -73,6 +73,7 @@ unsigned int cvt_pixel(unsigned char* colorData, FrameBuffer *this)
         aRect->origin.y = ([target size].height - aRect->origin.y) - aRect->size.height;
 }
 
+/*
 - (FBColor)colorFromPixel:(unsigned char*)pixValue
 {
     return (FBColor)cvt_pixel(pixValue, self);
@@ -82,10 +83,16 @@ unsigned int cvt_pixel(unsigned char* colorData, FrameBuffer *this)
 {
     return (FBColor)cvt_pixel24(pixValue, self);
 }
+*/
 
 - (NSColor *)nsColorFromPixel24:(unsigned char*)pixValue
 {
     return [NSColor colorWithCalibratedRed:(float) pixValue[0]/255.0 green:(float) pixValue[1]/255.0 blue:(float) pixValue[2]/255.0 alpha:1.0];
+}
+
+- (NSColor *)nsColorFromReversePixel24:(unsigned char*)pixValue
+{
+    return [NSColor colorWithCalibratedRed:(float) pixValue[2]/255.0 green:(float) pixValue[1]/255.0 blue:(float) pixValue[0]/255.0 alpha:1.0];
 }
 
 - (void)fillColor:(FrameBufferColor*)frameBufferColor fromPixel:(unsigned char*)pixValue
@@ -348,49 +355,65 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
 {
     FBColor* start;
     unsigned int stride, i, lines, pix, col;
-    
-        [self remapRect:&aRect];
-        [target lockFocus];
-    
-    #ifdef DEBUG_DRAW
+
+    [self remapRect:&aRect];
+    [target lockFocus];
+
+#ifdef DEBUG_DRAW
     printf("put x=%f y=%f w=%f h=%f\n", aRect.origin.x, aRect.origin.y, aRect.size.width, aRect.size.height);
-    #endif
-    
-    #ifdef PINFO
+#endif
+
+#ifdef PINFO
     putRectCount++;
     putPixelCount += aRect.size.width * aRect.size.height;
-    #endif
+#endif
+
+    switch(pixelFormat.bitsPerPixel / 8) {
+        case 1:
+            NSDrawBitmap(aRect, aRect.size.width, aRect.size.height, 2, 1, 8, aRect.size.width * 1, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&data);
+            break;
+        case 2:
+            if(pixelFormat.bigEndian) {
+                while(lines--) {
+                    for(i=aRect.size.width; i; i--) {
+                        pix = *data++; pix <<= 8; pix += *data++;
+                        CLUT(col, pix);
+                        *start++ = col;
+                    }
+                    start += stride;
+                }
+            } else {
+                while(lines--) {
+                    for(i=aRect.size.width; i; i--) {
+                        pix = *data++; pix += (((unsigned int)*data++) << 8);
+                        CLUT(col, pix);
+                        *start++ = col;
+                    }
+                    start += stride;
+                }
+            }
+            break;
+        case 4:
+            NSDrawBitmap(aRect, aRect.size.width, aRect.size.height, 8, 4, 8 * 4, aRect.size.width * 4, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&data);
+            break;
+    }
+    [target unlockFocus];
+}
+
+- (void)putRect:(NSRect)aRect fromReversedData:(unsigned char*)data
+{
+    unsigned char *fixedData;
+    int charCount = aRect.size.width * aRect.size.height * 4;
+    int i;
     
-        switch(pixelFormat.bitsPerPixel / 8) {
-                case 1:
-                    NSDrawBitmap(aRect, aRect.size.width, aRect.size.height, 2, 1, 8, aRect.size.width * 1, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&data);
-                    break;
-                case 2:
-                        if(pixelFormat.bigEndian) {
-                                while(lines--) {
-                                        for(i=aRect.size.width; i; i--) {
-                                                pix = *data++; pix <<= 8; pix += *data++;
-                                                CLUT(col, pix);
-                                                *start++ = col;
-                                        }
-                                        start += stride;
-                                }
-                        } else {
-                                while(lines--) {
-                                        for(i=aRect.size.width; i; i--) {
-                                                pix = *data++; pix += (((unsigned int)*data++) << 8);
-                                                CLUT(col, pix);
-                                                *start++ = col;
-                                        }
-                                        start += stride;
-                                }
-                        }
-                        break;
-                case 4:
-                    NSDrawBitmap(aRect, aRect.size.width, aRect.size.height, 8, 4, 8 * 4, aRect.size.width * 4, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&data);
-                    break;
-        }
-	[target unlockFocus];
+    fixedData = malloc(sizeof(unsigned char) * charCount);
+    for (i = 0; i < aRect.size.width * aRect.size.height; i++) {
+        fixedData[i * 4] = data[i * 4 + 2];
+        fixedData[i * 4 + 1] = data[i * 4 + 1];
+        fixedData[i * 4 + 2] = data[i * 4 + 0];
+    }
+    [self putRect:aRect fromData:fixedData];
+    free(fixedData);
 }
 
 /* --------------------------------------------------------------------------------- */
