@@ -266,17 +266,43 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
             break;
     }
     /*
-    col = this->redClut[(pix >> this->pixelFormat.redShift) & this->pixelFormat.redMax];
-    col += this->greenClut[(pix >> this->pixelFormat.greenShift) & this->pixelFormat.greenMax];
-    col += this->blueClut[(pix >> this->pixelFormat.blueShift) & this->pixelFormat.blueMax];
+     col = this->redClut[(pix >> this->pixelFormat.redShift) & this->pixelFormat.redMax];
+     col += this->greenClut[(pix >> this->pixelFormat.greenShift) & this->pixelFormat.greenMax];
+     col += this->blueClut[(pix >> this->pixelFormat.blueShift) & this->pixelFormat.blueMax];
      */
+    return col;
+}
+
+- (NSColor *) colorFromReversedChars:(unsigned char*)colorData bytesPerPixel:(int)bpp
+{
+    unsigned int pix = 0, col;
+
+    switch(bpp) {
+        case 1:
+            pix = *colorData;
+            return [NSColor colorWithCalibratedRed:(float) colorData[0]/255.0 green:(float) colorData[0]/255.0 blue:(float) colorData[0]/255.0 alpha:1.0];
+            break;
+        case 2:
+            if(FALSE /*&& [self pixelFormat] == bigEndian*/) {
+                pix = *colorData++; pix <<= 8; pix += *colorData;
+            } else {
+                pix = *colorData++; pix += (((unsigned int)*colorData) << 8);
+            }
+            break;
+        case 4:
+            return [NSColor colorWithCalibratedRed:(float) colorData[2]/255.0 green:(float) colorData[1]/255.0 blue:(float) colorData[0]/255.0 alpha:1.0];
+    }
     return col;
 }
 
 - (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue bytesPerPixel:(int)bpp
 {
     [self fillRect:aRect withNSColor:[self colorFromChars:pixValue bytesPerPixel:bpp]];
-    //    [self fillRect:aRect withColor:[self colorFromPixel:pixValue]];
+}
+
+- (void)fillRect:(NSRect)aRect withReversedPixel:(unsigned char*)pixValue bytesPerPixel:(int)bpp
+{
+    [self fillRect:aRect withNSColor:[self colorFromReversedChars:pixValue bytesPerPixel:bpp]];
 }
 
 /* --------------------------------------------------------------------------------- */

@@ -50,7 +50,7 @@
 
 - (void)setPixels:(NSData*)pixel
 {
-    [frameBuffer putRect:frame fromData:(unsigned char*)[pixel bytes]];
+    [frameBuffer putRect:frame fromReversedData:(unsigned char*)[pixel bytes]];
     [target performSelector:action withObject:self];
 }
 
