@@ -33,7 +33,7 @@
 		_password =         [[NSString alloc] init];
 		_rememberPassword = NO;
 		_display =          0;
-		_lastProfile =      [[NSString alloc] init];
+		_lastProfile =      [[NSString alloc] initWithString:@"default"];
 		_shared =           NO;
 		_fullscreen =       NO;
 	}

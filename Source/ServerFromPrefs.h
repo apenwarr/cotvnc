@@ -31,7 +31,6 @@
 + (id<IServerData>)createWithName:(NSString*)name;
 + (id<IServerData>)createWithHost:(NSString*)hostName preferenceDictionary:(NSDictionary*)prefDict;
 
-- (id)init;
 - (id)initWithHost:(NSString*)host preferenceDictionary:(NSDictionary*)prefDict;
 
 /* @name Archiving and Unarchiving

@@ -41,6 +41,8 @@
 	
 	id<IServerData> mServer;
 	id<ConnectionDelegate> mDelegate;
+	
+	NSArray* profileKeys;
 }
 
 - (void)setServer:(id<IServerData>)server;

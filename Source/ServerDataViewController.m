@@ -22,6 +22,7 @@
 
 #import "ServerDataViewController.h"
 #import "IServerData.h"
+#import "ProfileDataManager.h"
 
 @implementation ServerDataViewController
 
@@ -33,6 +34,19 @@
 		
 		[connectIndicatorText setStringValue:@""];
 		[box setBorderType:NSNoBorder];
+		
+		profileKeys = [[ProfileDataManager sharedInstance] sortedKeyArray];
+		
+		// I would have thought that the popup would have retained the strings that it displays,
+		// but it doesn't so we are keeping the array we are using retained.
+		[profileKeys retain];
+		
+		NSEnumerator* keyEnum = [profileKeys objectEnumerator];
+		NSString* key;
+		while( key = [keyEnum nextObject] )
+		{
+			[profilePopup addItemWithTitle:key];
+		}
 	}
 	
 	return self;
@@ -46,6 +60,13 @@
 	}
 	
 	return self;
+}
+
+- (void)dealloc
+{
+	[profileKeys release ];
+	
+	[super dealloc];
 }
 
 - (void)setServer:(id<IServerData>)server
@@ -157,7 +178,7 @@
 {
 	if( nil != mServer )
 	{
-		[mServer setLastProfile:[sender stringValue]];
+		[mServer setLastProfile:[sender titleOfSelectedItem]];
 	}
 }
 

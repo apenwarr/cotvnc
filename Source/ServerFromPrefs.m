@@ -66,28 +66,6 @@
 	return self;
 }
 
-- (id)init
-{
-	if( self = [super init] )
-	{
-		[_name autorelease];
-		[_host autorelease];
-		[_password autorelease];
-		[_lastProfile autorelease];
-		
-		_name =             [[NSString alloc] initWithString:@"new server"];
-		_host =             [[NSString alloc] initWithString:@"localhost"];
-		_password =         [[NSString alloc] init];
-		_rememberPassword = NO;
-		_display =          0;
-		_lastProfile =      [[NSString alloc] init];
-		_shared =           NO;
-		_fullscreen =       NO;
-	}
-	
-	return self;
-}
-
 - (void)dealloc
 {
 	[_prefDict release];
