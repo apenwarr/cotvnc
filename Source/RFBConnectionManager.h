@@ -55,6 +55,7 @@
 	IBOutlet NSSplitView *splitView;
 	IBOutlet NSMenuItem *rendezvousMenuItem;
     IBOutlet NSButton *serverDeleteBtn;
+	IBOutlet NSTextField *mInfoVersionNumber;
     NSMutableArray*	connections;
     NSString *cmdlineHost;
     int       cmdlineDisplay;

@@ -74,9 +74,9 @@
                 gamma = NSTextField; 
                 groupList = NSTableView; 
                 loginPanel = NSPanel; 
+                mInfoVersionNumber = NSTextField; 
                 otherInverseCPUSlider = NSSlider; 
                 profileManager = ProfileManager; 
-                profilePopup = NSPopUpButton; 
                 psMaxRects = NSTextField; 
                 psThreshold = NSTextField; 
                 rendezvousMenuItem = NSMenuItem; 

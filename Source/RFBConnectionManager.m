@@ -165,6 +165,8 @@ static RFBConnectionManager*	sharedManager = nil;
 	[loginPanel makeKeyAndOrderFront:self];
 	
 	[self useRendezvous:[[NSUserDefaults standardUserDefaults] boolForKey:RENDEZVOUS_SETTINGS]];
+	
+	[mInfoVersionNumber setStringValue: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]];
 }
 
 - (void)processArguments
