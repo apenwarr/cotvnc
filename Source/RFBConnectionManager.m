@@ -291,20 +291,22 @@ static RFBConnectionManager*	sharedManager = nil;
     [self savePrefs];
 }
 
-- (id)defaultFrameBufferClass
+- (id)selectedFrameBufferClass
 {
     switch([[colorModelMatrix selectedCell] tag]) {
+    /*
         case 0: return [GrayScaleFrameBuffer class];
         case 1: return [LowColorFrameBuffer class];
         case 2: return [HighColorFrameBuffer class];
         case 3: return [TrueColorFrameBuffer class];
+        */
         default: return [TrueColorFrameBuffer class];
     }
 }
 
 + (void)getLocalPixelFormat:(rfbPixelFormat*)pf
 {
-    id fbc = [sharedManager defaultFrameBufferClass];
+    id fbc = [sharedManager selectedFrameBufferClass];
 
     [fbc getPixelFormat:pf];
 }

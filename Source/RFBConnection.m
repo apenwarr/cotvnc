@@ -313,8 +313,8 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	NSRect screenRect; // jason added
 	NSClipView *contentView; // jason added
 
-    frameBufferClass = [manager defaultFrameBufferClass];
-	[frameBuffer autorelease];
+    frameBufferClass = [manager selectedFrameBufferClass];
+    [frameBuffer autorelease];
     frameBuffer = [[frameBufferClass alloc] initWithSize:aSize andFormat:pixf];
 
     [rfbView setFrameBuffer:frameBuffer];
@@ -1039,11 +1039,7 @@ static NSString* byteString(double d)
 	[scrollView removeFromSuperview];
 	[window setDelegate: nil];
 	[window close];
-	window = [[NSWindow alloc] initWithContentRect:[NSWindow contentRectForFrameRect: _windowedFrame styleMask: _styleMask]
-										styleMask:_styleMask
-										backing:NSBackingStoreBuffered
-										defer:NO
-										screen:[NSScreen mainScreen]];
+	window = [[NSWindow alloc] initWithContentRect: [NSWindow contentRectForFrameRect: _windowedFrame styleMask: _styleMask] styleMask:_styleMask backing:NSBackingStoreBuffered defer:NO screen:[NSScreen mainScreen]];
 	[window setDelegate: self];
 	[(NSWindow *)window setContentView: scrollView];
 	[scrollView release];

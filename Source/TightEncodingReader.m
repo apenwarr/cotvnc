@@ -272,7 +272,6 @@ static void JpegSetSrcManager(j_decompress_ptr cinfo, CARD8* compressedData, int
     z_stream* stream;
     NSRect r;
 	
-
 #ifdef ZDEBUG
 	fwrite([data bytes], 1, [data length], debugFiles[cntl & 3]);
 	fflush(debugFiles[cntl & 3]);

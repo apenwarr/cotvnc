@@ -20,7 +20,7 @@
 
 #import "TrueColorFrameBuffer.h"
 
-typedef	unsigned int			FBColor;
+//typedef	unsigned int			FBColor;
 
 @implementation TrueColorFrameBuffer
 
@@ -42,18 +42,16 @@ typedef	unsigned int			FBColor;
 		samplesPerPixel = 3;
 		bitsPerColor = 8;
 		[self setPixelFormat:theFormat];
-		sps = MIN((SCRATCHPAD_SIZE * sizeof(FBColor)), (aSize.width * aSize.height * sizeof(FBColor)));
-		pixels = malloc(aSize.width * aSize.height * sizeof(FBColor));
+		sps = MIN((SCRATCHPAD_SIZE * [self getPixelSize]), (aSize.width * aSize.height * [self getPixelSize]));
+		pixels = malloc(aSize.width * aSize.height * [self getPixelSize]);
 		scratchpad = malloc(sps);
 	}
     return self;
 }
 
-- (void)dealloc
+- (int)getPixelSize
 {
-    free(pixels);
-    free(scratchpad);
-    [super dealloc];
+    return sizeof(unsigned int);
 }
 
 + (void)getPixelFormat:(rfbPixelFormat*)aFormat

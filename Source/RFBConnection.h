@@ -53,7 +53,7 @@
     id dictionary;
     id serverVersion;
     RFBProtocol *rfbProtocol;
-    id scrollView;
+    NSScrollView *scrollView;
     id newTitleField;
     NSPanel *newTitlePanel;
     NSString *titleString;

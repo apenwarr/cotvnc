@@ -20,7 +20,7 @@
 
 #import "LowColorFrameBuffer.h"
 
-typedef	unsigned char			FBColor;
+//typedef	unsigned char			FBColor;
 
 @implementation LowColorFrameBuffer
 
@@ -36,18 +36,16 @@ typedef	unsigned char			FBColor;
 		samplesPerPixel = 3;
 		bitsPerColor = 2;
 		[self setPixelFormat:theFormat];
-		sps = MIN((SCRATCHPAD_SIZE * sizeof(FBColor)), (aSize.width * aSize.height * sizeof(FBColor)));
-		pixels = malloc(aSize.width * aSize.height * sizeof(FBColor));
+		sps = MIN((SCRATCHPAD_SIZE * [self getPixelSize]), (aSize.width * aSize.height * [self getPixelSize]));
+		pixels = malloc(aSize.width * aSize.height * [self getPixelSize]);
 		scratchpad = malloc(sps);
 	}
     return self;
 }
 
-- (void)dealloc
+- (int)getPixelSize
 {
-    free(pixels);
-    free(scratchpad);
-    [super dealloc];
+    return sizeof(unsigned char);
 }
 
 + (void)getPixelFormat:(rfbPixelFormat*)aFormat
@@ -60,6 +58,86 @@ typedef	unsigned char			FBColor;
    aFormat->depth = 8;
 }
 
+- (void)putRect:(NSRect)aRect fromData:(unsigned char*)data
+{
+    unsigned char* start;
+    unsigned int stride, i, lines, pix, col;
+    
+    #ifdef DEBUG_DRAW
+    printf("put x=%f y=%f w=%f h=%f\n", aRect.origin.x, aRect.origin.y, aRect.size.width, aRect.size.height);
+    #endif
+    
+    #ifdef PINFO
+    putRectCount++;
+    putPixelCount += aRect.size.width * aRect.size.height;
+    #endif
+    
+    start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;
+    lines = aRect.size.height;
+    stride = size.width - aRect.size.width;
+    
+        switch(pixelFormat.bitsPerPixel / 8) {
+                case 1:
+                        while(lines--) {
+                                for(i=aRect.size.width; i; i--) {
+                                        pix = *data++;
+                                        CLUT(col, pix);
+                                        *start++ = col;
+                                }
+                                start += stride;
+                        }
+                        break;
+                case 2:
+                        if(pixelFormat.bigEndian) {
+                                while(lines--) {
+                                        for(i=aRect.size.width; i; i--) {
+                                                pix = *data++; pix <<= 8; pix += *data++;
+                                                CLUT(col, pix);
+                                                *start++ = col;
+                                        }
+                                        start += stride;
+                                }
+                        } else {
+                                while(lines--) {
+                                        for(i=aRect.size.width; i; i--) {
+                                                pix = *data++; pix += (((unsigned int)*data++) << 8);
+                                                CLUT(col, pix);
+                                                *start++ = col;
+                                        }
+                                        start += stride;
+                                }
+                        }
+                        break;
+                case 4:
+                        if(pixelFormat.bigEndian) {
+                                while(lines--) {
+                                        for(i=aRect.size.width; i; i--) {
+                                                pix = *data++; pix <<= 8;
+                                                pix += *data++; pix <<= 8;
+                                                pix += *data++; pix <<= 8;
+                                                pix += *data++;
+                                                CLUT(col, pix);
+                                                *start++ = col;
+                                        }
+                                        start += stride;
+                                }
+                        } else {
+                                while(lines--) {
+                                        for(i=aRect.size.width; i; i--) {
+                                                pix = *data++;
+                                                pix += (((unsigned int)*data++) << 8);
+                                                pix += (((unsigned int)*data++) << 16);
+                                                pix += (((unsigned int)*data++) << 24);
+                                                CLUT(col, pix);
+                                                *start = col;
+                                                start += [self getPixelSize];
+                                        }
+                                        start += stride;
+                                }
+                        }
+                        break;
+        }
+}
 
 #include "FrameBufferDrawing.h"
 

@@ -23,8 +23,8 @@
 
 @interface HighColorFrameBuffer : FrameBuffer
 {
-    unsigned short*	pixels;
-    unsigned short*	scratchpad;
+    //unsigned short*	pixels; kjw
+    //unsigned short*	scratchpad; kjw
 }
 
 @end

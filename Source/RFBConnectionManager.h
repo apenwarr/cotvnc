@@ -71,7 +71,7 @@
 - (void)createConnectionWithDictionary:(NSDictionary *) someDict profile:(Profile *) someProfile owner:(id) someOwner;
 
 - (IBAction)preferencesChanged:(id)sender;
-- (id)defaultFrameBufferClass;
+- (id)selectedFrameBufferClass;
 
 //- (void)controlTextDidChange:(NSNotification *)aNotification; no needed?
 

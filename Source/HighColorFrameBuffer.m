@@ -20,7 +20,7 @@
 
 #import "HighColorFrameBuffer.h"
 
-typedef	unsigned short			FBColor;
+//typedef	unsigned short			FBColor;
 
 @implementation HighColorFrameBuffer
 
@@ -42,19 +42,18 @@ typedef	unsigned short			FBColor;
 		samplesPerPixel = 3;
 		bitsPerColor = 4;
 		[self setPixelFormat:theFormat];
-		sps = MIN((SCRATCHPAD_SIZE * sizeof(FBColor)), (aSize.width * aSize.height * sizeof(FBColor)));
-		pixels = malloc(aSize.width * aSize.height * sizeof(FBColor));
+		sps = MIN((SCRATCHPAD_SIZE * [self getPixelSize]), (aSize.width * aSize.height * [self getPixelSize]));
+		pixels = malloc(aSize.width * aSize.height * [self getPixelSize]);
 		scratchpad = malloc(sps);
 	}
     return self;
 }
 
-- (void)dealloc
+- (int)getPixelSize
 {
-    free(pixels);
-    free(scratchpad);
-    [super dealloc];
+    return sizeof(unsigned short);
 }
+
 
 + (void)getPixelFormat:(rfbPixelFormat*)aFormat
 {
@@ -65,8 +64,5 @@ typedef	unsigned short			FBColor;
    aFormat->blueShift = 12;
    aFormat->depth = 16;
 }
-
-
-#include "FrameBufferDrawing.h"
 
 @end

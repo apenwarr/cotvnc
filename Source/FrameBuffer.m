@@ -22,6 +22,13 @@
 
 @implementation FrameBuffer
 
+- (void)dealloc
+{
+    free(pixels);
+    free(scratchpad);
+    [super dealloc];
+}
+
 /* --------------------------------------------------------------------------------- */
 static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 {
@@ -62,9 +69,9 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 }
 
 /* --------------------------------------------------------------------------------- */
-#define TO_PIX(p,s)																\
-	p = (*s++ & pixelFormat.redMax) << pixelFormat.redShift;					\
-	p |= (*s++ & pixelFormat.greenMax) << pixelFormat.greenShift;				\
+#define TO_PIX(p,s)							\
+	p = (*s++ & pixelFormat.redMax) << pixelFormat.redShift;	\
+	p |= (*s++ & pixelFormat.greenMax) << pixelFormat.greenShift;	\
 	p |= (*s++ & pixelFormat.blueMax) << pixelFormat.blueShift	
 
 - (void)combineRGB:(int*)rgb pixels:(unsigned)length into:(unsigned char*)v
@@ -250,6 +257,17 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 /* --------------------------------------------------------------------------------- */
 + (void)getPixelFormat:(rfbPixelFormat*)pf
 {
+}
+
+- (void)setTarget:(NSView*) targetView
+{
+    target = targetView; // Note, the target owns us - we don't retain it.
+}
+
+- (int)getPixelSize
+{
+    NSLog(@"Should never have called FrameBuffer's getPixelSize");
+    return 0; // HA - that will show them!
 }
 
 /* --------------------------------------------------------------------------------- */

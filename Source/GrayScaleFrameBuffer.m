@@ -20,7 +20,7 @@
 
 #import "GrayScaleFrameBuffer.h"
 
-typedef	unsigned char			FBColor;
+//typedef	unsigned char			FBColor;
 
 @implementation GrayScaleFrameBuffer
 
@@ -34,18 +34,16 @@ typedef	unsigned char			FBColor;
 		samplesPerPixel = 1;
 		bitsPerColor = 8;
 		[self setPixelFormat:theFormat];
-		sps = MIN((SCRATCHPAD_SIZE * sizeof(FBColor)), (aSize.width * aSize.height * sizeof(FBColor)));
-		pixels = malloc(aSize.width * aSize.height * sizeof(FBColor));
+		sps = MIN((SCRATCHPAD_SIZE * [self getPixelSize]), (aSize.width * aSize.height * [self getPixelSize]));
+		pixels = malloc(aSize.width * aSize.height * [self getPixelSize]);
 		scratchpad = malloc(sps);
 	}
     return self;
 }
 
-- (void)dealloc
+- (int)getPixelSize
 {
-    free(pixels);
-    free(scratchpad);
-    [super dealloc];
+    return sizeof(unsigned char);
 }
 
 + (void)getPixelFormat:(rfbPixelFormat*)aFormat

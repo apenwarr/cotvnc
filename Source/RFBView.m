@@ -39,6 +39,7 @@
     
     [fbuf autorelease];
     fbuf = [aBuffer retain];
+    [fbuf setTarget:self];
     f.size = [aBuffer size];
     [self setFrame:f];
 }
@@ -46,7 +47,7 @@
 - (void)dealloc
 {
     [fbuf release];
-	[cursor release];
+    [cursor release];
     [super dealloc];
 }
 
@@ -74,9 +75,9 @@
 {
     NSRect b = [self bounds];
     NSRect r = destRect;
-
+    return;
     r.origin.y = b.size.height - NSMaxY(r);
-    [fbuf drawRect:r at:destRect.origin];
+    //[fbuf drawRect:r at:destRect.origin];
     //[delegate queueUpdateRequest];
 }
 
@@ -86,7 +87,7 @@
     NSRect r = aRect;
 
     r.origin.y = b.size.height - NSMaxY(r);
-    [self displayRect:r];
+    //[self displayRect:r];
 }
 
 - (void)drawRectList:(id)aList
