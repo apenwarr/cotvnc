@@ -49,7 +49,7 @@ BOOL gIsJaguar;
 
 const unsigned int page0[256] = {
     0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0xff09, 0xa, 0xb, 0xc, 0xff0d, 0xe, 0xf,
-    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0xff1b, 0x1c, 0x1d, 0x1e, 0x1f,
+    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0xff09, 0x1a, 0xff1b, 0x1c, 0x1d, 0x1e, 0x1f,
     0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f,
     0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f,
     0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f,
@@ -767,7 +767,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     if(diff & NSShiftKeyMask) {
         msg.down = (m & NSShiftKeyMask) ? YES : NO;
         msg.key = htonl([profile shiftKeyCode]);
-		//        fprintf(stderr, "%04X / %d\n", msg.key, msg.down);
+//		fprintf(stderr, "%04X / %d\n", msg.key, msg.down);
         [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
         if(msg.down) {
             if(!(lastButtonMask & rfbButton1Mask)) {
@@ -792,7 +792,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     if(diff & NSControlKeyMask) {
         msg.down = (m & NSControlKeyMask) ? YES : NO;
         msg.key = htonl([profile controlKeyCode]);
-        //        fprintf(stderr, "%04X / %d\n", msg.key, msg.down);
+//		fprintf(stderr, "%04X / %d\n", msg.key, msg.down);
         [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
         if(msg.down) {
             if(!(lastButtonMask & rfbButton1Mask)) {
@@ -816,18 +816,19 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     if(diff & NSAlternateKeyMask) {
         msg.down = (m & NSAlternateKeyMask) ? YES : NO;
         msg.key = htonl([profile altKeyCode]);
-		//        fprintf(stderr, "%04X / %d\n", msg.key, msg.down);
+//		fprintf(stderr, "%04X / %d\n", msg.key, msg.down);
         [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
     }
     if(diff & NSCommandKeyMask) {
         msg.down = (m & NSCommandKeyMask) ? YES : NO;
         msg.key = htonl([profile commandKeyCode]);
-		//        fprintf(stderr, "%04X / %d\n", msg.key, msg.down);
+//		fprintf(stderr, "%04X / %d\n", msg.key, msg.down);
         [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
     }
     if(diff & NSHelpKeyMask) {		// this is F1
         msg.down = (m & NSHelpKeyMask) ? YES : NO;
         msg.key = htonl(F1_KEYCODE);
+//		fprintf(stderr, "%04X / %d\n", msg.key, msg.down);
         [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
     }
 
@@ -835,6 +836,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     if(diff & NSAlphaShiftKeyMask) {
         msg.down = (m & NSAlphaShiftKeyMask) ? YES : NO;
         msg.key = htonl(CAPSLOCK);
+//		fprintf(stderr, "%04X / %d\n", msg.key, msg.down);
         [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
     }
     lastModifier = m;
@@ -849,12 +851,12 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     memset(&msg, 0, sizeof(msg));
     msg.type = rfbKeyEvent;
     msg.down = aFlag;
-    if(c < 256) {
+	if(c < 256) {
         kc = page0[c & 0xff];
     } else if((c & 0xff00) == 0xf700) {
         kc = pagef7[c & 0xff];
     } else {
-	kc = c;
+		kc = c;
     }
     msg.key = htonl(kc);
     [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
@@ -947,9 +949,9 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 		characters = [[theEvent charactersIgnoringModifiers] decomposedStringWithCanonicalMapping];
 	else
 		characters = [theEvent charactersIgnoringModifiers];
-	
+			
 	// if this is a key equivalent, perform it and get the rock outta here
-	if ( aFlag && characters && [[KeyEquivalentManager defaultManager] performEquivalentWithCharacters: characters modifiers: [theEvent modifierFlags] & 0xFFFF0000] )
+	if ( aFlag && characters && [[KeyEquivalentManager defaultManager] performEquivalentWithCharacters: [theEvent charactersIgnoringModifiers] modifiers: [theEvent modifierFlags] & 0xFFFF0000] )
 	{
 		[self clearEmulationActiveMask];
 		buttonEmulationKeyDownMask = 0;
