@@ -63,7 +63,6 @@
 //	id<IServerData> mSelectedServer;
 	ServerDataViewController* mServerCtrler;
 	bool      mDisplayGroups;
-	bool      mUseRendezvous;
 }
 
 + (float)gammaCorrection;
@@ -105,5 +104,7 @@
 - (id<IServerData>)selectedServer;
 
 - (void)displayGroups:(bool)display;
+
+- (void)useRendezvous:(bool)useRendezvous;
 
 @end

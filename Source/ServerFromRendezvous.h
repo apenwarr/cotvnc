@@ -20,10 +20,33 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ServerBase.h"
 #import "IServerData.h"
 
-@interface ServerFromRendezvous : NSObject <IServerData> {
-
+@interface ServerFromRendezvous : ServerBase {
+	NSNetService* service_;
+	bool bHasResolved;
+	bool bResloveSucceeded;
 }
+
++ (id<IServerData>)createWithNetService:(NSNetService*)service;
+
+- (id)initWithNetService:(NSNetService*)service;
+- (void)dealloc;
+
+- (bool)doYouSupport: (SUPPORT_TYPE)type;
+
+- (NSString*)name;
+- (NSString*)host;
+- (bool)rememberPassword;
+- (int)display;
+
+- (void)setName: (NSString*)name;
+- (void)setHost: (NSString*)host;
+- (void)setRememberPassword: (bool)rememberPassword;
+- (void)setDisplay: (int)display;
+
+- (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict;
+- (void)netServiceDidResolveAddress:(NSNetService *)sender;
 
 @end

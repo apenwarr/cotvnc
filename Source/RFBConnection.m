@@ -147,8 +147,13 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 		if (port < 100)
 		    port += RFB_PORT;
 		socket_address(&remote, host, port);
+		if( INADDR_NONE == remote.sin_addr.s_addr ) {
+			[self perror: [NSString stringWithFormat:@"Could not find a server with the name \"%@\"", host] call:@"connect()"];
+			[self release];
+			return nil;
+		}
 		if(connect(sock, (struct sockaddr *)&remote, sizeof(remote)) < 0) {
-			[self perror:@"Open Connection" call:@"connect()"];
+			[self perror:[NSString stringWithFormat:@"Could not connect to server %@:%d", host, port] call:@"connect()"];
 			[self release];
 			return nil;
 		}

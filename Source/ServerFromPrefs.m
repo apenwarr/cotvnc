@@ -58,7 +58,6 @@
 		_password =         [[NSString alloc] initWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name]];
 		_rememberPassword = [[prefDict objectForKey:RFB_REMEMBER] intValue] == 0 ? NO : YES;
 		_display =          [[prefDict objectForKey:RFB_DISPLAY] intValue];
-		_lastDisplay =      [[prefDict objectForKey:RFB_LAST_DISPLAY] intValue];
 		_lastProfile =      [[prefDict objectForKey:RFB_LAST_PROFILE] retain];
 		_shared =           [[prefDict objectForKey:RFB_SHARED] intValue] == 0 ? NO : YES;
 		_fullscreen =       [[prefDict objectForKey:RFB_FULLSCREEN] intValue] == 0 ? NO : YES;
@@ -81,7 +80,6 @@
 		_password =         [[NSString alloc] init];
 		_rememberPassword = NO;
 		_display =          0;
-		_lastDisplay =      0;
 		_lastProfile =      [[NSString alloc] init];
 		_shared =           NO;
 		_fullscreen =       NO;
@@ -117,7 +115,6 @@
 	[coder encodeObject:_host			 forKey:RFB_HOST];
 	[coder encodeBool:_rememberPassword  forKey:RFB_REMEMBER];
 	[coder encodeInt:_display			 forKey:RFB_DISPLAY];
-	[coder encodeInt:_lastDisplay		 forKey:RFB_LAST_DISPLAY];
 	[coder encodeObject:_lastProfile	 forKey:RFB_LAST_PROFILE];
 	[coder encodeBool:_shared			 forKey:RFB_SHARED];
 	[coder encodeBool:_fullscreen		 forKey:RFB_FULLSCREEN];
@@ -141,7 +138,6 @@
 		_host =             [[coder decodeObjectForKey:RFB_HOST] retain];
 		_rememberPassword = [coder decodeBoolForKey:RFB_REMEMBER];
 		_display =          [coder decodeIntForKey:RFB_DISPLAY];
-		_lastDisplay =      [coder decodeIntForKey:RFB_LAST_DISPLAY];
 		_lastProfile =      [[coder decodeObjectForKey:RFB_LAST_PROFILE] retain];
 		_shared =           [coder decodeBoolForKey:RFB_SHARED];
 		_fullscreen =       [coder decodeBoolForKey:RFB_FULLSCREEN];
@@ -150,6 +146,24 @@
 	}
 	
     return self;
+}
+
+- (bool)doYouSupport: (SUPPORT_TYPE)type
+{
+	switch( type )
+	{
+		case EDIT_ADDRESS:
+		case EDIT_PORT:
+		case EDIT_NAME:
+		case SAVE_PASSWORD:
+		case CONNECT:
+			return YES;
+		default:
+			// handle all cases
+			assert(0);
+	}
+	
+	return NO;
 }
 
 - (void)setName: (NSString*)name

@@ -28,7 +28,6 @@
 	NSString* _password;
 	bool      _rememberPassword;
 	int       _display;
-	int       _lastDisplay;
 	bool      _shared;
 	bool      _fullscreen;
 	NSString* _lastProfile;
@@ -42,12 +41,13 @@
  *  Implements the IServerData protocol
  */
 //@{
+- (bool)doYouSupport: (SUPPORT_TYPE)type;
+
 - (NSString*)name;
 - (NSString*)host;
 - (NSString*)password;
 - (bool)rememberPassword;
 - (int)display;
-- (int)lastDisplay;
 - (bool)shared;
 - (bool)fullscreen;
 - (NSString*)lastProfile;
@@ -57,7 +57,6 @@
 - (void)setPassword: (NSString*)password;
 - (void)setRememberPassword: (bool)rememberPassword;
 - (void)setDisplay: (int)display;
-- (void)setLastDisplay: (int)lastDisplay;
 - (void)setShared: (bool)shared;
 - (void)setFullscreen: (bool)fullscreen;
 - (void)setLastProfile: (NSString*)lastProfile;

@@ -29,11 +29,12 @@
 {
     IBOutlet NSTextField *display;
     IBOutlet NSTextField *hostName;
-    IBOutlet NSSecureTextField *password;
+    IBOutlet NSTextField *password;
     IBOutlet NSPopUpButton *profilePopup;
     IBOutlet NSButton *rememberPwd;
     IBOutlet NSButton *shared;
 	IBOutlet NSBox *box;
+	IBOutlet NSButton *connectBtn;
 	
 	IBOutlet NSProgressIndicator *connectIndicator;
 	IBOutlet NSTextField *connectIndicatorText;
@@ -58,6 +59,7 @@
 - (NSBox*)box;
 
 - (void)controlTextDidEndEditing:(NSNotification*)notification;
+- (void)updateView:(id)notification;
 
 @end
 

@@ -33,7 +33,6 @@
 		_password =         [[NSString alloc] init];
 		_rememberPassword = NO;
 		_display =          0;
-		_lastDisplay =      0;
 		_lastProfile =      [[NSString alloc] init];
 		_shared =           NO;
 		_fullscreen =       NO;
@@ -49,6 +48,25 @@
 	[_password release];
 	[_lastProfile release];
 	[super dealloc];
+}
+
+- (bool)doYouSupport: (SUPPORT_TYPE)type
+{
+	switch( type )
+	{
+		case EDIT_ADDRESS:
+		case EDIT_PORT:
+		case EDIT_NAME:
+		case CONNECT:
+			return YES;
+		case SAVE_PASSWORD:
+			return NO;
+		default:
+			// handle all cases
+			assert(0);
+	}
+	
+	return NO;
 }
 
 - (NSString*)name
@@ -74,11 +92,6 @@
 - (int)display
 {
 	return _display;
-}
-
-- (int)lastDisplay
-{
-	return _lastDisplay;
 }
 
 - (bool)shared
@@ -134,14 +147,6 @@
 - (void)setDisplay: (int)display
 {
 	_display = display;
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
-}
-
-- (void)setLastDisplay: (int)lastDisplay
-{
-	_lastDisplay = lastDisplay;
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
 														object:self];

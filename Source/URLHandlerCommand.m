@@ -31,7 +31,7 @@ if (!(condition)) return [self scriptError: (errno) description: \
 
 - (id)performDefaultImplementation
 {
-    NSString *command = [[self commandDescription] commandName];
+    /*NSString *command = [[self commandDescription] commandName];
     NSString *verb;
     NSString *urlString = [self directParameter];
     NSURL *url;
@@ -66,7 +66,7 @@ if (!(condition)) return [self scriptError: (errno) description: \
     // wrt URL formats; may want to use it instead (see release notes)
     HLSAssert(url != nil, kURLInvalidURLError,
               @"URL format is invalid; must be fully qualified (scheme://host...).");
-	
+	*/
     return nil;
 }
 

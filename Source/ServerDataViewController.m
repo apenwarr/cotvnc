@@ -50,12 +50,25 @@
 
 - (void)setServer:(id<IServerData>)server
 {
-	[(id)mServer autorelease];
+	if( nil != mServer )
+	{
+		[[NSNotificationCenter defaultCenter] removeObserver:self
+														name:ServerChangeMsg
+													  object:(id)mServer];
+		[(id)mServer autorelease];
+	}
+	
 	mServer = [(id)server retain];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(updateView:)
+												 name:ServerChangeMsg
+											   object:(id)mServer];
 	
-	// Set default values
-    [password setStringValue:@""];
+	[self updateView:nil];
+}
 	
+- (void)updateView:(id)notification
+{	
 	// Set properties in dialog box
     if (mServer != nil)
 	{
@@ -65,10 +78,16 @@
         [display setIntValue:[mServer display]];
         [shared setIntValue:[mServer shared]];
 		[profilePopup selectItemWithTitle:[mServer lastProfile]];
+		
+		[hostName    setEditable:[mServer doYouSupport:EDIT_ADDRESS]];
+		[display     setEditable:[mServer doYouSupport:EDIT_PORT]];
+		[rememberPwd setEnabled: [mServer doYouSupport:SAVE_PASSWORD]];
+		[connectBtn  setEnabled: [mServer doYouSupport:CONNECT]];
     }
 	else
 	{
 		[hostName setStringValue:@""];
+		[password setStringValue:@""];
 		[rememberPwd setIntValue:0];
 		[display setStringValue:@""];
 		[shared setIntValue:0];
@@ -130,7 +149,6 @@
 {
 	if( nil != mServer )
 	{
-		[mServer setLastDisplay:[mServer display]];
 		[mServer setDisplay:[sender intValue]];
 	}
 }

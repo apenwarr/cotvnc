@@ -24,17 +24,27 @@
 /** Implementers of IServerData will send this notification when a property has changed */
 #define ServerChangeMsg @"ServerChangeMsg"
 
+typedef enum
+{
+	EDIT_ADDRESS,
+	EDIT_PORT,
+	EDIT_NAME,
+	SAVE_PASSWORD,
+	CONNECT
+} SUPPORT_TYPE;
+
 @protocol IServerDataDelegate;
 
 @protocol IServerData
+
+- (bool)doYouSupport: (SUPPORT_TYPE)type;
 
 - (NSString*)name;
 - (NSString*)host;
 - (NSString*)password;
 - (bool)rememberPassword;
 - (int)display;
-- (int)lastDisplay;
-- (int)shared;
+- (bool)shared;
 - (bool)fullscreen;
 - (NSString*)lastProfile;
 
@@ -43,8 +53,7 @@
 - (void)setPassword: (NSString*)password;
 - (void)setRememberPassword: (bool)rememberPassword;
 - (void)setDisplay: (int)display;
-- (void)setLastDisplay: (int)lastDisplay;
-- (void)setShared: (int)shared;
+- (void)setShared: (bool)shared;
 - (void)setFullscreen: (bool)fullscreen;
 - (void)setLastProfile: (NSString*)lastProfile;
 
