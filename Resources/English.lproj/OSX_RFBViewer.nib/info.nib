@@ -24,13 +24,14 @@
 	<string>13</string>
 	<key>IBLockedObjects</key>
 	<array>
-		<integer>1049</integer>
 		<integer>1191</integer>
 		<integer>1208</integer>
 	</array>
 	<key>IBOpenObjects</key>
 	<array>
+		<integer>21</integer>
 		<integer>1015</integer>
+		<integer>1243</integer>
 	</array>
 	<key>IBSystem Version</key>
 	<string>7F44</string>
