@@ -30,7 +30,8 @@ typedef enum
 	EDIT_PORT,
 	EDIT_NAME,
 	SAVE_PASSWORD,
-	CONNECT
+	CONNECT,
+	DELETE
 } SUPPORT_TYPE;
 
 @protocol IServerDataDelegate;

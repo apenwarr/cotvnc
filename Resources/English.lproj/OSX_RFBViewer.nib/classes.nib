@@ -81,6 +81,7 @@
                 psThreshold = NSTextField; 
                 rendezvousMenuItem = NSMenuItem; 
                 serverDataBoxLocal = NSBox; 
+                serverDeleteBtn = NSButton; 
                 serverGroupBox = NSBox; 
                 serverList = NSTableView; 
                 serverListBox = NSBox; 
@@ -91,6 +92,7 @@
         {CLASS = ServerDataManager; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {
+                connectToServer = id; 
                 displayChanged = id; 
                 hostChanged = id; 
                 passwordChanged = id; 
@@ -101,9 +103,15 @@
             CLASS = ServerDataViewController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                box = NSBox; 
+                connectBtn = NSButton; 
+                connectIndicator = NSProgressIndicator; 
+                connectIndicatorText = NSTextField; 
                 display = NSTextField; 
                 hostName = NSTextField; 
-                password = NSSecureTextField; 
+                mDelegate = id; 
+                mServer = id; 
+                password = NSTextField; 
                 profilePopup = NSPopUpButton; 
                 rememberPwd = NSButton; 
                 shared = NSButton; 

@@ -135,6 +135,7 @@
 		case EDIT_NAME:
 		case SAVE_PASSWORD:
 		case CONNECT:
+		case DELETE:
 			return YES;
 		default:
 			// handle all cases

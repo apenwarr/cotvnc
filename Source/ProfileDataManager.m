@@ -60,11 +60,17 @@ static ProfileDataManager* gInstance = nil;
 - (void)setProfile:(NSMutableDictionary*)profile forKey:(id) key
 {
 	[profiles setObject:profile forKey:key];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:ProfileListChangeMsg
+														object:self];
 }
 
 - (void)removeProfileForKey:(id) key
 {
 	[profiles removeObjectForKey:key];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:ProfileListChangeMsg
+														object:self];
 }
 
 - (int)count
@@ -79,7 +85,7 @@ static ProfileDataManager* gInstance = nil;
 
 - (NSArray*)sortedKeyArray
 {
-	return [[[profiles allKeys] sortedArrayUsingSelector:@selector(compare:)] autorelease];
+	return [[profiles allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 }
 
 @end

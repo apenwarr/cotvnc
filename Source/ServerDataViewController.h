@@ -41,8 +41,6 @@
 	
 	id<IServerData> mServer;
 	id<ConnectionDelegate> mDelegate;
-	
-	NSArray* profileKeys;
 }
 
 - (void)setServer:(id<IServerData>)server;
@@ -62,6 +60,9 @@
 
 - (void)controlTextDidEndEditing:(NSNotification*)notification;
 - (void)updateView:(id)notification;
+- (void)updateProfileView:(id)notification;
+
+- (void)loadProfileIntoView;
 
 @end
 

@@ -109,8 +109,6 @@ static RFBConnectionManager*	sharedManager = nil;
 
     [self processArguments];
 
-    [self updateProfileList:nil];
-
     if (cmdlineHost) {
 	/* Connect without GUI */
 	Profile* profile;
@@ -121,7 +119,7 @@ static RFBConnectionManager*	sharedManager = nil;
 	[cmdlineServer setDisplay:cmdlineDisplay];
 	[cmdlineServer setFullscreen:cmdlineFullscreen];
 
-	profile = [profileManager profileNamed:[profilePopup titleOfSelectedItem]];	
+	profile = [profileManager profileNamed:DefaultProfile];	
 	
 	[self createConnectionWithServer:cmdlineServer profile:profile owner:self];
 
@@ -255,17 +253,6 @@ static RFBConnectionManager*	sharedManager = nil;
 	[self savePrefs];
 }
 
-- (void)updateProfileList:(id)notification
-{
-	// Jason changed the following line because the original was a reference
-    NSString* current = [[[profilePopup titleOfSelectedItem] copy] autorelease];
-//    NSString* current = [profilePopup titleOfSelectedItem];
-    
-    [profilePopup removeAllItems];
-    [profilePopup addItemsWithTitles:[profileManager profileNames]];
-    [profilePopup selectItemWithTitle:current];
-}
-
 - (id<IServerData>)selectedServer
 {
 	return [[ServerDataManager sharedInstance] getServerAtIndex:[serverList selectedRow]];
@@ -286,6 +273,9 @@ static RFBConnectionManager*	sharedManager = nil;
 
 	id<IServerData> selectedServer = [self selectedServer];
 	[mServerCtrler setServer:selectedServer];
+	
+	
+	[serverDeleteBtn setEnabled: [selectedServer doYouSupport:DELETE]];
 }
 
 - (NSString*)translateDisplayName:(NSString*)aName forHost:(NSString*)aHost

@@ -21,6 +21,8 @@
 
 #import "ServerFromPrefs.h"
 #import "IServerData.h"
+#import "ProfileManager.h"
+#import "ProfileDataManager.h"
 
 @implementation ServerBase
 
@@ -33,9 +35,14 @@
 		_password =         [[NSString alloc] init];
 		_rememberPassword = NO;
 		_display =          0;
-		_lastProfile =      [[NSString alloc] initWithString:@"default"];
+		_lastProfile =      [[NSString alloc] initWithString:DefaultProfile];
 		_shared =           NO;
 		_fullscreen =       NO;
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(profileListUpdate:)
+													 name:ProfileListChangeMsg
+												   object:(id)[ProfileDataManager sharedInstance]];
 	}
 	
 	return self;
@@ -43,6 +50,10 @@
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:ProfileListChangeMsg
+												  object:(id)[ProfileDataManager sharedInstance]];
+												  
 	[_name release];
 	[_host release];
 	[_password release];
@@ -171,7 +182,15 @@
 - (void)setLastProfile: (NSString*)lastProfile
 {
 	[_lastProfile autorelease];
-	_lastProfile = [lastProfile retain];
+	
+	if( nil == [[ProfileDataManager sharedInstance] profileForKey:[self lastProfile]] )
+	{
+		_lastProfile = [[NSString stringWithString:DefaultProfile] retain];
+	}
+	else
+	{
+		_lastProfile = [lastProfile retain];
+	}
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
 														object:self];
@@ -180,6 +199,14 @@
 - (void)setDelegate: (id<IServerDataDelegate>)delegate
 {
 	_delegate = delegate;
+}
+
+- (void)profileListUpdate:(id)notification
+{
+	if( nil == [[ProfileDataManager sharedInstance] profileForKey:[self lastProfile]] )
+	{
+		[self setLastProfile:DefaultProfile];
+	}
 }
 
 @end

@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+/** This message indicates that the profile list has changed */
+#define ProfileListChangeMsg @"ProfileListChangeMsg"
 
 @interface ProfileDataManager : NSObject {
 

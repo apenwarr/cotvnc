@@ -35,18 +35,12 @@
 		[connectIndicatorText setStringValue:@""];
 		[box setBorderType:NSNoBorder];
 		
-		profileKeys = [[ProfileDataManager sharedInstance] sortedKeyArray];
+		[self loadProfileIntoView];
 		
-		// I would have thought that the popup would have retained the strings that it displays,
-		// but it doesn't so we are keeping the array we are using retained.
-		[profileKeys retain];
-		
-		NSEnumerator* keyEnum = [profileKeys objectEnumerator];
-		NSString* key;
-		while( key = [keyEnum nextObject] )
-		{
-			[profilePopup addItemWithTitle:key];
-		}
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(updateProfileView:)
+													 name:ProfileListChangeMsg
+												   object:(id)[ProfileDataManager sharedInstance]];
 	}
 	
 	return self;
@@ -63,11 +57,12 @@
 }
 
 - (void)dealloc
-{
-	[profileKeys release ];
-	
+{	
 	[super dealloc];
-}
+		
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:ProfileListChangeMsg
+												  object:(id)[ProfileDataManager sharedInstance]];}
 
 - (void)setServer:(id<IServerData>)server
 {
@@ -113,6 +108,26 @@
 		[display setStringValue:@""];
 		[shared setIntValue:0];
 		[profilePopup selectItemAtIndex:0]; 
+	}
+}
+
+
+- (void)updateProfileView:(id)notification
+{
+	[self loadProfileIntoView];
+}
+
+- (void)loadProfileIntoView
+{
+	[profilePopup removeAllItems];
+	
+	NSArray* profileKeys = [NSArray arrayWithArray:[[ProfileDataManager sharedInstance] sortedKeyArray]];
+	
+	[profilePopup addItemsWithTitles:profileKeys];
+	
+	if( nil != mServer )
+	{
+		[profilePopup selectItemWithTitle:[mServer lastProfile]];
 	}
 }
 

@@ -52,15 +52,14 @@
 	IBOutlet NSBox *serverDataBoxLocal;
 	IBOutlet NSBox *serverListBox;
 	IBOutlet NSBox *serverGroupBox;
-    IBOutlet NSPopUpButton *profilePopup;
-    IBOutlet NSSplitView *splitView;
+	IBOutlet NSSplitView *splitView;
 	IBOutlet NSMenuItem *rendezvousMenuItem;
+    IBOutlet NSButton *serverDeleteBtn;
     NSMutableArray*	connections;
     NSString *cmdlineHost;
     int       cmdlineDisplay;
     NSString *cmdlinePassword;
     bool      cmdlineFullscreen;
-//	id<IServerData> mSelectedServer;
 	ServerDataViewController* mServerCtrler;
 	bool      mDisplayGroups;
 }
@@ -68,7 +67,6 @@
 + (float)gammaCorrection;
 + (void)getLocalPixelFormat:(rfbPixelFormat*)pf;
 
-- (void)updateProfileList:(id)notification;
 - (void)removeConnection:(id)aConnection;
 - (void)connect:(id<IServerData>)server;
 - (void)processArguments;

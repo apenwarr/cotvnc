@@ -62,6 +62,8 @@
 - (void)setLastProfile: (NSString*)lastProfile;
 
 - (void)setDelegate: (id<IServerDataDelegate>)delegate;
+
+- (void)profileListUpdate:(id)notification;
 //@}
 
 @end
