@@ -142,7 +142,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 		}
 		// jason added for direct port specification
 		display = [[aDictionary objectForKey:RFB_DISPLAY] intValue];
-		if (display > 10)
+		if (display > 99)
 			port = display;
 		else
 			port = RFB_PORT + [[aDictionary objectForKey:RFB_DISPLAY] intValue];

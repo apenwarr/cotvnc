@@ -145,7 +145,6 @@ static CARD32 getcode(NSString* s)
     return (i == 0) ? YES : NO;
 }
 
-/* Not used?
 - (void)getPixelFormat:(rfbPixelFormat*)format
 {
     int i = [[info objectForKey:PixelFormat] intValue];
@@ -172,9 +171,14 @@ static CARD32 getcode(NSString* s)
                 format->greenShift = 8;
                 format->blueShift = 4;
             } else {
+                format->redShift = 0;
+                format->greenShift = 4;
+                format->blueShift = 8;
+                /*
                 format->redShift = 4;
                 format->greenShift = 0;
                 format->blueShift = 12;
+                 */
             }
             break;
         case 3:
@@ -191,7 +195,9 @@ static CARD32 getcode(NSString* s)
                 format->blueShift = 16;
             }
             break;
+        default:
+            NSLog(@"Unknown profile selected.");
     }
 }
-*/
+
 @end

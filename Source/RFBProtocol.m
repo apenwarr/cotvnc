@@ -129,7 +129,7 @@
             aFormat->bigEndian = [FrameBuffer bigEndian];
         }
     } else {
-       	//[profile getPixelFormat:aFormat];
+       	[profile getPixelFormat:aFormat];
         aFormat->bigEndian = [FrameBuffer bigEndian];
     }
 

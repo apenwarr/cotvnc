@@ -279,29 +279,9 @@ for(i=0; i<=theFormat->blueMax; i++) {
         case 1:
             NSDrawBitmap(aRect, aRect.size.width, aRect.size.height, 2, 1, 8, aRect.size.width * 1, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&data);
             break;
-            /*
-             case 2:
-                 if(pixelFormat.bigEndian) {
-                     while(lines--) {
-                         for(i=aRect.size.width; i; i--) {
-                             pix = *data++; pix <<= 8; pix += *data++;
-                             CLUT(col, pix);
-                             *start++ = col;
-                         }
-                         start += stride;
-                     }
-                 } else {
-                     while(lines--) {
-                         for(i=aRect.size.width; i; i--) {
-                             pix = *data++; pix += (((unsigned int)*data++) << 8);
-                             CLUT(col, pix);
-                             *start++ = col;
-                         }
-                         start += stride;
-                     }
-                 }
-                 break;
-                 */
+        case 2:
+            NSDrawBitmap(aRect, aRect.size.width, aRect.size.height, 4, [self bytesPerPixel], 8 * [self bytesPerPixel], aRect.size.width * [self bytesPerPixel], NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&data);
+            break;
         case 3:
         case 4:
             NSDrawBitmap(aRect, aRect.size.width, aRect.size.height, 8, [self bytesPerPixel], 8 * [self bytesPerPixel], aRect.size.width * [self bytesPerPixel], NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&data);

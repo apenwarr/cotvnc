@@ -329,7 +329,7 @@ static RFBConnectionManager*	sharedManager = nil;
     BOOL gIsJaguar = [NSString instancesRespondToSelector: @selector(decomposedStringWithCanonicalMapping)];
 
     // [[NSApp windows] count] is the best option, but it don't work pre-jaguar
-    if ((gIsJaguar && ([[NSApp windows] count] == 0)) || ((!gIsJaguar) && (![self haveAnyConnections]))) {
+    if (![self haveAnyConnections]) {
         [loginPanel makeKeyAndOrderFront:self];
     }
 }
