@@ -552,6 +552,11 @@ static RFBConnectionManager*	sharedManager = nil;
 	}
 }
 
+- (void)updateProfileList:(NSNotification*)notification
+{
+	[mServerCtrler updateView: notification];
+}
+
 - (void)serverListDidChange:(NSNotification*)notification
 {
 	[serverList reloadData];
