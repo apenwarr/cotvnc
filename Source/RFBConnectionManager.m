@@ -32,6 +32,8 @@
 #import "TrueColorFrameBuffer.h"
 #import "ServerDataManager.h"
 
+#define RENDEZVOUS_SETTINGS @"Rendezvous Setting"
+
 static RFBConnectionManager*	sharedManager = nil;
 
 @implementation RFBConnectionManager
@@ -161,6 +163,8 @@ static RFBConnectionManager*	sharedManager = nil;
 
 	[loginPanel makeFirstResponder: serverListBox];
 	[loginPanel makeKeyAndOrderFront:self];
+	
+	[self useRendezvous:[[NSUserDefaults standardUserDefaults] boolForKey:RENDEZVOUS_SETTINGS]];
 }
 
 - (void)processArguments
@@ -566,6 +570,8 @@ static RFBConnectionManager*	sharedManager = nil;
 	assert( [[ServerDataManager sharedInstance] getUseRendezvous] == useRendezvous );
 	
 	[rendezvousMenuItem setState:useRendezvous ? NSOnState : NSOffState];
+	
+	[[NSUserDefaults standardUserDefaults] setBool:useRendezvous forKey:RENDEZVOUS_SETTINGS];
 }
 
 - (void)displayGroups:(bool)display
