@@ -22,6 +22,7 @@
 #import "ServerFromPrefs.h"
 #import "KeyChain.h"
 #import "IServerData.h"
+#import "ServerDataManager.h"
 
 #define RFB_NAME          @"Name"
 #define RFB_HOST		  @"Host"
@@ -46,9 +47,7 @@
 - (id)initWithHost:(NSString*)host preferenceDictionary:(NSDictionary*)prefDict
 {
     if( self = [super init] )
-	{
-		_delegate =         nil;
-		
+	{		
 		_name =             [[NSString stringWithString:host] retain];
 		_host =             [host retain];
 		_password =         [[NSString stringWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name]] retain];
@@ -191,10 +190,7 @@
 	{
 		NSMutableString *nameHelper = [NSMutableString stringWithString:name];
 		
-		if( nil != _delegate )
-		{
-			[_delegate validateNameChange:nameHelper forServer:self];
-		}
+		[_delegate validateNameChange:nameHelper forServer:self];
 		
 		// if the password is saved, destroy the one off the old name key
 		if( YES == _rememberPassword)

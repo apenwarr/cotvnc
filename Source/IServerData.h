@@ -52,6 +52,6 @@
 
 @interface NSObject(IServerDataDelegate)
 
-- (void)ValidateNameChange:(NSString *)Name forServer:(id<IServerData>)server;
+- (void)validateNameChange:(NSString *)name forServer:(id<IServerData>)server;
 
 @end

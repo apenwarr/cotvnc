@@ -23,9 +23,6 @@
 
 #undef PINFO
 
-#warning ALL THIS CODE HERE IS CRAZY - IT BELONGS IN THE CLASSFILE
-#warning SUBCLASSES CAN DEAL WITH DIFFERENCES
-
 static inline unsigned int cvt_pixel24(unsigned char* v, FrameBuffer* this)
 {
     unsigned int pix = 0, col;

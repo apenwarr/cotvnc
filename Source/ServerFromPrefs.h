@@ -21,6 +21,7 @@
 
 #import <Foundation/Foundation.h>
 #import "IServerData.h"
+@class ServerDataManager;
 
 @interface ServerFromPrefs : NSObject <IServerData> {
 	NSString* _name;
@@ -35,7 +36,7 @@
 	
 	NSMutableDictionary* _prefDict;
 	
-	id        _delegate;
+	ServerDataManager* _delegate;
 }
 
 + (id<IServerData>)createWithName:(NSString*)name;

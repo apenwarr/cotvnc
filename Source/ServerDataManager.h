@@ -99,6 +99,6 @@
 /** 
  *	The primary goal of this function is to force servers to have unique names
  */
-- (void)ValidateNameChange:(NSMutableString *)Name forServer:(id<IServerData>)server;
+- (void)validateNameChange:(NSMutableString *)name forServer:(id<IServerData>)server;
 
 @end

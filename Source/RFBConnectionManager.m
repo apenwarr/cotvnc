@@ -35,7 +35,6 @@ static RFBConnectionManager*	sharedManager = nil;
 
 @implementation RFBConnectionManager
 
-// Jason added the +initialize method
 + (void)initialize {
     id ud = [NSUserDefaults standardUserDefaults];
 	id dict = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -48,8 +47,6 @@ static RFBConnectionManager*	sharedManager = nil;
 		[NSNumber numberWithBool: YES], @"DisplayFullscreenWarning",
 					   nil];
 	[ud registerDefaults: dict];
-	
-	selectedServer = nil;
 }
 
 - (void)awakeFromNib
