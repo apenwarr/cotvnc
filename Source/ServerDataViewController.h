@@ -58,7 +58,6 @@
 
 - (NSBox*)box;
 
-- (void)controlTextDidEndEditing:(NSNotification*)notification;
 - (void)updateView:(id)notification;
 - (void)updateProfileView:(id)notification;
 
