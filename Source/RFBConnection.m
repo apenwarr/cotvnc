@@ -173,6 +173,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 - (void)dealloc
 {
+	[self terminateConnection: nil]; // just in case it didn't already get called somehow
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 	[self cancelFrameBufferUpdateRequest];
 	[self endFullscreenScrolling];
@@ -538,11 +539,14 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 - (void)emulateButtonTimeout:(id)sender
 {
-	NSPoint p = [window mouseLocationOutsideOfEventStream];
 	[self resetButtonEmulationTimer];
-    lastComputedMask = lastButtonMask;
-	p = [rfbView convertPoint:p fromView:nil];
-	[self mouseMovedTo: p];
+	if ( window ) // possible that this could be called between NULLing window and self being dealloc'ed
+	{
+		NSPoint p = [window mouseLocationOutsideOfEventStream];
+		lastComputedMask = lastButtonMask;
+		p = [rfbView convertPoint:p fromView:nil];
+		[self mouseMovedTo: p];
+	}
 }
 
 #define _ABS(x)	(((x)<0.0)?(-(x)):(x))
@@ -692,6 +696,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 }
 
 - (void)requestFrameBufferUpdate:(id)sender {
+	if ( terminating) return;
     updateRequested = FALSE;
 	[rfbProtocol requestIncrementalFrameBufferUpdateForVisibleRect: nil];
 }
