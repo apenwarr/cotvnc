@@ -67,15 +67,17 @@ typedef	unsigned int	FBColor;
     
 }
 
-+ (BOOL)bigEndian;
+//+ (BOOL)bigEndian;
 
 - (void)setTarget:(NSImage *) targetView;
 
 - (id)initWithSize:(NSSize)aSize andFormat:(rfbPixelFormat*)theFormat;
+
++ (BOOL)bigEndian;
+- (BOOL)bigEndian;
+
 - (unsigned int)bytesPerPixel;
 - (unsigned int)tightBytesPerPixel;
-- (BOOL)bigEndian;
-- (NSColor*)nsColorFromPixel:(unsigned char*)pixValue;
 - (void)getRGB:(float*)rgb fromPixel:(unsigned char*)pixValue;
 - (NSSize)size;
 - (void)setPixelFormat:(rfbPixelFormat*)theFormat;
@@ -89,7 +91,7 @@ typedef	unsigned int	FBColor;
 - (void)fillColor:(FrameBufferColor*)fbc fromTightPixel:(unsigned char*)pixValue;
 - (void)fillRect:(NSRect)aRect tightPixel:(unsigned char*)pixValue;
 - (void)putRect:(NSRect)aRect fromTightData:(unsigned char*)data;
-- (void)getMaxValues:(int*)m;
+//- (void)getMaxValues:(int*)m;
 - (void)splitRGB:(unsigned char*)pixValue pixels:(unsigned)length into:(int*)rgb;
 - (void)combineRGB:(int*)rgb pixels:(unsigned)length into:(unsigned char*)pixValue;
 
@@ -108,7 +110,7 @@ typedef	unsigned int	FBColor;
     /* --------------------------------------------------------------------------------- */
 - (void) remapRect:(NSRect *) aRect;
 
-- (FBColor)colorFromPixel:(unsigned char*)pixValue;
+//- (FBColor)colorFromPixel:(unsigned char*)pixValue;
 
 - (NSColor *)nsColorFromReversePixel24:(unsigned char*)pixValue;
 

@@ -74,17 +74,21 @@ static void _free(void* p) {
     int max[3];
     char* dst;
     unsigned char* bytes = (unsigned char*)[data bytes];
+
+#warning Probably need to rewrite this
+    NSLog(@"Probably need to rewrite this.");
     
     [filterData setLength:numRows * rowBytes];
     dst = [filterData mutableBytes];
-    [frameBuffer getMaxValues:max];
+    //[frameBuffer getMaxValues:max];
+    max[0] = max[1] = max[2] = 255;  // This line is bogus
     
     for(y=0; y<numRows; y++) {
 
         [frameBuffer splitRGB:bytes pixels:rowSize into:src];
         bytes += rowBytes;
-           
-		// col = (src + prevRow) & max
+
+        // col = (src + prevRow) & max
         // thisRow = col
         // dst = col
 

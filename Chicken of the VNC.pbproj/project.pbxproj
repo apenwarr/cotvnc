@@ -66,8 +66,6 @@
 		};
 		03F89AEC0411487E26A80BC8 = {
 			children = (
-				03F89B8C04114BF926A80BC8,
-				03F89B8D04114BF926A80BC8,
 				F5DC71B4033DB4A801A8010C,
 				F5DC71B5033DB4A801A8010C,
 				F5DC71F5033DB4A801A8010C,
@@ -88,28 +86,6 @@
 			name = "C Files";
 			path = "";
 			refType = 4;
-		};
-		03F89B8C04114BF926A80BC8 = {
-			isa = PBXFileReference;
-			path = "FrameBuffer+Drawing.h";
-			refType = 4;
-		};
-		03F89B8D04114BF926A80BC8 = {
-			isa = PBXFileReference;
-			path = "FrameBuffer+Drawing.m";
-			refType = 4;
-		};
-		03F89B8E04114BF926A80BC8 = {
-			fileRef = 03F89B8C04114BF926A80BC8;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		03F89B8F04114BF926A80BC8 = {
-			fileRef = 03F89B8D04114BF926A80BC8;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 //030
 //031
@@ -342,7 +318,6 @@
 				F536C26C03937E5301178D82,
 				F5F2D5A803B3C93B01150DB1,
 				E2F48D76040EDD2200BD55BA,
-				03F89B8E04114BF926A80BC8,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,7 +384,6 @@
 				F536C26D03937E5301178D82,
 				F5F2D5A903B3C93B01150DB1,
 				E2F48D77040EDD2200BD55BA,
-				03F89B8F04114BF926A80BC8,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
