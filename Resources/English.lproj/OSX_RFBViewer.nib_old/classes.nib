@@ -1,0 +1,90 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                makeConnectionFullscreen = id; 
+                makeConnectionWindowed = id; 
+                manuallyUpdateFrameBuffer = id; 
+                openNewTitlePanel = id; 
+                openOptions = id; 
+                pasteViaKeypress = id; 
+                sendCtrlAltDel = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = Profile; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                addProfile = id; 
+                changeEncodingState = id; 
+                deleteProfile = id; 
+                profileChanged = id; 
+                profileSelected = id; 
+                reorderEncodings = id; 
+            }; 
+            CLASS = ProfileManager; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                altKey = id; 
+                commandKey = id; 
+                controlKey = id; 
+                deleteProfileButton = id; 
+                enableCopyRect = id; 
+                encodingTableView = id; 
+                m3bTimeout = id; 
+                mkbTimeout = id; 
+                mkdTimeout = id; 
+                newProfileButton = id; 
+                pixelFormatMatrix = id; 
+                profileBrowser = id; 
+                profileField = id; 
+                profilePanel = id; 
+                shiftKey = id; 
+                upDownButtonMatrix = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                addServer = id; 
+                connect = id; 
+                deleteSelectedServer = id; 
+                displayChanged = id; 
+                frontInverseCPUSliderChanged = id; 
+                hostChanged = id; 
+                otherInverseCPUSliderChanged = id; 
+                passwordChanged = id; 
+                preferencesChanged = id; 
+                profileSelectionChanged = id; 
+                rememberPwdChanged = id; 
+                sharedChanged = id; 
+            }; 
+            CLASS = RFBConnectionManager; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                autoscrollIncrement = NSSlider; 
+                colorModelMatrix = NSMatrix; 
+                display = NSTextField; 
+                displayFullscreenWarning = NSButton; 
+                frontInverseCPUSlider = NSSlider; 
+                fullscreenScrollbars = NSButton; 
+                gamma = NSTextField; 
+                hostName = NSTextField; 
+                loginPanel = NSPanel; 
+                otherInverseCPUSlider = NSSlider; 
+                passWord = NSSecureTextField; 
+                profileManager = ProfileManager; 
+                profilePopup = NSPopUpButton; 
+                psMaxRects = NSTextField; 
+                psThreshold = NSTextField; 
+                rememberPwd = NSButton; 
+                serverList = NSTableView; 
+                shared = NSButton; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
