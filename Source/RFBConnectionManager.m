@@ -56,6 +56,7 @@ static RFBConnectionManager*	sharedManager = nil;
     NSString* s;
     id ud = [NSUserDefaults standardUserDefaults];
     float updateDelay;
+	mDisplayGroups = false;
 	
 	mServerCtrler = [[ServerDataViewController alloc] init];
 	[mServerCtrler setConnectionDelegate:self];
@@ -268,39 +269,23 @@ static RFBConnectionManager*	sharedManager = nil;
 - (id<IServerData>)selectedServer
 {
 	return [[ServerDataManager sharedInstance] getServerAtIndex:[serverList selectedRow]];
+	
+	/*NSTextFieldCell* textField = [serverList  selectedCell];
+	if( nil != textField )
+	{
+		NSString* serverName = [textField stringValue];
+		return [[ServerDataManager sharedInstance] getServerWithName:serverName];
+	}*/
+	
+	return nil;
 }
 
 - (void)selectedHostChanged
 {	
 	NSParameterAssert( mServerCtrler != nil );
-	
-	// jason - I don't understand the action with the notifications.  It seems a notification named by 
-	// the mSelectedServer object is never posted anywhere.  Explain?
-	//
-	// Since the notification is the only reason to retain the selected server, I'm going to comment 
-	// out the original implementation and replace with one that doesn't use the notifications until 
-	// I understand what's up.
 
 	id<IServerData> selectedServer = [self selectedServer];
 	[mServerCtrler setServer:selectedServer];
-
-/*
-	if( nil != mSelectedServer )
-	{
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverListDidChange:) name:(id)mSelectedServer object:nil];
-		[(id)mSelectedServer release];
-	}
-
-	mSelectedServer = [self selectedServer];
-	
-	if( nil != mSelectedServer )
-	{
-		[(id)mSelectedServer retain];
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:(id)mSelectedServer object:nil];
-		
-		[mServerCtrler setServer:mSelectedServer];
-	}
-*/
 }
 
 - (NSString*)translateDisplayName:(NSString*)aName forHost:(NSString*)aHost
@@ -501,7 +486,15 @@ static RFBConnectionManager*	sharedManager = nil;
 {
 	if( serverList == aTableView )
 	{
-		return [[ServerDataManager sharedInstance] serverCount];
+		if( mDisplayGroups )
+		{
+			NSString* groupName = [(NSTextFieldCell*)[groupList selectedCell] stringValue];
+			[[[[ServerDataManager sharedInstance] getServerEnumeratorForGroupName:groupName] allObjects] count];
+		}
+		else
+		{
+			return [[ServerDataManager sharedInstance] serverCount];
+		}
 	}
 	else if( groupList == aTableView )
 	{
@@ -530,7 +523,9 @@ static RFBConnectionManager*	sharedManager = nil;
 {
 	if( serverList == aTableView )
 	{
-		return YES;
+		id<IServerData> server = [[ServerDataManager sharedInstance] getServerAtIndex:row];
+		
+		return [server doYouSupport:EDIT_NAME];
 	}
 	else if( groupList == aTableView )
 	{
@@ -552,7 +547,15 @@ static RFBConnectionManager*	sharedManager = nil;
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
-	[self selectedHostChanged];
+	NSTableView *view = [aNotification object];
+	if( serverList == view )
+	{
+		[self selectedHostChanged];
+	}
+	else if( groupList == view )
+	{
+		[serverList reloadData];
+	}
 }
 
 - (void)serverListDidChange:(NSNotification*)notification
@@ -563,11 +566,16 @@ static RFBConnectionManager*	sharedManager = nil;
 
 - (IBAction)changeRendezvousUse:(id)sender
 {
-	mUseRendezvous = !mUseRendezvous;
+	[self useRendezvous:![[ServerDataManager sharedInstance] getUseRendezvous]];
+}
+
+- (void)useRendezvous:(bool)useRendezvous
+{
+	[[ServerDataManager sharedInstance] useRendezvous: useRendezvous];
 	
-	[self displayGroups:mUseRendezvous];
+	assert( [[ServerDataManager sharedInstance] getUseRendezvous] == useRendezvous );
 	
-	[rendezvousMenuItem setState:mUseRendezvous ? NSOnState : NSOffState];
+	[rendezvousMenuItem setState:useRendezvous ? NSOnState : NSOffState];
 }
 
 - (void)displayGroups:(bool)display

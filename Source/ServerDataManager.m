@@ -21,6 +21,7 @@
 
 #import "ServerDataManager.h"
 #import "ServerFromPrefs.h"
+#import "ServerFromRendezvous.h"
 #import <AppKit/AppKit.h>
 
 #define RFB_PREFS_LOCATION  @"Library/Preferences/cotvnc.prefs"
@@ -49,9 +50,16 @@ static ServerDataManager* gInstance = nil;
 		mServers = [[NSMutableDictionary alloc] init];
 		mGroups  = [[NSMutableDictionary alloc] init];
 		
-		[mGroups setObject:[NSMutableArray array] forKey:@"All"];
-		[mGroups setObject:[NSMutableArray array] forKey:@"Rendezvous"];
-		[mGroups setObject:[NSMutableArray array] forKey:@"Standard"];
+		[mGroups setObject:mServers forKey:@"All"];
+		[mGroups setObject:[NSMutableDictionary dictionaryWithCapacity:1] forKey:@"Standard"];
+		[mGroups setObject:[NSMutableDictionary dictionaryWithCapacity:1] forKey:@"Rendezvous"];
+		
+		assert( nil != [mGroups objectForKey:@"All"] );
+		assert( mServers == [mGroups objectForKey:@"All"] );
+		assert( nil != [mGroups objectForKey:@"Standard"] );
+		assert( nil != [mGroups objectForKey:@"Rendezvous"] );
+		
+		mServiceBrowser = nil;
 	}
 	
 	return self;
@@ -88,6 +96,11 @@ static ServerDataManager* gInstance = nil;
 		
     [mServers release];
 	[mGroups release];
+	if( nil != mServiceBrowser )
+	{
+		[mServiceBrowser release];
+	}
+	
     [super dealloc];
 }
 
@@ -133,7 +146,7 @@ static ServerDataManager* gInstance = nil;
     NSParameterAssert( [coder allowsKeyedCoding] );
 
 	[coder encodeObject:mServers forKey:RFB_SERVER_LIST];
-	[coder encodeObject:mGroups forKey:RFB_GROUP_LIST];
+	//[coder encodeObject:mGroups forKey:RFB_GROUP_LIST];
     
 	return;
 }
@@ -149,8 +162,8 @@ static ServerDataManager* gInstance = nil;
 		[mServers release];
 		mServers = [[coder decodeObjectForKey:RFB_SERVER_LIST] retain];
 		
-		[mGroups release];
-		mGroups = [[coder decodeObjectForKey:RFB_GROUP_LIST] retain];
+		//[mGroups release];
+		//mGroups = [[coder decodeObjectForKey:RFB_GROUP_LIST] retain];
 		
 		id<IServerData> server;
 		NSEnumerator* objEnumerator = [mServers objectEnumerator];
@@ -189,6 +202,20 @@ static ServerDataManager* gInstance = nil;
 	return [mGroups keyEnumerator];
 }
 
+- (NSEnumerator*) getServerEnumeratorForGroupName:(NSString*)group;
+{
+	if( [group compare:@"Standard"] )
+	{
+		return [mServers objectEnumerator];
+	}
+	else if( [group compare:@"Rendezvous"] )
+	{
+		return nil;
+	}
+	
+	return nil;
+}
+
 - (id<IServerData>)getServerWithName:(NSString*)name
 {
 	return [mServers objectForKey:name];
@@ -205,8 +232,13 @@ static ServerDataManager* gInstance = nil;
 }
 
 - (void)removeServer:(id<IServerData>)server
-{
-	[mServers removeObjectForKey:[server name]];
+{	
+	NSString* name;
+	NSEnumerator* groupKeys = [mGroups keyEnumerator];
+	while( name = [groupKeys nextObject] )
+	{
+		[[mGroups objectForKey:name] removeObjectForKey:[server name]];
+	}
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:ServerListChangeMsg
 														object:self];
@@ -236,6 +268,7 @@ static ServerDataManager* gInstance = nil;
 	
 	ServerFromPrefs* newServer = [ServerFromPrefs createWithName:nameHelper];
 	[mServers setObject:newServer forKey:[newServer name]];
+	[[mGroups objectForKey:@"Standard"] setObject:newServer forKey:[newServer name]];
 	
 	assert( nil != [mServers objectForKey:nameHelper] );
 	assert( newServer == [mServers objectForKey:nameHelper] );
@@ -263,4 +296,106 @@ static ServerDataManager* gInstance = nil;
 		[(NSObject *)server release];
 	}
 }
+
+- (void)useRendezvous:(bool)use
+{
+	if( use != mUsingRendezvous )
+	{
+		mUsingRendezvous = use;
+		
+		if( mUsingRendezvous )
+		{
+			assert( nil == mServiceBrowser );
+			
+			mServiceBrowser = [[NSNetServiceBrowser alloc] init];
+			[mServiceBrowser setDelegate:self];
+			[mServiceBrowser searchForServicesOfType:@"_vnc._tcp" inDomain:@""];
+		}
+		else
+		{
+			[mServiceBrowser release];
+			mServiceBrowser = nil;
+			
+			NSMutableDictionary *rendezvousDict = [mGroups objectForKey:@"Rendezvous"];
+			NSEnumerator *rendEnum = [rendezvousDict keyEnumerator];
+			NSString* host;
+			while( host = [rendEnum nextObject] )
+			{
+				[mServers removeObjectForKey:host];
+			}
+			
+			[rendezvousDict removeAllObjects];
+			
+			[[NSNotificationCenter defaultCenter] postNotificationName:ServerListChangeMsg
+																object:self];
+		}
+	}
+}
+
+- (bool)getUseRendezvous
+{
+	return mUsingRendezvous;
+}
+
+// Sent when browsing begins
+- (void)netServiceBrowserWillSearch:(NSNetServiceBrowser *)browser
+{
+    mSearching = YES;	
+    //[self updateUI];
+}
+
+// Sent when browsing stops
+- (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)browser
+{
+    mSearching = NO;
+    //[self updateUI];	
+}
+
+// Sent if browsing fails
+- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
+			 didNotSearch:(NSDictionary *)errorDict
+{
+    mSearching = NO;
+    //[self handleError:[errorDict objectForKey:NSNetServicesErrorCode]];	
+}
+
+// Sent when a service appears
+- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
+		   didFindService:(NSNetService *)aNetService
+			   moreComing:(BOOL)moreComing
+{
+	ServerFromRendezvous* newServer = [ServerFromRendezvous createWithNetService:aNetService];
+	[mServers setObject:newServer forKey:[newServer name]];
+	[[mGroups objectForKey:@"Rendezvous"] setObject:newServer forKey:[newServer name]];
+	
+	assert( nil != [mServers objectForKey:[newServer name]] );
+	assert( nil != [mGroups objectForKey:@"Rendezvous"] );
+	assert( nil != [[mGroups objectForKey:@"Rendezvous"] objectForKey:[newServer name]] );
+	assert( newServer == [mServers objectForKey:[newServer name]] );
+	assert( newServer == [[mGroups objectForKey:@"Rendezvous"] objectForKey:[newServer name]] );
+	
+	[newServer setDelegate:self];
+	
+    if(!moreComing)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:ServerListChangeMsg
+															object:self];
+	}
+}
+
+// Sent when a service disappears
+- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
+		 didRemoveService:(NSNetService *)aNetService
+			   moreComing:(BOOL)moreComing
+{
+	[[mGroups objectForKey:@"Rendezvous"] removeObjectForKey:[aNetService name]];
+    [mServers removeObjectForKey:[aNetService name]];
+    
+    if(!moreComing)
+    {		
+        [[NSNotificationCenter defaultCenter] postNotificationName:ServerListChangeMsg
+															object:self];
+    }	
+}
+
 @end

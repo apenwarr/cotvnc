@@ -35,8 +35,14 @@
  *  function. Do not create an instance yourself.
  */
 @interface ServerDataManager : NSObject <NSCoding,IServerDataDelegate> {
+	
 	NSMutableDictionary* mServers;
 	NSMutableDictionary* mGroups;
+	
+	// Keeps track of search status
+	NSNetServiceBrowser *mServiceBrowser;
+	BOOL mSearching;
+	bool mUsingRendezvous;
 }
 
 #define ServerListChangeMsg @"ServerListChangeMsg"
@@ -51,6 +57,16 @@
  *  Saves the current server settings.
  */
 - (void)save;
+
+/**
+ *  Sets whether or not rendezvous server searching should be on
+ */
+- (void)useRendezvous:(bool)use;
+
+/**
+ * @return Whether or not rendezvous server searching is on
+ */
+- (bool)getUseRendezvous;
 
 /*
  *  Provides the number of servers managed by ServerDataManager.
@@ -75,6 +91,12 @@
  *  @return The enumerator that can be used to enumerate through all group names. 
  */
 - (NSEnumerator*) getGroupNameEnumerator;
+
+/*
+ *  Allows access to all the servers in a particular group.
+ *  @return The enumerator that can be used to enumerate through all servers in a group. 
+ */
+- (NSEnumerator*) getServerEnumeratorForGroupName:(NSString*)group;
 
 /*
  *  Retrieves a server by its name. The retrieval process is case sensative.
@@ -119,5 +141,17 @@
  *	The primary goal of this function is to force servers to have unique names
  */
 - (void)validateNameChange:(NSMutableString *)name forServer:(id<IServerData>)server;
+
+// NSNetServiceBrowser delegate methods for service browsing
+- (void)netServiceBrowserWillSearch:(NSNetServiceBrowser *)browser;
+- (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)browser;
+- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
+			 didNotSearch:(NSDictionary *)errorDict;
+- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
+		   didFindService:(NSNetService *)aNetService
+			   moreComing:(BOOL)moreComing;
+- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
+		 didRemoveService:(NSNetService *)aNetService
+			   moreComing:(BOOL)moreComing;
 
 @end
