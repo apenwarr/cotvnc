@@ -148,8 +148,6 @@ static ServerDataManager* gInstance = nil;
 
 	[coder encodeObject:mServers forKey:RFB_SERVER_LIST];
 	//[coder encodeObject:mGroups forKey:RFB_GROUP_LIST];
-    
-	return;
 }
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -165,6 +163,33 @@ static ServerDataManager* gInstance = nil;
 		
 		//[mGroups release];
 		//mGroups = [[coder decodeObjectForKey:RFB_GROUP_LIST] retain];
+		
+		// This next bit will fix issues where the key and the name
+		// didn't always match due to a bug in the name change code.
+		// Eventually this should be deleted since the bug was never
+		// in a public release.
+		BOOL bContinueOuter = YES;
+		NSString* key;
+		do
+		{
+			BOOL bContinueInner = YES;
+			NSEnumerator* keyEnumerator = [mServers keyEnumerator];
+			while( (key = [keyEnumerator nextObject]) && bContinueInner )
+			{
+				id<IServerData> server = [mServers objectForKey:key];
+				if(  NSOrderedSame != [[server name] compare: key] )
+				{
+					[mServers removeObjectForKey:key];
+					[mServers setObject:server forKey:[server name]];
+					bContinueInner = NO;
+				}
+			}
+			
+			if( nil == key )
+			{
+				bContinueOuter = NO;
+			}
+		}while( bContinueOuter );
 		
 		id<IServerData> server;
 		NSEnumerator* objEnumerator = [mServers objectEnumerator];
@@ -241,7 +266,9 @@ static ServerDataManager* gInstance = nil;
 		[[mGroups objectForKey:name] removeObjectForKey:[server name]];
 	}
 	
+	assert( nil != [mServers objectForKey:[server name]] );
 	[mServers removeObjectForKey:[server name]];
+	assert( nil == [mServers objectForKey:[server name]] );
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:ServerListChangeMsg
 														object:self];
@@ -286,28 +313,54 @@ static ServerDataManager* gInstance = nil;
 
 - (void)validateNameChange:(NSMutableString *)name forServer:(id<IServerData>)server;
 {
+	[(NSObject *)server retain];
+
+	NSMutableArray *groupsWithServer = [[[NSMutableArray alloc] init] autorelease];
+
+	// Remove original server/key pair
+	//
+	// It is possible that the server hasn't been inserted yet, and
+	// we are validating a name for a server that will be inserted.
+	// If that is the case, the server we find searching on [server name]
+	// will not be the same as the server.  In this case, we won't remove
+	// the server from the list (because it isn't in the list yet). However,
+	// if they are the same, then we are validating a name change and
+	// the server needs to be removed before being added.
+	if( server == [mServers objectForKey:[server name]] )
+	{
+		NSString* groupName;
+		NSEnumerator* groupKeys = [mGroups keyEnumerator];
+		while( groupName = [groupKeys nextObject] )
+		{
+			NSMutableDictionary *group = [mGroups objectForKey:groupName];
+			if( nil != [group objectForKey:[server name]] )
+			{
+				[group removeObjectForKey:[server name]];
+				[groupsWithServer addObject:groupName];
+			}
+		}
+
+		[mServers removeObjectForKey:[server name]];
+	}
+
+	// Check to see if new name is valid and update if it isn't
 	if( nil != [mServers objectForKey:name] )
 	{
 		NSParameterAssert( server != [mServers objectForKey:name] );
 		
-		[(NSObject *)server retain];
-		
-		// It is possible that the server hasn't been inserted yet, and
-		// we are validating a name for a server that will be inserted.
-		// If that is the case, the server we find searching on [server name]
-		// will not be the same as the server.  In this case, we won't remove
-		// the server from the list (because it isn't in the list yet). However,
-		// if they are the same, then we are validating a name change and
-		// the server needs to be removed before being added.
-		if( server == [mServers objectForKey:[server name]] )
-		{
-			[mServers removeObjectForKey:[server name]];
-		}
 		[self makeNameUnique:name];
-		[mServers setObject:server forKey:name];
-		
-		[(NSObject *)server release];
 	}
+	
+	// Insert updated server/key pair
+	NSString* groupName;
+	NSEnumerator* groupNames = [groupsWithServer objectEnumerator];
+	while( groupName = [groupNames nextObject] )
+	{
+		[[mGroups objectForKey:groupName] setObject:server forKey:name];
+	}
+	[mServers setObject:server forKey:name];
+		
+	[(NSObject *)server release];
 }
 
 - (void)useRendezvous:(bool)use
