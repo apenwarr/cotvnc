@@ -38,6 +38,7 @@
 	
 	NSMutableDictionary* mServers;
 	NSMutableDictionary* mGroups;
+	NSMutableDictionary* mRendezvousNameToServer;
 	
 	// Keeps track of search status
 	NSNetServiceBrowser *mServiceBrowser;

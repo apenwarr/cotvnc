@@ -42,6 +42,10 @@
 		service_ = service;
 		[service_ setDelegate:self];
 		[service_ resolve];
+		
+		// Set the initial name. If will have to be validated with the
+		// delegate if one is set
+		[super setName:[service_ name]];
 	}
 	
 	return self;
@@ -69,11 +73,6 @@
 	}
 	
 	return NO;
-}
-
-- (NSString*)name
-{
-	return [service_ name];
 }
 
 - (NSString*)host
@@ -133,6 +132,19 @@
 - (void)setDisplay: (int)display
 {
 	assert(0);
+}
+
+- (void)setDelegate: (id<IServerDataDelegate>)delegate;
+{
+	[super setDelegate:delegate];
+	
+	// Now that we have a delegate, make sure the name is to the delegates liking
+	
+	NSMutableString *nameHelper = [NSMutableString stringWithString:[service_ name]];
+	
+	[_delegate validateNameChange:nameHelper forServer:self];
+	
+	[super setName:nameHelper];
 }
 
 - (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict

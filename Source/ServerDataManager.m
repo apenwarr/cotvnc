@@ -47,8 +47,9 @@ static ServerDataManager* gInstance = nil;
 												 selector:@selector(applicationWillTerminate:)
 													 name:NSApplicationWillTerminateNotification object:NSApp];
 		
-		mServers = [[NSMutableDictionary alloc] init];
-		mGroups  = [[NSMutableDictionary alloc] init];
+		mServers                 = [[NSMutableDictionary alloc] init];
+		mGroups                  = [[NSMutableDictionary alloc] init];
+		mRendezvousNameToServer  = [[NSMutableDictionary alloc] init];
 		
 		[mGroups setObject:mServers forKey:@"All"];
 		[mGroups setObject:[NSMutableDictionary dictionaryWithCapacity:1] forKey:@"Standard"];
@@ -270,8 +271,8 @@ static ServerDataManager* gInstance = nil;
 	[mServers setObject:newServer forKey:[newServer name]];
 	[[mGroups objectForKey:@"Standard"] setObject:newServer forKey:[newServer name]];
 	
-	assert( nil != [mServers objectForKey:nameHelper] );
-	assert( newServer == [mServers objectForKey:nameHelper] );
+	NSParameterAssert( nil != [mServers objectForKey:nameHelper] );
+	NSParameterAssert( newServer == [mServers objectForKey:nameHelper] );
 	
 	[newServer setDelegate:self];
 	
@@ -283,13 +284,23 @@ static ServerDataManager* gInstance = nil;
 
 - (void)validateNameChange:(NSMutableString *)name forServer:(id<IServerData>)server;
 {
-	if( nil != [mServers objectForKey:[server name]] )
+	if( nil != [mServers objectForKey:name] )
 	{
-		NSParameterAssert( server == [mServers objectForKey:[server name]] );
+		NSParameterAssert( server != [mServers objectForKey:name] );
 		
 		[(NSObject *)server retain];
 		
-		[mServers removeObjectForKey:[server name]];
+		// It is possible that the server hasn't been inserted yet, and
+		// we are validating a name for a server that will be inserted.
+		// If that is the case, the server we find searching on [server name]
+		// will not be the same as the server.  In this case, we won't remove
+		// the server from the list (because it isn't in the list yet). However,
+		// if they are the same, then we are validating a name change and
+		// the server needs to be removed before being added.
+		if( server == [mServers objectForKey:[server name]] )
+		{
+			[mServers removeObjectForKey:[server name]];
+		}
 		[self makeNameUnique:name];
 		[mServers setObject:server forKey:name];
 		
@@ -305,7 +316,7 @@ static ServerDataManager* gInstance = nil;
 		
 		if( mUsingRendezvous )
 		{
-			assert( nil == mServiceBrowser );
+			NSParameterAssert( nil == mServiceBrowser );
 			
 			mServiceBrowser = [[NSNetServiceBrowser alloc] init];
 			[mServiceBrowser setDelegate:self];
@@ -325,6 +336,7 @@ static ServerDataManager* gInstance = nil;
 			}
 			
 			[rendezvousDict removeAllObjects];
+			[mRendezvousNameToServer removeAllObjects];
 			
 			[[NSNotificationCenter defaultCenter] postNotificationName:ServerListChangeMsg
 																object:self];
@@ -365,16 +377,23 @@ static ServerDataManager* gInstance = nil;
 			   moreComing:(BOOL)moreComing
 {
 	ServerFromRendezvous* newServer = [ServerFromRendezvous createWithNetService:aNetService];
+	
+	// store a quick lookup list that connects the rendezvous name to the server class
+	// because the server name will not necessarily match that of the service published
+	[mRendezvousNameToServer setObject:newServer forKey:[aNetService name]];
+	
+	// Set delegate before adding to the server lists so that the server has a chance
+	// to appropriately validate the name as defined by the service
+	[newServer setDelegate:self];
+	
 	[mServers setObject:newServer forKey:[newServer name]];
 	[[mGroups objectForKey:@"Rendezvous"] setObject:newServer forKey:[newServer name]];
 	
-	assert( nil != [mServers objectForKey:[newServer name]] );
-	assert( nil != [mGroups objectForKey:@"Rendezvous"] );
-	assert( nil != [[mGroups objectForKey:@"Rendezvous"] objectForKey:[newServer name]] );
-	assert( newServer == [mServers objectForKey:[newServer name]] );
-	assert( newServer == [[mGroups objectForKey:@"Rendezvous"] objectForKey:[newServer name]] );
-	
-	[newServer setDelegate:self];
+	NSParameterAssert( nil != [mServers objectForKey:[newServer name]] );
+	NSParameterAssert( nil != [mGroups objectForKey:@"Rendezvous"] );
+	NSParameterAssert( nil != [[mGroups objectForKey:@"Rendezvous"] objectForKey:[newServer name]] );
+	NSParameterAssert( newServer == [mServers objectForKey:[newServer name]] );
+	NSParameterAssert( newServer == [[mGroups objectForKey:@"Rendezvous"] objectForKey:[newServer name]] );
 	
     if(!moreComing)
     {
@@ -388,8 +407,16 @@ static ServerDataManager* gInstance = nil;
 		 didRemoveService:(NSNetService *)aNetService
 			   moreComing:(BOOL)moreComing
 {
-	[[mGroups objectForKey:@"Rendezvous"] removeObjectForKey:[aNetService name]];
-    [mServers removeObjectForKey:[aNetService name]];
+	ServerFromRendezvous* serverToRemove = [mRendezvousNameToServer objectForKey:[aNetService name]];
+	
+	NSParameterAssert( nil != serverToRemove );
+	
+	[serverToRemove retain];
+	
+	[[mGroups objectForKey:@"Rendezvous"] removeObjectForKey:[serverToRemove name]];
+    [mServers removeObjectForKey:[serverToRemove name]];
+	
+	[serverToRemove release];
     
     if(!moreComing)
     {		

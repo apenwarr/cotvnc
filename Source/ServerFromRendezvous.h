@@ -36,7 +36,6 @@
 
 - (bool)doYouSupport: (SUPPORT_TYPE)type;
 
-- (NSString*)name;
 - (NSString*)host;
 - (bool)rememberPassword;
 - (int)display;
@@ -45,6 +44,8 @@
 - (void)setHost: (NSString*)host;
 - (void)setRememberPassword: (bool)rememberPassword;
 - (void)setDisplay: (int)display;
+
+- (void)setDelegate: (id<IServerDataDelegate>)delegate;
 
 - (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict;
 - (void)netServiceDidResolveAddress:(NSNetService *)sender;

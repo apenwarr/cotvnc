@@ -123,7 +123,7 @@
 
 - (void)hostChanged:(id)sender
 {
-	if( nil != mServer )
+	if( nil != mServer && [mServer doYouSupport:EDIT_ADDRESS] )
 	{
 		[mServer setHost:[sender stringValue]];
 	}
@@ -147,7 +147,7 @@
 
 - (IBAction)displayChanged:(id)sender
 {
-	if( nil != mServer )
+	if( nil != mServer && [mServer doYouSupport:EDIT_PORT] )
 	{
 		[mServer setDisplay:[sender intValue]];
 	}
