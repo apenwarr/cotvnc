@@ -136,7 +136,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				OPTIMIZATION_CFLAGS = "-O0";
 				ZERO_LINK = NO;
-				_CHICKEN_VERSION_ = 1.4;
+				_CHICKEN_VERSION_ = 2.0b1;
 			};
 			isa = PBXBuildStyle;
 			name = Development;
@@ -150,7 +150,7 @@
 				OPTIMIZATION_CFLAGS = "-O3";
 				REMOVE_CVS_FROM_RESOURCES = YES;
 				ZERO_LINK = NO;
-				_CHICKEN_VERSION_ = "";
+				_CHICKEN_VERSION_ = 2.0b1;
 			};
 			isa = PBXBuildStyle;
 			name = Deployment;
@@ -1584,6 +1584,13 @@
 			shellPath = /bin/sh;
 			shellScript = "strip -urx \"$TARGET_BUILD_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION/Contents/MacOS/$PRODUCT_NAME\"";
 		};
+		E24E517806D351FE00FA69F7 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.rtfd;
+			path = "About Chicken of the VNC.rtfd";
+			refType = 4;
+			sourceTree = "<group>";
+		};
 		E2F48D74040EDD2200BD55BA = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -1618,13 +1625,6 @@
 //F52
 //F53
 //F54
-		F52128E30368AF9F01F702E0 = {
-			isa = PBXFileReference;
-			lastKnownFileType = text.rtf;
-			path = "About Chicken of the VNC.rtf";
-			refType = 4;
-			sourceTree = "<group>";
-		};
 		F52128E40368AF9F01F702E0 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -1802,7 +1802,7 @@
 		};
 		F5DC718B033DB45F01A8010C = {
 			children = (
-				F52128E30368AF9F01F702E0,
+				E24E517806D351FE00FA69F7,
 				E228FA2704439B7D00F873F6,
 				F52128E40368AF9F01F702E0,
 				F5DC7191033DB45F01A8010C,

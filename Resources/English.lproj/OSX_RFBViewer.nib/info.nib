@@ -27,11 +27,6 @@
 		<integer>1191</integer>
 		<integer>1208</integer>
 	</array>
-	<key>IBOpenObjects</key>
-	<array>
-		<integer>232</integer>
-		<integer>21</integer>
-	</array>
 	<key>IBSystem Version</key>
 	<string>7M34</string>
 </dict>
