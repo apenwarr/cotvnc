@@ -20,8 +20,6 @@
 
 #import "TrueColorFrameBuffer.h"
 
-//typedef	unsigned int			FBColor;
-
 @implementation TrueColorFrameBuffer
 
 - (id)initWithSize:(NSSize)aSize andFormat:(rfbPixelFormat*)theFormat

@@ -312,7 +312,8 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     frameBufferClass = [manager selectedFrameBufferClass];
     [frameBuffer autorelease];
     frameBuffer = [[frameBufferClass alloc] initWithSize:aSize andFormat:pixf];
-
+    [frameBuffer setBitsPerPixel:pixf->bitsPerPixel];
+    
     [rfbView setFrameBuffer:frameBuffer];
     [rfbView setDelegate:self];
 

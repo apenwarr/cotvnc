@@ -300,7 +300,7 @@ static RFBConnectionManager*	sharedManager = nil;
         case 2: return [HighColorFrameBuffer class];
         case 3: return [TrueColorFrameBuffer class];
         */
-        default: return [TrueColorFrameBuffer class];
+        default: return [FrameBuffer class];
     }
 }
 

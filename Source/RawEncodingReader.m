@@ -50,7 +50,10 @@
 
 - (void)setPixels:(NSData*)pixel
 {
-    [frameBuffer putRect:frame fromReversedData:(unsigned char*)[pixel bytes]];
+    unsigned char *imageData = [pixel bytes];
+#warning I do not know why I have to increment this.  I suspect a problem with the reader...
+    imageData++;
+    [frameBuffer putRect:frame fromData:imageData];
     [target performSelector:action withObject:self];
 }
 
