@@ -26,6 +26,7 @@
 #define RFB_PREFS_LOCATION  @"Library/Preferences/cotvnc.prefs"
 #define RFB_HOST_INFO		@"HostPreferences"
 #define RFB_SERVER_LIST     @"ServerList"
+#define RFB_SAVED_SERVERS   @"SavedServers"
 
 @implementation ServerDataManager
 
@@ -84,25 +85,34 @@ static ServerDataManager* instance = nil;
 
 - (void)save
 {
-	NSString *storePath = [NSHomeDirectory() stringByAppendingPathComponent:RFB_PREFS_LOCATION];
-	
-	[NSKeyedArchiver archiveRootObject:instance toFile:storePath];	
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject: instance];
+	[[NSUserDefaults standardUserDefaults] setObject: data forKey: RFB_SAVED_SERVERS];
 }
 
 + (ServerDataManager*) sharedInstance
 {
 	if( nil == instance )
 	{
-		NSString *storePath = [NSHomeDirectory() stringByAppendingPathComponent:RFB_PREFS_LOCATION];
+		NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:RFB_SAVED_SERVERS];
+		instance = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 		
-		instance = [NSKeyedUnarchiver unarchiveObjectWithFile:storePath];
 		if( nil == instance )
 		{
-			// Didn't find any preferences under the new serialization system,
-			// load based on the old system
-			instance = [[ServerDataManager alloc] initWithOriginalPrefs];
+			NSString *storePath = [NSHomeDirectory() stringByAppendingPathComponent:RFB_PREFS_LOCATION];
 			
-			[instance save];
+			instance = [NSKeyedUnarchiver unarchiveObjectWithFile:storePath];
+			if( nil == instance )
+			{
+				// Didn't find any preferences under the new serialization system,
+				// load based on the old system
+				instance = [[ServerDataManager alloc] initWithOriginalPrefs];
+				
+				[instance save];
+			}
+			else
+			{
+				[instance retain];
+			}
 		}
 		else
 		{
