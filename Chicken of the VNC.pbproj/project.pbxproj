@@ -226,6 +226,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "Chicken of the VNC";
 				SECTORDER_FLAGS = "";
+				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
 				WRAPPER_EXTENSION = app;
 				_CHICKEN_VERSION_ = "$(_CHICKEN_VERSION_)";
@@ -299,6 +300,7 @@
 				E21FE452062B79AB0059585C,
 				E21FE454062B79AB0059585C,
 				7FFA8FEB062BA6330008D381,
+				7FB6A8D1068AB5E3005E5E49,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -756,6 +758,7 @@
 				E21FE451062B79AB0059585C,
 				E21FE453062B79AB0059585C,
 				7FFA8FEC062BA6330008D381,
+				7FB6A8D2068AB5E7005E5E49,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1072,6 +1075,18 @@
 		};
 		7F7A945B05E71B5C00E20416 = {
 			fileRef = E2F48D78040EDD5100BD55BA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7FB6A8D1068AB5E3005E5E49 = {
+			fileRef = 7FC6DF6D05C31B0D0028A970;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7FB6A8D2068AB5E7005E5E49 = {
+			fileRef = 7FC6DF6E05C31B0D0028A970;
 			isa = PBXBuildFile;
 			settings = {
 			};
