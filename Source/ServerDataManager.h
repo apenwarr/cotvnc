@@ -35,8 +35,8 @@
  *  function. Do not create an instance yourself.
  */
 @interface ServerDataManager : NSObject <NSCoding,IServerDataDelegate> {
-	NSMutableDictionary* servers;
-	NSMutableDictionary* groups;
+	NSMutableDictionary* mServers;
+	NSMutableDictionary* mGroups;
 }
 
 #define ServerListChangeMsg @"ServerListChangeMsg"
@@ -53,12 +53,24 @@
 - (void)save;
 
 /*
+ *  Provides the number of servers managed by ServerDataManager.
+ *  @return The number of servers.
+ */
+- (unsigned) serverCount;
+
+/*
  *  Allows access to all servers managed by ServerDataManager.
  *  @return The enumerator that can be used to enumerate through all servers. 
  */
 - (NSEnumerator*) getServerEnumerator;
 
 /*
+ *  Provides the number of groups managed by ServerDataManager.
+ *  @return The number of groups.
+ */
+- (unsigned) groupCount;
+
+	/*
  *  Allows access to the names of all the groups servers managed by ServerDataManager.
  *  @return The enumerator that can be used to enumerate through all group names. 
  */

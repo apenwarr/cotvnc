@@ -33,7 +33,6 @@
 		
 		[connectIndicatorText setStringValue:@""];
 		[box setBorderType:NSNoBorder];
-		delegate_ = nil;
 	}
 	
 	return self;
@@ -51,38 +50,40 @@
 
 - (void)setServer:(id<IServerData>)server
 {
-	[(id)server_ release];
-	server_ = server;
-	[(id)server_ retain];
+	[(id)mServer autorelease];
+	mServer = [(id)server retain];
 	
 	// Set default values
-	// Is this really necessary for anything other than password or should it only happen
-	// if currentServer is nil? - Jared
-	[hostName setStringValue:@""];
-    [passWord setStringValue:@""];
-    [rememberPwd setIntValue:0];
-    [display setStringValue:@""];
-    [shared setIntValue:0];
+    [password setStringValue:@""];
 	
 	// Set properties in dialog box
-    if (server_ != nil)
+    if (mServer != nil)
 	{
-        [rememberPwd setIntValue:[server_ rememberPassword]];
-        [display setIntValue:[server_ display]];
-        [shared setIntValue:[server_ shared]];
-		[hostName setStringValue:[server_ host]];
-		[passWord setStringValue:[server_ password]];
+		[hostName setStringValue:[mServer host]];
+		[password setStringValue:[mServer password]];
+        [rememberPwd setIntValue:[mServer rememberPassword]];
+        [display setIntValue:[mServer display]];
+        [shared setIntValue:[mServer shared]];
+		[profilePopup selectItemWithTitle:[mServer lastProfile]];
     }
+	else
+	{
+		[hostName setStringValue:@""];
+		[rememberPwd setIntValue:0];
+		[display setStringValue:@""];
+		[shared setIntValue:0];
+		[profilePopup selectItemAtIndex:0]; 
+	}
 }
 
 - (id<IServerData>)server
 {
-	return server_;
+	return mServer;
 }
 
 - (void)setConnectionDelegate:(id)delegate
 {
-	delegate_ = delegate;
+	mDelegate = delegate;
 }
 
 - (void)controlTextDidEndEditing:(NSNotification*)notification
@@ -91,9 +92,9 @@
 	{
 		[self displayChanged:display];
 	}
-	else if( [notification object] == passWord )
+	else if( [notification object] == password )
 	{
-		[self passwordChanged:passWord];
+		[self passwordChanged:password];
 	}
 	else if( [notification object] == hostName )
 	{
@@ -103,50 +104,50 @@
 
 - (void)hostChanged:(id)sender
 {
-	if( nil != server_ )
+	if( nil != mServer )
 	{
-		[server_ setHost:[sender stringValue]];
+		[mServer setHost:[sender stringValue]];
 	}
 }
 
 - (void)passwordChanged:(id)sender
 {
-	if( nil != server_ )
+	if( nil != mServer )
 	{
-		[server_ setPassword:[sender stringValue]];
+		[mServer setPassword:[sender stringValue]];
 	}
 }
 
 - (IBAction)rememberPwdChanged:(id)sender
 {
-	if( nil != server_ )
+	if( nil != mServer )
 	{
-		[server_ setRememberPassword:![server_ rememberPassword]];
+		[mServer setRememberPassword:![mServer rememberPassword]];
 	}
 }
 
 - (IBAction)displayChanged:(id)sender
 {
-	if( nil != server_ )
+	if( nil != mServer )
 	{
-		[server_ setLastDisplay:[server_ display]];
-		[server_ setDisplay:[sender intValue]];
+		[mServer setLastDisplay:[mServer display]];
+		[mServer setDisplay:[sender intValue]];
 	}
 }
 
 - (IBAction)profileSelectionChanged:(id)sender
 {
-	if( nil != server_ )
+	if( nil != mServer )
 	{
-		[server_ setLastProfile:[sender stringValue]];
+		[mServer setLastProfile:[sender stringValue]];
 	}
 }
 
 - (IBAction)sharedChanged:(id)sender
 {
-	if( nil != server_ )
+	if( nil != mServer )
 	{
-		[server_ setShared:![server_ shared]];
+		[mServer setShared:![mServer shared]];
 	}
 }
 
@@ -161,13 +162,11 @@
 	[connectIndicatorText setStringValue:NSLocalizedString(@"Connecting...", @"Connect in process notification string")];
 	[connectIndicatorText display];
 	
-	if( nil != delegate_ )
-	{
-		[delegate_ connect:server_];
-	}
+	[mDelegate connect:mServer];
 	
 	[connectIndicator stopAnimation:self];
 	[connectIndicatorText setStringValue:@""];
+	[connectIndicatorText display];
 }
 
 @end

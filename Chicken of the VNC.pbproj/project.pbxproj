@@ -138,7 +138,8 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				OPTIMIZATION_CFLAGS = "-O0";
-				ZERO_LINK = YES;
+				ZERO_LINK = NO;
+				_CHICKEN_VERSION_ = 1.4;
 			};
 			isa = PBXBuildStyle;
 			name = Development;
@@ -147,12 +148,14 @@
 			buildRules = (
 			);
 			buildSettings = {
+				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				OPTIMIZATION_CFLAGS = "-Os";
+				OPTIMIZATION_CFLAGS = "-O3";
 				REMOVE_CVS_FROM_RESOURCES = YES;
 				ZERO_LINK = NO;
+				_CHICKEN_VERSION_ = "";
 			};
 			isa = PBXBuildStyle;
 			name = Deployment;
@@ -205,6 +208,8 @@
 				7F7A941805E71B5C00E20416,
 				7F7A942605E71B5C00E20416,
 				7F7A945805E71B5C00E20416,
+				E23631D40646E8BD000D00B6,
+				E23631DC0646E907000D00B6,
 			);
 			buildRules = (
 			);
@@ -223,6 +228,7 @@
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
 				WRAPPER_EXTENSION = app;
+				_CHICKEN_VERSION_ = "$(_CHICKEN_VERSION_)";
 			};
 			dependencies = (
 			);
@@ -283,7 +289,6 @@
 				7F7A941205E71B5C00E20416,
 				7F7A941305E71B5C00E20416,
 				7F7A941405E71B5C00E20416,
-				7F7A941505E71B5C00E20416,
 				7F7A941605E71B5C00E20416,
 				7F7A941705E71B5C00E20416,
 				7FBB0A6A05F5BC9700F716C4,
@@ -586,12 +591,6 @@
 			settings = {
 			};
 		};
-		7F7A941505E71B5C00E20416 = {
-			fileRef = 7FC6DF6D05C31B0D0028A970;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		7F7A941605E71B5C00E20416 = {
 			fileRef = 7F088F2405E1D81100336456;
 			isa = PBXBuildFile;
@@ -619,7 +618,6 @@
 				7F7A942205E71B5C00E20416,
 				7F7A942305E71B5C00E20416,
 				7F7A942405E71B5C00E20416,
-				E21FE257062B6C8D0059585C,
 				E21FE263062B6D310059585C,
 				E21FE431062B79350059585C,
 				7FFA903D062BA74F0008D381,
@@ -748,7 +746,6 @@
 				7F7A945205E71B5C00E20416,
 				7F7A945305E71B5C00E20416,
 				7F7A945405E71B5C00E20416,
-				7F7A945505E71B5C00E20416,
 				7F7A945605E71B5C00E20416,
 				7F7A945705E71B5C00E20416,
 				7FBB0A6B05F5BC9700F716C4,
@@ -1039,12 +1036,6 @@
 			settings = {
 			};
 		};
-		7F7A945505E71B5C00E20416 = {
-			fileRef = 7FC6DF6E05C31B0D0028A970;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		7F7A945605E71B5C00E20416 = {
 			fileRef = 7F088F2505E1D81100336456;
 			isa = PBXBuildFile;
@@ -1270,12 +1261,6 @@
 			path = Resources/Info.plist;
 			refType = 4;
 			sourceTree = "<group>";
-		};
-		E21FE257062B6C8D0059585C = {
-			fileRef = E21FE256062B6C8D0059585C;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		E21FE261062B6D310059585C = {
 			children = (
@@ -1519,6 +1504,32 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
+		E23631D40646E8BD000D00B6 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			isa = PBXShellScriptBuildPhase;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$TARGET_BUILD_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION/Contents\"\n\ncat ./Info.plist \\\n| sed s/__VERSION__/$_CHICKEN_VERSION_/ \\\n> ./Info.plist.tmp \\\n&& mv -f ./Info.plist.tmp ./Info.plist\n\nTESTPATH=./Resources/*.lproj/InfoPlist.strings\nfor path in $TESTPATH ; do\n\tif [ $path != \"$TESTPATH\" ]; then\n\t\tcat \"$path\" \\\n\t\t| sed s/__VERSION__/$_CHICKEN_VERSION_/ \\\n\t\t> \"$path.tmp\" \\\n\t\t&& mv -f \"$path.tmp\" \"$path\"\n\tfi\ndone";
+		};
+		E23631DC0646E907000D00B6 = {
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			isa = PBXShellScriptBuildPhase;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "strip -urx \"$TARGET_BUILD_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION/Contents/MacOS/$PRODUCT_NAME\"";
+		};
 		E2F48D74040EDD2200BD55BA = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -1636,7 +1647,7 @@
 			sourceTree = "<group>";
 		};
 		F5DC7173033DB3DC01A8010C = {
-			fileEncoding = 30;
+			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = text.plist.strings;
 			name = English;

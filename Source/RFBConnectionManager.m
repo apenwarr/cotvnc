@@ -57,8 +57,8 @@ static RFBConnectionManager*	sharedManager = nil;
     id ud = [NSUserDefaults standardUserDefaults];
     float updateDelay;
 	
-	serverCtrler = [[ServerDataViewController alloc] init];
-	[serverCtrler setConnectionDelegate:self];
+	mServerCtrler = [[ServerDataViewController alloc] init];
+	[mServerCtrler setConnectionDelegate:self];
 
     sigblock(sigmask(SIGPIPE));
     connections = [[NSMutableArray alloc] init];
@@ -130,8 +130,6 @@ static RFBConnectionManager*	sharedManager = nil;
 	    [self selectedHostChanged];
 	}
 		
-	[loginPanel makeKeyAndOrderFront:self];
-
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateProfileList:) name:ProfileAddDeleteNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverListDidChange:) name:ServerListChangeMsg object:nil];
 
@@ -140,22 +138,30 @@ static RFBConnectionManager*	sharedManager = nil;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(cellTextDidBeginEditing:) name: NSControlTextDidBeginEditingNotification object: serverList];
     }
 		
-	[[serverCtrler box] removeFromSuperview];
+	NSBox *serverCtrlerBox = [mServerCtrler box];
+	[serverCtrlerBox retain];
+	[serverCtrlerBox removeFromSuperview];
 	
 	// I'm hardcoding the border so that I can use a real border at design time so it can be seen easily
 	[serverDataBoxLocal setBorderType:NSNoBorder];
-	[serverDataBoxLocal setContentView:[serverCtrler box]];
+	[serverDataBoxLocal setContentView:serverCtrlerBox];
+	[serverCtrlerBox release];
 	
 	[serverListBox retain];
 	[serverListBox removeFromSuperview];
 	[serverListBox setBorderType:NSNoBorder];
 	[splitView addSubview:serverListBox];
+	// we now own serverListBox and are responsible for releasing it
 	
 	[serverGroupBox retain];
 	[serverGroupBox removeFromSuperview];
 	[serverGroupBox setBorderType:NSNoBorder];
+	// we now own serverGroupBox and are responsible for releasing it
 	
 	[splitView adjustSubviews];
+
+	[loginPanel makeFirstResponder: serverListBox];
+	[loginPanel makeKeyAndOrderFront:self];
 }
 
 - (void)processArguments
@@ -223,7 +229,7 @@ static RFBConnectionManager*	sharedManager = nil;
 {
 	[[NSUserDefaults standardUserDefaults] synchronize];
     [connections release];
-	[serverCtrler release];
+	[mServerCtrler release];
 	[serverListBox release];
 	[serverGroupBox release];
     [super dealloc];
@@ -259,30 +265,42 @@ static RFBConnectionManager*	sharedManager = nil;
     [profilePopup selectItemWithTitle:current];
 }
 
-- (id<IServerData>)getSelectedServer
+- (id<IServerData>)selectedServer
 {
 	return [[ServerDataManager sharedInstance] getServerAtIndex:[serverList selectedRow]];
 }
 
 - (void)selectedHostChanged
 {	
-	assert( serverCtrler != nil );
+	NSParameterAssert( mServerCtrler != nil );
 	
-	if( nil != selectedServer )
+	// jason - I don't understand the action with the notifications.  It seems a notification named by 
+	// the mSelectedServer object is never posted anywhere.  Explain?
+	//
+	// Since the notification is the only reason to retain the selected server, I'm going to comment 
+	// out the original implementation and replace with one that doesn't use the notifications until 
+	// I understand what's up.
+
+	id<IServerData> selectedServer = [self selectedServer];
+	[mServerCtrler setServer:selectedServer];
+
+/*
+	if( nil != mSelectedServer )
 	{
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverListDidChange:) name:(id)selectedServer object:nil];
-		[(id)selectedServer release];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverListDidChange:) name:(id)mSelectedServer object:nil];
+		[(id)mSelectedServer release];
 	}
 
-	selectedServer = [self getSelectedServer];
+	mSelectedServer = [self selectedServer];
 	
-	if( nil != selectedServer )
+	if( nil != mSelectedServer )
 	{
-		[(id)selectedServer retain];
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:(id)selectedServer object:nil];
+		[(id)mSelectedServer retain];
+		[[NSNotificationCenter defaultCenter] removeObserver:self name:(id)mSelectedServer object:nil];
 		
-		[serverCtrler setServer:selectedServer];
+		[mServerCtrler setServer:mSelectedServer];
 	}
+*/
 }
 
 - (NSString*)translateDisplayName:(NSString*)aName forHost:(NSString*)aHost
@@ -335,7 +353,7 @@ static RFBConnectionManager*	sharedManager = nil;
 
 - (void)connect:(id<IServerData>)server;
 {
-    Profile* profile = [profileManager profileNamed:[profilePopup titleOfSelectedItem]];
+    Profile* profile = [profileManager profileNamed:[server lastProfile]];
     
     // Only close the open dialog of the connection was successful
     if( YES == [self createConnectionWithServer:server profile:profile owner:self] )
@@ -370,7 +388,7 @@ static RFBConnectionManager*	sharedManager = nil;
 
 - (IBAction)deleteSelectedServer:(id)sender
 {
-	[[ServerDataManager sharedInstance] removeServer:[self getSelectedServer]];
+	[[ServerDataManager sharedInstance] removeServer:[self selectedServer]];
 }
 
 - (id)defaultFrameBufferClass
@@ -483,11 +501,11 @@ static RFBConnectionManager*	sharedManager = nil;
 {
 	if( serverList == aTableView )
 	{
-		return [[[[ServerDataManager sharedInstance] getServerEnumerator] allObjects] count];
+		return [[ServerDataManager sharedInstance] serverCount];
 	}
 	else if( groupList == aTableView )
 	{
-		return [[[[ServerDataManager sharedInstance] getGroupNameEnumerator] allObjects] count];
+		return [[ServerDataManager sharedInstance] groupCount];
 	}
 	
 	return 0;
@@ -497,10 +515,11 @@ static RFBConnectionManager*	sharedManager = nil;
 {
 	if( serverList == aTableView )
 	{
-		return [[[[[ServerDataManager sharedInstance] getServerEnumerator] allObjects] objectAtIndex:rowIndex] name];
+		return [[[ServerDataManager sharedInstance] getServerAtIndex:rowIndex] name];
 	}
 	else if( groupList == aTableView )
 	{
+		// note - this isn't very efficient - jason
 		return [[[[ServerDataManager sharedInstance] getGroupNameEnumerator] allObjects] objectAtIndex:rowIndex];
 	}
 	
@@ -526,7 +545,7 @@ static RFBConnectionManager*	sharedManager = nil;
 	if( serverList == aTableView )
 	{
 		NSString* serverName = object;
-		id<IServerData> server = [[[[ServerDataManager sharedInstance] getServerEnumerator] allObjects] objectAtIndex:row];
+		id<IServerData> server = [[ServerDataManager sharedInstance] getServerAtIndex:row];
 		[server setName:serverName];
 	}
 }
@@ -544,18 +563,18 @@ static RFBConnectionManager*	sharedManager = nil;
 
 - (IBAction)changeRendezvousUse:(id)sender
 {
-	useRendezvous = !useRendezvous;
+	mUseRendezvous = !mUseRendezvous;
 	
-	[self displayGroups:useRendezvous];
+	[self displayGroups:mUseRendezvous];
 	
-	[rendezvousMenuItem setState:useRendezvous ? NSOnState : NSOffState];
+	[rendezvousMenuItem setState:mUseRendezvous ? NSOnState : NSOffState];
 }
 
 - (void)displayGroups:(bool)display
 {
-	if( display != displayGroups )
+	if( display != mDisplayGroups )
 	{
-		displayGroups = display;
+		mDisplayGroups = display;
 		
 		if( display )
 		{

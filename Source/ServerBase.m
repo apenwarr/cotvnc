@@ -28,8 +28,8 @@
 {
 	if( self = [super init] )
 	{
-		_name =             [[NSString stringWithString:@"new server"] retain];
-		_host =             [[NSString stringWithString:@"localhost"] retain];
+		_name =             [[NSString alloc] initWithString:@"new server"];
+		_host =             [[NSString alloc] initWithString:@"localhost"];
 		_password =         [[NSString alloc] init];
 		_rememberPassword = NO;
 		_display =          0;
@@ -45,7 +45,10 @@
 - (void)dealloc
 {
 	[_name release];
+	[_host release];
 	[_password release];
+	[_lastProfile release];
+	[super dealloc];
 }
 
 - (NSString*)name
@@ -95,41 +98,29 @@
 
 - (void)setName: (NSString*)name
 {
-	if( nil != name )
-	{
-		[_name release];
-		_name = name;
-		[_name retain];
-		
-		[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-															object:self];
-	}
+	[_name autorelease];
+	_name = [name retain];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+														object:self];
 }
 
 - (void)setHost: (NSString*)host
 {
-	if( nil != host )
-	{
-		[_host release];
-		_host = host;
-		[_host retain];
-		
-		[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-															object:self];
-	}
+	[_host autorelease];
+	_host = [host retain];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+														object:self];
 }
 
 - (void)setPassword: (NSString*)password
 {
-	if( nil != password )
-	{
-		[_password release];
-		_password = password;
-		[_password retain];
+	[_password autorelease];
+	_password = [password retain];
 	
-		[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-															object:self];
-	}
+	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+														object:self];
 }
 
 - (void)setRememberPassword: (bool)rememberPassword
@@ -174,15 +165,11 @@
 
 - (void)setLastProfile: (NSString*)lastProfile
 {
-	if( nil != lastProfile )
-	{
-		[_lastProfile release];
-		_lastProfile = lastProfile;
-		[_lastProfile retain];
-		
-		[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-															object:self];
-	}
+	[_lastProfile autorelease];
+	_lastProfile = [lastProfile retain];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+														object:self];
 }
 
 - (void)setDelegate: (id<IServerDataDelegate>)delegate

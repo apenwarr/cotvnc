@@ -47,14 +47,19 @@
 - (id)initWithHost:(NSString*)host preferenceDictionary:(NSDictionary*)prefDict
 {
     if( self = [super init] )
-	{		
-		_name =             [[NSString stringWithString:host] retain];
+	{
+		[_name autorelease];
+		[_host autorelease];
+		[_password autorelease];
+		[_lastProfile autorelease];
+		
+		_name =             [host copy];
 		_host =             [host retain];
-		_password =         [[NSString stringWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name]] retain];
+		_password =         [[NSString alloc] initWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name]];
 		_rememberPassword = [[prefDict objectForKey:RFB_REMEMBER] intValue] == 0 ? NO : YES;
 		_display =          [[prefDict objectForKey:RFB_DISPLAY] intValue];
 		_lastDisplay =      [[prefDict objectForKey:RFB_LAST_DISPLAY] intValue];
-		_lastProfile =      [prefDict objectForKey:RFB_LAST_PROFILE];
+		_lastProfile =      [[prefDict objectForKey:RFB_LAST_PROFILE] retain];
 		_shared =           [[prefDict objectForKey:RFB_SHARED] intValue] == 0 ? NO : YES;
 		_fullscreen =       [[prefDict objectForKey:RFB_FULLSCREEN] intValue] == 0 ? NO : YES;
 	}
@@ -66,8 +71,13 @@
 {
 	if( self = [super init] )
 	{
-		_name =             [[NSString stringWithString:@"new server"] retain];
-		_host =             [[NSString stringWithString:@"localhost"] retain];
+		[_name autorelease];
+		[_host autorelease];
+		[_password autorelease];
+		[_lastProfile autorelease];
+		
+		_name =             [[NSString alloc] initWithString:@"new server"];
+		_host =             [[NSString alloc] initWithString:@"localhost"];
 		_password =         [[NSString alloc] init];
 		_rememberPassword = NO;
 		_display =          0;
@@ -83,8 +93,7 @@
 - (void)dealloc
 {
 	[_prefDict release];
-	[_name release];
-	[_password release];
+	[super dealloc];
 }
 
 + (id<IServerData>)createWithHost:(NSString*)hostName preferenceDictionary:(NSDictionary*)prefDict;
@@ -94,7 +103,7 @@
 
 + (id<IServerData>)createWithName:(NSString*)name
 {
-	ServerFromPrefs* newServer = [[ServerFromPrefs alloc] init];
+	ServerFromPrefs* newServer = [[[ServerFromPrefs alloc] init] autorelease];
 	[newServer setName:name];
 	
 	return newServer;
@@ -102,7 +111,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    assert( [coder allowsKeyedCoding] );
+    NSParameterAssert( [coder allowsKeyedCoding] );
 
 	[coder encodeObject:_name			 forKey:RFB_NAME];
 	[coder encodeObject:_host			 forKey:RFB_HOST];
@@ -112,17 +121,21 @@
 	[coder encodeObject:_lastProfile	 forKey:RFB_LAST_PROFILE];
 	[coder encodeBool:_shared			 forKey:RFB_SHARED];
 	[coder encodeBool:_fullscreen		 forKey:RFB_FULLSCREEN];
-   	
-    return;
 }
 
 - (id)initWithCoder:(NSCoder *)coder
 {
-    self = [super init];
-	if( nil != self )
+	[self autorelease];
+	NSParameterAssert( [coder allowsKeyedCoding] );
+	[self retain];
+	
+	if( self = [super init] )
 	{
-		assert( [coder allowsKeyedCoding] );
-
+		[_name autorelease];
+		[_host autorelease];
+		[_password autorelease];
+		[_lastProfile autorelease];
+				
 		// Can decode keys in any order
 		_name =             [[coder decodeObjectForKey:RFB_NAME] retain];
 		_host =             [[coder decodeObjectForKey:RFB_HOST] retain];
@@ -133,7 +146,7 @@
 		_shared =           [coder decodeBoolForKey:RFB_SHARED];
 		_fullscreen =       [coder decodeBoolForKey:RFB_FULLSCREEN];
 			
-		_password = [[NSString stringWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name]] retain];
+		_password = [[NSString alloc] initWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name]];
 	}
 	
     return self;
@@ -141,7 +154,7 @@
 
 - (void)setName: (NSString*)name
 {
-	if( 0 != [name compare:_name] )
+	if( NSOrderedSame != [name compare:_name] )
 	{
 		NSMutableString *nameHelper = [NSMutableString stringWithString:name];
 		
@@ -160,9 +173,6 @@
 		{
 			[[KeyChain defaultKeyChain] setGenericPassword:_password forService:KEYCHAIN_SERVICE_NAME account:_name];
 		}
-		
-		[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-															object:self];
 	}
 }
 
@@ -171,13 +181,10 @@
 	[super setPassword:password];
 	
 	// only save if set to do so
-	if( _rememberPassword )
+	if( YES == _rememberPassword )
 	{
 		[[KeyChain defaultKeyChain] setGenericPassword:_password forService:KEYCHAIN_SERVICE_NAME account:_name];
 	}
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
 }
 
 - (void)setRememberPassword: (bool)rememberPassword
@@ -193,19 +200,6 @@
 	{
 		[[KeyChain defaultKeyChain] removeGenericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name];
 	}
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
-}
-
-- (void)setLastProfile: (NSString*)lastProfile
-{
-	[_lastProfile release];
-	_lastProfile = lastProfile;
-	[_lastProfile retain];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
 }
 
 @end

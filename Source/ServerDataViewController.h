@@ -29,7 +29,7 @@
 {
     IBOutlet NSTextField *display;
     IBOutlet NSTextField *hostName;
-    IBOutlet NSSecureTextField *passWord;
+    IBOutlet NSSecureTextField *password;
     IBOutlet NSPopUpButton *profilePopup;
     IBOutlet NSButton *rememberPwd;
     IBOutlet NSButton *shared;
@@ -38,8 +38,8 @@
 	IBOutlet NSProgressIndicator *connectIndicator;
 	IBOutlet NSTextField *connectIndicatorText;
 	
-	id<IServerData> server_;
-	id<ConnectionDelegate> delegate_;
+	id<IServerData> mServer;
+	id<ConnectionDelegate> mDelegate;
 }
 
 - (void)setServer:(id<IServerData>)server;
@@ -47,8 +47,8 @@
 
 - (void)setConnectionDelegate:(id<ConnectionDelegate>)delegate;
 
-- (void)hostChanged:(id)sender;
-- (void)passwordChanged:(id)sender;
+- (IBAction)hostChanged:(id)sender;
+- (IBAction)passwordChanged:(id)sender;
 - (IBAction)rememberPwdChanged:(id)sender;
 - (IBAction)displayChanged:(id)sender;
 - (IBAction)profileSelectionChanged:(id)sender;

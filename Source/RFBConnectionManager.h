@@ -19,11 +19,9 @@
 #import <AppKit/AppKit.h>
 #import "rfbproto.h"
 #import "Profile.h"
-#import "IServerData.h"
-#import "ServerDataViewController.h"
 @class ProfileManager;
 @class ServerDataViewController;
-@protocol IServerData;
+@protocol ConnectionDelegate, IServerData;
 
 /* Constants, generally used for userdefaults */
 #define RFB_COLOR_MODEL		@"RFBColorModel"
@@ -62,10 +60,10 @@
     int       cmdlineDisplay;
     NSString *cmdlinePassword;
     bool      cmdlineFullscreen;
-	id<IServerData> selectedServer;
-	ServerDataViewController* serverCtrler;
-	bool      displayGroups;
-	bool      useRendezvous;
+//	id<IServerData> mSelectedServer;
+	ServerDataViewController* mServerCtrler;
+	bool      mDisplayGroups;
+	bool      mUseRendezvous;
 }
 
 + (float)gammaCorrection;
@@ -104,7 +102,7 @@
 
 - (void)serverListDidChange:(NSNotification*)notification;
 
-- (id<IServerData>)getSelectedServer;
+- (id<IServerData>)selectedServer;
 
 - (void)displayGroups:(bool)display;
 

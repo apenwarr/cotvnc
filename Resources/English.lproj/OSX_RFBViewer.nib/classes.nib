@@ -80,7 +80,6 @@
                 psMaxRects = NSTextField; 
                 psThreshold = NSTextField; 
                 rendezvousMenuItem = NSMenuItem; 
-                selectedServer = id; 
                 serverDataBoxLocal = NSBox; 
                 serverGroupBox = NSBox; 
                 serverList = NSTableView; 
@@ -104,10 +103,9 @@
             OUTLETS = {
                 display = NSTextField; 
                 hostName = NSTextField; 
-                passWord = NSSecureTextField; 
+                password = NSSecureTextField; 
                 profilePopup = NSPopUpButton; 
                 rememberPwd = NSButton; 
-                "server_" = id; 
                 shared = NSButton; 
             }; 
             SUPERCLASS = NSWindowController; 

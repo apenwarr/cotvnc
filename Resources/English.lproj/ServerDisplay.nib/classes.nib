@@ -19,10 +19,9 @@
                 connectIndicatorText = NSTextField; 
                 display = NSTextField; 
                 hostName = NSTextField; 
-                passWord = NSSecureTextField; 
+                password = NSSecureTextField; 
                 profilePopup = NSPopUpButton; 
                 rememberPwd = NSButton; 
-                "server_" = id; 
                 shared = NSButton; 
             }; 
             SUPERCLASS = NSWindowController; 

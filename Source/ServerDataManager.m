@@ -26,11 +26,12 @@
 #define RFB_PREFS_LOCATION  @"Library/Preferences/cotvnc.prefs"
 #define RFB_HOST_INFO		@"HostPreferences"
 #define RFB_SERVER_LIST     @"ServerList"
+#define RFB_GROUP_LIST		@"GroupList"
 #define RFB_SAVED_SERVERS   @"SavedServers"
 
 @implementation ServerDataManager
 
-static ServerDataManager* instance = nil;
+static ServerDataManager* gInstance = nil;
 
 + (void)initialize
 {
@@ -43,14 +44,14 @@ static ServerDataManager* instance = nil;
 	{
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(applicationWillTerminate:)
-													 name:@"NSApplicationWillTerminateNotification" object:NSApp];
+													 name:NSApplicationWillTerminateNotification object:NSApp];
 		
-		servers = [[NSMutableDictionary alloc] init];
-		groups  = [[NSMutableDictionary alloc] init];
+		mServers = [[NSMutableDictionary alloc] init];
+		mGroups  = [[NSMutableDictionary alloc] init];
 		
-		[groups setObject:[NSMutableArray array] forKey:@"All"];
-		[groups setObject:[NSMutableArray array] forKey:@"Rendezvous"];
-		[groups setObject:[NSMutableArray array] forKey:@"Standard"];
+		[mGroups setObject:[NSMutableArray array] forKey:@"All"];
+		[mGroups setObject:[NSMutableArray array] forKey:@"Rendezvous"];
+		[mGroups setObject:[NSMutableArray array] forKey:@"Standard"];
 	}
 	
 	return self;
@@ -71,7 +72,7 @@ static ServerDataManager* instance = nil;
 			if( nil != server )
 			{
 				[server setDelegate:self];
-				[servers setObject:server forKey:[server name]];
+				[mServers setObject:server forKey:[server name]];
 			}
 		}
 	}
@@ -85,71 +86,74 @@ static ServerDataManager* instance = nil;
 	
 	[self save];
 		
-    [servers release];
+    [mServers release];
+	[mGroups release];
     [super dealloc];
 }
 
 - (void)save
 {
-	NSData *data = [NSKeyedArchiver archivedDataWithRootObject: instance];
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject: gInstance];
 	[[NSUserDefaults standardUserDefaults] setObject: data forKey: RFB_SAVED_SERVERS];
 }
 
 + (ServerDataManager*) sharedInstance
 {
-	if( nil == instance )
+	if( nil == gInstance )
 	{
 		NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:RFB_SAVED_SERVERS];
-		instance = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+		if ( data )
+		{
+			gInstance = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+			[gInstance retain];
+		}
 		
-		if( nil == instance )
+		if( nil == gInstance )
 		{
 			NSString *storePath = [NSHomeDirectory() stringByAppendingPathComponent:RFB_PREFS_LOCATION];
 			
-			instance = [NSKeyedUnarchiver unarchiveObjectWithFile:storePath];
-			if( nil == instance )
+			gInstance = [NSKeyedUnarchiver unarchiveObjectWithFile:storePath];
+			[gInstance retain];
+			if( nil == gInstance )
 			{
 				// Didn't find any preferences under the new serialization system,
 				// load based on the old system
-				instance = [[ServerDataManager alloc] initWithOriginalPrefs];
+				gInstance = [[ServerDataManager alloc] initWithOriginalPrefs];
 				
-				[instance save];
+				[gInstance save];
 			}
-			else
-			{
-				[instance retain];
-			}
-		}
-		else
-		{
-			[instance retain];
 		}
 	}
 	
-	return instance;
+	return gInstance;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    assert( [coder allowsKeyedCoding] );
+    NSParameterAssert( [coder allowsKeyedCoding] );
 
-	[coder encodeObject:servers forKey:RFB_SERVER_LIST];
+	[coder encodeObject:mServers forKey:RFB_SERVER_LIST];
+	[coder encodeObject:mGroups forKey:RFB_GROUP_LIST];
     
 	return;
 }
 
 - (id)initWithCoder:(NSCoder *)coder
 {
-    self = [self init];
-		
-	if( nil != self )
+	[self autorelease];
+	NSParameterAssert( [coder allowsKeyedCoding] );
+	[self retain];
+			
+	if( self = [self init] )
 	{
-		assert( [coder allowsKeyedCoding] );
+		[mServers release];
+		mServers = [[coder decodeObjectForKey:RFB_SERVER_LIST] retain];
 		
-		servers = [[coder decodeObjectForKey:RFB_SERVER_LIST] retain];
+		[mGroups release];
+		mGroups = [[coder decodeObjectForKey:RFB_GROUP_LIST] retain];
 		
 		id<IServerData> server;
-		NSEnumerator* objEnumerator = [servers objectEnumerator];
+		NSEnumerator* objEnumerator = [mServers objectEnumerator];
 		while( server = [objEnumerator nextObject] )
 		{
 			[server setDelegate:self];
@@ -162,25 +166,32 @@ static ServerDataManager* instance = nil;
 
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
-	if( nil != instance )
-	{
-		[instance release];
-	}
+	[gInstance release];
+}
+
+- (unsigned) serverCount
+{
+	return [mServers count];
 }
 
 - (NSEnumerator*) getServerEnumerator
 {
-	return [servers objectEnumerator];
+	return [mServers objectEnumerator];
+}
+
+- (unsigned) groupCount
+{
+	return [mGroups count];
 }
 
 - (NSEnumerator*) getGroupNameEnumerator
 {
-	return [groups keyEnumerator];
+	return [mGroups keyEnumerator];
 }
 
 - (id<IServerData>)getServerWithName:(NSString*)name
 {
-	return [servers objectForKey:name];
+	return [mServers objectForKey:name];
 }
 
 - (id<IServerData>)getServerAtIndex:(int)index
@@ -190,13 +201,12 @@ static ServerDataManager* instance = nil;
 		return nil;
 	}
 	
-	return [[servers allValues] objectAtIndex:index];
+	return [[mServers allValues] objectAtIndex:index];
 }
 
 - (void)removeServer:(id<IServerData>)server
 {
-	[servers removeObjectForKey:[server name]];
-	[servers removeObjectForKey:[server name]];
+	[mServers removeObjectForKey:[server name]];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:ServerListChangeMsg
 														object:self];
@@ -204,7 +214,7 @@ static ServerDataManager* instance = nil;
 
 - (void)makeNameUnique:(NSMutableString*)name
 {
-	if(nil != [servers objectForKey:name])
+	if(nil != [mServers objectForKey:name])
 	{
 		int numHelper = 0;
 		NSString* newName;
@@ -212,7 +222,7 @@ static ServerDataManager* instance = nil;
 		{
 			numHelper++;
 			newName = [NSString stringWithFormat:@"%@_%d", name, numHelper];
-		}while( nil != [servers objectForKey:newName] );
+		}while( nil != [mServers objectForKey:newName] );
 		
 		[name setString: newName];
 	}
@@ -225,10 +235,10 @@ static ServerDataManager* instance = nil;
 	[self makeNameUnique:nameHelper];
 	
 	ServerFromPrefs* newServer = [ServerFromPrefs createWithName:nameHelper];
-	[servers setObject:newServer forKey:[newServer name]];
+	[mServers setObject:newServer forKey:[newServer name]];
 	
-	assert( nil != [servers objectForKey:nameHelper] );
-	assert( newServer == [servers objectForKey:nameHelper] );
+	assert( nil != [mServers objectForKey:nameHelper] );
+	assert( newServer == [mServers objectForKey:nameHelper] );
 	
 	[newServer setDelegate:self];
 	
@@ -240,15 +250,17 @@ static ServerDataManager* instance = nil;
 
 - (void)validateNameChange:(NSMutableString *)name forServer:(id<IServerData>)server;
 {
-	if( nil != [servers objectForKey:[server name]] )
+	if( nil != [mServers objectForKey:[server name]] )
 	{
-		assert( server == [servers objectForKey:[server name]] );
+		NSParameterAssert( server == [mServers objectForKey:[server name]] );
 		
-		[servers removeObjectForKey:[server name]];
-
+		[(NSObject *)server retain];
+		
+		[mServers removeObjectForKey:[server name]];
 		[self makeNameUnique:name];
-
-		[servers setObject:server forKey:name];
+		[mServers setObject:server forKey:name];
+		
+		[(NSObject *)server release];
 	}
 }
 @end
