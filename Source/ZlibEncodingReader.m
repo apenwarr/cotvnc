@@ -84,7 +84,7 @@
 
 - (void)setUncompressedData:(unsigned char*)data length:(int)length
 {
-	[frameBuffer putRect:frame fromData:pixels];
+    [frameBuffer putRect:frame fromReversedData:pixels];
     [target performSelector:action withObject:self];
 }
 
