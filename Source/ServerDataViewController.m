@@ -105,7 +105,7 @@
 	mDelegate = delegate;
 }
 
-- (void)controlTextDidEndEditing:(NSNotification*)notification
+- (void)controlTextDidChange:(NSNotification*)notification
 {
 	if( [notification object] == display )
 	{
