@@ -184,7 +184,7 @@ static ServerDataManager* instance = nil;
 														object:self];
 }
 
-- (NSString*)makeNameUnique:(NSString*)name
+- (void)makeNameUnique:(NSMutableString*)name
 {
 	if(nil != [servers objectForKey:name])
 	{
@@ -196,21 +196,21 @@ static ServerDataManager* instance = nil;
 			newName = [NSString stringWithFormat:@"%@_%d", name, numHelper];
 		}while( nil != [servers objectForKey:newName] );
 		
-		return newName;
+		[name setString: newName];
 	}
-	
-	return name;
 }
 
 - (id<IServerData>)createServerByName:(NSString*)name
 {
-	name = [self makeNameUnique:name];
+	NSMutableString *nameHelper = [NSMutableString stringWithString:name];
 	
-	ServerFromPrefs* newServer = [ServerFromPrefs createWithName:name];
+	[self makeNameUnique:nameHelper];
+	
+	ServerFromPrefs* newServer = [ServerFromPrefs createWithName:nameHelper];
 	[servers setObject:newServer forKey:[newServer name]];
 	
-	assert( nil != [servers objectForKey:name] );
-	assert( newServer == [servers objectForKey:name] );
+	assert( nil != [servers objectForKey:nameHelper] );
+	assert( newServer == [servers objectForKey:nameHelper] );
 	
 	[newServer setDelegate:self];
 	
@@ -220,21 +220,17 @@ static ServerDataManager* instance = nil;
 	return newServer;
 }
 
-- (void)validateNameChange:(NSString *)name forServer:(id<IServerData>)server;
+- (void)validateNameChange:(NSMutableString *)name forServer:(id<IServerData>)server;
 {
 	if( nil != [servers objectForKey:[server name]] )
 	{
 		assert( server == [servers objectForKey:[server name]] );
-
+		
 		[servers removeObjectForKey:[server name]];
 
-		name = [self makeNameUnique:name];
+		[self makeNameUnique:name];
 
-		[server setName:name];
-		[servers setObject:server forKey:[server name]];
-
-		[[NSNotificationCenter defaultCenter] postNotificationName:ServerListChangeMsg
-															object:self];
+		[servers setObject:server forKey:name];
 	}
 }
 @end

@@ -48,6 +48,8 @@ static RFBConnectionManager*	sharedManager = nil;
 		[NSNumber numberWithBool: YES], @"DisplayFullscreenWarning",
 					   nil];
 	[ud registerDefaults: dict];
+	
+	selectedServer = nil;
 }
 
 - (void)awakeFromNib
@@ -262,7 +264,20 @@ static RFBConnectionManager*	sharedManager = nil;
 {	
 	assert( serverCtrler != nil );
 	
-	[serverCtrler setServer:[self getSelectedServer]];
+	if( nil != selectedServer )
+	{
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverListDidChange:) name:(id)selectedServer object:nil];
+		[(id)selectedServer release];
+	}
+
+	selectedServer = [self getSelectedServer];
+	
+	assert( nil != selectedServer );
+	
+	[(id)selectedServer retain];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:(id)selectedServer object:nil];
+	
+	[serverCtrler setServer:selectedServer];
 }
 
 - (NSString*)translateDisplayName:(NSString*)aName forHost:(NSString*)aHost

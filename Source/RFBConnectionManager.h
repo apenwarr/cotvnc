@@ -57,6 +57,7 @@
     NSString *cmdlineDisplay;
     NSString *cmdlinePassword;
     NSString *cmdlineFullscreen;
+	id<IServerData> selectedServer;
 }
 
 + (float)gammaCorrection;

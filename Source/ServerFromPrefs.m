@@ -189,9 +189,11 @@
 {
 	if( 0 != [name compare:_name] )
 	{
+		NSMutableString *nameHelper = [NSMutableString stringWithString:name];
+		
 		if( nil != _delegate )
 		{
-			[_delegate validateNameChange:name forServer:self];
+			[_delegate validateNameChange:nameHelper forServer:self];
 		}
 		
 		// if the password is saved, destroy the one off the old name key
@@ -201,7 +203,7 @@
 		}
 		
 		[_name release];
-		_name = name;
+		_name = nameHelper;
 		[_name retain];
 		
 		// if the password should be saved, save it with the new name key
