@@ -241,6 +241,8 @@ static ServerDataManager* gInstance = nil;
 		[[mGroups objectForKey:name] removeObjectForKey:[server name]];
 	}
 	
+	[mServers removeObjectForKey:[server name]];
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:ServerListChangeMsg
 														object:self];
 }
