@@ -113,6 +113,145 @@
     return;
 }
 
+#define TO_RGB(d,c) 						\
+*d++ = (c >> pixelFormat.redShift) & pixelFormat.redMax; 	\
+*d++ = (c >> pixelFormat.greenShift) & pixelFormat.greenMax;	\
+*d++ = (c >> pixelFormat.blueShift) & pixelFormat.blueMax
+/* What is this stuff, and why is it here? */
+- (void)splitRGB:(unsigned char*)v pixels:(unsigned)length into:(int*)rgb
+{
+    unsigned char c;
+    int pix;
+
+    switch([self tightBytesPerPixel]) {
+        case 1:
+            while(length--) {
+                c = *v++;
+                TO_RGB(rgb, c);
+            }
+            break;
+        case 2:
+            if(pixelFormat.bigEndian) {
+                while(length--) {
+                    pix = *v++; pix <<= 8; pix += *v++;
+                    TO_RGB(rgb, pix);
+                }
+            } else {
+                while(length--) {
+                    pix = *v++; pix += (((unsigned int)*v++) << 8);
+                    TO_RGB(rgb, pix);
+                }
+            }
+            break;
+        case 3:
+            if(pixelFormat.bigEndian) {
+                while(length--) {
+                    pix = *v++; pix <<= 8;
+                    pix += *v++; pix <<= 8;
+                    pix += *v++;
+                    TO_RGB(rgb, pix);
+                }
+            } else {
+                while(length--) {
+                    pix = *v++;
+                    pix += (((unsigned int)*v++) << 8);
+                    pix += (((unsigned int)*v++) << 16);
+                    TO_RGB(rgb, pix);
+                }
+            }
+            break;
+        case 4:
+            if(pixelFormat.bigEndian) {
+                while(length--) {
+                    pix = *v++; pix <<= 8;
+                    pix += *v++; pix <<= 8;
+                    pix += *v++; pix <<= 8;
+                    pix += *v++;
+                    TO_RGB(rgb, pix);
+                }
+            } else {
+                while(length--) {
+                    pix = *v++;
+                    pix += (((unsigned int)*v++) << 8);
+                    pix += (((unsigned int)*v++) << 16);
+                    pix += (((unsigned int)*v++) << 24);
+                    TO_RGB(rgb, pix);
+                }
+            }
+            break;
+    }
+}
+
+#define TO_PIX(p,s)						\
+p = (*s++ & pixelFormat.redMax) << pixelFormat.redShift;	\
+p |= (*s++ & pixelFormat.greenMax) << pixelFormat.greenShift;	\
+p |= (*s++ & pixelFormat.blueMax) << pixelFormat.blueShift
+/* What is this stuff, and why is it here? */
+- (void)combineRGB:(int*)rgb pixels:(unsigned)length into:(unsigned char*)v
+{
+    int pix, bpp = [self tightBytesPerPixel];
+
+    switch(bpp) {
+        case 1:
+            while(length--) {
+                TO_PIX(pix, rgb);
+                *v++ = pix;
+            }
+            break;
+        case 2:
+            if(pixelFormat.bigEndian) {
+                while(length--) {
+                    TO_PIX(pix, rgb);
+                    *v++ = (pix >> 8) & 0xff;
+                    *v++ = pix & 0xff;
+                }
+            } else {
+                while(length--) {
+                    TO_PIX(pix, rgb);
+                    *v++ = pix & 0xff;
+                    *v++ = (pix >> 8) & 0xff;
+                }
+            }
+            break;
+        case 3:
+            if(pixelFormat.bigEndian) {
+                while(length--) {
+                    TO_PIX(pix, rgb);
+                    *v++ = (pix >> 16) & 0xff;
+                    *v++ = (pix >> 8) & 0xff;
+                    *v++ = pix & 0xff;
+                }
+            } else {
+                while(length--) {
+                    TO_PIX(pix, rgb);
+                    *v++ = pix & 0xff;
+                    *v++ = (pix >> 8) & 0xff;
+                    *v++ = (pix >> 16) & 0xff;
+                }
+            }
+            break;
+        case 4:
+            if(pixelFormat.bigEndian) {
+                while(length--) {
+                    TO_PIX(pix, rgb);
+                    *v++ = (pix >> 24) & 0xff;
+                    *v++ = (pix >> 16) & 0xff;
+                    *v++ = (pix >> 8) & 0xff;
+                    *v++ = pix & 0xff;
+                }
+            } else {
+                while(length--) {
+                    TO_PIX(pix, rgb);
+                    *v++ = pix & 0xff;
+                    *v++ = (pix >> 8) & 0xff;
+                    *v++ = (pix >> 16) & 0xff;
+                    *v++ = (pix >> 24) & 0xff;
+                }
+            }
+            break;
+    }
+}
+
 /* Looks like a bad hack for the rect list drawing.  Probably should be removed/refactored */
 - (void)ns_pixelData:(unsigned char *) v toFloat:(float *)clr
 {
@@ -162,75 +301,6 @@
 /* --------------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------------- */
-#define TO_PIX(p,s)							\
-	p = (*s++ & pixelFormat.redMax) << pixelFormat.redShift;	\
-	p |= (*s++ & pixelFormat.greenMax) << pixelFormat.greenShift;	\
-	p |= (*s++ & pixelFormat.blueMax) << pixelFormat.blueShift	
-
-- (void)combineRGB:(int*)rgb pixels:(unsigned)length into:(unsigned char*)v
-{
-    int pix, bpp = [self tightBytesPerPixel];
-
-	switch(bpp) {
-		case 1:
-			while(length--) {
-				TO_PIX(pix, rgb);
-				*v++ = pix;
-			}
-			break;
-		case 2:
-			if(pixelFormat.bigEndian) {
-				while(length--) {
-					TO_PIX(pix, rgb);
-                    *v++ = (pix >> 8) & 0xff;
-                    *v++ = pix & 0xff;
-				}
-			} else {
-				while(length--) {
-					TO_PIX(pix, rgb);
-                    *v++ = pix & 0xff;
-                    *v++ = (pix >> 8) & 0xff;
-				}
-			}
-			break;
-		case 3:
-			if(pixelFormat.bigEndian) {
-				while(length--) {
-					TO_PIX(pix, rgb);
-                    *v++ = (pix >> 16) & 0xff;
-                    *v++ = (pix >> 8) & 0xff;
-                    *v++ = pix & 0xff;
-				}
-			} else {
-				while(length--) {
-					TO_PIX(pix, rgb);
-                    *v++ = pix & 0xff;
-                    *v++ = (pix >> 8) & 0xff;
-                    *v++ = (pix >> 16) & 0xff;
-				}
-			}
-			break;
-		case 4:
-			if(pixelFormat.bigEndian) {
-				while(length--) {
-					TO_PIX(pix, rgb);
-                    *v++ = (pix >> 24) & 0xff;
-                    *v++ = (pix >> 16) & 0xff;
-                    *v++ = (pix >> 8) & 0xff;
-                    *v++ = pix & 0xff;
-				}
-			} else {
-				while(length--) {
-					TO_PIX(pix, rgb);
-                    *v++ = pix & 0xff;
-                    *v++ = (pix >> 8) & 0xff;
-                    *v++ = (pix >> 16) & 0xff;
-                    *v++ = (pix >> 24) & 0xff;
-				}
-			}
-			break;
-	}
-}
 
 /* --------------------------------------------------------------------------------- */
 #define TO_RGB(d,c)														\
@@ -238,69 +308,6 @@
 	*d++ = (c >> pixelFormat.greenShift) & pixelFormat.greenMax;		\
 	*d++ = (c >> pixelFormat.blueShift) & pixelFormat.blueMax
 
-- (void)splitRGB:(unsigned char*)v pixels:(unsigned)length into:(int*)rgb
-{
-	unsigned char c;
-    int pix;
-    
-    switch([self tightBytesPerPixel]) {
-        case 1:
-            while(length--) {
-				c = *v++;
-				TO_RGB(rgb, c);
-            }
-            break;
-        case 2:
-			if(pixelFormat.bigEndian) {
-				while(length--) {
-                    pix = *v++; pix <<= 8; pix += *v++;
-					TO_RGB(rgb, pix);
-				}
-			} else {
-				while(length--) {
-					pix = *v++; pix += (((unsigned int)*v++) << 8);
-					TO_RGB(rgb, pix);
-				}
-			}
-            break;
-        case 3:
-			if(pixelFormat.bigEndian) {
-				while(length--) {
-					pix = *v++; pix <<= 8;
-					pix += *v++; pix <<= 8;
-					pix += *v++;
-					TO_RGB(rgb, pix);
-				}
-			} else {
-				while(length--) {
-					pix = *v++;
-					pix += (((unsigned int)*v++) << 8);
-					pix += (((unsigned int)*v++) << 16);
-					TO_RGB(rgb, pix);
-				}
-			}
-            break;
-        case 4:
-			if(pixelFormat.bigEndian) {
-				while(length--) {
-                    pix = *v++; pix <<= 8;
-                    pix += *v++; pix <<= 8;
-                    pix += *v++; pix <<= 8;
-                    pix += *v++;
-					TO_RGB(rgb, pix);
-				}
-			} else {
-				while(length--) {
-                    pix = *v++;
-                    pix += (((unsigned int)*v++) << 8);
-                    pix += (((unsigned int)*v++) << 16);
-                    pix += (((unsigned int)*v++) << 24);
-					TO_RGB(rgb, pix);
-				}
-			}
-            break;
-    }
-}
 
 /* --------------------------------------------------------------------------------- */
 - (void)getMaxValues:(int*)m
