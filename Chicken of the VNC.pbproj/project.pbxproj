@@ -66,17 +66,10 @@
 		};
 		03F89AEC0411487E26A80BC8 = {
 			children = (
-				F5DC71B6033DB4A801A8010C,
 				03F89B8C04114BF926A80BC8,
 				03F89B8D04114BF926A80BC8,
 				F5DC71B4033DB4A801A8010C,
 				F5DC71B5033DB4A801A8010C,
-				F5DC71BB033DB4A801A8010C,
-				F5DC71BC033DB4A801A8010C,
-				F5DC71BF033DB4A801A8010C,
-				F5DC71C0033DB4A801A8010C,
-				F5DC71CE033DB4A801A8010C,
-				F5DC71CF033DB4A801A8010C,
 				F5DC71F5033DB4A801A8010C,
 				F5DC71F6033DB4A801A8010C,
 			);
@@ -970,12 +963,6 @@
 			path = FrameBuffer.m;
 			refType = 4;
 		};
-		F5DC71B6033DB4A801A8010C = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = FrameBufferDrawing.h;
-			refType = 4;
-		};
 		F5DC71B7033DB4A801A8010C = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -1000,18 +987,6 @@
 			path = GradientFilter.m;
 			refType = 4;
 		};
-		F5DC71BB033DB4A801A8010C = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = GrayScaleFrameBuffer.h;
-			refType = 4;
-		};
-		F5DC71BC033DB4A801A8010C = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = GrayScaleFrameBuffer.m;
-			refType = 4;
-		};
 		F5DC71BD033DB4A801A8010C = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -1022,30 +997,6 @@
 			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = HextileEncodingReader.m;
-			refType = 4;
-		};
-		F5DC71BF033DB4A801A8010C = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = HighColorFrameBuffer.h;
-			refType = 4;
-		};
-		F5DC71C0033DB4A801A8010C = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = HighColorFrameBuffer.m;
-			refType = 4;
-		};
-		F5DC71CE033DB4A801A8010C = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = LowColorFrameBuffer.h;
-			refType = 4;
-		};
-		F5DC71CF033DB4A801A8010C = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			path = LowColorFrameBuffer.m;
 			refType = 4;
 		};
 		F5DC71D1033DB4A801A8010C = {

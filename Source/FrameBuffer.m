@@ -22,6 +22,137 @@
 
 @implementation FrameBuffer
 
+- (id)initWithSize:(NSSize)aSize andFormat:(rfbPixelFormat*)theFormat
+{
+    originPoint.x = originPoint.y = 0.0;
+
+    union {
+        unsigned char	c[2];
+        unsigned short	s;
+    } x;
+
+    if (self = [super init]) {
+        x.s = 0x1234;
+        isBig = (x.c[0] == 0x12);
+        size = aSize;
+        /*
+         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(monitor:)
+                                        userInfo:nil repeats:YES];
+         */
+    }
+    bitsPerPixel = 32; // Start with some default, anyway...
+    return self;
+}
+
+- (void)setPixelFormat:(rfbPixelFormat*)theFormat
+{
+    int		i;
+    double	rweight, gweight, bweight, gamma = 1.0/[RFBConnectionManager gammaCorrection];
+
+    fprintf(stderr, "rfbPixelFormat redMax = %d\n", theFormat->redMax);
+    fprintf(stderr, "rfbPixelFormat greenMax = %d\n", theFormat->greenMax);
+    fprintf(stderr, "rfbPixelFormat blueMax = %d\n", theFormat->blueMax);
+    if(theFormat->redMax > 255)
+        theFormat->redMax = 255;		/* limit at our LUT size */
+    if(theFormat->greenMax > 255)
+        theFormat->greenMax = 255;	/* limit at our LUT size */
+    if(theFormat->blueMax > 255)
+        theFormat->blueMax = 255;	/* limit at our LUT size */
+    memcpy(&pixelFormat, theFormat, sizeof(pixelFormat));
+
+    if(samplesPerPixel == 1) {			/* greyscale */
+        rweight = 0.3;
+        gweight = 0.59;
+        bweight = 0.11;
+    } else {
+        rweight = gweight = bweight = 1.0;
+    }
+
+    for(i=0; i<=theFormat->redMax; i++) {
+        redClut[i] = (int)(rweight * pow((double)i / (double)theFormat->redMax, gamma) * maxValue + 0.5) << rshift;
+    }
+    for(i=0; i<=theFormat->greenMax; i++) {
+        greenClut[i] = (int)(gweight * pow((double)i / (double)theFormat->greenMax, gamma) * maxValue + 0.5) << gshift;
+    }
+    for(i=0; i<=theFormat->blueMax; i++) {
+        blueClut[i] = (int)(bweight * pow((double)i / (double)theFormat->blueMax, gamma) * maxValue + 0.5) << bshift;
+    }
+}
+
+- (NSSize)size
+{
+    return size;
+}
+
+- (void)setTarget:(NSImage *) targetView
+{
+    target = targetView; // Note, the target owns us - we don't retain it.
+}
+
+- (unsigned int)bytesPerPixel
+{
+    return (unsigned int)bitsPerPixel / 8;
+}
+
+- (unsigned int)tightBytesPerPixel
+{
+    if((pixelFormat.bitsPerPixel == 32) &&
+       (pixelFormat.depth == 24) &&
+       (pixelFormat.redMax == 0xff) &&
+       (pixelFormat.greenMax == 0xff) &&
+       (pixelFormat.blueMax == 0xff)) {
+        return 3;
+    } else {
+        return [self bytesPerPixel];
+    }
+}
+
+- (void)getRGB:(float*)rgb fromPixel:(unsigned char*)pixValue
+{
+    [self ns_pixelData:pixValue toFloat:rgb];
+    return;
+}
+
+/* Looks like a bad hack for the rect list drawing.  Probably should be removed/refactored */
+- (void)ns_pixelData:(unsigned char *) v toFloat:(float *)clr
+{
+    unsigned int *pix = 0;
+
+    switch([self bytesPerPixel]) {
+        /*
+        case 1:
+            pix = *v;
+            break;
+        case 2:
+            if([self pixelFormat].bigEndian) {
+                pix = *v++; pix <<= 8; pix += *v;
+            } else {
+                pix = *v++; pix += (((unsigned int)*v) << 8);
+            }
+            break;
+            */
+        case 4:
+            clr[0] = (float) v[2]/255.0;
+            clr[1] = (float) v[1]/255.0;
+            clr[2] = (float) v[0]/255.0;
+            break;
+        default:
+            NSLog(@"Dunno how to ns_pixelData for %d yet", [self bytesPerPixel]);
+    }
+}
+
+- (int) bitsPerPixel
+{
+    return bitsPerPixel;
+}
+
+- (void)setBitsPerPixel:(int) newValue
+{
+    bitsPerPixel = newValue;
+}
+
+#ifdef TOTALLY_OBSOLETE
+
 - (void)dealloc
 {
     //free(pixels);
@@ -29,43 +160,6 @@
 }
 
 /* --------------------------------------------------------------------------------- */
-static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
-{
-    unsigned int pix = 0;
-
-    switch(this->pixelFormat.bitsPerPixel / 8) {
-        case 1:
-            pix = *v;
-            break;
-        case 2:
-            if(this->pixelFormat.bigEndian) {
-                pix = *v++; pix <<= 8; pix += *v;
-            } else {
-                pix = *v++; pix += (((unsigned int)*v) << 8);
-            }
-            break;
-        case 4:
-            if(this->pixelFormat.bigEndian) {
-                pix = *v++; pix <<= 8;
-                pix += *v++; pix <<= 8;
-                pix += *v++; pix <<= 8;
-                pix += *v;
-            } else {
-                pix = *v++;
-                pix += (((unsigned int)*v++) << 8);
-                pix += (((unsigned int)*v++) << 16);
-                pix += (((unsigned int)*v) << 24);
-            }
-            break;
-    }
-    clr[0] = (float)(this->redClut[(pix >> this->pixelFormat.redShift) & this->pixelFormat.redMax] >> this->rshift) / this->maxValue;
-    clr[1] = (float)(this->greenClut[(pix >> this->pixelFormat.greenShift) & this->pixelFormat.greenMax] >> this->gshift) / this->maxValue;
-    clr[2] = (float)(this->blueClut[(pix >> this->pixelFormat.blueShift) & this->pixelFormat.blueMax] >> this->bshift) / this->maxValue;
-    if(this->samplesPerPixel == 1) {	/* greyscale */
-        clr[0] += clr[1] + clr[2];
-        clr[1] = clr[2] = clr[0];
-    }
-}
 
 /* --------------------------------------------------------------------------------- */
 #define TO_PIX(p,s)							\
@@ -217,48 +311,8 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 }
 
 /* --------------------------------------------------------------------------------- */
-- (void)setPixelFormat:(rfbPixelFormat*)theFormat
-{
-    int		i;
-    double	rweight, gweight, bweight, gamma = 1.0/[RFBConnectionManager gammaCorrection];
-
-    fprintf(stderr, "rfbPixelFormat redMax = %d\n", theFormat->redMax);
-    fprintf(stderr, "rfbPixelFormat greenMax = %d\n", theFormat->greenMax);
-    fprintf(stderr, "rfbPixelFormat blueMax = %d\n", theFormat->blueMax);
-    if(theFormat->redMax > 255)
-        theFormat->redMax = 255;		/* limit at our LUT size */
-    if(theFormat->greenMax > 255)
-        theFormat->greenMax = 255;	/* limit at our LUT size */
-    if(theFormat->blueMax > 255)
-        theFormat->blueMax = 255;	/* limit at our LUT size */
-    memcpy(&pixelFormat, theFormat, sizeof(pixelFormat));
-    bytesPerPixel = pixelFormat.bitsPerPixel / 8;
-	
-    if(samplesPerPixel == 1) {			/* greyscale */
-        rweight = 0.3;
-        gweight = 0.59;
-        bweight = 0.11;
-    } else {
-        rweight = gweight = bweight = 1.0;
-    }
-
-    for(i=0; i<=theFormat->redMax; i++) {
-        redClut[i] = (int)(rweight * pow((double)i / (double)theFormat->redMax, gamma) * maxValue + 0.5) << rshift;
-    }
-    for(i=0; i<=theFormat->greenMax; i++) {
-        greenClut[i] = (int)(gweight * pow((double)i / (double)theFormat->greenMax, gamma) * maxValue + 0.5) << gshift;
-    }
-    for(i=0; i<=theFormat->blueMax; i++) {
-        blueClut[i] = (int)(bweight * pow((double)i / (double)theFormat->blueMax, gamma) * maxValue + 0.5) << bshift;
-    }
-}
 
 /* --------------------------------------------------------------------------------- */
-
-- (void)setTarget:(NSImage *) targetView
-{
-    target = targetView; // Note, the target owns us - we don't retain it.
-}
 
 /* --------------------------------------------------------------------------------- */
 + (BOOL)bigEndian
@@ -279,26 +333,6 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 }
 
 /* --------------------------------------------------------------------------------- */
-- (id)initWithSize:(NSSize)aSize andFormat:(rfbPixelFormat*)theFormat
-{
-    originPoint.x = originPoint.y = 0.0;
-    
-    union {
-        unsigned char	c[2];
-        unsigned short	s;
-    } x;
-
-    if (self = [super init]) {
-		x.s = 0x1234;
-		isBig = (x.c[0] == 0x12);
-		size = aSize;
-/*
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(monitor:)
-                                   userInfo:nil repeats:YES];
-*/
-	}
-    return self;
-}
 
 /* --------------------------------------------------------------------------------- */
 - (void)monitor:(id)sender
@@ -335,29 +369,8 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 }
 
 /* --------------------------------------------------------------------------------- */
-- (NSSize)size
-{
-    return size;
-}
 
 /* --------------------------------------------------------------------------------- */
-- (unsigned int)bytesPerPixel
-{
-    return bytesPerPixel;
-}
-
-- (unsigned int)tightBytesPerPixel
-{
-    if((pixelFormat.bitsPerPixel == 32) &&
-        (pixelFormat.depth == 24) &&
-        (pixelFormat.redMax == 0xff) &&
-        (pixelFormat.greenMax == 0xff) &&
-        (pixelFormat.blueMax == 0xff)) {
-        return 3;
-    } else {
-        return bytesPerPixel;
-    }
-}
 
 /* --------------------------------------------------------------------------------- */
 - (NSColor*)nsColorFromPixel:(unsigned char*)pixValue
@@ -369,25 +382,7 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 }
 
 /* --------------------------------------------------------------------------------- */
-- (void)getRGB:(float*)rgb fromPixel:(unsigned char*)pixValue
-{
-    ns_pixel(pixValue, self, rgb);
-}
-
-/* --------------------------------------------------------------------------------- */
-- (void)fillColor:(FrameBufferColor*)fbc fromPixel:(unsigned char*)pixValue {}
-- (void)fillColor:(FrameBufferColor*)fbc fromTightPixel:(unsigned char*)pixValue {}
-- (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue {}
-- (void)fillRect:(NSRect)aRect withFbColor:(FrameBufferColor*)fbc {}
-- (void)copyRect:(NSRect)aRect to:(NSPoint)aPoint {}
-- (void)putRect:(NSRect)aRect fromData:(unsigned char*)data {}
-- (void)drawRect:(NSRect)aRect at:(NSPoint)aPoint {}
-- (void)fillRect:(NSRect)aRect tightPixel:(unsigned char*)pixValue {}
-- (void)putRect:(NSRect)aRect fromTightData:(unsigned char*)data {}
-- (void)putRect:(NSRect)aRect withColors:(FrameBufferPaletteIndex*)data fromPalette:(FrameBufferColor*)palette {}
-- (void)putRun:(FrameBufferColor*)fbc ofLength:(int)length at:(NSRect)aRect pixelOffset:(int)offset {}
-- (void)putRect:(NSRect)aRect fromRGBBytes:(unsigned char*)rgb {}
-/* --------------------------------------------------------------------------------- */
+#endif TOTALLY_OBSOLETE
 
 @end
 

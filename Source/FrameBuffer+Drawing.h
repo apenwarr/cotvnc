@@ -12,38 +12,6 @@
 
 @interface FrameBuffer(Drawing)
 
-unsigned int cvt_pixel24(unsigned char* v, FrameBuffer* this);
-
-
-unsigned int cvt_pixel(unsigned char* v, FrameBuffer *this);
-
-
-/* --------------------------------------------------------------------------------- */
-- (void) remapRect:(NSRect *) aRect;
-
-- (FBColor)colorFromPixel:(unsigned char*)pixValue;
-- (FBColor)colorFromPixel24:(unsigned char*)pixValue;
-
-- (void)fillColor:(FrameBufferColor*)frameBufferColor fromPixel:(unsigned char*)pixValue;
-- (void)fillColor:(FrameBufferColor*)frameBufferColor fromTightPixel:(unsigned char*)pixValue;
-//- (void)fillRect:(NSRect)aRect withColor:(FBColor)aColor;
-
-- (void)putRect:(NSRect)aRect withColors:(FrameBufferPaletteIndex*)data fromPalette:(FrameBufferColor*)palette;
-
-- (void)putRun:(FrameBufferColor*)frameBufferColor ofLength:(int)length at:(NSRect)aRect pixelOffset:(int)offset;
-
-- (void)fillRect:(NSRect)aRect withFbColor:(FrameBufferColor*)frameBufferColor;
-- (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue;
-- (void)fillRect:(NSRect)aRect tightPixel:(unsigned char*)pixValue;
-
-- (void)copyRect:(NSRect)aRect to:(NSPoint)aPoint;
-
-- (void)putRect:(NSRect)aRect fromTightData:(unsigned char*)data;
-- (void)putRect:(NSRect)aRect fromRGBBytes:(unsigned char*)rgb;
-
-- (void)putRect:(NSRect)aRect fromData:(unsigned char*)data;
-
-- (void)drawRect:(NSRect)aRect at:(NSPoint)aPoint;
 
 /*
 NSDrawBitmap

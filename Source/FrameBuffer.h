@@ -44,7 +44,7 @@ typedef	unsigned int	FBColor;
     NSPoint 		originPoint; // AppKit doesn't define this for me?
     BOOL		isBig;
     NSSize		size;
-    int			bytesPerPixel;
+    int			bitsPerPixel;
     //unsigned int	*pixels;
     NSImage 		*target; // Do not retain - I'm am retained by the target
 @public
@@ -82,7 +82,6 @@ typedef	unsigned int	FBColor;
 
 - (void)fillColor:(FrameBufferColor*)fbc fromPixel:(unsigned char*)pixValue;
 - (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue;
-- (void)fillRect:(NSRect)aRect withFbColor:(FrameBufferColor*)fbc;
 - (void)copyRect:(NSRect)aRect to:(NSPoint)aPoint;
 - (void)putRect:(NSRect)aRect fromData:(unsigned char*)data;
 - (void)drawRect:(NSRect)aRect at:(NSPoint)aPoint;
@@ -97,6 +96,46 @@ typedef	unsigned int	FBColor;
 - (void)putRect:(NSRect)aRect withColors:(FrameBufferPaletteIndex*)data fromPalette:(FrameBufferColor*)palette;
 - (void)putRun:(FrameBufferColor*)fbc ofLength:(int)length at:(NSRect)aRect pixelOffset:(int)offset;
 - (void)putRect:(NSRect)aRect fromRGBBytes:(unsigned char*)rgb;
+
+
+    /* ############################################################### */
+    unsigned int cvt_pixel24(unsigned char* v, FrameBuffer* this);
+
+
+    unsigned int cvt_pixel(unsigned char* v, FrameBuffer *this);
+
+
+    /* --------------------------------------------------------------------------------- */
+- (void) remapRect:(NSRect *) aRect;
+
+- (FBColor)colorFromPixel:(unsigned char*)pixValue;
+
+- (NSColor *)nsColorFromReversePixel24:(unsigned char*)pixValue;
+
+- (void)fillColor:(FrameBufferColor*)frameBufferColor fromPixel:(unsigned char*)pixValue;
+- (void)fillColor:(FrameBufferColor*)frameBufferColor fromTightPixel:(unsigned char*)pixValue;
+
+- (void)fillRect:(NSRect)aRect withNSColor:(NSColor *)aColor;
+- (void)fillRect:(NSRect)aRect withReversedPixel:(unsigned char*)pixValue bytesPerPixel:(int)bpp;
+
+- (void)putRect:(NSRect)aRect withColors:(FrameBufferPaletteIndex*)data fromPalette:(FrameBufferColor*)palette;
+
+- (void)putRun:(FrameBufferColor*)frameBufferColor ofLength:(int)length at:(NSRect)aRect pixelOffset:(int)offset;
+
+- (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue;
+- (void)fillRect:(NSRect)aRect tightPixel:(unsigned char*)pixValue;
+
+- (void)copyRect:(NSRect)aRect to:(NSPoint)aPoint;
+
+- (void)putRect:(NSRect)aRect fromTightData:(unsigned char*)data;
+- (void)putRect:(NSRect)aRect fromRGBBytes:(unsigned char*)rgb;
+
+- (void)putRect:(NSRect)aRect fromData:(unsigned char*)data;
+- (void)putRect:(NSRect)aRect fromReversedData:(unsigned char*)data;
+
+- (void)drawRect:(NSRect)aRect at:(NSPoint)aPoint;
+
+
 
 @end
 

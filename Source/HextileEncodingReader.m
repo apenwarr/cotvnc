@@ -140,7 +140,6 @@
     [background autorelease];
     background = [frameBuffer nsColorFromReversePixel24:(unsigned char*)[data bytes]];
     [background retain];
-#warning new code
     [frameBuffer fillRect:currentTile withNSColor:background];
     [self checkSubEncoding];
 }
@@ -150,11 +149,8 @@
 #ifdef COLLECT_STATS
         bytesTransferred += [data length];
 #endif
-    //[frameBuffer fillColor:&foreground fromPixel:(unsigned char*)[data bytes]];
-#warning new code
     [foreground autorelease];
     foreground = [frameBuffer nsColorFromReversePixel24:(unsigned char*)[data bytes]];
-    //foreground = [NSColor whiteColor];
     [foreground retain];
     [self checkSubEncoding];
 }

@@ -73,18 +73,6 @@ unsigned int cvt_pixel(unsigned char* colorData, FrameBuffer *this)
         aRect->origin.y = ([target size].height - aRect->origin.y) - aRect->size.height;
 }
 
-/*
-- (FBColor)colorFromPixel:(unsigned char*)pixValue
-{
-    return (FBColor)cvt_pixel(pixValue, self);
-}
-
-- (FBColor)colorFromPixel24:(unsigned char*)pixValue
-{
-    return (FBColor)cvt_pixel24(pixValue, self);
-}
-*/
-
 - (NSColor *)nsColorFromPixel24:(unsigned char*)pixValue
 {
     return [NSColor colorWithCalibratedRed:(float) pixValue[0]/255.0 green:(float) pixValue[1]/255.0 blue:(float) pixValue[2]/255.0 alpha:1.0];
@@ -221,14 +209,6 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
         return;
 }
 
-/* ---------------------------------------------------------------------------------
- */
-- (void)fillRect:(NSRect)aRect withFbColor:(FrameBufferColor*)frameBufferColor
-{
-// This will fail XXXX
-    [self fillRect:aRect withColor:*((FBColor*)frameBufferColor)];
-}
- 
 /* --------------------------------------------------------------------------------- 
 */
 - (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue
@@ -238,59 +218,39 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
 
 - (NSColor *) colorFromChars:(unsigned char*)colorData bytesPerPixel:(int)bpp
 {
-    unsigned int pix = 0, col;
-
     switch(bpp) {
         case 1:
-            pix = *colorData;
             return [NSColor colorWithCalibratedRed:(float) colorData[0]/255.0 green:(float) colorData[0]/255.0 blue:(float) colorData[0]/255.0 alpha:1.0];
-            break;
+            /*
         case 2:
-            if(FALSE /*&& [self pixelFormat] == bigEndian*/) {
-                pix = *colorData++; pix <<= 8; pix += *colorData;
-            } else {
-                pix = *colorData++; pix += (((unsigned int)*colorData) << 8);
-            }
+            pix = *colorData++; pix += (((unsigned int)*colorData) << 8);
             break;
+            */
         case 4:
-            if(FALSE /*&& [self pixelFormat] == bigEndian*/) {
-                pix = *colorData++; pix <<= 8;
-                pix += *colorData++; pix <<= 8;
-                pix += *colorData++; pix <<= 8;
-                pix += *colorData;
-            } else {
                 return [NSColor colorWithCalibratedRed:(float) colorData[0]/255.0 green:(float) colorData[1]/255.0 blue:(float) colorData[2]/255.0 alpha:1.0];
-            }
-            break;
+        default:
+            NSLog(@"Don't know how do to colorFromReversedChars for %d bpp", bpp);
     }
-    /*
-     col = this->redClut[(pix >> this->pixelFormat.redShift) & this->pixelFormat.redMax];
-     col += this->greenClut[(pix >> this->pixelFormat.greenShift) & this->pixelFormat.greenMax];
-     col += this->blueClut[(pix >> this->pixelFormat.blueShift) & this->pixelFormat.blueMax];
-     */
-    return col;
+    return nil;
 }
 
 - (NSColor *) colorFromReversedChars:(unsigned char*)colorData bytesPerPixel:(int)bpp
 {
-    unsigned int pix = 0, col;
-
     switch(bpp) {
         case 1:
-            pix = *colorData;
             return [NSColor colorWithCalibratedRed:(float) colorData[0]/255.0 green:(float) colorData[0]/255.0 blue:(float) colorData[0]/255.0 alpha:1.0];
             break;
+            /*
         case 2:
-            if(FALSE /*&& [self pixelFormat] == bigEndian*/) {
-                pix = *colorData++; pix <<= 8; pix += *colorData;
-            } else {
-                pix = *colorData++; pix += (((unsigned int)*colorData) << 8);
-            }
+            pix = *colorData++; pix += (((unsigned int)*colorData) << 8);
             break;
+            */
         case 4:
             return [NSColor colorWithCalibratedRed:(float) colorData[2]/255.0 green:(float) colorData[1]/255.0 blue:(float) colorData[0]/255.0 alpha:1.0];
+        default:
+            NSLog(@"Don't know how do to colorFromReversedChars for %d bpp", bpp);
     }
-    return col;
+    return nil;
 }
 
 - (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue bytesPerPixel:(int)bpp

@@ -306,7 +306,7 @@ static RFBConnectionManager*	sharedManager = nil;
 
 + (void)getLocalPixelFormat:(rfbPixelFormat*)pf
 {
-    id fbc = [sharedManager selectedFrameBufferClass];
+    //id fbc = [sharedManager selectedFrameBufferClass];
 
     //[fbc getPixelFormat:pf];
 }
