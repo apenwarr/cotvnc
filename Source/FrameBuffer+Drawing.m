@@ -233,9 +233,7 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
 */
 - (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue
 {
-    // This will fail XXXX
     [self fillRect:aRect withNSColor:[self nsColorFromPixel24:pixValue]];
-    //    [self fillRect:aRect withColor:[self colorFromPixel:pixValue]];
 }
 
 - (NSColor *) colorFromChars:(unsigned char*)colorData bytesPerPixel:(int)bpp

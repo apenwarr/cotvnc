@@ -137,7 +137,7 @@
         r.origin.y = ntohs(subRect.y) + frame.origin.y;
         r.size.width = ntohs(subRect.w);
         r.size.height = ntohs(subRect.h);
-        [frameBuffer fillRect:r withPixel:pixptr];
+        [frameBuffer fillRect:r withReversedPixel:pixptr bytesPerPixel:4];
         if(useList) {
             [rectList putRectangle:r withColor:rgb];
         }
