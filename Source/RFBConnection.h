@@ -22,6 +22,7 @@
 #import "Profile.h"
 #import "rfbproto.h"
 #import "RFBProtocol.h"
+#import "RFBView.h"
 
 #define RFB_HOST		@"Host"
 #define RFB_PASSWORD		@"Password"
@@ -42,9 +43,9 @@
 
 @interface RFBConnection : ByteReader
 {
-    id rfbView;
-    NSWindow *window;
-    FrameBuffer* frameBuffer;
+    RFBView		*rfbView;
+    NSWindow		*window;
+    FrameBuffer		*frameBuffer;
     id manager;
     id socketHandler;
     id currentReader;
@@ -53,7 +54,7 @@
     id dictionary;
     id serverVersion;
     RFBProtocol *rfbProtocol;
-    NSScrollView *scrollView;
+    NSScrollView	*scrollView;
     id newTitleField;
     NSPanel *newTitlePanel;
     NSString *titleString;

@@ -254,19 +254,10 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 }
 
 /* --------------------------------------------------------------------------------- */
-+ (void)getPixelFormat:(rfbPixelFormat*)pf
-{
-}
 
 - (void)setTarget:(NSImage *) targetView
 {
     target = targetView; // Note, the target owns us - we don't retain it.
-}
-
-- (int)getPixelSize
-{
-    NSLog(@"Should never have called FrameBuffer's getPixelSize");
-    return 0; // HA - that will show them!
 }
 
 /* --------------------------------------------------------------------------------- */

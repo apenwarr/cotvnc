@@ -40,6 +40,7 @@
     [fbuf autorelease];
     [remoteScreenImage autorelease];
     remoteScreenImage = [[NSImage alloc] initWithSize:[aBuffer size]];
+
     fbuf = [aBuffer retain];
     [fbuf setTarget:remoteScreenImage];
     f.size = [aBuffer size];

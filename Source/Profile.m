@@ -145,6 +145,7 @@ static CARD32 getcode(NSString* s)
     return (i == 0) ? YES : NO;
 }
 
+/* Not used?
 - (void)getPixelFormat:(rfbPixelFormat*)format
 {
     int i = [[info objectForKey:PixelFormat] intValue];
@@ -192,5 +193,5 @@ static CARD32 getcode(NSString* s)
             break;
     }
 }
-
+*/
 @end

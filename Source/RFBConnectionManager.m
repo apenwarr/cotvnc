@@ -308,7 +308,7 @@ static RFBConnectionManager*	sharedManager = nil;
 {
     id fbc = [sharedManager selectedFrameBufferClass];
 
-    [fbc getPixelFormat:pf];
+    //[fbc getPixelFormat:pf];
 }
 
 + (float)gammaCorrection

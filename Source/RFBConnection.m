@@ -280,18 +280,14 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     }
 	// jason added
 	if (_isFullscreen && !usesFullscreenScrollers)
+        {
 		horizontalScroll = verticalScroll = NO;
+                }
 	// end jason
 		maxviewsize = [NSScrollView frameSizeForContentSize:[rfbView frame].size
                                   hasHorizontalScroller:horizontalScroll
                                     hasVerticalScroller:verticalScroll
                                              borderType:NSNoBorder];
-    if(aSize.width < maxviewsize.width) {
-        horizontalScroll = YES;
-    }
-    if(aSize.height < maxviewsize.height) {
-        verticalScroll = YES;
-    }
 	// jason added
 	if (_isFullscreen && !usesFullscreenScrollers)
 		horizontalScroll = verticalScroll = NO;
@@ -953,17 +949,42 @@ static void print_data(unsigned char* data, int length)
 
 - (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize
 {
-    NSSize max = [self _maxSizeForWindowSize:proposedFrameSize];
+    NSSize max = proposedFrameSize;
+    NSSize viewSize = [rfbView bounds].size;
+    NSSize neededSize = viewSize;
 
-    max.width = (proposedFrameSize.width > max.width) ? max.width : proposedFrameSize.width;
-    max.height = (proposedFrameSize.height > max.height) ? max.height : proposedFrameSize.height;
+    if ([scrollView hasVerticalScroller]) {
+        neededSize.width += [NSScroller scrollerWidth];
+    }
+    if ([scrollView hasHorizontalScroller]) {
+        neededSize.height += [NSScroller scrollerWidth];
+    }
+    
+    if (proposedFrameSize.width > neededSize.width) {
+        max.width = neededSize.width;
+        [scrollView setHasHorizontalScroller:FALSE];
+    } else {
+        max.width = proposedFrameSize.width;
+        [scrollView setHasHorizontalScroller:TRUE];
+    }
+    
+    if (proposedFrameSize.height > neededSize.height) {
+        max.height = neededSize.height;
+        [scrollView setHasVerticalScroller:FALSE];
+    } else {
+        max.height = proposedFrameSize.height;
+        [scrollView setHasVerticalScroller:TRUE];
+    }
+    
     return max;
 }
 
 - (void)windowDidResize:(NSNotification *)aNotification
 {
+/*
 	[scrollView setHasHorizontalScroller:horizontalScroll];
 	[scrollView setHasVerticalScroller:verticalScroll];
+        */
 	if (_isFullscreen) {
 		[self removeFullscreenTrackingRects];
 		[self installFullscreenTrackingRects];
@@ -1045,8 +1066,8 @@ static NSString* byteString(double d)
 	[scrollView release];
 	_isFullscreen = NO;
 	[self _maxSizeForWindowSize: [[window contentView] frame].size];
-	[scrollView setHasHorizontalScroller:horizontalScroll];
-	[scrollView setHasVerticalScroller:verticalScroll];
+	[scrollView setHasHorizontalScroller:TRUE];
+	[scrollView setHasVerticalScroller:TRUE];
 	[window makeFirstResponder: rfbView];
 	[window makeKeyAndOrderFront:nil];
         [window setTitle:titleString];
@@ -1082,7 +1103,7 @@ static NSString* byteString(double d)
 											backing:NSBackingStoreBuffered
 											defer:NO
 											screen:[NSScreen mainScreen]];
-		[window setDelegate: self];
+                [window setDelegate: self];
 		[(NSWindow *)window setContentView: scrollView];
 		[scrollView release];
 		[window setLevel:windowLevel];

@@ -68,12 +68,8 @@ typedef	unsigned int	FBColor;
 }
 
 + (BOOL)bigEndian;
-+ (void)getPixelFormat:(rfbPixelFormat*)pf;
 
 - (void)setTarget:(NSImage *) targetView;
-
-// Return the size of pixels data used in this framebuffer.
-- (int)getPixelSize;
 
 - (id)initWithSize:(NSSize)aSize andFormat:(rfbPixelFormat*)theFormat;
 - (unsigned int)bytesPerPixel;

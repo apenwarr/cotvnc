@@ -27,8 +27,6 @@
 - (id)initWithSize:(NSSize)aSize andFormat:(rfbPixelFormat*)theFormat
 {
     if (self = [super initWithSize:aSize andFormat:theFormat]) {
-		unsigned int sps;
-	
 		if(isBig) {
 			rshift = 12;
 			gshift = 8;
@@ -44,22 +42,6 @@
 		[self setPixelFormat:theFormat];
 	}
     return self;
-}
-
-- (int)getPixelSize
-{
-    return sizeof(unsigned short);
-}
-
-
-+ (void)getPixelFormat:(rfbPixelFormat*)aFormat
-{
-   aFormat->bitsPerPixel = 16;
-   aFormat->redMax = aFormat->greenMax = aFormat->blueMax = 15;
-   aFormat->redShift = 4;
-   aFormat->greenShift = 0;
-   aFormat->blueShift = 12;
-   aFormat->depth = 16;
 }
 
 @end

@@ -118,26 +118,6 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
     [aColor set];
     NSRectFill(aRect);
     [target unlockFocus];
-    [self refreshTargetRect:aRect];
-}
-
-- (void) refreshTargetRect:(NSRect) aRect
-{
-/*
-    [target lockFocus];
-    [target compositeToPoint:aRect.origin fromRect:aRect operation:NSCompositeSourceOver];
-    [target unlockFocus];
-    */
-/* 
-Fails 
-    [target drawRect:aRect];
-     */
-    /* 
-    Dead slow 
-    [target lockFocus];
-    [target compositeToPoint:originPoint operation:NSCompositeSourceOver];
-    [target unlockFocus];
-    */
 }
 
 /*
@@ -170,7 +150,6 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
     [[NSColor whiteColor] set];
     NSRectFill(aRect);
     [target unlockFocus];
-    [self refreshTargetRect:aRect];
 }
     */
 
@@ -272,7 +251,6 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
     [copyRect drawAtPoint:targetRect.origin];
     [copyRect autorelease];
     [target unlockFocus];
-    [self refreshTargetRect:targetRect];
 /*
         int line_step, src_start_x, dst_start_x;
         int stride, src_start_y, dst_start_y;
@@ -330,7 +308,6 @@ printf("copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
         [target lockFocus];
 	NSDrawBitmap(aRect, aRect.size.width, aRect.size.height, 8, 3, 8 * 3, aRect.size.width * 3, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&data);
 	[target unlockFocus];
-    [self refreshTargetRect:aRect];
     } else {
         [self putRect:aRect fromData:data];
     }
@@ -418,7 +395,6 @@ printf("copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
                     break;
         }
 	[target unlockFocus];
-    [self refreshTargetRect:aRect];
 }
 
 /* --------------------------------------------------------------------------------- */

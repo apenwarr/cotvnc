@@ -56,7 +56,7 @@ typedef enum {
 - (CARD16)numberOfEnabledEncodings;
 - (CARD32)encodingAtIndex:(unsigned)index;
 - (BOOL)useServerNativeFormat;
-- (void)getPixelFormat:(rfbPixelFormat*)format;
+//- (void)getPixelFormat:(rfbPixelFormat*)format;
 - (NSString*)profileName;
 
 @end

@@ -46,21 +46,6 @@
     return self;
 }
 
-- (int)getPixelSize
-{
-    return sizeof(unsigned int);
-}
-
-+ (void)getPixelFormat:(rfbPixelFormat*)aFormat
-{
-   aFormat->bitsPerPixel = 32;
-   aFormat->redMax = aFormat->greenMax = aFormat->blueMax = 255;
-   aFormat->redShift = 0;
-   aFormat->greenShift = 8;
-   aFormat->blueShift = 16;
-   aFormat->depth = 24;
-}
-
 #include "FrameBufferDrawing.h"
 
 @end
