@@ -94,7 +94,7 @@
 
 + (id<IServerData>)createWithName:(NSString*)name
 {
-	ServerFromPrefs* newServer = [[ServerFromPrefs alloc] initWithDefaults];
+	ServerFromPrefs* newServer = [[ServerFromPrefs alloc] init];
 	[newServer setName:name];
 	
 	return newServer;
