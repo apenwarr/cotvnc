@@ -103,9 +103,6 @@ static ServerDataManager* instance = nil;
 			instance = [[ServerDataManager alloc] initWithOriginalPrefs];
 			
 			[instance save];
-			
-			// Now that we've saved to the new format, remove from the old one
-			[[NSUserDefaults standardUserDefaults] removeObjectForKey:RFB_HOST_INFO];
 		}
 		else
 		{
