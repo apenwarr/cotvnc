@@ -38,8 +38,6 @@
 #define NUM_BUTTON_EMU_KEYS	2
 
 // jason added the following constants for fullscreen display
-#define kFullscreenSwitchKey		'`'
-#define kFullscreenSwitchModifiers	(NSCommandKeyMask | NSAlternateKeyMask | NSControlKeyMask)
 #define kTrackingRectThickness		10.0
 #define kAutoscrollInterval			0.05
 
@@ -156,6 +154,7 @@
 
 // Jason added the following for full-screen windows
 - (BOOL)connectionIsFullscreen;
+- (IBAction)toggleFullscreenMode: (id)sender;
 - (IBAction)makeConnectionWindowed: (id)sender;
 - (IBAction)makeConnectionFullscreen: (id)sender;
 - (void)installMouseMovedTrackingRect;

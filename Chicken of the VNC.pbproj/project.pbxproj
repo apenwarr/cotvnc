@@ -90,6 +90,7 @@
 				F5DC7172033DB3DC01A8010C,
 				F5DC7175033DB40D01A8010C,
 				F5DC7177033DB40D01A8010C,
+				E21FE430062B79350059585C,
 				F5DC717C033DB40D01A8010C,
 				F5DC717B033DB40D01A8010C,
 				F5DC7178033DB40D01A8010C,
@@ -285,6 +286,12 @@
 				7F7A941605E71B5C00E20416,
 				7F7A941705E71B5C00E20416,
 				7FBB0A6A05F5BC9700F716C4,
+				E21FE44A062B79AB0059585C,
+				E21FE44C062B79AB0059585C,
+				E21FE44F062B79AB0059585C,
+				E21FE450062B79AB0059585C,
+				E21FE452062B79AB0059585C,
+				E21FE454062B79AB0059585C,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -612,6 +619,7 @@
 				7F7A942405E71B5C00E20416,
 				E21FE257062B6C8D0059585C,
 				E21FE263062B6D310059585C,
+				E21FE431062B79350059585C,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -741,6 +749,12 @@
 				7F7A945605E71B5C00E20416,
 				7F7A945705E71B5C00E20416,
 				7FBB0A6B05F5BC9700F716C4,
+				E21FE449062B79AB0059585C,
+				E21FE44B062B79AB0059585C,
+				E21FE44D062B79AB0059585C,
+				E21FE44E062B79AB0059585C,
+				E21FE451062B79AB0059585C,
+				E21FE453062B79AB0059585C,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1230,6 +1244,209 @@
 			settings = {
 			};
 		};
+		E21FE430062B79350059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			name = KeyEquivalentScenarios.plist;
+			path = Resources/KeyEquivalentScenarios.plist;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE431062B79350059585C = {
+			fileRef = E21FE430062B79350059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE439062B79940059585C = {
+			children = (
+				E21FE440062B79AB0059585C,
+				E21FE43F062B79AB0059585C,
+				E21FE43E062B79AB0059585C,
+				E21FE441062B79AB0059585C,
+				E21FE448062B79AB0059585C,
+				E21FE442062B79AB0059585C,
+				E21FE443062B79AB0059585C,
+				E21FE447062B79AB0059585C,
+				E21FE446062B79AB0059585C,
+				E21FE43D062B79AB0059585C,
+				E21FE444062B79AB0059585C,
+				E21FE445062B79AB0059585C,
+			);
+			isa = PBXGroup;
+			name = KeyEquivalents;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE43D062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = KeyEquivalentScenario.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE43E062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = KeyEquivalentEntry.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE43F062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = KeyEquivalent.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE440062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = KeyEquivalent.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE441062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = KeyEquivalentEntry.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE442062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = KeyEquivalentManager.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE443062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = KeyEquivalentPrefsController.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE444062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = KeyEquivalentTextView.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE445062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = KeyEquivalentTextView.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE446062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = KeyEquivalentScenario.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE447062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = KeyEquivalentPrefsController.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE448062B79AB0059585C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = KeyEquivalentManager.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E21FE449062B79AB0059585C = {
+			fileRef = E21FE43D062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE44A062B79AB0059585C = {
+			fileRef = E21FE43E062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE44B062B79AB0059585C = {
+			fileRef = E21FE43F062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE44C062B79AB0059585C = {
+			fileRef = E21FE440062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE44D062B79AB0059585C = {
+			fileRef = E21FE441062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE44E062B79AB0059585C = {
+			fileRef = E21FE442062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE44F062B79AB0059585C = {
+			fileRef = E21FE443062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE450062B79AB0059585C = {
+			fileRef = E21FE444062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE451062B79AB0059585C = {
+			fileRef = E21FE445062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE452062B79AB0059585C = {
+			fileRef = E21FE446062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE453062B79AB0059585C = {
+			fileRef = E21FE447062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E21FE454062B79AB0059585C = {
+			fileRef = E21FE448062B79AB0059585C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		E228FA2704439B7D00F873F6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = text.rtf;
@@ -1484,6 +1701,7 @@
 		};
 		F5DC7198033DB4A801A8010C = {
 			children = (
+				E21FE439062B79940059585C,
 				7FC6DF2405C315680028A970,
 				F5DC719B033DB4A801A8010C,
 				F5DC719C033DB4A801A8010C,

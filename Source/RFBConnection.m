@@ -26,6 +26,7 @@
 #import "FrameBuffer.h"
 #import "RectangleList.h"
 #import "FrameBufferUpdateReader.h"
+#import "KeyEquivalentManager.h"
 #import "EncodingReader.h"
 #import "IServerData.h"
 #include <unistd.h>
@@ -934,27 +935,27 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 {
 	NSString *characters;
 	int i, length;
-
+	
 	// Jason - decomposedStringWithCanonicalMapping is a jaguar-only API call
 	if (gIsJaguar)
 		characters = [[theEvent charactersIgnoringModifiers] decomposedStringWithCanonicalMapping];
 	else
 		characters = [theEvent charactersIgnoringModifiers];
-
+	
+	// if this is a key equivalent, perform it and get the rock outta here
+	if ( aFlag && characters && [[KeyEquivalentManager defaultManager] performEquivalentWithCharacters: characters modifiers: [theEvent modifierFlags] & 0xFFFF0000] )
+	{
+		[self clearEmulationActiveMask];
+		buttonEmulationKeyDownMask = 0;
+		[self sendModifier:0];
+		return;
+	}
+	
 	length = [characters length];
 	for (i = 0; i < length; ++i) {
 		unichar c;
-
+		
 		c = [characters characterAtIndex: i];
-		if ( (c == kFullscreenSwitchKey) && (lastModifier == kFullscreenSwitchModifiers) ){
-			if (aFlag)
-				_isFullscreen ? [self makeConnectionWindowed: self] : [self makeConnectionFullscreen: self];
-			[self clearEmulationActiveMask];
-			buttonEmulationKeyDownMask = 0;
-			[self sendModifier:kFullscreenSwitchModifiers]; // Clear the modifier mask
-			[self sendModifier:0];
-			continue;
-		}
 		[self sendKey:c pressed:aFlag];
 	}
 }
@@ -1108,6 +1109,11 @@ static NSString* byteString(double d)
 	return _isFullscreen;
 }
 
+- (IBAction)toggleFullscreenMode: (id)sender
+{
+	_isFullscreen ? [self makeConnectionWindowed: self] : [self makeConnectionFullscreen: self];
+}
+
 - (IBAction)makeConnectionWindowed: (id)sender {
 	[self removeFullscreenTrackingRects];
 	[scrollView retain];
@@ -1176,7 +1182,7 @@ static NSString* byteString(double d)
 	BOOL displayFullscreenWarning = [[NSUserDefaults standardUserDefaults] boolForKey: @"DisplayFullscreenWarning"];
 
 	if (displayFullscreenWarning) {
-		NSBeginAlertSheet(@"Your connection is entering fullscreen mode", @"Fullscreen", @"Cancel", nil, window, self, nil, @selector(connectionWillGoFullscreen: returnCode: contextInfo: ), nil, @"You may return to windowed mode by pressing the key combination (command-option-control-`) at any time.\n\nPlease note that the character in this key command is the back-quote, the key next to the number '1' on American keyboards.");
+		NSBeginAlertSheet(@"Your connection is entering fullscreen mode", @"Fullscreen", @"Cancel", nil, window, self, nil, @selector(connectionWillGoFullscreen: returnCode: contextInfo: ), nil, @"You may return to windowed mode by pressing the proper key equivalent at any time.  You can change this key equivalent in the Preferences if necessary.");
 	} else {
 		[self connectionWillGoFullscreen:nil returnCode:NSAlertDefaultReturn contextInfo:nil]; 
 	}

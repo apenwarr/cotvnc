@@ -22,10 +22,10 @@
 #define NUMENCODINGS			8
 
 static const NSString* encodingNames[NUMENCODINGS] = {
-    @"Tight",
 	@"Zlib",
 	@"ZRLE",
 	@"ZlibHex",
+    @"Tight",
     @"Hextile",
     @"RRE",
     @"CoRRE",
@@ -33,10 +33,10 @@ static const NSString* encodingNames[NUMENCODINGS] = {
 };
 
 static const unsigned int encodingValues[NUMENCODINGS] = {
-	rfbEncodingTight,
 	rfbEncodingZlib,
 	rfbEncodingZRLE,
 	rfbEncodingZlibHex,
+	rfbEncodingTight,
 	rfbEncodingHextile,
     rfbEncodingRRE,
     rfbEncodingCoRRE,

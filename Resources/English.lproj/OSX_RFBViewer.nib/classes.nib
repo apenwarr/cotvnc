@@ -9,9 +9,17 @@
                 openOptions = id; 
                 pasteViaKeypress = id; 
                 sendCtrlAltDel = id; 
+                toggleFullscreenMode = id; 
             }; 
             CLASS = FirstResponder; 
             LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {changeSelectedScenario = id; restoreDefaults = id; }; 
+            CLASS = KeyEquivalentPrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {mConnectionType = NSPopUpButton; mOutlineView = NSOutlineView; }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = Profile; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
