@@ -1,5 +1,6 @@
 {
     IBClasses = (
+        {CLASS = AutoCompletingTextField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {
             ACTIONS = {
                 makeConnectionFullscreen = id; 
@@ -22,27 +23,24 @@
                 deleteProfile = id; 
                 profileChanged = id; 
                 profileSelected = id; 
-                reorderEncodings = id; 
             }; 
             CLASS = ProfileManager; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                altKey = id; 
-                commandKey = id; 
-                controlKey = id; 
-                deleteProfileButton = id; 
-                enableCopyRect = id; 
-                encodingTableView = id; 
-                m3bTimeout = id; 
-                mkbTimeout = id; 
-                mkdTimeout = id; 
-                newProfileButton = id; 
-                pixelFormatMatrix = id; 
-                profileBrowser = id; 
-                profileField = id; 
-                profilePanel = id; 
-                shiftKey = id; 
-                upDownButtonMatrix = id; 
+                altKey = NSPopUpButton; 
+                commandKey = NSPopUpButton; 
+                controlKey = NSPopUpButton; 
+                deleteProfileButton = NSButton; 
+                enableCopyRect = NSButton; 
+                encodingTableView = NSTableView; 
+                m3bTimeout = NSTextField; 
+                mkbTimeout = NSTextField; 
+                mkdTimeout = NSTextField; 
+                newProfileButton = NSButton; 
+                pixelFormatMatrix = NSMatrix; 
+                profileBrowser = NSTableView; 
+                profilePanel = NSWindow; 
+                shiftKey = NSPopUpButton; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
@@ -64,15 +62,14 @@
                 frontInverseCPUSlider = NSSlider; 
                 fullscreenScrollbars = NSButton; 
                 gamma = NSTextField; 
-                hostName = NSComboBox; 
-                loginPanel = NSPanel; 
+                hostName = AutoCompletingTextField; 
+                loginPanel = NSWindow; 
                 otherInverseCPUSlider = NSSlider; 
                 passWord = NSSecureTextField; 
                 profileManager = ProfileManager; 
                 profilePopup = NSPopUpButton; 
                 psMaxRects = NSTextField; 
                 psThreshold = NSTextField; 
-                rememberPwd = NSButton; 
                 shared = NSButton; 
             }; 
             SUPERCLASS = NSObject; 
