@@ -907,9 +907,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     }
     
     r.length = 1;
-	// Jason casted to NSString to avoid an ambiguity
     for(i=0; i<[(NSString *)sel length]; i++) {
-//    for(i=0; i<[sel length]; i++) {
         unichar c = [sel characterAtIndex:i];
         [self sendKey:c pressed:YES];
         [self sendKey:c pressed:NO];
@@ -918,7 +916,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     return YES;
 }
 
-- (void)pasteViaKeypress:(id)sender
+- (void)paste:(id)sender
 {
     [self pasteFromPasteboard:[NSPasteboard generalPasteboard]];
 }
@@ -932,34 +930,8 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 }
 
 /* --------------------------------------------------------------------------------- */
-- (void)paste:(id)sender
-{
-    rfbClientCutTextMsg*	msg;
-    NSPasteboard* pb = [NSPasteboard generalPasteboard];
-    id sel;
-    const char* s;
-    char* cp;
-
-    [pb types];
-    sel = [pb stringForType:NSStringPboardType];
-    s = [sel lossyCString];
-    if(s == NULL) {
-        return;
-    }
-    msg = malloc(sz_rfbClientCutTextMsg + strlen(s));
-    msg->type = rfbClientCutText;
-    msg->length = htonl(strlen(s));
-    cp = (char*)&msg->length;
-    cp += sizeof(CARD32);
-    memcpy(cp, s, strlen(s));
-    [self writeBytes:(unsigned char*)msg length:(sz_rfbClientCutTextMsg + strlen(s))];
-    free(msg);
-    [self sendModifier:lastModifier & ~NSCommandKeyMask];
-}
-
 - (void)processKey:(NSEvent*)theEvent pressed:(BOOL)aFlag
 {
-	// Jason rewrote this routine.  My rationale is that since the key is being sent to the server anyway, we'll just go ahead and map it into AutoKeyCodes.  This way, it seems transparent to the user, but we've still got a keymap that can be edited if the user has problems.  Also, I intercept kFullscreenSwitchKey and kFullscreenSwitchModifiers to switch fullscreen mode
 	NSString *characters;
 	int i, length;
 

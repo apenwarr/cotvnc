@@ -111,7 +111,6 @@
 
 - (void)paste:(id)sender;
 - (BOOL)pasteFromPasteboard:(NSPasteboard*)pb;
-- (void)pasteViaKeypress:(id)sender;
 - (void)setServerVersion:(NSString*)aVersion;
 - (void)terminateConnection:(NSString*)aReason;
 - (void)setDisplaySize:(NSSize)aSize andPixelFormat:(rfbPixelFormat*)pixf;
