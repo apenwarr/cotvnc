@@ -315,6 +315,7 @@ static ServerDataManager* gInstance = nil;
 {
 	[(NSObject *)server retain];
 
+	BOOL insertServer = NO;
 	NSMutableArray *groupsWithServer = [[[NSMutableArray alloc] init] autorelease];
 
 	// Remove original server/key pair
@@ -341,6 +342,8 @@ static ServerDataManager* gInstance = nil;
 		}
 
 		[mServers removeObjectForKey:[server name]];
+		
+		insertServer = YES;
 	}
 
 	// Check to see if new name is valid and update if it isn't
@@ -352,13 +355,16 @@ static ServerDataManager* gInstance = nil;
 	}
 	
 	// Insert updated server/key pair
-	NSString* groupName;
-	NSEnumerator* groupNames = [groupsWithServer objectEnumerator];
-	while( groupName = [groupNames nextObject] )
+	if( insertServer )
 	{
-		[[mGroups objectForKey:groupName] setObject:server forKey:name];
+		NSString* groupName;
+		NSEnumerator* groupNames = [groupsWithServer objectEnumerator];
+		while( groupName = [groupNames nextObject] )
+		{
+			[[mGroups objectForKey:groupName] setObject:server forKey:name];
+		}
+		[mServers setObject:server forKey:name];
 	}
-	[mServers setObject:server forKey:name];
 		
 	[(NSObject *)server release];
 }
