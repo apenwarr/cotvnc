@@ -17,8 +17,7 @@
 			sourceTree = "<group>";
 		};
 		1058C7A1FEA54F0111CA2CBB = {
-			fallbackIsa = PBXFileReference;
-			isa = PBXFrameworkReference;
+			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = Cocoa.framework;
 			path = /System/Library/Frameworks/Cocoa.framework;
@@ -129,8 +128,6 @@
 //4A3
 //4A4
 		4A9504CCFFE6A4B311CA0CBA = {
-			buildRules = (
-			);
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -145,8 +142,6 @@
 			name = Development;
 		};
 		4A9504CDFFE6A4B311CA0CBA = {
-			buildRules = (
-			);
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_LOCATION = YES;
@@ -301,6 +296,7 @@
 				E21FE454062B79AB0059585C,
 				7FFA8FEB062BA6330008D381,
 				7FB6A8D1068AB5E3005E5E49,
+				7FD35C1A06CC583A00648090,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -759,6 +755,7 @@
 				E21FE453062B79AB0059585C,
 				7FFA8FEC062BA6330008D381,
 				7FB6A8D2068AB5E7005E5E49,
+				7FD35C1B06CC583A00648090,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1180,6 +1177,48 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
+		7FD35C1706CC57FB00648090 = {
+			children = (
+				F5DC71D5033DB4A801A8010C,
+				F5DC71D6033DB4A801A8010C,
+				F5DC71D7033DB4A801A8010C,
+				F5DC71D8033DB4A801A8010C,
+				7FD35C1806CC583A00648090,
+				7FD35C1906CC583A00648090,
+			);
+			isa = PBXGroup;
+			name = Profiles;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7FD35C1806CC583A00648090 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = ProfileDataManager.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7FD35C1906CC583A00648090 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = ProfileDataManager.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7FD35C1A06CC583A00648090 = {
+			fileRef = 7FD35C1806CC583A00648090;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7FD35C1B06CC583A00648090 = {
+			fileRef = 7FD35C1906CC583A00648090;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		7FD66F5805E9E2B500229E5C = {
 			explicitFileType = wrapper.application;
 			includeInIndex = 0;
@@ -1271,7 +1310,7 @@
 		E21FE256062B6C8D0059585C = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = Info.plist;
 			path = Resources/Info.plist;
 			refType = 4;
@@ -1305,7 +1344,7 @@
 		E21FE430062B79350059585C = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = KeyEquivalentScenarios.plist;
 			path = Resources/KeyEquivalentScenarios.plist;
 			refType = 4;
@@ -1562,8 +1601,7 @@
 			sourceTree = "<group>";
 		};
 		E2F48D78040EDD5100BD55BA = {
-			fallbackIsa = PBXFileReference;
-			isa = PBXFrameworkReference;
+			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = Carbon.framework;
 			path = /System/Library/Frameworks/Carbon.framework;
@@ -1786,6 +1824,7 @@
 		F5DC7198033DB4A801A8010C = {
 			children = (
 				E21FE439062B79940059585C,
+				7FD35C1706CC57FB00648090,
 				7FC6DF2405C315680028A970,
 				F5DC719B033DB4A801A8010C,
 				F5DC719C033DB4A801A8010C,
@@ -1834,10 +1873,6 @@
 				F5DC71D2033DB4A801A8010C,
 				F5DC71D3033DB4A801A8010C,
 				F5DC71D4033DB4A801A8010C,
-				F5DC71D5033DB4A801A8010C,
-				F5DC71D6033DB4A801A8010C,
-				F5DC71D7033DB4A801A8010C,
-				F5DC71D8033DB4A801A8010C,
 				F5DC71D9033DB4A801A8010C,
 				F5DC71DA033DB4A801A8010C,
 				F5DC71DB033DB4A801A8010C,
