@@ -32,8 +32,7 @@
     id			numOfSubRectReader;
     id			subColorRectReader;
     id			subRectReader;
-    FrameBufferColor	background;
-    FrameBufferColor	foreground;
+    NSColor		*background, *foreground;
     CARD8		numOfSubRects;
     CARD8		subEncodingMask;
     NSRect		currentTile;

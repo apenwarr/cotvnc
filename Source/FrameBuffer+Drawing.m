@@ -11,51 +11,53 @@
 
 @implementation FrameBuffer(FrameBuffer_Drawing)
 
-unsigned int cvt_pixel24(unsigned char* v, FrameBuffer* this)
+unsigned int cvt_pixel24(unsigned char* colorData, FrameBuffer* this)
 {
     unsigned int pix = 0, col;
 
     if(this->pixelFormat.bigEndian) {
-        pix += *v++; pix <<= 8;
-        pix += *v++; pix <<= 8;
-        pix += *v;
+        pix += *colorData++; pix <<= 8;
+        pix += *colorData++; pix <<= 8;
+        pix += *colorData;
     } else {
-        pix = *v++;
-        pix += (((unsigned int)*v++) << 8);
-        pix += (((unsigned int)*v++) << 16);
+        pix = *colorData++;
+        pix += (((unsigned int)*colorData++) << 8);
+        pix += (((unsigned int)*colorData++) << 16);
     }
+    /*
     col = this->redClut[(pix >> this->pixelFormat.redShift) & this->pixelFormat.redMax];
     col += this->greenClut[(pix >> this->pixelFormat.greenShift) & this->pixelFormat.greenMax];
     col += this->blueClut[(pix >> this->pixelFormat.blueShift) & this->pixelFormat.blueMax];
+     */
     return col;
 }
 
-unsigned int cvt_pixel(unsigned char* v, FrameBuffer *this)
+unsigned int cvt_pixel(unsigned char* colorData, FrameBuffer *this)
 {
     unsigned int pix = 0, col;
 
     switch(this->pixelFormat.bitsPerPixel / 8) {
         case 1:
-            pix = *v;
+            pix = *colorData;
             break;
         case 2:
             if(this->pixelFormat.bigEndian) {
-                pix = *v++; pix <<= 8; pix += *v;
+                pix = *colorData++; pix <<= 8; pix += *colorData;
             } else {
-                pix = *v++; pix += (((unsigned int)*v) << 8);
+                pix = *colorData++; pix += (((unsigned int)*colorData) << 8);
             }
             break;
         case 4:
             if(this->pixelFormat.bigEndian) {
-                pix = *v++; pix <<= 8;
-                pix += *v++; pix <<= 8;
-                pix += *v++; pix <<= 8;
-                pix += *v;
+                pix = *colorData++; pix <<= 8;
+                pix += *colorData++; pix <<= 8;
+                pix += *colorData++; pix <<= 8;
+                pix += *colorData;
             } else {
-                pix = *v++;
-                pix += (((unsigned int)*v++) << 8);
-                pix += (((unsigned int)*v++) << 16);
-                pix += (((unsigned int)*v) << 24);
+                pix = *colorData++;
+                pix += (((unsigned int)*colorData++) << 8);
+                pix += (((unsigned int)*colorData++) << 16);
+                pix += (((unsigned int)*colorData) << 24);
             }
             break;
     }
@@ -101,6 +103,11 @@ unsigned int cvt_pixel(unsigned char* v, FrameBuffer *this)
 }
 
 /* --------------------------------------------------------------------------------- */
+- (void)fillRect:(NSRect)aRect withColor:(NSColor *)aColor
+{
+    NSLog(@"Should not be here.");
+}
+
 - (void)fillRect:(NSRect)aRect withNSColor:(NSColor *)aColor
 {	
 
@@ -217,17 +224,58 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
  
 /* --------------------------------------------------------------------------------- 
 */
-- (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue;
-{	
-// This will fail XXXX
-    [self fillRect:aRect withColor:[self colorFromPixel:pixValue]];
+- (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue
+{
+    // This will fail XXXX
+    [self fillRect:aRect withNSColor:[self nsColorFromPixel24:pixValue]];
+    //    [self fillRect:aRect withColor:[self colorFromPixel:pixValue]];
+}
+
+- (NSColor *) colorFromChars:(unsigned char*)colorData bytesPerPixel:(int)bpp
+{
+    unsigned int pix = 0, col;
+
+    switch(bpp) {
+        case 1:
+            pix = *colorData;
+            return [NSColor colorWithCalibratedRed:(float) colorData[0]/255.0 green:(float) colorData[0]/255.0 blue:(float) colorData[0]/255.0 alpha:1.0];
+            break;
+        case 2:
+            if(FALSE /*&& [self pixelFormat] == bigEndian*/) {
+                pix = *colorData++; pix <<= 8; pix += *colorData;
+            } else {
+                pix = *colorData++; pix += (((unsigned int)*colorData) << 8);
+            }
+            break;
+        case 4:
+            if(FALSE /*&& [self pixelFormat] == bigEndian*/) {
+                pix = *colorData++; pix <<= 8;
+                pix += *colorData++; pix <<= 8;
+                pix += *colorData++; pix <<= 8;
+                pix += *colorData;
+            } else {
+                return [NSColor colorWithCalibratedRed:(float) colorData[0]/255.0 green:(float) colorData[1]/255.0 blue:(float) colorData[2]/255.0 alpha:1.0];
+            }
+            break;
+    }
+    /*
+    col = this->redClut[(pix >> this->pixelFormat.redShift) & this->pixelFormat.redMax];
+    col += this->greenClut[(pix >> this->pixelFormat.greenShift) & this->pixelFormat.greenMax];
+    col += this->blueClut[(pix >> this->pixelFormat.blueShift) & this->pixelFormat.blueMax];
+     */
+    return col;
+}
+
+- (void)fillRect:(NSRect)aRect withPixel:(unsigned char*)pixValue bytesPerPixel:(int)bpp
+{
+    [self fillRect:aRect withNSColor:[self colorFromChars:pixValue bytesPerPixel:bpp]];
+    //    [self fillRect:aRect withColor:[self colorFromPixel:pixValue]];
 }
 
 /* --------------------------------------------------------------------------------- */
 - (void)fillRect:(NSRect)aRect tightPixel:(unsigned char*)pixValue
 {
     if([self tightBytesPerPixel] == 3) {
-        //[self fillRect:aRect withColor:[self colorFromPixel24:pixValue]];
 	[self fillRect:aRect withNSColor:[self nsColorFromPixel24:pixValue]];
     } else {
         char oneChar = *pixValue;
@@ -251,53 +299,6 @@ printf("fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
     [copyRect drawAtPoint:targetRect.origin];
     [copyRect autorelease];
     [target unlockFocus];
-/*
-        int line_step, src_start_x, dst_start_x;
-        int stride, src_start_y, dst_start_y;
-        FBColor* src, *dst;
-        int lines = aRect.size.height;
-        int i;
-
-#ifdef DEBUG_DRAW
-printf("copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y, aRect.size.width, aRect.size.height, aPoint.x, aPoint.y);
-#endif
-
-#ifdef PINFO
-    copyRectCount++;
-    copyPixelCount += aRect.size.width * aRect.size.height;
-#endif
-        if(aPoint.x < aRect.origin.x) {
-                line_step = 1;
-                src_start_x = aRect.origin.x;
-                dst_start_x = aPoint.x;
-        } else {
-                line_step = -1;
-                src_start_x = NSMaxX(aRect) - 1;
-                dst_start_x = aPoint.x + aRect.size.width - 1;
-        }
-        if(aPoint.y < aRect.origin.y) {
-                stride = (line_step > 0) ? size.width - aRect.size.width :
-                                           size.width + aRect.size.width;
-                src_start_y = aRect.origin.y;
-                dst_start_y = aPoint.y;
-        } else {
-                stride = (line_step > 0) ? -size.width - aRect.size.width :
-                                           -size.width + aRect.size.width;
-                src_start_y = NSMaxY(aRect) - 1;
-                dst_start_y = aPoint.y + aRect.size.height - 1;
-        }
-        src = pixels + (int)(src_start_y * size.width) + (int)src_start_x;
-        dst = pixels + (int)(dst_start_y * size.width) + (int)dst_start_x;
-        while(lines--) {
-			for(i=aRect.size.width; i; i--) {
-				*dst = *src;
-				dst += line_step;
-				src += line_step;
-			}
-			dst += stride;
-			src += stride;
-        }
-        */
 }
 
 /* --------------------------------------------------------------------------------- */
@@ -360,11 +361,6 @@ printf("copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     putPixelCount += aRect.size.width * aRect.size.height;
     #endif
     
-    /*
-    start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;
-    lines = aRect.size.height;
-    stride = size.width - aRect.size.width;
-    */
         switch(pixelFormat.bitsPerPixel / 8) {
                 case 1:
                     NSDrawBitmap(aRect, aRect.size.width, aRect.size.height, 2, 1, 8, aRect.size.width * 1, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&data);

@@ -27,7 +27,6 @@
 - (id)initWithSize:(NSSize)aSize andFormat:(rfbPixelFormat*)theFormat
 {
     if (self = [super initWithSize:aSize andFormat:theFormat]) {
-		unsigned int sps;
 	
 		if(isBig) {
 			rshift = 24;
@@ -45,7 +44,5 @@
 	}
     return self;
 }
-
-#include "FrameBufferDrawing.h"
 
 @end

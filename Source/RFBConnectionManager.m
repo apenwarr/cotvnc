@@ -24,9 +24,9 @@
 // #import <signal.h> // jason removed signal handler
 #import "rfbproto.h"
 
-#import "GrayScaleFrameBuffer.h"
-#import "LowColorFrameBuffer.h"
-#import "HighColorFrameBuffer.h"
+//#import "GrayScaleFrameBuffer.h"
+//#import "LowColorFrameBuffer.h"
+//#import "HighColorFrameBuffer.h"
 #import "TrueColorFrameBuffer.h"
 
 static RFBConnectionManager*	sharedManager = nil;

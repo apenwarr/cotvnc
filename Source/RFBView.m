@@ -93,9 +93,10 @@
 
 - (void)drawRectList:(id)aList
 {
-    [self lockFocus];
+    [remoteScreenImage lockFocus];
     [aList drawRectsInRect:[self bounds]];
-    [self unlockFocus];
+    [remoteScreenImage unlockFocus];
+    [self displayRect:[self bounds]];
 }
 
 - (void)resetCursorRects

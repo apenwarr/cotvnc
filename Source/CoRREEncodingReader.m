@@ -62,7 +62,7 @@
         r.origin.y = *bytes++ + frame.origin.y;
         r.size.width = *bytes++;
         r.size.height = *bytes++;
-        [frameBuffer fillRect:r withPixel:pixptr];
+        [frameBuffer fillRect:r withPixel:pixptr bytesPerPixel:bpp];
         if(useList) {
             [rectList putRectangle:r withColor:rgb];
         }

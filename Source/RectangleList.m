@@ -79,9 +79,7 @@
 
     for(i=0; i<used; i++) {
         rp->origin.y = frame.size.height - rp->origin.y - rp->size.height;
-		// Jason - no PS functions
-		[[NSColor colorWithCalibratedRed: fp[0] green: fp[1] blue: fp[2] alpha: 1.0] set];
-//        PSsetrgbcolor(fp[0], fp[1], fp[2]);
+        [[NSColor colorWithCalibratedRed: fp[0] green: fp[1] blue: fp[2] alpha: 1.0] set];
         NSRectFill(*rp);
         rp++;
         fp += 3;

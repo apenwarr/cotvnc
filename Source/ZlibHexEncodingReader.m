@@ -102,13 +102,16 @@
 		ptr = buffer;
 		bpp = [frameBuffer bytesPerPixel];
 		if(subEncodingMask & rfbHextileBackgroundSpecified) {
-			[frameBuffer fillColor:&background fromPixel:ptr];
-			[frameBuffer fillRect:currentTile withFbColor:&background];
+			//[frameBuffer fillColor:&background fromPixel:ptr];
+#warning new code
+			[frameBuffer fillRect:currentTile withPixel:ptr];
 			ptr += bpp;
 		}
 		if(subEncodingMask & rfbHextileForegroundSpecified) {
 			subEncodingMask &= ~(rfbHextileSubrectsColoured);
-			[frameBuffer fillColor:&foreground fromPixel:ptr];
+			//[frameBuffer fillColor:&foreground fromPixel:ptr];
+#warning new code
+                        foreground = [frameBuffer nsColorFromPixel24:ptr];
 			ptr += bpp;
 		}
 		if(subEncodingMask & rfbHextileAnySubrects) {

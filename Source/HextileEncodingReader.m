@@ -87,7 +87,7 @@
     if(NSMaxY(currentTile) > NSMaxY(frame)) {
         currentTile.size.height -= NSMaxY(currentTile) - NSMaxY(frame);
     }
-    [frameBuffer fillRect:currentTile withFbColor:&background];
+    [frameBuffer fillRect:currentTile withNSColor:background];
     [target setReader:subEncodingReader];
 }
 
@@ -137,8 +137,13 @@
 #ifdef COLLECT_STATS
         bytesTransferred += [data length];
 #endif
-    [frameBuffer fillColor:&background fromPixel:(unsigned char*)[data bytes]];
-    [frameBuffer fillRect:currentTile withFbColor:&background];
+    //[frameBuffer fillColor:&background fromPixel:(unsigned char*)[data bytes]];
+    //[frameBuffer fillRect:currentTile withFbColor:&background];
+    [background autorelease];
+    background = [frameBuffer nsColorFromPixel24:(unsigned char*)[data bytes]];
+    [background retain];
+#warning new code
+    [frameBuffer fillRect:currentTile withPixel:(unsigned char*)[data bytes]];
     [self checkSubEncoding];
 }
 
@@ -147,7 +152,11 @@
 #ifdef COLLECT_STATS
         bytesTransferred += [data length];
 #endif
-    [frameBuffer fillColor:&foreground fromPixel:(unsigned char*)[data bytes]];
+    //[frameBuffer fillColor:&foreground fromPixel:(unsigned char*)[data bytes]];
+#warning new code
+    [foreground autorelease];
+    foreground = [frameBuffer nsColorFromPixel24:(unsigned char*)[data bytes]];
+    [foreground retain];
     [self checkSubEncoding];
 }
 
@@ -205,7 +214,7 @@
         r.size.width = rfbHextileExtractW(*bytes);
         r.size.height = rfbHextileExtractH(*bytes);
         bytes++;
-        [frameBuffer fillRect:r withFbColor:&foreground];
+        [frameBuffer fillRect:r withNSColor:foreground];
     }
     [self nextTile];
 }
