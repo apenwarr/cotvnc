@@ -24,6 +24,7 @@
 #import "rfbproto.h"
 #import "vncauth.h"
 #import "ServerDataViewController.h"
+#import "ServerBase.h"
 
 #import "GrayScaleFrameBuffer.h"
 #import "LowColorFrameBuffer.h"
@@ -55,13 +56,16 @@ static RFBConnectionManager*	sharedManager = nil;
     NSString* s;
     id ud = [NSUserDefaults standardUserDefaults];
     float updateDelay;
+	
+	serverCtrler = [[ServerDataViewController alloc] init];
+	[serverCtrler setConnectionDelegate:self];
 
     sigblock(sigmask(SIGPIPE));
     connections = [[NSMutableArray alloc] init];
     cmdlineHost = nil;
-    cmdlineDisplay = nil;
+    cmdlineDisplay = 0;
     cmdlinePassword = @"";
-    cmdlineFullscreen = @"0";
+    cmdlineFullscreen = NO;
     sharedManager = self;
     [NSApp setDelegate:self];
     [profileManager wakeup];
@@ -109,21 +113,16 @@ static RFBConnectionManager*	sharedManager = nil;
     if (cmdlineHost) {
 	/* Connect without GUI */
 	Profile* profile;
-	NSDictionary* connectionDictionary;
-
-	connectionDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-            cmdlineHost, RFB_HOST,
-            cmdlinePassword, RFB_PASSWORD,
-            @"0", RFB_SHARED,
-            cmdlineDisplay, RFB_DISPLAY,
-            cmdlineFullscreen, RFB_FULLSCREEN,
-            NULL, NULL];
+		
+	ServerBase* cmdlineServer = [[[ServerBase alloc] init] autorelease];
+	[cmdlineServer setHost:cmdlineHost];
+	[cmdlineServer setPassword:cmdlinePassword];
+	[cmdlineServer setDisplay:cmdlineDisplay];
+	[cmdlineServer setFullscreen:cmdlineFullscreen];
 
 	profile = [profileManager profileNamed:[profilePopup titleOfSelectedItem]];	
 	
-	// BUG
-	// This needs to be added back in before release -Jared
-	//[self createConnectionWithDictionary:connectionDictionary profile:profile owner:self];
+	[self createConnectionWithServer:cmdlineServer profile:profile owner:self];
 
     } else {
 	if((s = [ud objectForKey:RFB_LAST_HOST]) != nil) {
@@ -140,16 +139,12 @@ static RFBConnectionManager*	sharedManager = nil;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(cellTextDidEndEditing:) name: NSControlTextDidEndEditingNotification object: serverList];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(cellTextDidBeginEditing:) name: NSControlTextDidBeginEditingNotification object: serverList];
     }
-	
-	[serverCtrler retain];
-	
-	[serverDataBox retain];
-	[serverDataBox removeFromSuperview];
+		
+	[[serverCtrler box] removeFromSuperview];
 	
 	// I'm hardcoding the border so that I can use a real border at design time so it can be seen easily
-	[serverDataBox setBorderType:NSNoBorder];
 	[serverDataBoxLocal setBorderType:NSNoBorder];
-	[serverDataBoxLocal setContentView:serverDataBox];
+	[serverDataBoxLocal setContentView:[serverCtrler box]];
 }
 
 - (void)processArguments
@@ -182,7 +177,7 @@ static RFBConnectionManager*	sharedManager = nil;
 				free(decrypted_password);
 			}
 		} else if ([arg hasPrefix:@"--FullScreen"]) {
-			cmdlineFullscreen = @"1";
+			cmdlineFullscreen = YES;
 			// FIXME: Support -FullScreen=0 etc
 			//if (i + 1 >= [args count]) [self cmdlineUsage];
 			//cmdlinePasswordFile = [args objectAtIndex:i+1];
@@ -195,10 +190,10 @@ static RFBConnectionManager*	sharedManager = nil;
 			
 			if (![cmdlineHost isEqualToString:arg]) {
 				/* Found : */
-				cmdlineDisplay = [listItems objectAtIndex:1];
+				cmdlineDisplay = [[listItems objectAtIndex:1] intValue];
 			} else {
 				/* No colon, assume :0 as default */
-				cmdlineDisplay = @"0";
+				cmdlineDisplay = 0;
 			}
 		} 
     }
@@ -218,7 +213,6 @@ static RFBConnectionManager*	sharedManager = nil;
 	[[NSUserDefaults standardUserDefaults] synchronize];
     [connections release];
 	[serverCtrler release];
-	[serverDataBox release];
     [super dealloc];
 }
 
@@ -325,13 +319,12 @@ static RFBConnectionManager*	sharedManager = nil;
 	[NSApp terminate:self];
 }
 
-- (IBAction)connect:(id)sender
+- (void)connect:(id<IServerData>)server;
 {
-	id<IServerData> currentServer = [self getSelectedServer];
     Profile* profile = [profileManager profileNamed:[profilePopup titleOfSelectedItem]];
     
     // Only close the open dialog of the connection was successful
-    if( YES == [self createConnectionWithServer:currentServer profile:profile owner:self] )
+    if( YES == [self createConnectionWithServer:server profile:profile owner:self] )
 	{
         [loginPanel orderOut:self];
     }

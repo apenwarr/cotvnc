@@ -49,15 +49,14 @@
 	IBOutlet NSSlider *otherInverseCPUSlider;
 	IBOutlet NSTableView *serverList;
 	IBOutlet NSBox *serverDataBoxLocal;
-	IBOutlet NSBox *serverDataBox;
-	IBOutlet ServerDataViewController* serverCtrler;
     IBOutlet NSPopUpButton *profilePopup;
     NSMutableArray*	connections;
     NSString *cmdlineHost;
-    NSString *cmdlineDisplay;
+    int       cmdlineDisplay;
     NSString *cmdlinePassword;
-    NSString *cmdlineFullscreen;
+    bool      cmdlineFullscreen;
 	id<IServerData> selectedServer;
+	ServerDataViewController* serverCtrler;
 }
 
 + (float)gammaCorrection;
@@ -65,7 +64,7 @@
 
 - (void)updateProfileList:(id)notification;
 - (void)removeConnection:(id)aConnection;
-- (IBAction)connect:(id)sender;
+- (void)connect:(id<IServerData>)server;
 - (void)processArguments;
 - (void)cmdlineUsage;
 

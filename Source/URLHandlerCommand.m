@@ -7,6 +7,8 @@
 //
 
 #import "URLHandlerCommand.h"
+#import "ServerDataViewController.h"
+#import "ServerBase.h"
 
 #define HLSAssert(condition, errno, desc) \
 if (!(condition)) return [self scriptError: (errno) description: (desc)];
@@ -50,6 +52,16 @@ if (!(condition)) return [self scriptError: (errno) description: \
     
 	url = [NSURL URLWithString: urlString];
     
+	ServerDataViewController* viewCtrlr = [[ServerDataViewController alloc] init];
+	
+	ServerBase* server = [[ServerBase alloc]init];
+	[server setHost:[url host]];
+	[server setDisplay:[[url port] intValue]];
+	[server setPassword:[url password]];
+	
+	[viewCtrlr setServer:server];
+	[[viewCtrlr window] makeKeyAndOrderFront:self];
+	
 	// XXX CFURLCreateStringByAddingPercentEscapes is more permissive
     // wrt URL formats; may want to use it instead (see release notes)
     HLSAssert(url != nil, kURLInvalidURLError,

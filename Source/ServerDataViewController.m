@@ -3,6 +3,29 @@
 
 @implementation ServerDataViewController
 
+- (id)init
+{
+	if (self = [super init])
+	{
+		[NSBundle loadNibNamed:@"ServerDisplay.nib" owner:self];
+		
+		[box setBorderType:NSNoBorder];
+		delegate_ = nil;
+	}
+	
+	return self;
+}
+
+- (id)initWithServer:(id<IServerData>)server
+{
+	if (self = [self init])
+	{
+		[self setServer:server];
+	}
+	
+	return self;
+}
+
 - (void)setServer:(id<IServerData>)server
 {
 	[(id)server_ release];
@@ -25,16 +48,18 @@
         [display setIntValue:[server_ display]];
         [shared setIntValue:[server_ shared]];
 		[hostName setStringValue:[server_ host]];
-        if ([server_ rememberPassword])
-		{
-            [passWord setStringValue:[server_ password]];
-        }
+		[passWord setStringValue:[server_ password]];
     }
 }
 
 - (id<IServerData>)server
 {
 	return server_;
+}
+
+- (void)setConnectionDelegate:(id)delegate
+{
+	delegate_ = delegate;
 }
 
 - (void)controlTextDidEndEditing:(NSNotification*)notification
@@ -100,6 +125,25 @@
 	{
 		[server_ setShared:![server_ shared]];
 	}
+}
+
+- (NSBox*)box
+{
+	return box;
+}
+
+- (IBAction)connectToServer:(id)sender
+{
+	[connectIndicator startAnimation:self];
+	[connectIndicatorText setHidden:NO];
+	
+	if( nil != delegate_ )
+	{
+		[delegate_ connect:server_];
+	}
+	
+	[connectIndicator stopAnimation:self];
+	[connectIndicatorText setHidden:YES];
 }
 
 @end

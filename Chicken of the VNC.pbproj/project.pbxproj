@@ -85,6 +85,7 @@
 		};
 		29B97317FDCFA39411CA2CEA = {
 			children = (
+				7FFA903B062BA74F0008D381,
 				E21FE261062B6D310059585C,
 				E21FE256062B6C8D0059585C,
 				F5DC7172033DB3DC01A8010C,
@@ -292,6 +293,7 @@
 				E21FE450062B79AB0059585C,
 				E21FE452062B79AB0059585C,
 				E21FE454062B79AB0059585C,
+				7FFA8FEB062BA6330008D381,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,6 +622,7 @@
 				E21FE257062B6C8D0059585C,
 				E21FE263062B6D310059585C,
 				E21FE431062B79350059585C,
+				7FFA903D062BA74F0008D381,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -755,6 +758,7 @@
 				E21FE44E062B79AB0059585C,
 				E21FE451062B79AB0059585C,
 				E21FE453062B79AB0059585C,
+				7FFA8FEC062BA6330008D381,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1111,6 +1115,8 @@
 		};
 		7FC6DF2405C315680028A970 = {
 			children = (
+				7FFA8FE9062BA6330008D381,
+				7FFA8FEA062BA6330008D381,
 				F5DC71DF033DB4A801A8010C,
 				F5DC71E0033DB4A801A8010C,
 				7FBB0A6605F5BC9700F716C4,
@@ -1193,6 +1199,58 @@
 			path = Resources/CotVNC.scriptTerminology;
 			refType = 4;
 			sourceTree = "<group>";
+		};
+		7FFA8FE9062BA6330008D381 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = ServerBase.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7FFA8FEA062BA6330008D381 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = ServerBase.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7FFA8FEB062BA6330008D381 = {
+			fileRef = 7FFA8FE9062BA6330008D381;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7FFA8FEC062BA6330008D381 = {
+			fileRef = 7FFA8FEA062BA6330008D381;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7FFA903B062BA74F0008D381 = {
+			children = (
+				7FFA903C062BA74F0008D381,
+			);
+			isa = PBXVariantGroup;
+			name = ServerDisplay.nib;
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7FFA903C062BA74F0008D381 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.nib;
+			name = English;
+			path = Resources/English.lproj/ServerDisplay.nib;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7FFA903D062BA74F0008D381 = {
+			fileRef = 7FFA903B062BA74F0008D381;
+			isa = PBXBuildFile;
+			settings = {
+			};
 		};
 //7F0
 //7F1

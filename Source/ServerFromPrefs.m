@@ -62,7 +62,7 @@
 	return self;
 }
 
-- (id)initWithDefaults
+- (id)init
 {
 	if( self = [super init] )
 	{
@@ -139,51 +139,6 @@
     return self;
 }
 
-- (NSString*)name
-{
-	return _name;
-}
-
-- (NSString*)host
-{
-	return _host;
-}
-
-- (NSString*)password
-{
-	return _password;
-}
-
-- (bool)rememberPassword
-{
-	return _rememberPassword;
-}
-
-- (int)display
-{
-	return _display;
-}
-
-- (int)lastDisplay
-{
-	return _lastDisplay;
-}
-
-- (bool)shared
-{
-	return _shared;
-}
-
-- (bool)fullscreen
-{
-	return _fullscreen;
-}
-
-- (NSString*)lastProfile
-{
-	return _lastProfile;
-}
-
 - (void)setName: (NSString*)name
 {
 	if( 0 != [name compare:_name] )
@@ -198,9 +153,7 @@
 			[[KeyChain defaultKeyChain] removeGenericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name];
 		}
 		
-		[_name release];
-		_name = nameHelper;
-		[_name retain];
+		[super setName:nameHelper];
 		
 		// if the password should be saved, save it with the new name key
 		if( YES == _rememberPassword)
@@ -213,21 +166,9 @@
 	}
 }
 
-- (void)setHost: (NSString*)host
-{
-	[_host release];
-	_host = host;
-	[_host retain];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
-}
-
 - (void)setPassword: (NSString*)password
 {
-	[_password release];
-	_password = password;
-	[_password retain];
+	[super setPassword:password];
 	
 	// only save if set to do so
 	if( _rememberPassword )
@@ -241,7 +182,7 @@
 
 - (void)setRememberPassword: (bool)rememberPassword
 {
-	_rememberPassword = rememberPassword;
+	[super setRememberPassword:rememberPassword];
 	
 	// make sure that the saved password reflects the new remember password setting
 	if( YES == _rememberPassword )
@@ -252,38 +193,6 @@
 	{
 		[[KeyChain defaultKeyChain] removeGenericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name];
 	}
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
-}
-
-- (void)setDisplay: (int)display
-{
-	_display = display;
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
-}
-
-- (void)setLastDisplay: (int)lastDisplay
-{
-	_lastDisplay = lastDisplay;
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
-}
-
-- (void)setShared: (bool)shared
-{
-	_shared = shared;
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
-}
-
-- (void)setFullscreen: (bool)fullscreen
-{
-	_fullscreen =  fullscreen;
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
 														object:self];

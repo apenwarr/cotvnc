@@ -20,39 +20,46 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ServerBase.h"
 #import "IServerData.h"
-@class ServerDataManager;
 
-@interface ServerFromPrefs : ServerBase {
-	NSMutableDictionary* _prefDict;
-	
-	ServerDataManager* _delegate;
+@interface ServerBase : NSObject <IServerData> {
+	NSString* _name;
+	NSString* _host;
+	NSString* _password;
+	bool      _rememberPassword;
+	int       _display;
+	int       _lastDisplay;
+	bool      _shared;
+	bool      _fullscreen;
+	NSString* _lastProfile;
 }
 
-+ (id<IServerData>)createWithName:(NSString*)name;
-+ (id<IServerData>)createWithHost:(NSString*)hostName preferenceDictionary:(NSDictionary*)prefDict;
-
 - (id)init;
-- (id)initWithHost:(NSString*)host preferenceDictionary:(NSDictionary*)prefDict;
-
-/* @name Archiving and Unarchiving
- * Implements the NSCoding protocol for serialization
- */
-//@{
-- (void)encodeWithCoder:(NSCoder*)coder;
-- (id)initWithCoder:(NSCoder*)coder;
-//@}
+- (void)dealloc;
 
 /** @name IServerData
- *  Implements elements of the IServerData protocol
+ *  Implements the IServerData protocol
  */
 //@{
+- (NSString*)name;
+- (NSString*)host;
+- (NSString*)password;
+- (bool)rememberPassword;
+- (int)display;
+- (int)lastDisplay;
+- (bool)shared;
+- (bool)fullscreen;
+- (NSString*)lastProfile;
+
 - (void)setName: (NSString*)name;
+- (void)setHost: (NSString*)host;
 - (void)setPassword: (NSString*)password;
 - (void)setRememberPassword: (bool)rememberPassword;
+- (void)setDisplay: (int)display;
+- (void)setLastDisplay: (int)lastDisplay;
+- (void)setShared: (bool)shared;
+- (void)setFullscreen: (bool)fullscreen;
+- (void)setLastProfile: (NSString*)lastProfile;
 //@}
-
-- (void)setDelegate: (id)delegate;
 
 @end
