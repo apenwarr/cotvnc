@@ -173,23 +173,8 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 - (void)dealloc
 {
+	[window close];
 	[self terminateConnection: nil]; // just in case it didn't already get called somehow
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-	[self cancelFrameBufferUpdateRequest];
-	[self endFullscreenScrolling];
-    [socketHandler release];
-    [titleString release];
-    [manager release];
-    [versionReader release];
-    [handshaker release];
-    [(id)server_ release];
-    [serverVersion release];
-    [rfbProtocol release];
-    [frameBuffer release];
-    //[optionPanel release];  We don't create this!
-    [profile release];
-    [host release];
-    [realDisplayName release];
     [super dealloc];
 }
 
@@ -229,43 +214,59 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     [self setReader:handshaker];
 }
 
+- (void)connectionHasTerminated
+{
+	[socketHandler release];
+	[titleString release];
+	[manager release];
+	[versionReader release];
+	[handshaker release];
+	[(id)server_ release];
+	[serverVersion release];
+	[rfbProtocol release];
+	[frameBuffer release];
+	//[optionPanel release];  We don't create this!
+	[profile release];
+	[host release];
+	[realDisplayName release];
+
+	[manager removeConnection:self];
+}
+
+- (void)connectionTerminatedSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	/* One might reasonably argue that this should be handled by the connection manager. */
+	switch (returnCode) {
+		case NSAlertDefaultReturn:
+			break;
+		case NSAlertAlternateReturn:
+			[_owner createConnectionWithServer:server_ profile:profile owner:_owner];
+			break;
+		default:
+			NSLog(@"Unknown alert returnvalue: %d", returnCode);
+	}
+	[self connectionHasTerminated];
+}
+
 - (void)terminateConnection:(NSString*)aReason
 {
-    if(!terminating) {
-        int alertValue;
-        NSString *terminateString = NULL;
-		
+    if(!terminating) {		
         terminating = YES;
-		[self clearAllEmulationStates];
-		[self cancelFrameBufferUpdateRequest];
-		[[NSNotificationCenter defaultCenter] removeObserver:self
-														name:NSFileHandleReadCompletionNotification object:socketHandler];
-		// jason added for fullscreen display
+
 		if (_isFullscreen)
 			[self makeConnectionWindowed: self];
-		// end jason
+		
+		[[NSNotificationCenter defaultCenter] removeObserver:self];
+		[self cancelFrameBufferUpdateRequest];
+		[self endFullscreenScrolling];
+		[self clearAllEmulationStates];
 
-		[window close];
         if(aReason) {
-            if (![_owner haveMultipleConnections]) {
-                terminateString = @"Quit";
-            }
-            alertValue = NSRunAlertPanel(@"Terminate Connection", aReason, @"Ok", terminateString, @"Reconnect", NULL);
-
-            /* One might reasonably argue that this should be handled by the connection manager. */
-            switch (alertValue) {
-                case -1:
-                    [_owner createConnectionWithServer:server_ profile:profile owner:_owner];
-                    break;
-                case 0:
-                    [NSApp terminate:self];
-                case 1:
-                    break;
-                default:
-                    NSLog(@"Unknown alert returnvalue: %d", alertValue);
-            }
+			NSBeginAlertSheet(@"Connection Terminated", @"Okay", @"Reconnect", nil, window, self, @selector(connectionTerminatedSheetDidEnd:returnCode:contextInfo:), nil, nil, aReason);
+			return;
         }
-        [manager removeConnection:self];
+
+		[self connectionHasTerminated];
     }
 }
 
