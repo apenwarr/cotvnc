@@ -32,6 +32,7 @@
 	bool      _shared;
 	bool      _fullscreen;
 	NSString* _lastProfile;
+	id<IServerDataDelegate> _delegate;
 }
 
 - (id)init;
@@ -60,6 +61,8 @@
 - (void)setShared: (bool)shared;
 - (void)setFullscreen: (bool)fullscreen;
 - (void)setLastProfile: (NSString*)lastProfile;
+
+- (void)setDelegate: (id<IServerDataDelegate>)delegate;
 //@}
 
 @end

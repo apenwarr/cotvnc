@@ -185,4 +185,9 @@
 	}
 }
 
+- (void)setDelegate: (id<IServerDataDelegate>)delegate
+{
+	_delegate = delegate;
+}
+
 @end

@@ -145,6 +145,17 @@ static RFBConnectionManager*	sharedManager = nil;
 	// I'm hardcoding the border so that I can use a real border at design time so it can be seen easily
 	[serverDataBoxLocal setBorderType:NSNoBorder];
 	[serverDataBoxLocal setContentView:[serverCtrler box]];
+	
+	[serverListBox retain];
+	[serverListBox removeFromSuperview];
+	[serverListBox setBorderType:NSNoBorder];
+	[splitView addSubview:serverListBox];
+	
+	[serverGroupBox retain];
+	[serverGroupBox removeFromSuperview];
+	[serverGroupBox setBorderType:NSNoBorder];
+	
+	[splitView adjustSubviews];
 }
 
 - (void)processArguments
@@ -213,6 +224,8 @@ static RFBConnectionManager*	sharedManager = nil;
 	[[NSUserDefaults standardUserDefaults] synchronize];
     [connections release];
 	[serverCtrler release];
+	[serverListBox release];
+	[serverGroupBox release];
     [super dealloc];
 }
 
@@ -263,12 +276,13 @@ static RFBConnectionManager*	sharedManager = nil;
 
 	selectedServer = [self getSelectedServer];
 	
-	assert( nil != selectedServer );
-	
-	[(id)selectedServer retain];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:(id)selectedServer object:nil];
-	
-	[serverCtrler setServer:selectedServer];
+	if( nil != selectedServer )
+	{
+		[(id)selectedServer retain];
+		[[NSNotificationCenter defaultCenter] removeObserver:self name:(id)selectedServer object:nil];
+		
+		[serverCtrler setServer:selectedServer];
+	}
 }
 
 - (NSString*)translateDisplayName:(NSString*)aName forHost:(NSString*)aHost
@@ -467,24 +481,54 @@ static RFBConnectionManager*	sharedManager = nil;
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-	return [[[[ServerDataManager sharedInstance] getServerEnumerator] allObjects] count];
+	if( serverList == aTableView )
+	{
+		return [[[[ServerDataManager sharedInstance] getServerEnumerator] allObjects] count];
+	}
+	else if( groupList == aTableView )
+	{
+		return [[[[ServerDataManager sharedInstance] getGroupNameEnumerator] allObjects] count];
+	}
+	
+	return 0;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex
 {
-	return [[[[[ServerDataManager sharedInstance] getServerEnumerator] allObjects] objectAtIndex:rowIndex] name];
+	if( serverList == aTableView )
+	{
+		return [[[[[ServerDataManager sharedInstance] getServerEnumerator] allObjects] objectAtIndex:rowIndex] name];
+	}
+	else if( groupList == aTableView )
+	{
+		return [[[[ServerDataManager sharedInstance] getGroupNameEnumerator] allObjects] objectAtIndex:rowIndex];
+	}
+	
+	return NULL;	
 }
 
-- (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(int)row
+- (BOOL)tableView:(NSTableView *)aTableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(int)row
 {
-	return YES;
+	if( serverList == aTableView )
+	{
+		return YES;
+	}
+	else if( groupList == aTableView )
+	{
+		return NO;
+	}
+	
+	return NO;	
 }
 
-- (void)tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(int)row
+- (void)tableView:(NSTableView *)aTableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(int)row
 {
-	NSString* serverName = object;
-	id<IServerData> server = [[[[ServerDataManager sharedInstance] getServerEnumerator] allObjects] objectAtIndex:row];
-	[server setName:serverName];
+	if( serverList == aTableView )
+	{
+		NSString* serverName = object;
+		id<IServerData> server = [[[[ServerDataManager sharedInstance] getServerEnumerator] allObjects] objectAtIndex:row];
+		[server setName:serverName];
+	}
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
@@ -496,6 +540,34 @@ static RFBConnectionManager*	sharedManager = nil;
 {
 	[serverList reloadData];
 	[self selectedHostChanged];
+}
+
+- (IBAction)changeRendezvousUse:(id)sender
+{
+	useRendezvous = !useRendezvous;
+	
+	[self displayGroups:useRendezvous];
+	
+	[rendezvousMenuItem setState:useRendezvous ? NSOnState : NSOffState];
+}
+
+- (void)displayGroups:(bool)display
+{
+	if( display != displayGroups )
+	{
+		displayGroups = display;
+		
+		if( display )
+		{
+			[splitView addSubview:serverGroupBox positioned:NSWindowBelow relativeTo:serverListBox];
+		}
+		else
+		{	
+			[serverGroupBox removeFromSuperview];
+		}
+		
+		[splitView adjustSubviews];
+	}
 }
 
 @end

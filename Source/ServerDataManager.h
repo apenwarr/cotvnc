@@ -34,8 +34,9 @@
  *  This is a singleton class. Always access the class through the sharedInstance
  *  function. Do not create an instance yourself.
  */
-@interface ServerDataManager : NSObject <NSCoding> {
+@interface ServerDataManager : NSObject <NSCoding,IServerDataDelegate> {
 	NSMutableDictionary* servers;
+	NSMutableDictionary* groups;
 }
 
 #define ServerListChangeMsg @"ServerListChangeMsg"
@@ -56,6 +57,12 @@
  *  @return The enumerator that can be used to enumerate through all servers. 
  */
 - (NSEnumerator*) getServerEnumerator;
+
+/*
+ *  Allows access to the names of all the groups servers managed by ServerDataManager.
+ *  @return The enumerator that can be used to enumerate through all group names. 
+ */
+- (NSEnumerator*) getGroupNameEnumerator;
 
 /*
  *  Retrieves a server by its name. The retrieval process is case sensative.

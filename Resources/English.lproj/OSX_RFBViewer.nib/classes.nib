@@ -57,7 +57,7 @@
         {
             ACTIONS = {
                 addServer = id; 
-                connect = id; 
+                changeRendezvousUse = id; 
                 deleteSelectedServer = id; 
                 frontInverseCPUSliderChanged = id; 
                 otherInverseCPUSliderChanged = id; 
@@ -72,16 +72,20 @@
                 frontInverseCPUSlider = NSSlider; 
                 fullscreenScrollbars = NSButton; 
                 gamma = NSTextField; 
+                groupList = NSTableView; 
                 loginPanel = NSPanel; 
                 otherInverseCPUSlider = NSSlider; 
                 profileManager = ProfileManager; 
                 profilePopup = NSPopUpButton; 
                 psMaxRects = NSTextField; 
                 psThreshold = NSTextField; 
-                serverCtrler = ServerDataViewController; 
-                serverDataBox = NSBox; 
+                rendezvousMenuItem = NSMenuItem; 
+                selectedServer = id; 
                 serverDataBoxLocal = NSBox; 
+                serverGroupBox = NSBox; 
                 serverList = NSTableView; 
+                serverListBox = NSBox; 
+                splitView = NSSplitView; 
             }; 
             SUPERCLASS = NSObject; 
         }, 

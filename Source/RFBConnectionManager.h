@@ -19,6 +19,8 @@
 #import <AppKit/AppKit.h>
 #import "rfbproto.h"
 #import "Profile.h"
+#import "IServerData.h"
+#import "ServerDataViewController.h"
 @class ProfileManager;
 @class ServerDataViewController;
 @protocol IServerData;
@@ -34,7 +36,7 @@
 
 #define KEYCHAIN_SERVICE_NAME	@"cotvnc" // This should really be the appname, but I'm too lame to know how to find that - kjw
 
-@interface RFBConnectionManager : NSObject
+@interface RFBConnectionManager : NSObject<ConnectionDelegate>
 {
     IBOutlet NSPanel *loginPanel;
     IBOutlet NSMatrix *colorModelMatrix;
@@ -48,8 +50,13 @@
 	IBOutlet NSSlider *frontInverseCPUSlider;
 	IBOutlet NSSlider *otherInverseCPUSlider;
 	IBOutlet NSTableView *serverList;
+	IBOutlet NSTableView *groupList;
 	IBOutlet NSBox *serverDataBoxLocal;
+	IBOutlet NSBox *serverListBox;
+	IBOutlet NSBox *serverGroupBox;
     IBOutlet NSPopUpButton *profilePopup;
+    IBOutlet NSSplitView *splitView;
+	IBOutlet NSMenuItem *rendezvousMenuItem;
     NSMutableArray*	connections;
     NSString *cmdlineHost;
     int       cmdlineDisplay;
@@ -57,6 +64,8 @@
     bool      cmdlineFullscreen;
 	id<IServerData> selectedServer;
 	ServerDataViewController* serverCtrler;
+	bool      displayGroups;
+	bool      useRendezvous;
 }
 
 + (float)gammaCorrection;
@@ -80,6 +89,8 @@
 - (IBAction)addServer:(id)sender;
 - (IBAction)deleteSelectedServer:(id)sender;
 
+- (IBAction)changeRendezvousUse:(id)sender;
+
 - (id)defaultFrameBufferClass;
 
 - (void)makeAllConnectionsWindowed;
@@ -94,5 +105,7 @@
 - (void)serverListDidChange:(NSNotification*)notification;
 
 - (id<IServerData>)getSelectedServer;
+
+- (void)displayGroups:(bool)display;
 
 @end

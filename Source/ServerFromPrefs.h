@@ -26,8 +26,6 @@
 
 @interface ServerFromPrefs : ServerBase {
 	NSMutableDictionary* _prefDict;
-	
-	ServerDataManager* _delegate;
 }
 
 + (id<IServerData>)createWithName:(NSString*)name;
@@ -52,7 +50,5 @@
 - (void)setPassword: (NSString*)password;
 - (void)setRememberPassword: (bool)rememberPassword;
 //@}
-
-- (void)setDelegate: (id)delegate;
 
 @end

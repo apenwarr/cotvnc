@@ -208,9 +208,4 @@
 														object:self];
 }
 
-- (void)setDelegate: (id)delegate
-{
-	_delegate = delegate;
-}
-
 @end

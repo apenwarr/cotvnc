@@ -44,6 +44,13 @@ static ServerDataManager* instance = nil;
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(applicationWillTerminate:)
 													 name:@"NSApplicationWillTerminateNotification" object:NSApp];
+		
+		servers = [[NSMutableDictionary alloc] init];
+		groups  = [[NSMutableDictionary alloc] init];
+		
+		[groups setObject:[NSMutableArray array] forKey:@"All"];
+		[groups setObject:[NSMutableArray array] forKey:@"Rendezvous"];
+		[groups setObject:[NSMutableArray array] forKey:@"Standard"];
 	}
 	
 	return self;
@@ -53,7 +60,6 @@ static ServerDataManager* instance = nil;
 {
 	if( self = [self init] )
 	{
-		servers = [[NSMutableDictionary alloc] init];
 		NSEnumerator* hostEnumerator = [[[NSUserDefaults standardUserDefaults] objectForKey:RFB_HOST_INFO] keyEnumerator];
 		NSEnumerator* objEnumerator = [[[NSUserDefaults standardUserDefaults] objectForKey:RFB_HOST_INFO] objectEnumerator];
 		NSString* host;
@@ -165,6 +171,11 @@ static ServerDataManager* instance = nil;
 - (NSEnumerator*) getServerEnumerator
 {
 	return [servers objectEnumerator];
+}
+
+- (NSEnumerator*) getGroupNameEnumerator
+{
+	return [groups keyEnumerator];
 }
 
 - (id<IServerData>)getServerWithName:(NSString*)name

@@ -24,6 +24,8 @@
 /** Implementers of IServerData will send this notification when a property has changed */
 #define ServerChangeMsg @"ServerChangeMsg"
 
+@protocol IServerDataDelegate;
+
 @protocol IServerData
 
 - (NSString*)name;
@@ -46,11 +48,12 @@
 - (void)setFullscreen: (bool)fullscreen;
 - (void)setLastProfile: (NSString*)lastProfile;
 
-- (void)setDelegate: (id)delegate;
+- (void)setDelegate: (id<IServerDataDelegate>)delegate;
 
 @end
 
-@interface NSObject(IServerDataDelegate)
+
+@protocol IServerDataDelegate
 
 - (void)validateNameChange:(NSString *)name forServer:(id<IServerData>)server;
 
