@@ -144,6 +144,8 @@
 - (id)frameBuffer;
 - (NSWindow *)window;
 
+- (void)windowDidBecomeKey:(NSNotification *)aNotification;
+- (void)windowDidResignKey:(NSNotification *)aNotification;
 - (void)windowDidDeminiaturize:(NSNotification *)aNotification;
 - (void)windowDidMiniaturize:(NSNotification *)aNotification;
 - (void)windowWillClose:(NSNotification *)aNotification;

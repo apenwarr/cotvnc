@@ -540,11 +540,12 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	[emulate3ButtonTimer invalidate];
 	[emulate3ButtonTimer release];
 	emulate3ButtonTimer = nil;
-	// NSLog(@"Key-Down Timer Reset!\n");
+	//NSLog(@"Key-Down Timer Reset!\n");
 }
 
 - (void)emulateButtonTimeout:(id)sender
 {
+	//NSLog(@"Timed out\n");
 	[self resetButtonEmulationTimer];
 	if ( window ) // possible that this could be called between NULLing window and self being dealloc'ed
 	{
@@ -559,6 +560,12 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 - (unsigned)performButtonEmulation:(unsigned)mask at:(NSPoint)thePoint
 {
+	// This does two things:
+	// 1. If you press buttons 1 and 3 together, sends a button 2 event
+	// 2. If you do the shift- or control tap thingie, it sends the button that corresponds to that.
+	// To do 1, it has a timer, emulate3buttontimer. Press 1 and 3 within the timer of each other and they press 2.
+	//    Note that this means that not always a button event is passed on.
+	// To do 2, it uses a mask that is set up in the modifier code.
     unsigned diff = mask ^ lastButtonMask;
     unsigned pressed = diff & mask;
     unsigned released = diff & lastButtonMask;
@@ -566,9 +573,9 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     if(pressed) {
 		// button 1 or 3 pressed
         if((mask & (rfbButton1Mask | rfbButton3Mask)) == (rfbButton1Mask | rfbButton3Mask)) {
-            // both buttons pressed
+            // both 1 and 3 buttons pressed
             if( emulate3ButtonTimer) {
-				// timer is running, so the second button has been pressed.
+				// timer is running, so we generate a button 2 press
 				[self resetButtonEmulationTimer];
 				// emulate button 2 in lastComputedMask
                 lastComputedMask = rfbButton2Mask;
@@ -583,15 +590,20 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 				// only one but the timer is running -> bug
                 NSLog(@"emulate3ButtonTimer running when no button was pressed ???\n");
             } else {
-				if(buttonEmulationActiveMask) {
-					// we should emulate buttons
+				if(buttonEmulationActiveMask && mask == rfbButton1Mask) {
+					// Button emulation and mouse button 1 pressed, we should emulate buttons
                     lastComputedMask = buttonEmulationActiveMask;
 				} else {
-					// first button is pressed, start emulation-timer
                     float to = [profile emulate3ButtonTimeout];
 
-                    mouseButtonPressedLocation = thePoint;
-                    emulate3ButtonTimer = [[NSTimer scheduledTimerWithTimeInterval:to target:self selector:@selector(emulateButtonTimeout:) userInfo:nil repeats:NO] retain];
+					// first button is pressed, start emulation-timer if button 1 or 3
+					if(to && (mask == rfbButton1Mask || mask == rfbButton3Mask)) {
+						mouseButtonPressedLocation = thePoint;
+						emulate3ButtonTimer = [[NSTimer scheduledTimerWithTimeInterval:to target:self selector:@selector(emulateButtonTimeout:) userInfo:nil repeats:NO] retain];
+					} else {
+						// Any other button pressed or no emulation -> send
+						lastComputedMask = mask;
+					}
 				}
             }
         }
@@ -806,7 +818,8 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
             }
         } else {
             if(buttonEmulationKeyDownMask & rfbButton2Mask) {
-                if(buttonEmulationActiveMask) {
+                if(buttonEmulationActiveMask & rfbButton2Mask) {
+					// Allow cancelling emulation by pressing button again
                     [self clearEmulationActiveMask];
                 } else {
                     if ([self checkButtonEmulationKeyDownTimer]) {
@@ -872,6 +885,9 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
     buttonEmulationKeyDownMask = 0;
     [self resetButtonEmulationKeyDownTimer];
+	if(buttonEmulationActiveMask) {
+		[self clearEmulationActiveMask];
+	}
 }
 
 - (void)sendCtrlAltDel: (id)sender
@@ -1069,14 +1085,23 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 - (void)windowDidBecomeKey:(NSNotification *)aNotification
 {
+	//NSLog(@"Key\n");
 	[self installMouseMovedTrackingRect];
 	[self setFrameBufferUpdateSeconds: [[NSUserDefaults standardUserDefaults] floatForKey: @"FrontFrameBufferUpdateSeconds"]];
+	
+	//Reset keyboard state on remote end
+	[self sendModifier:0];
 }
 
 - (void)windowDidResignKey:(NSNotification *)aNotification
 {
+	//NSLog(@"Not Key\n");
 	[self removeMouseMovedTrackingRect];
 	[self setFrameBufferUpdateSeconds: [[NSUserDefaults standardUserDefaults] floatForKey: @"OtherFrameBufferUpdateSeconds"]];
+	
+	//Reset keyboard state on remote end
+	[self sendModifier:0];
+	[self clearAllEmulationStates];
 }
 
 - (void)viewFrameDidChange:(NSNotification *)aNotification
