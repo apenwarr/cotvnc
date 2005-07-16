@@ -127,6 +127,10 @@ typedef enum {
 	NSTimeInterval _tapAndClickButtonSpeed[2];
 	NSTimeInterval _tapAndClickTimeout[2];
 	NSTimer *_tapAndClickTimer;
+	
+	NSTimer *_mouseTimer;
+	NSPoint  _lastMousePoint;
+	bool     _unsentMouseMoveExists;
 }
 
 // Talking to the server
@@ -170,6 +174,7 @@ typedef enum {
 - (unsigned int)handleClickWhileHoldingForButton: (unsigned int)button;
 - (unsigned int)handleMultiTapForButton: (unsigned int)button;
 - (unsigned int)handleTapModifierAndClickForButton: (unsigned int)button;
+- (void)sendUnpublishedMouseMove;
 
 // Configuration
 - (void)setButton2EmulationScenario: (EventFilterEmulationScenario)scenario;
