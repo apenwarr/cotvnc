@@ -189,6 +189,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	if( nil != _mouseTimer )
 	{
         [_mouseTimer invalidate];
+		[_mouseTimer release];
         _mouseTimer = nil;
     }
 
@@ -231,11 +232,13 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
                                                      selector: @selector(handleMouseTimer:)
                                                      userInfo: nil
                                                       repeats: NO];
+		[_mouseTimer retain];
     }
 }
 
 - (void)handleMouseTimer: (NSTimer *) timer
 {
+	[_mouseTimer release];
     _mouseTimer = nil;
     
     [self sendUnpublishedMouseMove];
