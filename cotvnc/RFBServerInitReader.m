@@ -1,0 +1,124 @@
+/* RFBServerInitReader.m created by helmut on Tue 16-Jun-1998 */
+
+/* Copyright (C) 1998-2000  Helmut Maierhofer <helmut.maierhofer@chello.at>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#import "RFBServerInitReader.h"
+#import "ByteBlockReader.h"
+#import "RFBStringReader.h"
+
+@implementation ServerInitMessage
+
+- (void)setFixed:(NSData*)data
+{
+	NSLog(@"server init fixed=%d bytes", [data length]);
+    memcpy(&fixed, [data bytes], sizeof(fixed));
+    fixed.width = ntohs(fixed.width);
+    fixed.height = ntohs(fixed.height);
+    fixed.red_max = ntohs(fixed.red_max);
+    fixed.green_max = ntohs(fixed.green_max);
+    fixed.blue_max = ntohs(fixed.blue_max);
+	NSLog(@"fixed.width=%d", (int)fixed.width);
+	NSLog(@"fixed.height=%d", (int)fixed.height);
+}
+
+- (unsigned char*)pixelFormatData
+{
+    return &fixed.bpp;
+}
+
+- (void)dealloc
+{
+    [name release];
+    [super dealloc];
+}
+
+- (void)setName:(NSString*)aName
+{
+    [name autorelease];
+    name = [aName retain];
+}
+
+- (NSString*)name
+{
+    return name;
+}
+
+- (CGSize)size
+{
+    CGSize s;
+	
+	// For some reason, we have to go through this rigamarole to convert
+	// from CARD16 to float format on the iPhone! Must be an issue with
+	// the ARM FP library or something.
+	int iw;
+	int ih;
+	float fw;
+	float fh;
+	
+	iw = (int)fixed.width;
+	ih = (int)fixed.height;
+	
+	fw = (float)iw;
+	fh = (float)ih;
+	
+    s.width = fw;
+    s.height = fh;
+    return s;
+}
+
+@end
+
+@implementation RFBServerInitReader
+
+- (id)initTarget:(id)aTarget action:(SEL)anAction
+{
+	if (self = [super initTarget:aTarget action:anAction]) {
+		blockReader = [[ByteBlockReader alloc] initTarget:self action:@selector(setBlock:) size:20];
+		nameReader = [[RFBStringReader alloc] initTarget:self action:@selector(setName:)];
+		msg = [[ServerInitMessage alloc] init];
+	}
+    return self;
+}
+
+- (void)dealloc
+{
+    [nameReader release];
+    [blockReader release];
+    [msg release];
+    [super dealloc];
+}
+
+- (void)resetReader
+{
+    [target setReader:blockReader];
+}
+
+- (void)setBlock:(NSData*)theBlock
+{
+    [msg setFixed:theBlock];
+    [target setReader:nameReader];
+}
+
+- (void)setName:(NSString*)aName
+{
+    [msg setName:aName];
+    [target performSelector:action withObject:msg];
+}
+
+@end
