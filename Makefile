@@ -117,7 +117,7 @@ LIBJPEG_OBJS=\
 
 all:    vnsea
 
-vnsea:  $(APP_OBJS) $(VNC_OBJS)
+vnsea:  $(APP_OBJS) $(VNC_OBJS) $(LIBJPEG_OBJS)
 	$(LD) $(LDFLAGS) -v -o $@ $^
 	cp vnsea VNsea.app
 

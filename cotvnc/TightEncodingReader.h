@@ -22,8 +22,8 @@
 #import "EncodingReader.h"
 #import <zlib.h>
 
-//#define SUPPORT_JPEG
-#undef	SUPPORT_JPEG
+#define SUPPORT_JPEG
+//#undef	SUPPORT_JPEG
 
 #ifdef SUPPORT_JPEG
 #import "../libjpeg/jpeglib.h"

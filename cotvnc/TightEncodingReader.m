@@ -292,7 +292,7 @@ static void JpegSetSrcManager(j_decompress_ptr cinfo, CARD8* compressedData, int
 		cinfo.err = jpeg_std_error(&jerr);
 		jpeg_create_decompress(&cinfo);
 		cinfo.src = &jpegSrcManager;
-		JpegSetSrcManager(&cinfo, (char*)[data bytes], [data length]);
+		JpegSetSrcManager(&cinfo, (CARD8*)[data bytes], [data length]);
 		jpeg_read_header(&cinfo, TRUE);
 		cinfo.out_color_space = JCS_RGB;
 		jpeg_start_decompress(&cinfo);

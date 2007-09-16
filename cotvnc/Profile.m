@@ -173,17 +173,17 @@ ButtonNumberToArrayIndex( unsigned int buttonNumber )
 //				enabledEncodings[numberOfEnabledEncodings++] = [[e objectForKey: kProfile_EncodingValue_Key] intValue];
 //		}
 		
-		numberOfEnabledEncodings = 5;
+		numberOfEnabledEncodings = 10;
 		enabledEncodings[0] = rfbEncodingZRLE;
 		enabledEncodings[1] = rfbEncodingTight;
 		enabledEncodings[2] = rfbEncodingZlib;
 		enabledEncodings[3] = rfbEncodingZlibHex;
 		enabledEncodings[4] = rfbEncodingHextile;
-//		enabledEncodings[5] = rfbEncodingCoRRE;
-//		enabledEncodings[6] = rfbEncodingRRE;
-//		enabledEncodings[7] = rfbEncodingRaw;
-//		enabledEncodings[8] = rfbEncodingCopyRect;
-//		enabledEncodings[9] = rfbEncodingQualityLevel6;
+		enabledEncodings[5] = rfbEncodingCoRRE;
+		enabledEncodings[6] = rfbEncodingRRE;
+		enabledEncodings[7] = rfbEncodingRaw;
+		enabledEncodings[8] = rfbEncodingCopyRect;
+		enabledEncodings[9] = rfbEncodingQualityLevel6;
 
 		_button2EmulationScenario = kNoMouseButtonEmulation; //(EventFilterEmulationScenario)[[info objectForKey: kProfile_Button2EmulationScenario_Key] intValue];
 		

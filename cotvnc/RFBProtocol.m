@@ -40,17 +40,16 @@
 		[self setPixelFormat:&myFormat];
 		[aTarget setDisplaySize:[info size] andPixelFormat:&myFormat];
 //		[aTarget setDisplayName:[info name]];
-		NSLog(@"a");
+		
 		[self setEncodings];
-		NSLog(@"b");
+		
 		typeReader = [[CARD8Reader alloc] initTarget:self action:@selector(receiveType:)];
 		msgTypeReader[rfbFramebufferUpdate] = [[FrameBufferUpdateReader alloc] initTarget:self action:@selector(frameBufferUpdateComplete:)];
 		msgTypeReader[rfbSetColourMapEntries] = [[SetColorMapEntriesReader alloc] initTarget:self action:@selector(setColormapEntries:)];
 		msgTypeReader[rfbBell] = nil;
 		msgTypeReader[rfbServerCutText] = [[ServerCutTextReader alloc] initTarget:self action:@selector(serverCutText:)];
-		NSLog(@"c");
+		
 		[self requestUpdate:[aTarget visibleRect] incremental:NO];
-		NSLog(@"d");
 	}
     return self;
 }
@@ -81,18 +80,18 @@
     int i;
     rfbSetEncodingsMsg msg;
     CARD32	enc[64];
-	NSLog(@"a2.1(e=%p,l=%d",newEncodings,(int)l);
+	
     numberOfEncodings = l;
     msg.type = rfbSetEncodings;
     msg.nEncodings = htons(l);
-	NSLog(@"a2.1.1:(msg=%p,l=%d)",&msg,sizeof(msg));
+	
     [target writeBytes:(unsigned char*)&msg length:sizeof(msg)];
-	NSLog(@"a2.2");
+	
     for(i=0; i<l; i++) {
         encodings[i] = newEncodings[i];
         enc[i] = htonl(encodings[i]);
     }
-	NSLog(@"a2.3");
+	
     [target writeBytes:(unsigned char*)&enc length:numberOfEncodings * sizeof(CARD32)];
 }
 
@@ -101,13 +100,12 @@
     Profile* profile = [target profile];
     CARD16 i, l = [profile numberOfEnabledEncodings];
     CARD32	enc[64];
-	NSLog(@"a1");
+	
     for(i=0; i<l; i++) {
         enc[i] = [profile encodingAtIndex:i];
     }
-	NSLog(@"a2");
+	
     [self changeEncodingsTo:enc length:l];
-	NSLog(@"a3");
 }
 
 - (void)requestUpdate:(CGRect)frame incremental:(BOOL)aFlag

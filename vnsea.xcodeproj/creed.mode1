@@ -290,7 +290,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>33</integer>
+									<integer>22</integer>
 									<integer>20</integer>
 									<integer>1</integer>
 								</array>
@@ -339,7 +339,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>VnseaApp.m</string>
+								<string>Profile.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -347,11 +347,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>VnseaApp.m</string>
+										<string>Profile.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>0259C6820C9DC0E2005285B7</string>
+										<string>0259C6C50C9DC662005285B7</string>
 										<key>history</key>
 										<array>
 											<string>0259A43C0C8D0020005285B7</string>
@@ -549,7 +549,6 @@
 											<string>0259B2BA0C931DCA005285B7</string>
 											<string>0259B2BC0C931DCA005285B7</string>
 											<string>0259B2BF0C931DCA005285B7</string>
-											<string>0259B2C30C931DCA005285B7</string>
 											<string>0259B2C40C931DCA005285B7</string>
 											<string>0259B2C60C931DCA005285B7</string>
 											<string>0259B3F70C933378005285B7</string>
@@ -707,11 +706,6 @@
 											<string>0259C2830C9CDF0C005285B7</string>
 											<string>0259C2B80C9CE22B005285B7</string>
 											<string>0259C3010C9CE490005285B7</string>
-											<string>0259C3190C9CE50B005285B7</string>
-											<string>0259C33C0C9CE7C1005285B7</string>
-											<string>0259C36A0C9DA8CE005285B7</string>
-											<string>0259C36B0C9DA8CE005285B7</string>
-											<string>0259C5980C9DB8C9005285B7</string>
 											<string>0259C6630C9DBD2A005285B7</string>
 											<string>0259C6640C9DBD2A005285B7</string>
 											<string>0259C6660C9DBD2A005285B7</string>
@@ -720,14 +714,14 @@
 											<string>0259C6690C9DBD2A005285B7</string>
 											<string>0259C67B0C9DC0E2005285B7</string>
 											<string>0259C67C0C9DC0E2005285B7</string>
-											<string>0259C67D0C9DC0E2005285B7</string>
-											<string>0259C67E0C9DC0E2005285B7</string>
-										</array>
-										<key>nextStack</key>
-										<array>
-											<string>0259C67F0C9DC0E2005285B7</string>
-											<string>0259C6800C9DC0E2005285B7</string>
-											<string>0259C6810C9DC0E2005285B7</string>
+											<string>0259C6990C9DC4DE005285B7</string>
+											<string>0259C69A0C9DC4DE005285B7</string>
+											<string>0259C69C0C9DC4DE005285B7</string>
+											<string>0259C69D0C9DC4DE005285B7</string>
+											<string>0259C6AD0C9DC5B8005285B7</string>
+											<string>0259C6BB0C9DC620005285B7</string>
+											<string>0259C6BC0C9DC620005285B7</string>
+											<string>0259C69B0C9DC4DE005285B7</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -744,6 +738,12 @@
 											<string>0259BD4B0C9638BB005285B7</string>
 											<string>0259C28B0C9CDF0C005285B7</string>
 											<string>0259C66B0C9DBD2A005285B7</string>
+											<string>0259C69F0C9DC4DE005285B7</string>
+											<string>0259C6A00C9DC4DE005285B7</string>
+											<string>0259C6A10C9DC4DE005285B7</string>
+											<string>0259C6A20C9DC4DE005285B7</string>
+											<string>0259C6B00C9DC5B8005285B7</string>
+											<string>0259C6BD0C9DC620005285B7</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -922,7 +922,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>211665122.80820099</real>
+	<real>211666530.67172799</real>
 	<key>ToolbarDisplayMode</key>
 	<integer>2</integer>
 	<key>ToolbarIsVisible</key>
@@ -962,7 +962,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>TightEncodingReader.m</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>

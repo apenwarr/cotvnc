@@ -72,7 +72,7 @@ static KeyChain* defaultKeyChain = nil;
 //    free(p); 
 //    return string;
 
-	return @"Carn1v0re";
+	return @"xxx";
 }
 
 - (void)removeGenericPasswordForService:(NSString *)service account:(NSString*)account

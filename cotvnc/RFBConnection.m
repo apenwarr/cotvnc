@@ -438,7 +438,6 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     id frameBufferClass;
     CGRect wf;
 	CGRect screenRect;
-//	NSClipView *contentView;
 	NSString *serverName;
 
     frameBufferClass = [[PrefController sharedController] defaultFrameBufferClass];
@@ -454,8 +453,6 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	
 	[self setFrameBufferUpdateSeconds: [[PrefController sharedController] frontFrameBufferUpdateSeconds]];
 	[self queueUpdateRequest];
-	
-	NSLog(@"exiting setDisplaySize:andPixelFormat:");
 }
 
 - (CGSize)displaySize
@@ -884,9 +881,9 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     }
 */
     do {
-		NSLog(@"write(%d, %p, l=%d, w=%d)", [socketHandler fileDescriptor], bytes+written, length, written);
+//		NSLog(@"write(%d, %p, l=%d, w=%d)", [socketHandler fileDescriptor], bytes+written, length, written);
         result = write([socketHandler fileDescriptor], bytes + written, length);
-		NSLog(@"wrote %d bytes", result);
+//		NSLog(@"wrote %d bytes", result);
         if(result >= 0) {
             length -= result;
             written += result;
