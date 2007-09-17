@@ -9,7 +9,7 @@
 #import "Profile.h"
 #import "ServerStandAlone.h"
 #import "ServerFromPrefs.h"
-//#import "Shimmer.h"
+#import "Shimmer.h"
 
 #define kControlsBarHeight (48.0f)
 
@@ -36,11 +36,13 @@ Copyright 2007 Chris Reed\n\
 Licensed under GPLv3\n\
 http://code.google.com/p/vnsea"
 
+#define kAppVersion @"VNsea 0.2"
+
 @implementation VnseaApp
 
 - (void)applicationDidFinishLaunching:(NSNotification *)unused
 {
-	NSLog(@"Vnsea app launching");
+//	NSLog(@"Vnsea app launching");
 	
 	CGRect screenRect = [UIHardware fullScreenApplicationContentRect];
 	CGRect frame;
@@ -62,18 +64,18 @@ http://code.google.com/p/vnsea"
 	[_mainView addSubview: _transView];
 
 	// Scroll view
-	_vncScroller = [[UIScroller alloc] initWithFrame: frame];
+/*	_vncScroller = [[UIScroller alloc] initWithFrame: frame];
 	[_vncScroller setScrollingEnabled:YES];
 	[_vncScroller setShowScrollerIndicators:YES];
 	[_vncScroller setAdjustForContentSizeChange:YES];// why isn't this working?
 	[_vncScroller setAllowsRubberBanding:NO];
 	[_vncScroller setAllowsFourWayRubberBanding:NO];
 	[_vncScroller setThumbDetectionEnabled:YES];
-//	[_vncScroller setScrollerIndicatorStyle:1];
+//	[_vncScroller setScrollerIndicatorStyle:1];*/
 	
 	// vncsea view
 	_vncView = [[VNCView alloc] initWithFrame: frame];
-	[_vncScroller addSubview: _vncView];
+//	[_vncScroller addSubview: _vncView];
 	
 //	NSLog(@"vncView=%@", vncView);
 
@@ -88,7 +90,7 @@ http://code.google.com/p/vnsea"
 	
 	// Profile
 	_defaultProfile = [[Profile defaultProfile] retain];
-	NSLog(@"profile=%@", _defaultProfile);
+//	NSLog(@"profile=%@", _defaultProfile);
 	
 	// Switch to the list view
 	[_transView transition:0 toView:_serversView];
@@ -106,7 +108,7 @@ http://code.google.com/p/vnsea"
 	
 //	[self setIgnoresInteractionEvents:NO];
 	
-//	[self checkForUpdate];
+	[self checkForUpdate];
 }
 
 - (void)dealloc
@@ -116,7 +118,7 @@ http://code.google.com/p/vnsea"
 
 	[super dealloc];
 }
-/*
+
 //! Use Shimmer to check for an available update, ask the user if it should be
 //! installed, and then download and install it.
 - (void)checkForUpdate
@@ -128,7 +130,7 @@ http://code.google.com/p/vnsea"
 		[shimmer doUpdate];
 	}
 }
-
+/*
 - (void) applicationResume: (struct __GSEvent *)unknown1 withArguments:(id)unknown2
 {
 	[_window _setHidden: NO];
@@ -190,7 +192,7 @@ http://code.google.com/p/vnsea"
 		NSLog(@"connection=%@", connection);
 		[connection manuallyUpdateFrameBuffer:self];
 		
-		[_transView transition:1 fromView:_serversView toView:_vncScroller/*_vncView*/];
+		[_transView transition:1 fromView:_serversView toView:_vncView];
 	}
 	else
 	{
@@ -209,7 +211,6 @@ http://code.google.com/p/vnsea"
 		[hotSheet setRunsModal:YES];
 		[hotSheet setShowsOverSpringBoardAlerts:NO];
 		
-//		[hotSheet presentSheetToAboveView:_mainView];
 		[hotSheet popupAlertAnimated:YES];
 	}
 	
@@ -296,6 +297,7 @@ http://code.google.com/p/vnsea"
 	[info setObject:[NSNumber numberWithInt:0] forKey:RFB_DISPLAY];
 	[info setObject:@"Default" forKey:RFB_LAST_PROFILE];
 	[info setObject:[NSNumber numberWithBool:NO] forKey:RFB_SHARED];
+	[info setObject:[NSNumber numberWithInt:32] forKey:RFB_PIXEL_DEPTH];
 	[info setObject:[NSNumber numberWithBool:NO] forKey:RFB_FULLSCREEN];
 	[info setObject:[NSNumber numberWithBool:NO] forKey:RFB_VIEWONLY];
 	
@@ -305,7 +307,7 @@ http://code.google.com/p/vnsea"
 - (void)displayAbout
 {
 	UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
-		initWithTitle:@"VNsea 0.2"
+		initWithTitle:kAppVersion
 		buttons:[NSArray arrayWithObject:@"OK"]
 		defaultButtonIndex:0
 		delegate:self

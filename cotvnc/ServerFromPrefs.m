@@ -44,6 +44,7 @@
 		[self setRememberPassword:[[prefDict objectForKey:RFB_REMEMBER] intValue] == 0 ? NO : YES];
 		[self setDisplay:         [[prefDict objectForKey:RFB_DISPLAY] intValue]];
 		[self setLastProfile:      [prefDict objectForKey:RFB_LAST_PROFILE]];
+		[self setPixelDepth:		[[prefDict objectForKey:RFB_PIXEL_DEPTH] intValue]];
 		[self setShared:          [[prefDict objectForKey:RFB_SHARED] intValue] == 0 ? NO : YES];
 		[self setFullscreen:      [[prefDict objectForKey:RFB_FULLSCREEN] intValue] == 0 ? NO : YES];
 		[self setViewOnly:        [[prefDict objectForKey:RFB_VIEWONLY] intValue] == 0 ? NO : YES];

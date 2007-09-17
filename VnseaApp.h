@@ -17,14 +17,6 @@
 
 @class Profile;
 
-//! @brief Event type flags
-//enum _event_types
-//{
-//	kButtonDown = 1,		//!< Finger presses down on button
-//	kButtonUnreleased = 32, //!< User moves finger off the button
-//	kButtonUp = 64			//!< Finger releases button with it selected
-//};
-
 //! @brief Device orientation constants.
 enum _device_orient
 {
@@ -36,6 +28,11 @@ enum _device_orient
 
 /*!
  * @brief Main application class for the VNC viewer program.
+ *
+ * This class manages the high level interaction with the user. It
+ * switches between the server list, server editor, and connection views
+ * as necessary. It also handles reading and writing the saved list
+ * of servers to and from media.
  */
 @interface VnseaApp : UIApplication
 {
@@ -50,19 +47,30 @@ enum _device_orient
 	int _editingIndex;	//!< Index of the server currently being edited.
 }
 
+//! \name Server list I/O
+//@{
 - (NSArray *)loadServers;
 - (void)saveServers:(NSArray *)theServers;
+//@}
 
+//! \name List and editor delegate messages
+//@{
 - (void)serverSelected:(int)serverIndex;
 - (void)editServer:(int)serverIndex;
 - (void)addNewServer;
 - (void)finishedEditingServer:(NSDictionary *)serverInfo;
 - (void)deleteServer;
+//@}
 
+//! @brief Creates a dictionary populated with default server values.
 - (NSDictionary *)defaultServerInfo;
 
-//- (void)checkForUpdate;
+//! \name Auto-update support
+//@{
+- (void)checkForUpdate;
+//@}
 
+//! @brief Show the abourt alert.
 - (void)displayAbout;
 
 @end

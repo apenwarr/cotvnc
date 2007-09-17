@@ -17,10 +17,10 @@
 
 #define kNavBarHeight (48)
 #define kButtonBarHeight (48)
-#define kAddButtonHeight (40)
-#define kAddButtonWidth (60)
+#define kAddButtonHeight (48)
+#define kAddButtonWidth (120)
 
-#define kAddButtonName @"+"
+#define kAddButtonName @"Add Server"
 
 @implementation VNCServerListView
 
@@ -36,7 +36,7 @@
 		
 		// Setup navbar
 		_navBar = [[UINavigationBar alloc] initWithFrame: subframe];
-		[_navBar showButtonsWithLeftTitle: @"About" rightTitle: @"Edit" leftBack: NO];
+		[_navBar showButtonsWithLeftTitle: @"About" rightTitle: @"New" leftBack: NO];
 		[_navBar setBarStyle: 3];
 		[_navBar setDelegate: self];
 		[self addSubview: _navBar];
@@ -50,7 +50,7 @@
 		[self addSubview:_buttonBar];
 		
 		// Add server button
-		subframe = CGRectMake(frame.size.width - 10.0f - kAddButtonWidth, (kButtonBarHeight - kAddButtonHeight) / 2.0, kAddButtonWidth, kAddButtonHeight);
+/*		subframe = CGRectMake(frame.size.width - 10.0f - kAddButtonWidth, (kButtonBarHeight - kAddButtonHeight) / 2.0, kAddButtonWidth, kAddButtonHeight);
 		_addButton = [[UINavBarButton alloc] initWithFrame:subframe];
 		[_addButton setAutosizesToFit: NO];
 		[_addButton addTarget:self action: @selector(addNewServer:) forEvents:kGSEventTypeButtonSelected];
@@ -58,7 +58,7 @@
 		[_addButton setTitle: kAddButtonName];
 		[_addButton setEnabled: YES];
 		[_buttonBar addSubview: _addButton];
-
+*/
 		// Setup server table
 		subframe = CGRectMake(0, navBarSize.height, frame.size.width, frame.size.height - navBarSize.height - kButtonBarHeight);
 		_serverColumn = [[UITableColumn alloc] initWithTitle:@"Servers" identifier:@"servers" width:frame.size.width];
@@ -121,6 +121,7 @@
 	switch (buttonIndex)
 	{
 		case kNavBarEditButton:
+			[self addNewServer:nil];
 			break;
 			
 		case kNavBarAboutButton:

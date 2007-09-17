@@ -19,18 +19,21 @@
 #import "EventFilter.h"
 #import "FrameBuffer.h"
 #import "RFBViewProtocol.h"
-//#import "VNCContentView.h"
+#import "VNCContentView.h"
 
 /*!
  * @brief Main view to display and control the remote computer.
+ *
+ * This view class handles everything related to showing the remote display
+ * and interacting with it. It is tightly coupled with the RFBConnection
+ * instance and is its delegate.
  */
-@interface VNCView : UIView <RFBViewProtocol>
+@interface VNCView : UIScroller <RFBViewProtocol>
 {
     RFBConnection * _connection;
 	EventFilter * _eventFilter;
-    FrameBuffer * _fbuf;
-//	UIScroller * _scroller;
-//	VNCContentView * _screenView;
+	VNCContentView * _screenView;
+	bool _inRemoteAction;
 }
 
 //! \name Implementation of RFBViewProtocol
@@ -39,7 +42,6 @@
 - (void)setFrameBuffer:(id)aBuffer;
 - (void)setConnection:(RFBConnection *)connection;
 - (RFBConnection *)connection;
-- (void)drawRect:(CGRect)aRect;
 - (void)displayFromBuffer:(CGRect)aRect;
 - (void)drawRectList:(id)aList;
 //@}

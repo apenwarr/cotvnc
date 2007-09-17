@@ -39,6 +39,7 @@
 		[self setDisplay:         0];
 		[self setPort:            5900];
 		[self setLastProfile:     @"default"]; //[NSString stringWithString:[[ProfileDataManager sharedInstance] defaultProfileName]]];
+		[self setPixelDepth: 32];
 		[self setShared:          NO];
 		[self setFullscreen:      NO];
 		[self setViewOnly:      NO];
@@ -278,6 +279,62 @@
 														object:self];
 }
 
+- (int)pixelDepth
+{
+	return _pixelDepth;
+}
+
+- (void)setPixelDepth:(int)depth
+{
+	_pixelDepth = depth;
+}
+
+- (void)getPixelFormat:(rfbPixelFormat*)format
+{
+    format->bigEndian = [FrameBuffer bigEndian];
+    format->trueColour = YES;
+    switch(_pixelDepth) {
+        case 0:
+            break;
+        case 8:
+            format->bitsPerPixel = 8;
+            format->depth = 8;
+            format->redMax = format->greenMax = format->blueMax = 3;
+            format->redShift = 6;
+            format->greenShift = 4;
+            format->blueShift = 2;
+            break;
+        case 16:
+            format->bitsPerPixel = 16;
+            format->depth = 16;
+            format->redMax = format->greenMax = format->blueMax = 15;
+            if(format->bigEndian) {
+                format->redShift = 12;
+                format->greenShift = 8;
+                format->blueShift = 4;
+            } else {
+                format->redShift = 4;
+                format->greenShift = 0;
+                format->blueShift = 12;
+            }
+            break;
+        case 32:
+            format->bitsPerPixel = 32;
+            format->depth = 24;
+            format->redMax = format->greenMax = format->blueMax = 255;
+            if(format->bigEndian) {
+                format->redShift = 16;
+                format->greenShift = 8;
+                format->blueShift = 0;
+            } else {
+                format->redShift = 0;
+                format->greenShift = 8;
+                format->blueShift = 16;
+            }
+            break;
+    }
+}
+
 //- (void)setDelegate: (id<IServerDataDelegate>)delegate
 //{
 //	_delegate = delegate;
@@ -302,7 +359,7 @@
 	// needs to do appropriate save logic
 	[self setRememberPassword:[server rememberPassword]];
 	[self setPassword:[server password]];
-	[self setDisplay:[server display]];
+	[self setDisplay:[(ServerBase *)server display]];
 	[self setPort:(int)[server port]];
 	[self setShared:[server shared]];
 	[self setFullscreen:[server fullscreen]];

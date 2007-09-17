@@ -10,6 +10,7 @@
 #import <UIKit/UIPreferencesTable.h>
 #import <UIKit/UISwitchControl.h>
 #import <UIKit/UIPreferencesDeleteTableCell.h>
+#import <UIKit/UISegmentedControl.h>
 
 //! @brief Array indices for the preferences table cells.
 enum _server_info_cell_indices
@@ -19,7 +20,8 @@ enum _server_info_cell_indices
 	kServerPasswordCellIndex,
 	kServerDisplayCellIndex,
 	kServerSharedCellIndex,
-	kServerViewOnlyCellIndex
+	kServerViewOnlyCellIndex,
+	kServerPixelDepthCellIndex
 };
 
 /*!
@@ -34,6 +36,7 @@ enum _server_info_cell_indices
 	NSArray * _cells;
 	UISwitchControl * _sharedSwitch;
 	UISwitchControl * _viewOnlySwitch;
+	UISegmentedControl * _pixelDepthControl;
 	UIPreferencesDeleteTableCell * _deleteCell;
 }
 

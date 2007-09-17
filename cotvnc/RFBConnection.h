@@ -118,6 +118,7 @@
 
 - (id)connectionHandle;
 - (Profile*)profile;
+- (id)serverSettings;
 - (NSString*)serverVersion;
 - (int) serverMajorVersion;
 - (int) serverMinorVersion;

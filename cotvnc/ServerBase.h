@@ -21,6 +21,7 @@
 
 #import <Foundation/Foundation.h>
 #import "IServerData.h"
+#import "FrameBuffer.h"
 
 @interface ServerBase : NSObject //<IServerData>
 {
@@ -35,6 +36,7 @@
 	bool      _fullscreen;
 	bool      _viewOnly;	
 	NSString* _lastProfile;
+	int _pixelDepth;
 //	id<IServerDataDelegate> _delegate;
 }
 
@@ -59,6 +61,7 @@
 - (bool)fullscreen;
 - (bool)viewOnly;
 - (NSString*)lastProfile;
+- (int)pixelDepth;
 - (bool)addToServerListOnConnect;
 
 - (void)setName: (NSString*)name;
@@ -72,7 +75,10 @@
 - (void)setFullscreen: (bool)fullscreen;
 - (void)setViewOnly: (bool)viewOnly;
 - (void)setLastProfile: (NSString*)lastProfile;
+- (void)setPixelDepth:(int)depth;
 - (void)setAddToServerListOnConnect: (bool)addToServerListOnConnect;
+
+- (void)getPixelFormat:(rfbPixelFormat*)format;
 
 //- (void)setDelegate: (id<IServerDataDelegate>)delegate;
 

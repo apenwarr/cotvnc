@@ -133,7 +133,7 @@ typedef enum {
 	NSTimeInterval _tapAndClickTimeout[2];
 	NSTimer *_tapAndClickTimer;
 	
-//	NSTimer *_mouseTimer;
+	NSTimer *_mouseTimer;
 	CGPoint  _lastMousePoint;
 	bool     _unsentMouseMoveExists;
 }
@@ -195,5 +195,7 @@ typedef enum {
 - (void)setTapAndClickModifier: (unsigned int)modifier button: (unsigned int)button;
 - (void)setTapAndClickButtonSpeed: (NSTimeInterval)speed button: (unsigned int)button;
 - (void)setTapAndClickTimeout: (NSTimeInterval)timeout button: (unsigned int)button;
+
+- (void)handleMouseTimer: (NSTimer *) timer;
 
 @end

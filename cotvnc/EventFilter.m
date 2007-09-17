@@ -185,66 +185,71 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	if ( _viewOnly )
 		return;
 	
-//	if( nil != _mouseTimer )
-//	{
-//        [_mouseTimer invalidate];
-//		[_mouseTimer release];
-//        _mouseTimer = nil;
-//    }
+	if( nil != _mouseTimer )
+	{
+        [_mouseTimer invalidate];
+		[_mouseTimer release];
+        _mouseTimer = nil;
+    }
 
 	CGRect r = GSEventGetLocationInWindow(theEvent);
-    CGPoint	currentPoint = [_view convertPoint: r.origin fromView: nil];
+	CGRect cr = [_view convertRect:r fromView:nil];
+    CGPoint	currentPoint = cr.origin;
 
-	//#define CHANGE_DIFF 5
+	// Ignore up to 10 drag events in a row, unless the delta X/Y from the
+	// last event we sent is greater than 3 pixels.
+	#define CHANGE_DIFF 3
 	#define IGNORE_COUNT 10
 	
-//	static int ct = IGNORE_COUNT;
-//    bool bSendEventImmediately = NO;
+	static int ct = IGNORE_COUNT;
+    bool bSendEventImmediately = NO;
 	
-//	if( IGNORE_COUNT == ct )
-//	{
-	//	if( (_lastMousePoint.x - currentPoint.x <= CHANGE_DIFF && _lastMousePoint.x - currentPoint.x >= -CHANGE_DIFF) &&
-	//		(_lastMousePoint.y - currentPoint.y <= CHANGE_DIFF && _lastMousePoint.y - currentPoint.y >= -CHANGE_DIFF) )
-	//	{
-//            bSendEventImmediately = YES;
-	//	}
+	bool overDiff = (ABS(_lastMousePoint.x - currentPoint.x) >= CHANGE_DIFF || ABS(_lastMousePoint.y - currentPoint.y) >= CHANGE_DIFF);
+	
+	if( IGNORE_COUNT == ct || overDiff )
+	{
+//		if( (_lastMousePoint.x - currentPoint.x <= CHANGE_DIFF && _lastMousePoint.x - currentPoint.x >= -CHANGE_DIFF) &&
+//			(_lastMousePoint.y - currentPoint.y <= CHANGE_DIFF && _lastMousePoint.y - currentPoint.y >= -CHANGE_DIFF) )
+//		{
+            bSendEventImmediately = YES;
+//		}
 		
-//		ct = 0;
-//	}
-//	else
-//	{
-//		++ct;
-//	}
+		ct = 0;
+	}
+	else
+	{
+		++ct;
+	}
     
     _unsentMouseMoveExists = YES;
     _lastMousePoint = currentPoint;
     
-//    if( YES == bSendEventImmediately )
-//    {
-        NSLog( @"Forced Mouse Move." );
+    if( YES == bSendEventImmediately )
+    {
+//        NSLog( @"Forced Mouse Move." );
         [self sendUnpublishedMouseMove];
-//    }
-//    else
-//    {
+    }
+    else
+    {
 //        NSLog( @"Ignored Mouse Move." );
-//        _mouseTimer = [NSTimer scheduledTimerWithTimeInterval: 0.05
-//                                                       target: self
-//                                                     selector: @selector(handleMouseTimer:)
-//                                                     userInfo: nil
-//                                                      repeats: NO];
-//		[_mouseTimer retain];
-//    }
+        _mouseTimer = [NSTimer scheduledTimerWithTimeInterval: 0.05
+                                                       target: self
+                                                     selector: @selector(handleMouseTimer:)
+                                                     userInfo: nil
+                                                      repeats: NO];
+		[_mouseTimer retain];
+    }
 }
 
-//- (void)handleMouseTimer: (NSTimer *) timer
-//{
-//	[_mouseTimer release];
-//    _mouseTimer = nil;
-//    
-//    [self sendUnpublishedMouseMove];
-//    
+- (void)handleMouseTimer: (NSTimer *) timer
+{
+	[_mouseTimer release];
+    _mouseTimer = nil;
+    
+    [self sendUnpublishedMouseMove];
+    
 //    NSLog( @"Sent Mouse Move." );
-//}
+}
 
 - (void)clearUnpublishedMouseMove
 {
@@ -447,35 +452,33 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 // XXX why does the convertPoint:fromView: method crash???
 - (void)queueMouseDownEventFromEvent: (GSEvent *)theEvent buttonNumber: (unsigned int)button
 {
-	NSLog(@"queueMouseDownEventFromEvent:%@ n:%d", theEvent, button);
+//	NSLog(@"queueMouseDownEventFromEvent:%@ n:%d", theEvent, button);
 	if ( 1 != _emulationButton )
 	{
 		[self queueMouseUpEventFromEvent: theEvent buttonNumber: _emulationButton];
 	}
 	
 	CGRect r = GSEventGetLocationInWindow(theEvent);
-	NSLog(@"r.o={%f,%f}", r.origin.x, r.origin.y);
+//	NSLog(@"r.o={%f,%f}", r.origin.x, r.origin.y);
 
-	// This convertPoint:fromView: call crashes. Probably a compiler issue.
-//	CGRect cr = [_view convertRect:r fromView:nil];
-    CGPoint	p = r.origin; //[_view convertPoint: r.origin fromView: self];
-	p.y = [_view bounds].size.height - p.y;
-	NSLog(@"p={%f,%f}", p.x, p.y);
+	// The convertPoint:fromView: call crashes. Probably a compiler issue.
+	// So instead we use convertRect:fromView:.
+	CGRect cr = [_view convertRect:r fromView:nil];
+    CGPoint	p = cr.origin;
+//	NSLog(@"p={%f,%f}", p.x, p.y);
 	
 	double timestamp = GSEventGetTimestamp(theEvent);
 //	NSLog(@"timestamp = %f", timestamp);
 	QueuedEvent *event = [QueuedEvent mouseDownEventForButton: button location: p timestamp: timestamp];
 	
-	NSLog(@"q'd event=%@", event);
+//	NSLog(@"q'd event=%@", event);
 	[_pendingEvents addObject: event];
 	[self sendAnyValidEventsToServerNow];
 }
 
-
-// XXX why does the convertPoint:fromView: method crash???
 - (void)queueMouseUpEventFromEvent: (GSEvent *)theEvent buttonNumber: (unsigned int)button
 {
-	NSLog(@"queueMouseUpEventFromEvent:%@ n:%d", theEvent, button);
+//	NSLog(@"queueMouseUpEventFromEvent:%@ n:%d", theEvent, button);
 	if ( 1 != _emulationButton )
 	{
 		button = _emulationButton;
@@ -483,17 +486,15 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	}
 	
 	CGRect r = GSEventGetLocationInWindow(theEvent);
-//	CGRect cr = [_view convertRect:r fromView:nil];
-    CGPoint	p = r.origin; //[_view convertPoint: r.origin fromView: self];
-	p.y = [_view bounds].size.height - p.y;
+	CGRect cr = [_view convertRect:r fromView:nil];
+    CGPoint	p = cr.origin;
 	
 	QueuedEvent *event = [QueuedEvent mouseUpEventForButton:button location:p timestamp:GSEventGetTimestamp(theEvent)];
 	
-	NSLog(@"q'd event=%@", event);
+//	NSLog(@"q'd event=%@", event);
 	[_pendingEvents addObject: event];
 	[self sendAnyValidEventsToServerNow];
 }
-
 
 - (void)queueModifierPressed: (unsigned int)modifier timestamp: (NSTimeInterval)timestamp
 {

@@ -256,6 +256,11 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     return _profile;
 }
 
+- (id)serverSettings
+{
+	return server_;
+}
+
 - (void)ringBell
 {
 //    NSBeep();
@@ -491,7 +496,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 - (CGRect)visibleRect
 {
-    return [rfbView bounds];
+    return [rfbView contentRect];
 }
 
 - (void)drawRectFromBuffer:(CGRect)aRect
@@ -594,21 +599,22 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 - (void)mouseAt:(CGPoint)thePoint buttons:(unsigned int)mask
 {
     rfbPointerEventMsg msg;
-    CGRect b = [rfbView bounds];
+//    CGRect b = [rfbView contentRect];
     CGSize s = [frameBuffer size];
 	
     if(thePoint.x < 0) thePoint.x = 0;
     if(thePoint.y < 0) thePoint.y = 0;
     if(thePoint.x >= s.width) thePoint.x = s.width - 1;
     if(thePoint.y >= s.height) thePoint.y = s.height - 1;
-    if((_mouseLocation.x != thePoint.x) || (_mouseLocation.y != thePoint.y) || (_lastMask != mask)) {
+    if((_mouseLocation.x != thePoint.x) || (_mouseLocation.y != thePoint.y) || (_lastMask != mask))
+	{
         //NSLog(@"here %d", mask);
         _mouseLocation = thePoint;
 		_lastMask = mask;
         msg.type = rfbPointerEvent;
         msg.buttonMask = mask;
-        msg.x = thePoint.x; msg.x = htons(msg.x);
-        msg.y = b.size.height - thePoint.y; msg.y = htons(msg.y);
+        msg.x = htons((uint16_t)thePoint.x);
+        msg.y = htons((uint16_t)thePoint.y);
         [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
     }
     [self queueUpdateRequest];

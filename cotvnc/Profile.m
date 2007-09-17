@@ -280,7 +280,7 @@ ButtonNumberToArrayIndex( unsigned int buttonNumber )
 
 - (void)getPixelFormat:(rfbPixelFormat*)format
 {
-    int i = 3; //[[info objectForKey: kProfile_PixelFormat_Key] intValue];
+    int i = 2; //[[info objectForKey: kProfile_PixelFormat_Key] intValue];
 
     format->bigEndian = [FrameBuffer bigEndian];
     format->trueColour = YES;

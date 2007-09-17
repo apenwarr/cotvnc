@@ -28,6 +28,7 @@
 #import "RFBConnection.h"
 #import "ServerCutTextReader.h"
 #import "SetColorMapEntriesReader.h"
+#import "ServerBase.h"
 
 @implementation RFBProtocol
 
@@ -125,6 +126,7 @@
 - (void)setPixelFormat:(rfbPixelFormat*)aFormat
 {
     Profile* profile = [target profile];
+	ServerBase * server = [target serverSettings];
     rfbSetPixelFormatMsg	msg;
 
     msg.type = rfbSetPixelFormat;
@@ -137,7 +139,7 @@
             aFormat->bigEndian = [FrameBuffer bigEndian];
         }
     } else {
-       	[profile getPixelFormat:aFormat];
+       	[server getPixelFormat:aFormat];
         aFormat->bigEndian = [FrameBuffer bigEndian];
     }
 

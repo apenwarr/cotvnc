@@ -83,8 +83,6 @@
 		0259AD090C9093BD005285B7 /* RFBServerInitReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFBServerInitReader.m; sourceTree = "<group>"; };
 		0259AD0A0C9093BD005285B7 /* RFBStringReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFBStringReader.h; sourceTree = "<group>"; };
 		0259AD0B0C9093BD005285B7 /* RFBStringReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFBStringReader.m; sourceTree = "<group>"; };
-		0259AD0C0C9093BD005285B7 /* RFBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFBView.h; sourceTree = "<group>"; };
-		0259AD0D0C9093BD005285B7 /* RFBView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFBView.m; sourceTree = "<group>"; };
 		0259AD0E0C9093BD005285B7 /* RREEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RREEncodingReader.h; sourceTree = "<group>"; };
 		0259AD0F0C9093BD005285B7 /* RREEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RREEncodingReader.m; sourceTree = "<group>"; };
 		0259AD100C9093BD005285B7 /* RawEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawEncodingReader.h; sourceTree = "<group>"; };
@@ -290,8 +288,6 @@
 		0259AD530C909D43005285B7 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				0259AD0C0C9093BD005285B7 /* RFBView.h */,
-				0259AD0D0C9093BD005285B7 /* RFBView.m */,
 				0259ACD80C9093BD005285B7 /* KeyChain.h */,
 				0259ACD90C9093BD005285B7 /* KeyChain.m */,
 				0259ACC40C9093BD005285B7 /* EventFilter.h */,
@@ -364,6 +360,8 @@
 				0259B2660C931875005285B7 /* RFBViewProtocol.h */,
 				0259BE780C9B5E65005285B7 /* Shimmer.h */,
 				0259BE790C9B5E65005285B7 /* Shimmer.m */,
+				0259C1D80C9CBE70005285B7 /* VNCContentView.h */,
+				0259C1D90C9CBE70005285B7 /* VNCContentView.m */,
 				0259AD590C90AEED005285B7 /* VNCServerInfoView.h */,
 				0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */,
 				0259BAC40C94BCF7005285B7 /* VNCServerListView.h */,
@@ -372,8 +370,6 @@
 				0259AC180C909383005285B7 /* VNCView.m */,
 				0259AC150C909383005285B7 /* VnseaApp.h */,
 				0259AC160C909383005285B7 /* VnseaApp.m */,
-				0259C1D80C9CBE70005285B7 /* VNCContentView.h */,
-				0259C1D90C9CBE70005285B7 /* VNCContentView.m */,
 			);
 			name = src;
 			sourceTree = "<group>";

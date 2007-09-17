@@ -35,6 +35,7 @@
 #define RFB_VIEWONLY      @"ViewOnly"
 #define RFB_LAST_DISPLAY  @"Display"
 #define RFB_LAST_PROFILE  @"Profile"
+#define RFB_PIXEL_DEPTH   @"PixelDepth"
 #define RFB_PORT		  5900
 
 @interface ServerFromPrefs : ServerBase

@@ -13,9 +13,9 @@ APP_OBJS=\
 	VnseaApp.o \
 	VNCView.o \
 	VNCServerInfoView.o \
-	VNCServerListView.o 
-#	VNCContentView.o
-#	Shimmer.o
+	VNCServerListView.o \
+	VNCContentView.o \
+	Shimmer.o
 
 VNC_OBJS=\
 	cotvnc/Profile.o \

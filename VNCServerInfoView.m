@@ -67,7 +67,18 @@
 		[_viewOnlySwitch setOrigin:controlOrigin];
 		[viewOnlyCell setControl:_viewOnlySwitch];
 		
-		_cells = [[NSArray arrayWithObjects:nameCell, addressCell, passwordCell, displayCell, sharedCell, viewOnlyCell, nil] retain];
+		subviewFrame = [_table frameOfPreferencesCellAtRow:6 inGroup:0];
+		UIPreferencesTableCell * pixelDepthCell = [[UIPreferencesTableCell alloc] initWithFrame:subviewFrame];
+		[pixelDepthCell setTitle:@"Pixel Depth"];
+
+		subviewFrame.origin = CGPointMake(154, 9);
+		subviewFrame.size.height = [UISegmentedControl defaultHeightForStyle:2];
+		subviewFrame.size.width = 140;
+		NSArray * segmentItems = [NSArray arrayWithObjects:@"8", @"16", @"32", nil];
+		_pixelDepthControl = [[UISegmentedControl alloc] initWithFrame:subviewFrame withStyle:2 withItems:segmentItems];
+		[pixelDepthCell addSubview:_pixelDepthControl];
+		
+		_cells = [[NSArray arrayWithObjects:nameCell, addressCell, passwordCell, displayCell, sharedCell, viewOnlyCell, pixelDepthCell, nil] retain];
 		
 		// Create Delete Server button
 		subviewFrame = [_table frameOfPreferencesCellAtRow:0 inGroup:1];
@@ -101,7 +112,7 @@
 
 - (void)setKeyboardVisible:(BOOL)visible
 {
-	[_table setKeyboardVisible:visible];
+	[_table setKeyboardVisible:visible animated:NO];
 }
 
 - (void)setServerInfo:(NSDictionary *)info
@@ -118,6 +129,22 @@
 	[(UIPreferencesTextTableCell *)[_cells objectAtIndex:kServerDisplayCellIndex] setValue:[NSString stringWithFormat:@"%d", [[_serverInfo objectForKey:RFB_DISPLAY] intValue]]];
 	[_sharedSwitch setValue:[[_serverInfo objectForKey:RFB_SHARED] boolValue] ? 1.0f : 0.0f];
 	[_viewOnlySwitch setValue:[[_serverInfo objectForKey:RFB_VIEWONLY] boolValue] ? 1.0f : 0.0f];
+	
+	int depth = [[_serverInfo objectForKey:RFB_PIXEL_DEPTH] intValue];
+	int segment = 2;
+	switch (depth)
+	{
+		case 8:
+			segment = 0;
+			break;
+		case 16:
+			segment = 1;
+			break;
+		case 32:
+			segment = 2;
+			break;
+	}
+	[_pixelDepthControl setSelectedSegment:segment];
 	
 	[_table reloadData];
 }
@@ -145,6 +172,21 @@
 			[_serverInfo setObject:[NSNumber numberWithInt:[[[_cells objectAtIndex:kServerDisplayCellIndex] value] intValue]] forKey:RFB_DISPLAY];
 			[_serverInfo setObject:[NSNumber numberWithBool:([_sharedSwitch value] > 0.1)] forKey:RFB_SHARED];
 			[_serverInfo setObject:[NSNumber numberWithBool:([_viewOnlySwitch value] > 0.1)] forKey:RFB_VIEWONLY];
+			
+			int depth = 32;
+			switch ([_pixelDepthControl selectedSegment])
+			{
+				case 0:
+					depth = 8;
+					break;
+				case 1:
+					depth = 16;
+					break;
+				case 2:
+					depth = 32;
+					break;
+			}
+			[_serverInfo setObject:[NSNumber numberWithInt:depth] forKey:RFB_PIXEL_DEPTH];
 			
 			resultDict = _serverInfo;
 			break;
