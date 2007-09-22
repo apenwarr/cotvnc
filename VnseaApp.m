@@ -29,7 +29,9 @@
 
 #define kServerArrayKey @"servers"
 
-#define kUpdateURL @"http://www.manyetas.com/creed/iphone/pxl/vnsea.plist"
+//! URL for a plist that contains information about the latest version
+//! of the application, for use by Shimmer.
+#define kUpdateURL @"http://www.manyetas.com/creed/iphone/shimmer/vnsea.plist"
 
 #define kAboutMessage @"\
 Copyright 2007 Chris Reed\n\
@@ -108,7 +110,7 @@ http://code.google.com/p/vnsea"
 	
 //	[self setIgnoresInteractionEvents:NO];
 	
-	[self checkForUpdate];
+	[NSThread detachNewThreadSelector:@selector(checkForUpdate:) toTarget:self withObject:nil];
 }
 
 - (void)dealloc
@@ -120,16 +122,32 @@ http://code.google.com/p/vnsea"
 }
 
 //! Use Shimmer to check for an available update, ask the user if it should be
-//! installed, and then download and install it.
-- (void)checkForUpdate
+//! installed, and then download and install it. This method is executed on a
+//! separate thread, so attempting the connection will not freeze the UI.
+- (void)checkForUpdate:(id)unused
 {
-	Shimmer * shimmer = [[[Shimmer alloc] init] autorelease];
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	Shimmer * shimmer = [[Shimmer alloc] init];
 	if ([shimmer checkForUpdateHere:kUpdateURL])
 	{
-		[shimmer setAboveThisView:_transView];
-		[shimmer doUpdate];
+		// An update is available, so give the user the option to update.
+		// The update is performed on the main thread since it operates
+		// with the UI.
+		[self performSelectorOnMainThread:@selector(doUpdate:) withObject:shimmer waitUntilDone:NO];
 	}
+	
+	[pool release];
 }
+
+- (void)doUpdate:(Shimmer *)shimmer
+{
+	[shimmer setAboveThisView:_transView];
+	[shimmer setUseCustomView:YES];
+	[shimmer doUpdate];
+}
+
+
 /*
 - (void) applicationResume: (struct __GSEvent *)unknown1 withArguments:(id)unknown2
 {
@@ -330,7 +348,7 @@ http://code.google.com/p/vnsea"
 {
 	NSLog(@"accel: x=%f, y=%f, z=%f", x, y, z);
 }
-/*
+
 - (void)statusBarMouseDown:(GSEvent *)event
 {
 	NSLog(@"statusBarMouseDown:%@", event);
@@ -345,7 +363,7 @@ http://code.google.com/p/vnsea"
 {
 	NSLog(@"statusBarMouseUp:%@", event);
 }
-
+/*
 - (void)volumeChanged:(GSEvent *)event
 {
 	NSLog(@"volumeChanged:%@", event);

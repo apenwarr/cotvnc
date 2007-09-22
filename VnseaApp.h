@@ -16,6 +16,7 @@
 #import "VNCServerListView.h"
 
 @class Profile;
+@class Shimmer;
 
 //! @brief Device orientation constants.
 enum _device_orient
@@ -67,7 +68,8 @@ enum _device_orient
 
 //! \name Auto-update support
 //@{
-- (void)checkForUpdate;
+- (void)checkForUpdate:(id)unused;
+- (void)doUpdate:(Shimmer *)shimmer;
 //@}
 
 //! @brief Show the abourt alert.
