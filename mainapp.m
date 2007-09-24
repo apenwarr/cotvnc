@@ -1,6 +1,7 @@
 #import "VnseaApp.h"
 #include <objc/objc.h>
 #include <objc/objc-runtime.h>
+#include <stdio.h>
 
 //thanks to apolloim
 double objc_msgSend_fpret(id self, SEL op, ...) {

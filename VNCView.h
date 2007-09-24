@@ -48,3 +48,9 @@
 
 @end
 
+@interface VNCView (DelegateMethods)
+
+- (void)connectionClosed;
+
+@end
+

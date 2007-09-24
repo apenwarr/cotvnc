@@ -116,129 +116,120 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     addr->sin_addr.s_addr = address_for_name((char*)[host cString]);
 }
 
-- (void)perror:(NSString*)theAction call:(NSString*)theFunction
+- (NSString *)perror:(NSString*)theAction call:(NSString*)theFunction
 {
     NSString* s = [NSString stringWithFormat:@"%s: %@", strerror(errno), theFunction];
 	NSLog(@"error: %@", s);
-//	NSString *ok = NSLocalizedString( @"Okay", nil );
-//    NSRunAlertPanel(theAction, s, ok, NULL, NULL, NULL);
+	return s;
 }
 
-// jason added for Jaguar check
 + (void)initialize {
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithFloat: 0.0], @"FrameBufferUpdateSeconds", nil];
 	
 	[standardUserDefaults registerDefaults: dict];
-//	gIsJaguar = [NSString instancesRespondToSelector: @selector(decomposedStringWithCanonicalMapping)];
 }
 
-
-// mark refactored init methods
-- (void)_prepareWithServer:(id/*<IServerData>*/)server profile:(Profile*)p view:(UIView<RFBViewProtocol> *)theView
+- (id)initWithServer:(id)server profile:(Profile*)p view:(UIView<RFBViewProtocol> *)theView
 {
-    _profile = [p retain];
-	rfbView = theView;
-	
-//    _owner = owner; // jason added for fullscreen display
-//    _isFullscreen = NO; // jason added for fullscreen display
-
-    if((host = [server host]) == nil) {
-        host = [DEFAULT_HOST retain];
-    } else {
-        [host retain];
-    }
-}
-
-- (void)_finishInitWithFileHandle:(NSFileHandle*)file server:(id<IServerData>)server
-{
-//    [NSBundle loadNibNamed:@"RFBConnection.nib" owner:self];
-    server_ = [(id)server retain];
-	
-	_eventFilter = [[EventFilter alloc] init];
-	[_eventFilter setConnection: self];
-
-    versionReader = [[NLTStringReader alloc] initTarget:self action:@selector(setServerVersion:)];
-    [self setReader:versionReader];
-
-    socketHandler = [file retain];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readData:) 	name:NSFileHandleReadCompletionNotification object:socketHandler];
-    [socketHandler readInBackgroundAndNotify];
-//    [rfbView registerForDraggedTypes:[NSArray arrayWithObjects:NSStringPboardType, NSFilenamesPboardType, nil]];
-
-//    if ([server fullscreen]) {
-//        [self makeConnectionFullscreen: self];
-//    }
-}
-
-- (void)setView:(UIView<RFBViewProtocol> *)theView
-{
-	rfbView = theView;
-}
-
-// jason changed for fullscreen display
-- (id)initWithServer:(id/*<IServerData>*/)server profile:(Profile*)p view:(UIView<RFBViewProtocol> *)theView
-{
-    if (self = [super init]) {
-		struct sockaddr_in	remote;
-		int sock, port;
-
-        [self _prepareWithServer:server profile:p view:theView];
-
-		if((sock = socket(PF_INET, SOCK_STREAM, 0)) < 0) {
-			NSString *actionStr = NSLocalizedString( @"OpenConnection", nil );
-			[self perror:actionStr call:@"socket()"];
-			[self release];
-			return nil;
+    if (self = [super init])
+	{
+		server_ = [server retain];
+		_profile = [p retain];
+		rfbView = theView;
+		
+		if ((host = [server host]) == nil)
+		{
+			host = [DEFAULT_HOST retain];
 		}
-		port = (int)[server port];
-		socket_address(&remote, host, port);
-		if( INADDR_NONE == remote.sin_addr.s_addr ) {
-			NSString *actionStr = NSLocalizedString( @"NoNamedServer", nil );
-			[self perror: [NSString stringWithFormat:actionStr, host] call:@"connect()"];
-			[self release];
-			return nil;
+		else
+		{
+			[host retain];
 		}
-		if(connect(sock, (struct sockaddr *)&remote, sizeof(remote)) < 0) {
-			NSString *actionStr;
-			switch( errno )
-			{
-				case EADDRNOTAVAIL:
-					actionStr = NSLocalizedString( @"NoNamedServer", nil );
-					break;
-				default:
-					actionStr = NSLocalizedString( @"NoConnection", nil );
-			}
-			actionStr = [NSString stringWithFormat:actionStr, host, port];
-			[self perror:actionStr call:@"connect()"];
-			[self release];
-			return nil;
-		}
-        
-        [self _finishInitWithFileHandle:
-            [[[NSFileHandle alloc] initWithFileDescriptor:sock closeOnDealloc: YES] autorelease]
-            server:server];
-	}
-    return self;
-}
-
-- (id)initWithFileHandle:(NSFileHandle*)file server:(id/*<IServerData>*/)server profile:(Profile*)p view:(UIView<RFBViewProtocol> *)theView
-{
-    if (self = [super init]) {
-        [self _prepareWithServer:server profile:p view:theView];
-        [self _finishInitWithFileHandle:(NSFileHandle*)file server:server];
+		
+		// Have to do this after setting the profile, since the event filter gets
+		// our profile in its setConnection: method.
+		_eventFilter = [[EventFilter alloc] init];
+		[_eventFilter setConnection: self];
 	}
     return self;
 }
 
 - (void)dealloc
 {
-//	[newTitlePanel orderOut:self];
-//	[optionPanel orderOut:self];
-	
-//	[window close];
 	[self terminateConnection: nil]; // just in case it didn't already get called somehow
     [super dealloc];
+}
+
+- (BOOL)openConnectionReturningError:(NSString **)errorMessage
+{
+	struct sockaddr_in	remote;
+	int sock;
+	int port;
+	
+	// Start off assuming there will be no error.
+	if (errorMessage)
+	{
+		*errorMessage = nil;
+	}
+	
+	if((sock = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+	{
+		NSString *actionStr = NSLocalizedString( @"OpenConnection", nil );
+		if (errorMessage)
+		{
+			*errorMessage = actionStr;
+		}
+		return NO;
+	}
+	
+	port = (int)[server_ port];
+	socket_address(&remote, host, port);
+	if( INADDR_NONE == remote.sin_addr.s_addr )
+	{
+		NSString *actionStr = NSLocalizedString( @"NoNamedServer", nil );
+		if (errorMessage)
+		{
+			*errorMessage = [NSString stringWithFormat:actionStr, host, port];
+		}
+		return NO;
+	}
+	
+	if(connect(sock, (struct sockaddr *)&remote, sizeof(remote)) < 0)
+	{
+		NSString *actionStr;
+		switch( errno )
+		{
+			case EADDRNOTAVAIL:
+				actionStr = NSLocalizedString( @"NoNamedServer", nil );
+				break;
+			default:
+				actionStr = NSLocalizedString( @"NoConnection", nil );
+		}
+		if (errorMessage)
+		{
+			*errorMessage = [NSString stringWithFormat:actionStr, host, port];
+		}
+		return NO;
+	}
+	
+	socketHandler = [[NSFileHandle alloc] initWithFileDescriptor:sock closeOnDealloc:YES];
+	_isOpen = YES;
+	return YES;
+}
+
+- (void)startTalking
+{
+    versionReader = [[NLTStringReader alloc] initTarget:self action:@selector(setServerVersion:)];
+    [self setReader:versionReader];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readData:) 	name:NSFileHandleReadCompletionNotification object:socketHandler];
+    [socketHandler readInBackgroundAndNotify];
+}
+
+- (void)setView:(UIView<RFBViewProtocol> *)theView
+{
+	rfbView = theView;
 }
 
 - (id)delegate
@@ -271,11 +262,13 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     return serverVersion;
 }
 
-- (int) serverMajorVersion {
+- (int) serverMajorVersion
+{
 	return serverMajorVersion;
 }
 
-- (int) serverMinorVersion {
+- (int) serverMinorVersion
+{
 	return serverMinorVersion;
 }
 
@@ -309,17 +302,20 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     [self setReader:handshaker];
 }
 
+- (BOOL)isConnectionOpen
+{
+	return _isOpen;
+}
+
 - (void)connectionHasTerminated
 {
-//	[manager removeConnection:self];
+	_isOpen = NO;
 	
-	[rfbView setConnection:nil];
+//	[rfbView setConnection:nil];
 	[rfbView setFrameBuffer:nil];
 
 	[socketHandler release];	socketHandler = nil;
 	[_eventFilter release];		_eventFilter = nil;
-	[titleString release];		titleString = nil;
-//	[manager release];			manager = nil;
 	[versionReader release];	versionReader = nil;
 	[handshaker release];		handshaker = nil;
 	[(id)server_ release];		server_ = nil;
@@ -328,39 +324,18 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	[frameBuffer release];		frameBuffer = nil;
 	[_profile release];			_profile = nil;
 	[host release];				host = nil;
-	[realDisplayName release];	realDisplayName = nil;
 }
-
-//- (void)connectionTerminatedSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-//{
-//	/* One might reasonably argue that this should be handled by the connection manager. */
-//	switch (returnCode) {
-//		case NSAlertDefaultReturn:
-//			break;
-//		case NSAlertAlternateReturn:
-//			[_owner createConnectionWithServer:server_ profile:_profile owner:_owner];
-//			break;
-//		default:
-//			NSLog(@"Unknown alert returnvalue: %d", returnCode);
-//	}
-//	[self connectionHasTerminated];
-//}
 
 - (void)terminateConnection:(NSString*)aReason
 {
 	NSLog(@"terminating connection: %@", aReason);
-    if(!terminating) {		
+	
+    if (!terminating)
+	{		
         terminating = YES;
 
-		// Ignore our timer (It's invalid)
-		[self resetReconnectTimer];
-
-//		if (_isFullscreen)
-//			[self makeConnectionWindowed: self];
-		
 		[[NSNotificationCenter defaultCenter] removeObserver:self];
 		[self cancelFrameBufferUpdateRequest];
-//		[self endFullscreenScrolling];
 		[self clearAllEmulationStates];
 		[_eventFilter synthesizeRemainingEvents];
 		[_eventFilter sendAllPendingQueueEntriesNow];
@@ -370,70 +345,8 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 			[_delegate connection:self hasTerminatedWithReason:aReason];
 		}
 
-//        if(aReason) {
-//			if ( _autoReconnect ) {
-//                NSLog(@"Automatically reconnecting to server.  The connection was closed because: \"%@\".", aReason);
-//				// Just auto-reconnect (by reinstantiating ourselves)
-//				[_owner createConnectionWithServer:server_ profile:_profile owner:_owner];
-//				// And ending (by falling through)
-//			}
-//			else {
-//				// Ask what to do
-//				NSString *header = NSLocalizedString( @"ConnectionTerminated", nil );
-//				NSString *okayButton = NSLocalizedString( @"Okay", nil );
-//				NSString *reconnectButton =  NSLocalizedString( @"Reconnect", nil );
-//				NSBeginAlertSheet(header, okayButton, [server_ doYouSupport:CONNECT] ? reconnectButton : nil, nil, window, self, @selector(connectionTerminatedSheetDidEnd:returnCode:contextInfo:), nil, nil, aReason);
-//				return;
-//			}
-//        }
-
 		[self connectionHasTerminated];
     }
-}
-
-- (CGSize)_maxSizeForWindowSize:(CGSize)aSize;
-{
-	return aSize;
-	// XXX review this again
-	
-//    CGRect  winframe;
-//    CGSize	maxviewsize;
-//	BOOL usesFullscreenScrollers = [[PrefController sharedController] fullscreenHasScrollbars];
-//	
-//    horizontalScroll = verticalScroll = NO;
-//    winframe = [window frame];
-//    if(aSize.width < _maxSize.width) {
-//        horizontalScroll = YES;
-//    }
-//    if(aSize.height < _maxSize.height) {
-//        verticalScroll = YES;
-//    }
-//	// jason added
-//	if (_isFullscreen && !usesFullscreenScrollers)
-//		horizontalScroll = verticalScroll = NO;
-//	// end jason
-//		maxviewsize = [NSScrollView frameSizeForContentSize:[rfbView frame].size
-//                                  hasHorizontalScroller:horizontalScroll
-//                                    hasVerticalScroller:verticalScroll
-//                                             borderType:NSNoBorder];
-//    if(aSize.width < maxviewsize.width) {
-//        horizontalScroll = YES;
-//    }
-//    if(aSize.height < maxviewsize.height) {
-//        verticalScroll = YES;
-//    }
-//	// jason added
-//	if (_isFullscreen && !usesFullscreenScrollers)
-//		horizontalScroll = verticalScroll = NO;
-//	// end jason
-//    aSize = [NSScrollView frameSizeForContentSize:[rfbView frame].size
-//                            hasHorizontalScroller:horizontalScroll
-//                              hasVerticalScroller:verticalScroll
-//                                       borderType:NSNoBorder];
-//    winframe = [window frame];
-//    winframe.size = aSize;
-//    winframe = [NSWindow frameRectForContentRect:winframe styleMask:[window styleMask]];
-//    return winframe.size;
 }
 
 - (void)setDisplaySize:(CGSize)aSize andPixelFormat:(rfbPixelFormat*)pixf
@@ -452,7 +365,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 //	NSLog(@"frameBuffer=%@", frameBuffer);
 	
     [rfbView setFrameBuffer:frameBuffer];
-    [rfbView setConnection:self];
+//    [rfbView setConnection:self];
 	[rfbView setRemoteDisplaySize:aSize];
 	[_eventFilter setView: rfbView];
 	
@@ -471,12 +384,19 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     rfbProtocol = [[RFBProtocol alloc] initTarget:self serverInfo:info];
     [rfbProtocol setFrameBuffer:frameBuffer];
     [self setReader:rfbProtocol];
-	[self startReconnectTimer];
 }
 
 - (id)connectionHandle
 {
     return socketHandler;
+}
+
+//! \note This method must be only called once, just after the object is created
+//! and before communications has been initiated.
+- (void)setConnectionHandle:(id)handle
+{
+	socketHandler = [handle retain];
+	_isOpen = YES;
 }
 
 - (NSString*)password
@@ -551,12 +471,6 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     [socketHandler readInBackgroundAndNotify];
 	[pool release];
 }
-
-//- (void)setManager:(id)aManager
-//{
-//    [manager autorelease];
-//    manager = [aManager retain];
-//}
 
 - (void)_queueUpdateRequest {
     if (!updateRequested) {
@@ -897,7 +811,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
             if(errno == EAGAIN) {
                 continue;
             }
-			NSLog(@"write:errno=%d", errno);
+//			NSLog(@"write:errno=%d", errno);
             if(errno == EPIPE) {
 				NSString *reason = NSLocalizedString( @"ServerClosed", nil );
                 [self terminateConnection:reason];
@@ -961,39 +875,6 @@ static NSString* byteString(double d)
 - (void)manuallyUpdateFrameBuffer: (id)sender
 {
 	[self _queueUpdateRequest];
-}
-
-// Timers for connection
-- (void)resetReconnectTimer
-{
-//	NSLog(@"resetReconnectTimer called.\n");
-	[_reconnectTimer invalidate];
-	[_reconnectTimer release];
-	_reconnectTimer = nil;
-}
-
-- (void)startReconnectTimer
-{
-//	NSLog(@"startReconnectTimer called.\n");
-	[self resetReconnectTimer];
-
-    if ( terminating )
-        return;
-	if ( ! [[PrefController sharedController] autoReconnect] )
-		return;
-	
-	NSTimeInterval timeout = [[PrefController sharedController] intervalBeforeReconnect];
-	if ( 0.0 == timeout )
-		_autoReconnect = YES;
-	else
-		_reconnectTimer = [[NSTimer scheduledTimerWithTimeInterval:timeout target:self selector:@selector(reconnectTimerTimeout:) userInfo:nil repeats:NO] retain];
-}
-
-- (void)reconnectTimerTimeout:(id)sender
-{
-//	NSLog(@"reconnectTimerTimeout called.\n");
-	[self resetReconnectTimer];
-	_autoReconnect = YES;
 }
 
 - (void)connection:(RFBConnection *)connection hasTerminatedWithReason:(NSString *)reason

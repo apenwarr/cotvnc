@@ -17,6 +17,7 @@
 
 @class Profile;
 @class Shimmer;
+@class RFBConnection;
 
 //! @brief Device orientation constants.
 enum _device_orient
@@ -46,6 +47,10 @@ enum _device_orient
 	VNCServerListView * _serversView;
 	VNCServerInfoView * _serverEditorView;
 	int _editingIndex;	//!< Index of the server currently being edited.
+	RFBConnection * _connection;
+	NSConditionLock * _connectLock;
+	BOOL _didOpenConnection;	//!< YES if the connection was opened successfully.
+	NSString * _connectError;	//!< Error message from attempting to open a connection.
 }
 
 //! \name Server list I/O
@@ -66,14 +71,16 @@ enum _device_orient
 //! @brief Creates a dictionary populated with default server values.
 - (NSDictionary *)defaultServerInfo;
 
-//! \name Auto-update support
+//! \name Shimmer auto-update support
 //@{
 - (void)checkForUpdate:(id)unused;
 - (void)doUpdate:(Shimmer *)shimmer;
 //@}
 
-//! @brief Show the abourt alert.
+//! @brief Show the about alert.
 - (void)displayAbout;
+
+- (void)connectToServer:(RFBConnection *)connection;
 
 @end
 

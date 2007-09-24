@@ -33,12 +33,9 @@
 //! of the application, for use by Shimmer.
 #define kUpdateURL @"http://www.manyetas.com/creed/iphone/shimmer/vnsea.plist"
 
-#define kAboutMessage @"\
-Copyright 2007 Chris Reed\n\
-Licensed under GPLv3\n\
-http://code.google.com/p/vnsea"
-
-#define kAppVersion @"VNsea 0.2"
+//! If a connection attempt takes longer than this amount of time, then
+//! an alert is displayed telling the user what is going on.
+#define kConnectionAlertTime (0.6f)
 
 @implementation VnseaApp
 
@@ -65,21 +62,8 @@ http://code.google.com/p/vnsea"
 	_transView = [[UITransitionView alloc] initWithFrame:frame];
 	[_mainView addSubview: _transView];
 
-	// Scroll view
-/*	_vncScroller = [[UIScroller alloc] initWithFrame: frame];
-	[_vncScroller setScrollingEnabled:YES];
-	[_vncScroller setShowScrollerIndicators:YES];
-	[_vncScroller setAdjustForContentSizeChange:YES];// why isn't this working?
-	[_vncScroller setAllowsRubberBanding:NO];
-	[_vncScroller setAllowsFourWayRubberBanding:NO];
-	[_vncScroller setThumbDetectionEnabled:YES];
-//	[_vncScroller setScrollerIndicatorStyle:1];*/
-	
 	// vncsea view
 	_vncView = [[VNCView alloc] initWithFrame: frame];
-//	[_vncScroller addSubview: _vncView];
-	
-//	NSLog(@"vncView=%@", vncView);
 
 	// Server manager view
 	_serversView = [[VNCServerListView alloc] initWithFrame:frame];
@@ -109,6 +93,8 @@ http://code.google.com/p/vnsea"
 //	NSLog(@"displayIdentifier=%@", [self displayIdentifier]);
 	
 //	[self setIgnoresInteractionEvents:NO];
+
+//	[self displayAbout];
 	
 	[NSThread detachNewThreadSelector:@selector(checkForUpdate:) toTarget:self withObject:nil];
 }
@@ -185,14 +171,12 @@ http://code.google.com/p/vnsea"
 
 - (void)serverSelected:(int)serverIndex
 {
-//	[self setStatusBarShowsProgress:YES];
-//	[self setStatusBarCustomText:@"Connecting..."];
+	[self setStatusBarShowsProgress:YES];
 	
 	NSArray * servers = [self loadServers];
 	
 	// Without the retain on serverInfo, we get a crash when theServer is released. Not sure why...
 	NSDictionary * serverInfo = [[servers objectAtIndex:serverIndex] retain];
-	
 	ServerFromPrefs * theServer = [[[ServerFromPrefs alloc] initWithPreferenceDictionary:serverInfo] autorelease];
 	
 	NSLog(@"opening connection...");
@@ -202,38 +186,144 @@ http://code.google.com/p/vnsea"
 	NSLog(@"  index:   %d", serverIndex);
 	NSLog(@"  info:    %@", serverInfo);
 	
-	// Create connection for this server. The init method won't return until
-	// the connection is established.
-	RFBConnection * connection = [[RFBConnection alloc] initWithServer:theServer profile:_defaultProfile view:_vncView];
-	if (connection)
+	// Create the connection object.
+	_didOpenConnection = NO;
+	_connection = [[RFBConnection alloc] initWithServer:theServer profile:_defaultProfile view:_vncView];
+
+	// Create a condition lock used to synchronise this thread with the
+	// connection thread.
+	_connectLock = [[NSConditionLock alloc] initWithCondition:0];
+	
+	// Spawn a thread to open the connection in. This lets us manage the
+	// UI while the connection is being attempted.
+	[NSThread detachNewThreadSelector:@selector(connectToServer:) toTarget:self withObject:_connection];
+	
+	// While the connection is being attempted, sit back and wait. If it ends up
+	// taking longer than a second or so, put up an alert sheet that says that
+	// the connection is in progress.
+	UIAlertSheet * connectAlert = nil;
+	NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
+	while ([_connectLock tryLockWhenCondition:1] == NO)
 	{
-		NSLog(@"connection=%@", connection);
-		[connection manuallyUpdateFrameBuffer:self];
+		if (connectAlert == nil)
+		{
+			NSTimeInterval deltaTime = [NSDate timeIntervalSinceReferenceDate] - startTime;
+			if (deltaTime > kConnectionAlertTime)
+			{
+				connectAlert = [[UIAlertSheet alloc]
+						initWithTitle:NSLocalizedString(@"ConnectingToServer", nil)
+						buttons:nil //[NSArray arrayWithObject:@"Cancel"]
+						defaultButtonIndex:0
+						delegate:self
+						context:self];
+				[connectAlert setAlertSheetStyle:1];
+				[connectAlert setRunsModal:NO];
+				[connectAlert setDimsBackground:NO];
+				[connectAlert _slideSheetOut:YES];
+				[connectAlert presentSheetFromAboveView:_transView];
+			}
+		}
+		
+		// Run the run loop for a little bit to give the alert sheet some time
+		// to animate and so we don't hog the CPU.
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.25f]];
+	}
+	
+	if (connectAlert)
+	{
+		[connectAlert dismissAnimated:YES];
+		[connectAlert release];
+	}
+	
+	// NSConditionLock doesn't like to be dealloc's when still locked.
+	[_connectLock unlockWithCondition:0];
+	[_connectLock release];
+	_connectLock = nil;
+	
+	// Stop the status bar progress
+	[self setStatusBarShowsProgress:NO];
+
+	// Either switch to the screen view or present an error alert depending on
+	// whether the connection succeeded.
+	if (_didOpenConnection)
+	{
+		NSLog(@"connection=%@", _connection);
+		[_vncView setConnection:_connection];
+		[_connection setDelegate:self];
+		[_connection startTalking];
+		[_connection manuallyUpdateFrameBuffer:self];
 		
 		[_transView transition:1 fromView:_serversView toView:_vncView];
 	}
 	else
 	{
 		NSLog(@"connection failed");
+		[_connection release];
+		_connection = nil;
 		
 		UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
-					initWithTitle:@"Connection failed"
-					buttons:[NSArray arrayWithObject:@"OK"]
+					initWithTitle:NSLocalizedString(@"Connection failed", nil)
+					buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
 					defaultButtonIndex:0
 					delegate:self
 					context:self];
 		
-//		[hotSheet setBodyText:reason];
-		[hotSheet setDimsBackground:YES];
-		[hotSheet _slideSheetOut:YES];
+		[hotSheet setBodyText:_connectError];
+		[hotSheet setDimsBackground:NO];
 		[hotSheet setRunsModal:YES];
 		[hotSheet setShowsOverSpringBoardAlerts:NO];
-		
 		[hotSheet popupAlertAnimated:YES];
+		
+		// We no longer need the error message.
+		[_connectError release];
+		_connectError = nil;
+	}
+}
+
+- (void)connectToServer:(RFBConnection *)connection
+{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	// Grab the lock.
+	[_connectLock lockWhenCondition:0];
+	
+	// Attempt to open a connection to theServer.
+	_didOpenConnection = [connection openConnectionReturningError:&_connectError];
+	
+	// Need to keep the error message around.
+	if (_connectError)
+	{
+		[_connectError retain];
 	}
 	
-//	[self setStatusBarShowsProgress:NO];
-//	[self setStatusBarCustomText:nil];
+	// Unlock to signal that we're done.
+	[_connectLock unlockWithCondition:1];
+	
+	[pool release];
+}
+
+- (void)connection:(RFBConnection *)connection hasTerminatedWithReason:(NSString *)reason
+{
+	NSArray * buttons = [NSArray arrayWithObject:@"OK"];
+	
+	UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
+				initWithTitle:NSLocalizedString(@"Connection terminated", nil)
+				buttons:buttons
+				defaultButtonIndex:0
+				delegate:self
+				context:self];
+	
+	[hotSheet setBodyText:reason];
+	[hotSheet setDimsBackground:YES];
+	[hotSheet _slideSheetOut:YES];
+	[hotSheet setRunsModal:YES];
+	[hotSheet setShowsOverSpringBoardAlerts:NO];
+	
+//	[hotSheet presentSheetToAboveView:self];
+	[hotSheet popupAlertAnimated:YES];
+	
+	// Switch back to the list view
+	[_transView transition:2 fromView:_vncView toView:_serversView];
 }
 
 - (void)alertSheet:(id)sheet buttonClicked:(int)buttonIndex
@@ -325,13 +415,13 @@ http://code.google.com/p/vnsea"
 - (void)displayAbout
 {
 	UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
-		initWithTitle:kAppVersion
-		buttons:[NSArray arrayWithObject:@"OK"]
+		initWithTitle:NSLocalizedString(@"AboutVersion", nil)
+		buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
 		defaultButtonIndex:0
 		delegate:self
 		context:self];
 
-	[hotSheet setBodyText:kAboutMessage];
+	[hotSheet setBodyText:NSLocalizedString(@"AboutMessage", nil)];
 	[hotSheet setDimsBackground:NO];
 	[hotSheet setRunsModal:YES];
 	[hotSheet setShowsOverSpringBoardAlerts:NO];
