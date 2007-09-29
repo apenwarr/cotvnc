@@ -48,17 +48,17 @@
 }
 
 /*
-- (void)gestureEnded:(GSEvent *)event
+- (void)gestureEnded:(GSEventRef)event
 {
 	NSLog(@"gestureEnded:%@", event);
 }
 
-- (void)gestureStarted:(GSEvent *)event
+- (void)gestureStarted:(GSEventRef)event
 {
 	NSLog(@"gestureStarted:%@", event);
 }
 
-- (void)gestureChanged:(GSEvent *)event
+- (void)gestureChanged:(GSEventRef)event
 {
 	NSLog(@"gestureChanged:%@", event);
 }
@@ -67,12 +67,6 @@
 - (RFBConnection *)connection;
 {
 	return _connection;
-}
-
-- (void)alertSheet:(id)sheet buttonClicked:(int)buttonIndex
-{  
-	[sheet dismissAnimated:YES];
-	[sheet release];
 }
 
 - (void)setFrameBuffer:(id)aBuffer;
@@ -109,6 +103,7 @@
 - (void)drawRectList:(id)aList
 {
 	NSLog(@"VNCView:drawRectList:%@", aList);
+	
 	// XXX this may not be cool!
 //    [self lockFocus];
 //    [aList drawRectsInRect:[self bounds]];
@@ -120,86 +115,128 @@
 	return [_screenView bounds];
 }
 
-
-- (void)mouseDown:(GSEvent *)theEvent
+- (void)handleTapTimer:(NSTimer *)timer
 {
-	bool isChording = GSEventIsChordingHandEvent(theEvent);
+	_inRemoteAction = true;
 	
-//	NSLog(@"mouseDown:%c", isChording ? 'y' : 'n');
+	// Send the original event.
+	GSEventRef theEvent = (GSEventRef)[timer userInfo];
+//	NSLog(@"tapTimer:%@", theEvent);
+	[_eventFilter mouseDown:theEvent];
+	
+	// The event is no longer needed.
+	CFRelease(theEvent);
+	
+	_tapTimer = nil;
+}
+
+- (void)mouseDown:(GSEventRef)theEvent
+{
+	bool isChording = GSEventIsChordingHandEvent(theEvent);	
+//	int count = GSEventGetClickCount(theEvent);
+//	NSLog(@"mouseDown:%c:%d", isChording ? 'y' : 'n', count);
 	
 	if (isChording)
 	{
-		_inRemoteAction = false;
+		// If the timer exists, it means we haven't yet sent the single finger mouse
+		// down. Kill the timer so that the event is never sent.
+		if (_tapTimer)
+		{
+//			NSLog(@"killed tap timer");
+			[_tapTimer invalidate];
+			_tapTimer = nil;
+		}
+		
+		// Need to send a mouse up when switching from remote mouse to scrolling.
+		// This assumes that _inRemoteAction will only ever be true after a mouse
+		// down and before a mouse up.
+		if (_inRemoteAction)
+		{
+			[_eventFilter mouseUp:theEvent];
+			_inRemoteAction = false;
+		}
+		
+		// Let the superclass handle scrolling.
 		[super mouseDown:theEvent];
 	}
 	else
 	{
-		_inRemoteAction = true;
-		[_eventFilter mouseDown:theEvent];
+		// Keep this event around for a bit.
+		CFRetain(theEvent);
+		
+		// We don't want to send the mouse down event quite yet, because we
+		// need to wait to see if this is really a chording event for scrolling.
+		// So create a timer that when it fires will send the original event.
+		// If a chording mouse down happens before the timer fires, it will be
+		// killed.
+		_tapTimer = [NSTimer scheduledTimerWithTimeInterval:0.15 target:self selector:@selector(handleTapTimer:) userInfo:(id)theEvent repeats:NO];
 	}
 }
 
-- (void)mouseUp:(GSEvent *)theEvent
+- (void)mouseUp:(GSEventRef)theEvent
 {
 //	bool isChording = GSEventIsChordingHandEvent(theEvent);
-	
 //	NSLog(@"mouseUp:%c", isChording ? 'y' : 'n');
 	
-	if (!_inRemoteAction)
+	if (_tapTimer)
+	{
+		[_tapTimer fire];
+	}
+
+	if (_inRemoteAction)
+	{
+		[_eventFilter mouseUp:theEvent];
+		_inRemoteAction = false;
+	}
+	else
 	{
 		[super mouseUp:theEvent];
 	}
-	else
-	{
-		[_eventFilter mouseUp:theEvent];
-	}
 }
 
 
-- (void)mouseDragged:(GSEvent *)theEvent
+- (void)mouseDragged:(GSEventRef)theEvent
 {
-//	bool isChording = GSEventIsChordingHandEvent(theEvent);
-	
+//	bool isChording = GSEventIsChordingHandEvent(theEvent);	
 //	NSLog(@"mouseDragged:%c", isChording ? 'y' : 'n');
 	
-	if (!_inRemoteAction)
+	if (_tapTimer)
 	{
-		[super mouseDragged:theEvent];
+		[_tapTimer fire];
+	}
+
+	if (_inRemoteAction)
+	{
+		[_eventFilter mouseDragged:theEvent];
 	}
 	else
 	{
-		[_eventFilter mouseDragged:theEvent];
+		[super mouseDragged:theEvent];
 	}
 }
 
 /*
-- (void)rightMouseDown:(GSEvent *)theEvent
+- (void)rightMouseDown:(GSEventRef)theEvent
 {  [_eventFilter rightMouseDown: theEvent];  }
 
-- (void)otherMouseDown:(GSEvent *)theEvent
+- (void)otherMouseDown:(GSEventRef)theEvent
 {  [_eventFilter otherMouseDown: theEvent];  }
 
 
-- (void)rightMouseUp:(GSEvent *)theEvent
+- (void)rightMouseUp:(GSEventRef)theEvent
 {  [_eventFilter rightMouseUp: theEvent];  }
 
-- (void)otherMouseUp:(GSEvent *)theEvent
+- (void)otherMouseUp:(GSEventRef)theEvent
 {  [_eventFilter otherMouseUp: theEvent];  }
 
-//- (void)mouseEntered:(GSEvent *)theEvent
-//{  [[self window] setAcceptsMouseMovedEvents: YES];  }
-//
-//- (void)mouseExited:(GSEvent *)theEvent
-//{  [[self window] setAcceptsMouseMovedEvents: NO];  }
-
-- (void)mouseMoved:(GSEvent *)theEvent
+- (void)mouseMoved:(GSEventRef)theEvent
 {  [_eventFilter mouseMoved: theEvent];  }
 
 
-- (void)rightMouseDragged:(GSEvent *)theEvent
+- (void)rightMouseDragged:(GSEventRef)theEvent
 {  [_eventFilter rightMouseDragged: theEvent];  }
 
-- (void)otherMouseDragged:(GSEvent *)theEvent
+- (void)otherMouseDragged:(GSEventRef)theEvent
 {  [_eventFilter otherMouseDragged: theEvent];  }
 
 // jason - this doesn't work, I think because the server I'm testing against doesn't support
@@ -208,16 +245,16 @@
 // 
 // Later note - works fine now, maybe more servers have added support since I wrote the original
 // comment
-- (void)scrollWheel:(GSEvent *)theEvent
+- (void)scrollWheel:(GSEventRef)theEvent
 {  [_eventFilter scrollWheel: theEvent];  }
 
-- (void)keyDown:(GSEvent *)theEvent
+- (void)keyDown:(GSEventRef)theEvent
 {  [_eventFilter keyDown: theEvent];  }
 
-- (void)keyUp:(GSEvent *)theEvent
+- (void)keyUp:(GSEventRef)theEvent
 {  [_eventFilter keyUp: theEvent];  }
 
-- (void)flagsChanged:(GSEvent *)theEvent
+- (void)flagsChanged:(GSEventRef)theEvent
 {  [_eventFilter flagsChanged: theEvent];  }
 */
 /*

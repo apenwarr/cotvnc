@@ -11,7 +11,7 @@
 
 @class RFBConnection;
 
-/*
+/*!
  * Philosophy:  The EventFilter sits between an NSResponder and an object that sends
  * events to the VNC server.  It handles several things:
  *	- converting from a native representation to a VNC representation
@@ -145,29 +145,29 @@ typedef enum {
 - (void)setView: (UIView *)view;
 
 // Local Mouse Events
-- (void)mouseDown: (GSEvent *)theEvent;
-- (void)mouseUp: (GSEvent *)theEvent;
-- (void)rightMouseDown: (GSEvent *)theEvent;
-- (void)rightMouseUp: (GSEvent *)theEvent;
-- (void)otherMouseDown: (GSEvent *)theEvent;
-- (void)otherMouseUp: (GSEvent *)theEvent;
-- (void)scrollWheel: (GSEvent *)theEvent;
-- (void)mouseMoved:(GSEvent *)theEvent;
-- (void)mouseDragged:(GSEvent *)theEvent;
-- (void)rightMouseDragged:(GSEvent *)theEvent;
-- (void)otherMouseDragged:(GSEvent *)theEvent;
+- (void)mouseDown: (GSEventRef)theEvent;
+- (void)mouseUp: (GSEventRef)theEvent;
+- (void)rightMouseDown: (GSEventRef)theEvent;
+- (void)rightMouseUp: (GSEventRef)theEvent;
+- (void)otherMouseDown: (GSEventRef)theEvent;
+- (void)otherMouseUp: (GSEventRef)theEvent;
+- (void)scrollWheel: (GSEventRef)theEvent;
+- (void)mouseMoved:(GSEventRef)theEvent;
+- (void)mouseDragged:(GSEventRef)theEvent;
+- (void)rightMouseDragged:(GSEventRef)theEvent;
+- (void)otherMouseDragged:(GSEventRef)theEvent;
 - (void)sendUnpublishedMouseMove;
 - (void)clearUnpublishedMouseMove;
 
 // Local Keyboard Events
-- (void)keyDown: (GSEvent *)theEvent;
-- (void)keyUp: (GSEvent *)theEvent;
-- (void)flagsChanged:(GSEvent *)theEvent;
+- (void)keyDown: (GSEventRef)theEvent;
+- (void)keyUp: (GSEventRef)theEvent;
+- (void)flagsChanged:(GSEventRef)theEvent;
 
 // Synthesized Events
 - (void)clearAllEmulationStates;
-- (void)queueMouseDownEventFromEvent: (GSEvent *)theEvent buttonNumber: (unsigned int)button;
-- (void)queueMouseUpEventFromEvent: (GSEvent *)theEvent buttonNumber: (unsigned int)button;
+- (void)queueMouseDownEventFromEvent: (GSEventRef)theEvent buttonNumber: (unsigned int)button;
+- (void)queueMouseUpEventFromEvent: (GSEventRef)theEvent buttonNumber: (unsigned int)button;
 - (void)queueModifierPressed: (unsigned int)modifier timestamp: (NSTimeInterval)timestamp;
 - (void)queueModifierReleased: (unsigned int)modifier timestamp: (NSTimeInterval)timestamp;
 - (void)pasteString: (NSString *)string;

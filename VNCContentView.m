@@ -55,7 +55,7 @@
 	// This accounts for the bitmap being drawn inverted. If we don't set the
 	// matrix after setting the bounds, then we'd have to translate in addition
 	// to scale.
-	// XXX this should be fixed by rendering the bitmap correctly
+	//! @todo This should be fixed by rendering the bitmap correctly.
 	CGAffineTransform matrix = CGAffineTransformMakeScale(1.0f, -1.0f);
 	[self setTransform:matrix];
 	

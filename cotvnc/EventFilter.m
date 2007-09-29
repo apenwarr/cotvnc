@@ -59,7 +59,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 //	if ( _watchEventForCapsLock )
 //	{
 //		_watchEventForCapsLock = NO;
-//		GSEvent *currentEvent = [NSApp currentEvent];
+//		GSEventRefcurrentEvent = [NSApp currentEvent];
 //		unsigned int modifierFlags = [currentEvent modifierFlags];
 //		if ( (NSAlphaShiftKeyMask & modifierFlags) != (NSAlphaShiftKeyMask & _pressedModifiers) )
 //			[self flagsChanged: currentEvent];
@@ -132,44 +132,52 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 #pragma mark Local Mouse Events
 
 
-- (void)mouseDown: (GSEvent *)theEvent
-{  [self queueMouseDownEventFromEvent: theEvent buttonNumber: 1];  }
+- (void)mouseDown: (GSEventRef)theEvent
+{
+	[self queueMouseDownEventFromEvent: theEvent buttonNumber: 1];
+}
 
 
-- (void)mouseUp: (GSEvent *)theEvent
-{  [self queueMouseUpEventFromEvent: theEvent buttonNumber: 1];  }
+- (void)mouseUp: (GSEventRef)theEvent
+{
+	[self queueMouseUpEventFromEvent: theEvent buttonNumber: 1];
+}
 
 
-- (void)rightMouseDown: (GSEvent *)theEvent
-{  [self queueMouseDownEventFromEvent: theEvent buttonNumber: 3];  }
+- (void)rightMouseDown: (GSEventRef)theEvent
+{
+	[self queueMouseDownEventFromEvent: theEvent buttonNumber: 3];
+}
 
 
-- (void)rightMouseUp: (GSEvent *)theEvent
-{  [self queueMouseUpEventFromEvent: theEvent buttonNumber: 3];  }
+- (void)rightMouseUp: (GSEventRef)theEvent
+{
+	[self queueMouseUpEventFromEvent: theEvent buttonNumber: 3];
+}
 
 
-- (void)otherMouseDown: (GSEvent *)theEvent
+- (void)otherMouseDown: (GSEventRef)theEvent
 {
 //	if ( 2 == [theEvent buttonNumber] )
 //		[self queueMouseDownEventFromEvent: theEvent buttonNumber: 2];
 }
 
 
-- (void)otherMouseUp: (GSEvent *)theEvent
+- (void)otherMouseUp: (GSEventRef)theEvent
 {
 //	if ( 2 == [theEvent buttonNumber] )
 //		[self queueMouseUpEventFromEvent: theEvent buttonNumber: 2];
 }
 
 
-- (void)scrollWheel: (GSEvent *)theEvent
+- (void)scrollWheel: (GSEventRef)theEvent
 {
 //	if ( _viewOnly )
 //		return;
 //
 //	[self sendAllPendingQueueEntriesNow];
 //	int addMask;
-//    CGPoint	p = [_view convertPoint: [[_view window] convertScreenToBase: [GSEvent mouseLocation]] 
+//    CGPoint	p = [_view convertPoint: [[_view window] convertScreenToBase: [GSEventRefmouseLocation]] 
 //						  fromView: nil];
 //    if ( [theEvent deltaY] > 0.0 )
 //		addMask = rfbButton4Mask;
@@ -180,7 +188,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 //    [_connection mouseAt: p buttons: _pressedButtons];			// 'Mouse button up'
 }
 
-- (void)mouseMoved:(GSEvent *)theEvent
+- (void)mouseMoved:(GSEventRef)theEvent
 {
 	if ( _viewOnly )
 		return;
@@ -208,11 +216,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	
 	if( IGNORE_COUNT == ct || overDiff )
 	{
-//		if( (_lastMousePoint.x - currentPoint.x <= CHANGE_DIFF && _lastMousePoint.x - currentPoint.x >= -CHANGE_DIFF) &&
-//			(_lastMousePoint.y - currentPoint.y <= CHANGE_DIFF && _lastMousePoint.y - currentPoint.y >= -CHANGE_DIFF) )
-//		{
-            bSendEventImmediately = YES;
-//		}
+		bSendEventImmediately = YES;
 		
 		ct = 0;
 	}
@@ -265,17 +269,17 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
     }
 }
 
-- (void)mouseDragged:(GSEvent *)theEvent
+- (void)mouseDragged:(GSEventRef)theEvent
 {
 	[self mouseMoved:theEvent];
 }
 
-- (void)rightMouseDragged:(GSEvent *)theEvent
+- (void)rightMouseDragged:(GSEventRef)theEvent
 {
 	[self mouseMoved:theEvent];
 }
 
-- (void)otherMouseDragged:(GSEvent *)theEvent
+- (void)otherMouseDragged:(GSEventRef)theEvent
 {
 	[self mouseMoved:theEvent];
 }
@@ -285,7 +289,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 #pragma mark Local Keyboard Events
 
 // XXX handle key stuff later
-- (void)keyDown: (GSEvent *)theEvent
+- (void)keyDown: (GSEventRef)theEvent
 {
 //	[self _updateCapsLockStateIfNecessary];
 //	NSString *characters = [theEvent characters];
@@ -328,7 +332,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 //	}
 }
 
-- (void)keyUp: (GSEvent *)theEvent
+- (void)keyUp: (GSEventRef)theEvent
 {
 //	[self _updateCapsLockStateIfNecessary];
 //	NSString *characters = [theEvent characters];
@@ -364,7 +368,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 //	}
 }
 
-- (void)flagsChanged:(GSEvent *)theEvent
+- (void)flagsChanged:(GSEventRef)theEvent
 {
 //	unsigned int newState = [theEvent modifierFlags];
 //    newState = ~(~newState | 0xFFFF);
@@ -450,7 +454,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 
 
 // XXX why does the convertPoint:fromView: method crash???
-- (void)queueMouseDownEventFromEvent: (GSEvent *)theEvent buttonNumber: (unsigned int)button
+- (void)queueMouseDownEventFromEvent: (GSEventRef)theEvent buttonNumber: (unsigned int)button
 {
 //	NSLog(@"queueMouseDownEventFromEvent:%@ n:%d", theEvent, button);
 	if ( 1 != _emulationButton )
@@ -465,18 +469,16 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	// So instead we use convertRect:fromView:.
 	CGRect cr = [_view convertRect:r fromView:nil];
     CGPoint	p = cr.origin;
-//	NSLog(@"p={%f,%f}", p.x, p.y);
+//	NSLog(@"down:p={%f,%f}", p.x, p.y);
 	
-	double timestamp = GSEventGetTimestamp(theEvent);
-//	NSLog(@"timestamp = %f", timestamp);
-	QueuedEvent *event = [QueuedEvent mouseDownEventForButton: button location: p timestamp: timestamp];
+	QueuedEvent *event = [QueuedEvent mouseDownEventForButton: button location: p timestamp: GSEventGetTimestamp(theEvent)];
 	
 //	NSLog(@"q'd event=%@", event);
 	[_pendingEvents addObject: event];
 	[self sendAnyValidEventsToServerNow];
 }
 
-- (void)queueMouseUpEventFromEvent: (GSEvent *)theEvent buttonNumber: (unsigned int)button
+- (void)queueMouseUpEventFromEvent: (GSEventRef)theEvent buttonNumber: (unsigned int)button
 {
 //	NSLog(@"queueMouseUpEventFromEvent:%@ n:%d", theEvent, button);
 	if ( 1 != _emulationButton )
@@ -488,6 +490,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	CGRect r = GSEventGetLocationInWindow(theEvent);
 	CGRect cr = [_view convertRect:r fromView:nil];
     CGPoint	p = cr.origin;
+//	NSLog(@"up:p={%f,%f}", p.x, p.y);
 	
 	QueuedEvent *event = [QueuedEvent mouseUpEventForButton:button location:p timestamp:GSEventGetTimestamp(theEvent)];
 	
@@ -935,7 +938,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 //			if ( validEvents / 2 == _multipTapCount[buttonIndex] )
 //			{
 //				[self discardAllPendingQueueEntries];
-//				CGPoint	p = [_view convertPoint: [[_view window] convertScreenToBase: [GSEvent mouseLocation]] 
+//				CGPoint	p = [_view convertPoint: [[_view window] convertScreenToBase: [GSEventRefmouseLocation]] 
 //									  fromView: nil];
 //				unsigned int rfbButton = ButtonNumberToRFBButtomMask( button );
 //                [self clearUnpublishedMouseMove];

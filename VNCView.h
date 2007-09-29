@@ -26,14 +26,19 @@
  *
  * This view class handles everything related to showing the remote display
  * and interacting with it. It is tightly coupled with the RFBConnection
- * instance and is its delegate.
+ * instance and is its delegate. The actual drawing of the framebuffer
+ * is done by the VNCContentView that is this view's child. And this view
+ * inherits from UIScroller so it can modify the default scrolling
+ * behaviour. A number of method invocations are forwarded to the content
+ * view rather than be implemented directly by this class.
  */
 @interface VNCView : UIScroller <RFBViewProtocol>
 {
-    RFBConnection * _connection;
-	EventFilter * _eventFilter;
-	VNCContentView * _screenView;
-	bool _inRemoteAction;
+    RFBConnection * _connection;	//!< The connection object.
+	EventFilter * _eventFilter;		//!< Event generation and queue object.
+	VNCContentView * _screenView;	//!< Child content view that draws the framebuffer.
+	bool _inRemoteAction;			//!< Are we controling the remote mouse?
+	NSTimer * _tapTimer;	//!< Timer used to delay first mouse down.
 }
 
 //! \name Implementation of RFBViewProtocol
@@ -48,9 +53,4 @@
 
 @end
 
-@interface VNCView (DelegateMethods)
-
-- (void)connectionClosed;
-
-@end
 
