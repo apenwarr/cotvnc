@@ -25,8 +25,11 @@
 #define kRevertButtonWidth (100.0f)
 #define kRevertButtonHeight (32.0f)
 
+//! Path to the file that server settings are stored in.
 #define kServersFilePath @"/var/root/Library/Preferences/vnsea_servers.plist"
 
+//! The top level dictionary key containing the array of server dictionaries in the
+//! server settings file.
 #define kServerArrayKey @"servers"
 
 //! URL for a plist that contains information about the latest version
@@ -36,6 +39,10 @@
 //! If a connection attempt takes longer than this amount of time, then
 //! an alert is displayed telling the user what is going on.
 #define kConnectionAlertTime (0.6f)
+
+//! Amount of time in seconds to let the run loop run while waiting for
+//! a connection to be made.
+#define kConnectWaitRunLoopTime (0.1f)
 
 @implementation VnseaApp
 
@@ -142,28 +149,10 @@
 	[shimmer doUpdate];
 }
 
-
-/*
-- (void) applicationResume: (struct __GSEvent *)unknown1 withArguments:(id)unknown2
-{
-	[_window _setHidden: NO];
-}
-
-- (void) applicationSuspend: (id)unknown1 settings: (id)unknown2
-{
-	[self applicationSuspended: nil];
-}
-
-- (void) applicationResume: (struct __GSEvent *)unknown
-{
-	[self applicationDidResume];
-	[_window _setHidden: NO];
-}
-*/
 - (NSArray *)loadServers
 {
 	NSDictionary * dict = [NSDictionary dictionaryWithContentsOfFile:kServersFilePath];
-	NSLog(@"load");
+//	NSLog(@"load");
 	if (dict == nil)
 	{
 		return [NSArray array];
@@ -173,18 +162,74 @@
 
 - (void)saveServers:(NSArray *)theServers
 {
-	NSLog(@"save");
+//	NSLog(@"save");
 	NSDictionary * prefs = [NSDictionary dictionaryWithObject:theServers forKey:kServerArrayKey];
 	[prefs writeToFile:kServersFilePath atomically:YES];
 }
 
+- (void)waitForConnection:(RFBConnection *)connection
+{
+	// Create a condition lock used to synchronise this thread with the
+	// connection thread.
+	_connectLock = [[NSConditionLock alloc] initWithCondition:0];
+	
+	// Spawn a thread to open the connection in. This lets us manage the
+	// UI while the connection is being attempted.
+	[NSThread detachNewThreadSelector:@selector(connectToServer:) toTarget:self withObject:connection];
+	
+	// While the connection is being attempted, sit back and wait. If it ends up
+	// taking longer than a second or so, put up an alert sheet that says that
+	// the connection is in progress.
+	_connectAlert = nil;
+	NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
+	while (!_closingConnection && ![_connectLock tryLockWhenCondition:1])
+	{
+		if (_connectAlert == nil)
+		{
+			NSTimeInterval deltaTime = [NSDate timeIntervalSinceReferenceDate] - startTime;
+			if (deltaTime > kConnectionAlertTime)
+			{
+				_connectAlert = [[UIAlertSheet alloc]
+						initWithTitle:nil
+						buttons:[NSArray arrayWithObject:@"Cancel"]
+						defaultButtonIndex:-1
+						delegate:self
+						context:self];
+				[_connectAlert setBodyText:NSLocalizedString(@"ConnectingToServer", nil)];
+				[_connectAlert setAlertSheetStyle:0];
+				[_connectAlert setRunsModal:NO];
+				[_connectAlert setDimsBackground:NO];
+				[_connectAlert _slideSheetOut:YES];
+				[_connectAlert presentSheetFromAboveView:_transView];
+			}
+		}
+		
+		// Run the run loop for a little bit to give the alert sheet some time
+		// to animate and so we don't hog the CPU.
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:kConnectWaitRunLoopTime]];
+	}
+	
+	// Get rid of the alert.
+	if (_connectAlert)
+	{
+		[_connectAlert dismissAnimated:YES];
+		[_connectAlert release];
+		_connectAlert = nil;
+	}
+	
+	// NSConditionLock doesn't like to be dealloc's when still locked.
+	if (!_closingConnection)
+	{
+		[_connectLock unlockWithCondition:0];
+		[_connectLock release];
+		_connectLock = nil;
+	}
+}
+
 - (void)serverSelected:(int)serverIndex
 {
-	[self setStatusBarShowsProgress:YES];
-	
-	NSArray * servers = [self loadServers];
-	
 	// Without the retain on serverInfo, we get a crash when theServer is released. Not sure why...
+	NSArray * servers = [self loadServers];
 	NSDictionary * serverInfo = [[servers objectAtIndex:serverIndex] retain];
 	ServerFromPrefs * theServer = [[[ServerFromPrefs alloc] initWithPreferenceDictionary:serverInfo] autorelease];
 	
@@ -197,59 +242,13 @@
 	
 	// Create the connection object.
 	_didOpenConnection = NO;
+	_closingConnection = NO;
 	_connection = [[RFBConnection alloc] initWithServer:theServer profile:_defaultProfile view:_vncView];
-
-	// Create a condition lock used to synchronise this thread with the
-	// connection thread.
-	_connectLock = [[NSConditionLock alloc] initWithCondition:0];
 	
-	// Spawn a thread to open the connection in. This lets us manage the
-	// UI while the connection is being attempted.
-	[NSThread detachNewThreadSelector:@selector(connectToServer:) toTarget:self withObject:_connection];
-	
-	// While the connection is being attempted, sit back and wait. If it ends up
-	// taking longer than a second or so, put up an alert sheet that says that
-	// the connection is in progress.
-	UIAlertSheet * connectAlert = nil;
-	NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
-	while ([_connectLock tryLockWhenCondition:1] == NO)
-	{
-		if (connectAlert == nil)
-		{
-			NSTimeInterval deltaTime = [NSDate timeIntervalSinceReferenceDate] - startTime;
-			if (deltaTime > kConnectionAlertTime)
-			{
-				connectAlert = [[UIAlertSheet alloc]
-						initWithTitle:NSLocalizedString(@"ConnectingToServer", nil)
-						buttons:nil //[NSArray arrayWithObject:@"Cancel"]
-						defaultButtonIndex:0
-						delegate:self
-						context:self];
-				[connectAlert setAlertSheetStyle:1];
-				[connectAlert setRunsModal:NO];
-				[connectAlert setDimsBackground:NO];
-				[connectAlert _slideSheetOut:YES];
-				[connectAlert presentSheetFromAboveView:_transView];
-			}
-		}
-		
-		// Run the run loop for a little bit to give the alert sheet some time
-		// to animate and so we don't hog the CPU.
-		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.25f]];
-	}
-	
-	if (connectAlert)
-	{
-		[connectAlert dismissAnimated:YES];
-		[connectAlert release];
-	}
-	
-	// NSConditionLock doesn't like to be dealloc's when still locked.
-	[_connectLock unlockWithCondition:0];
-	[_connectLock release];
-	_connectLock = nil;
-	
-	// Stop the status bar progress
+	// Wait for the connection to complete. Show network activity in the status bar
+	// during this time.
+	[self setStatusBarShowsProgress:YES];
+	[self waitForConnection:_connection];
 	[self setStatusBarShowsProgress:NO];
 
 	// Either switch to the screen view or present an error alert depending on
@@ -264,7 +263,7 @@
 		
 		[_transView transition:1 fromView:_serversView toView:_vncView];
 	}
-	else
+	else if (!_closingConnection)
 	{
 		NSLog(@"connection failed");
 		[_connection release];
@@ -287,26 +286,58 @@
 		[_connectError release];
 		_connectError = nil;
 	}
+	else
+	{
+		// The connection was canceled so set the current connection to nil.
+		[_connection setView:nil];
+		_connection = nil;
+	}
 }
 
+//! This method is executed as a background thread. The thread doesn't use
+//! any globals, making local copies of the object references passed in, until
+//! the connection is made and we're sure the user didn't cancel. This
+//! lets the main thread code just abandon a connection thread when the user
+//! cancels, knowing that it will clean itself up.
 - (void)connectToServer:(RFBConnection *)connection
 {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	NSConditionLock * lock = _connectLock;	// Make a copy in case the connection is canceled.
 	
 	// Grab the lock.
-	[_connectLock lockWhenCondition:0];
+	[lock lockWhenCondition:0];
 	
 	// Attempt to open a connection to theServer.
-	_didOpenConnection = [connection openConnectionReturningError:&_connectError];
+	NSString * message;
+	BOOL didOpen = [connection openConnectionReturningError:&message];
 	
-	// Need to keep the error message around.
-	if (_connectError)
+	// Just bail if the connection was canceled.
+	if ([connection didCancelConnect])
 	{
-		[_connectError retain];
+//		NSLog(@"connectToServer:connection canceled, releasing connection");
+		
+		// Get rid of the lock and connection. They were passed to our ownership
+		// when the user hit cancel.
+		[lock unlockWithCondition:0];
+		[lock release];
+		
+		[connection release];
 	}
-	
-	// Unlock to signal that we're done.
-	[_connectLock unlockWithCondition:1];
+	else
+	{
+		// Set globals from the connection results now that we know that the
+		// user hasn't canceled.
+		_didOpenConnection = didOpen;
+		
+		// Need to keep the error message around.
+		if (message)
+		{
+			_connectError = [message retain];
+		}
+		
+		// Unlock to signal that we're done.
+		[lock unlockWithCondition:1];
+	}
 	
 	[pool release];
 }
@@ -316,11 +347,9 @@
 	// Don't need to display an alert if we intentionally closed the connection.
 	if (!_closingConnection)
 	{
-		NSArray * buttons = [NSArray arrayWithObject:@"OK"];
-		
 		UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
 					initWithTitle:NSLocalizedString(@"Connection terminated", nil)
-					buttons:buttons
+					buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
 					defaultButtonIndex:0
 					delegate:self
 					context:self];
@@ -338,6 +367,11 @@
 		[hotSheet popupAlertAnimated:YES];
 	}
 	
+	[_connection release];
+	_connection = nil;
+	
+	[_vncView setConnection:nil];
+	
 	_closingConnection = NO;
 	
 	// Switch back to the list view
@@ -345,9 +379,19 @@
 }
 
 - (void)alertSheet:(id)sheet buttonClicked:(int)buttonIndex
-{  
-	[sheet dismissAnimated:YES];
-	[sheet release];
+{
+	if (sheet == _connectAlert)
+	{
+		// The user hit the Cancel button on the "Connecting to server" alert.
+		_closingConnection = YES;
+		[_connection cancelConnect];
+	}
+	else
+	{
+		// Just close and release any other sheets.
+		[sheet dismissAnimated:YES];
+		[sheet release];
+	}
 }
 
 - (void)editServer:(int)serverIndex

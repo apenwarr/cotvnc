@@ -16,6 +16,10 @@
 #import <GraphicsServices/GraphicsServices.h>
 #import "RectangleList.h"
 
+//! Number of seconds to wait before sending a mouse down, during which we
+//! check to see if the user is really wanting to scroll.
+#define kSendMouseDownDelay (0.185)
+
 @implementation VNCView
 
 - (id)initWithFrame:(CGRect)frame
@@ -84,6 +88,7 @@
 	else
 	{
 		_eventFilter = nil;
+		[_screenView setFrameBuffer:nil];
 	}
 }
 
@@ -169,7 +174,7 @@
 		// So create a timer that when it fires will send the original event.
 		// If a chording mouse down happens before the timer fires, it will be
 		// killed.
-		_tapTimer = [NSTimer scheduledTimerWithTimeInterval:0.15 target:self selector:@selector(handleTapTimer:) userInfo:(id)theEvent repeats:NO];
+		_tapTimer = [NSTimer scheduledTimerWithTimeInterval:kSendMouseDownDelay target:self selector:@selector(handleTapTimer:) userInfo:(id)theEvent repeats:NO];
 	}
 }
 

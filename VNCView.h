@@ -37,7 +37,7 @@
     RFBConnection * _connection;	//!< The connection object.
 	EventFilter * _eventFilter;		//!< Event generation and queue object.
 	VNCContentView * _screenView;	//!< Child content view that draws the framebuffer.
-	bool _inRemoteAction;			//!< Are we controling the remote mouse?
+	bool _inRemoteAction;			//!< Are we controlling the remote mouse?
 	NSTimer * _tapTimer;	//!< Timer used to delay first mouse down.
 }
 

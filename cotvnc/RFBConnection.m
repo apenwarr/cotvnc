@@ -100,9 +100,11 @@ static unsigned address_for_name(char *name)
     unsigned    address = INADDR_NONE;
 
     address = (name == NULL || *name == 0) ? INADDR_ANY : inet_addr(name);
-    if(address == INADDR_NONE) {
+    if(address == INADDR_NONE)
+	{
         struct hostent *hostinfo = gethostbyname(name);
-        if(hostinfo != NULL && (hostinfo->h_addr_list[0] != NULL)) {
+        if(hostinfo != NULL && (hostinfo->h_addr_list[0] != NULL))
+		{
             address = *((unsigned*)hostinfo->h_addr_list[0]);
         }
     }
@@ -166,6 +168,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	struct sockaddr_in	remote;
 	int sock;
 	int port;
+	NSString * actionStr;
 	
 	// Start off assuming there will be no error.
 	if (errorMessage)
@@ -173,9 +176,10 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 		*errorMessage = nil;
 	}
 	
+	// Create the socket.
 	if((sock = socket(PF_INET, SOCK_STREAM, 0)) < 0)
 	{
-		NSString *actionStr = NSLocalizedString( @"OpenConnection", nil );
+		actionStr = NSLocalizedString( @"OpenConnection", nil );
 		if (errorMessage)
 		{
 			*errorMessage = actionStr;
@@ -183,22 +187,40 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 		return NO;
 	}
 	
+	// Check for a cancel request before doing the name lookup.
+	if (_cancelConnect)
+	{
+		close(sock);
+		return NO;
+	}
+
+	// Convert the host name to an address.
 	port = (int)[server_ port];
 	socket_address(&remote, host, port);
-	if( INADDR_NONE == remote.sin_addr.s_addr )
+	if (INADDR_NONE == remote.sin_addr.s_addr)
 	{
-		NSString *actionStr = NSLocalizedString( @"NoNamedServer", nil );
+		actionStr = NSLocalizedString( @"NoNamedServer", nil );
 		if (errorMessage)
 		{
 			*errorMessage = [NSString stringWithFormat:actionStr, host, port];
 		}
+		close(sock);
 		return NO;
 	}
 	
-	if(connect(sock, (struct sockaddr *)&remote, sizeof(remote)) < 0)
+	// Check for a cancel request before connecting.
+	if (_cancelConnect)
 	{
-		NSString *actionStr;
-		switch( errno )
+		close(sock);
+		return NO;
+	}
+
+	// Attempt to connect.
+	if (connect(sock, (struct sockaddr *)&remote, sizeof(remote)) < 0)
+	{
+//			NSLog([self perror:@"" call:@"connect()"]);
+		
+		switch (errno)
 		{
 			case EADDRNOTAVAIL:
 				actionStr = NSLocalizedString( @"NoNamedServer", nil );
@@ -210,9 +232,19 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 		{
 			*errorMessage = [NSString stringWithFormat:actionStr, host, port];
 		}
+		close(sock);
 		return NO;
 	}
 	
+	// Deal with a cancel.
+	if (_cancelConnect)
+	{
+		NSLog(@"canceled connect");
+		close(sock);
+		return NO;
+	}
+	
+	// Create the file handle and return.
 	socketHandler = [[NSFileHandle alloc] initWithFileDescriptor:sock closeOnDealloc:YES];
 	_isOpen = YES;
 	return YES;
@@ -225,6 +257,17 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readData:) 	name:NSFileHandleReadCompletionNotification object:socketHandler];
     [socketHandler readInBackgroundAndNotify];
+}
+
+- (void)cancelConnect
+{
+	NSLog(@"requesting cancel connect");
+	_cancelConnect = YES;
+}
+
+- (BOOL)didCancelConnect
+{
+	return _cancelConnect;
 }
 
 - (void)setView:(UIView<RFBViewProtocol> *)theView

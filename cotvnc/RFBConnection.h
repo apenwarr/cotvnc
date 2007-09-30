@@ -81,12 +81,16 @@
 	int serverMajorVersion;
 	int serverMinorVersion;
 	BOOL _isOpen;
+	BOOL _cancelConnect;
 }
 
 - (id)initWithServer:(id)server profile:(Profile*)p view:(UIView<RFBViewProtocol> *)theView;
 
 - (BOOL)openConnectionReturningError:(NSString **)errorMessage;
 - (void)startTalking;
+
+- (void)cancelConnect;
+- (BOOL)didCancelConnect;
 
 - (id)connectionHandle;
 - (void)setConnectionHandle:(id)handle;

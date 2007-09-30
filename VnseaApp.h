@@ -19,15 +19,6 @@
 @class Shimmer;
 @class RFBConnection;
 
-//! @brief Device orientation constants.
-enum _device_orient
-{
-	kUIDeviceOrientationNormal = 1,
-	kUIDeviceOrientationUpsideDown = 2,
-	kUIDeviceOrientationTurnedLeft = 3,
-	kUIDeviceOrientationTurnedRight = 4
-};
-
 /*!
  * @brief Main application class for the VNC viewer program.
  *
@@ -52,15 +43,16 @@ enum _device_orient
 	BOOL _didOpenConnection;	//!< YES if the connection was opened successfully.
 	NSString * _connectError;	//!< Error message from attempting to open a connection.
 	BOOL _closingConnection;	//!< True if the connection is intentionally being closed.
+	UIAlertSheet * _connectAlert;	//!< Sheet saying we're connecting to a server.
 }
 
-//! \name Server list I/O
+//! @name Server list I/O
 //@{
 - (NSArray *)loadServers;
 - (void)saveServers:(NSArray *)theServers;
 //@}
 
-//! \name List and editor delegate messages
+//! @name List and editor delegate messages
 //@{
 - (void)serverSelected:(int)serverIndex;
 - (void)editServer:(int)serverIndex;
@@ -72,7 +64,7 @@ enum _device_orient
 //! @brief Creates a dictionary populated with default server values.
 - (NSDictionary *)defaultServerInfo;
 
-//! \name Shimmer auto-update support
+//! @name Shimmer auto-update support
 //@{
 - (void)checkForUpdate:(id)unused;
 - (void)doUpdate:(Shimmer *)shimmer;
@@ -81,7 +73,11 @@ enum _device_orient
 //! @brief Show the about alert.
 - (void)displayAbout;
 
+//! @name Connection methods
+//@{
+- (void)waitForConnection:(RFBConnection *)connection;
 - (void)connectToServer:(RFBConnection *)connection;
+//@}
 
 @end
 
