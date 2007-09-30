@@ -99,6 +99,15 @@
 	[NSThread detachNewThreadSelector:@selector(checkForUpdate:) toTarget:self withObject:nil];
 }
 
+- (void)applicationWillTerminate
+{
+	if (_connection)
+	{
+		_closingConnection = YES;
+		[_connection terminateConnection:nil];
+	}
+}
+
 - (void)dealloc
 {
 	[_window release];
@@ -304,23 +313,32 @@
 
 - (void)connection:(RFBConnection *)connection hasTerminatedWithReason:(NSString *)reason
 {
-	NSArray * buttons = [NSArray arrayWithObject:@"OK"];
+	// Don't need to display an alert if we intentionally closed the connection.
+	if (!_closingConnection)
+	{
+		NSArray * buttons = [NSArray arrayWithObject:@"OK"];
+		
+		UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
+					initWithTitle:NSLocalizedString(@"Connection terminated", nil)
+					buttons:buttons
+					defaultButtonIndex:0
+					delegate:self
+					context:self];
+		
+		if (reason)
+		{
+			[hotSheet setBodyText:reason];
+		}
+		
+		[hotSheet setDimsBackground:NO];
+		[hotSheet _slideSheetOut:YES];
+		[hotSheet setRunsModal:YES];
+		[hotSheet setShowsOverSpringBoardAlerts:NO];
+		
+		[hotSheet popupAlertAnimated:YES];
+	}
 	
-	UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
-				initWithTitle:NSLocalizedString(@"Connection terminated", nil)
-				buttons:buttons
-				defaultButtonIndex:0
-				delegate:self
-				context:self];
-	
-	[hotSheet setBodyText:reason];
-	[hotSheet setDimsBackground:YES];
-	[hotSheet _slideSheetOut:YES];
-	[hotSheet setRunsModal:YES];
-	[hotSheet setShowsOverSpringBoardAlerts:NO];
-	
-//	[hotSheet presentSheetToAboveView:self];
-	[hotSheet popupAlertAnimated:YES];
+	_closingConnection = NO;
 	
 	// Switch back to the list view
 	[_transView transition:2 fromView:_vncView toView:_serversView];

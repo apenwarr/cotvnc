@@ -51,6 +51,7 @@ enum _device_orient
 	NSConditionLock * _connectLock;
 	BOOL _didOpenConnection;	//!< YES if the connection was opened successfully.
 	NSString * _connectError;	//!< Error message from attempting to open a connection.
+	BOOL _closingConnection;	//!< True if the connection is intentionally being closed.
 }
 
 //! \name Server list I/O
