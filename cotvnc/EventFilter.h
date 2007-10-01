@@ -135,6 +135,7 @@ typedef enum {
 	
 	NSTimer *_mouseTimer;
 	CGPoint  _lastMousePoint;
+	CGPoint _lastSentMousePoint;
 	bool     _unsentMouseMoveExists;
 }
 

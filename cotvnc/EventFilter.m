@@ -212,7 +212,9 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	static int ct = IGNORE_COUNT;
     bool bSendEventImmediately = NO;
 	
-	bool overDiff = (ABS(_lastMousePoint.x - currentPoint.x) >= CHANGE_DIFF || ABS(_lastMousePoint.y - currentPoint.y) >= CHANGE_DIFF);
+	float dx = ABS(_lastSentMousePoint.x - currentPoint.x);
+	float dy = ABS(_lastSentMousePoint.y - currentPoint.y);
+	bool overDiff = (dx >= CHANGE_DIFF || dy >= CHANGE_DIFF);
 	
 	if( IGNORE_COUNT == ct || overDiff )
 	{
@@ -266,6 +268,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
     {
         [self clearUnpublishedMouseMove];
         [_connection mouseAt: _lastMousePoint buttons: _pressedButtons];
+		_lastSentMousePoint = _lastMousePoint;
     }
 }
 
@@ -452,6 +455,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	[_pendingEvents addObject: mousedown];
 }
 
+#define kMouseHysteresisPixels (5.0)
 
 // XXX why does the convertPoint:fromView: method crash???
 - (void)queueMouseDownEventFromEvent: (GSEventRef)theEvent buttonNumber: (unsigned int)button
@@ -470,7 +474,21 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	CGRect cr = [_view convertRect:r fromView:nil];
     CGPoint	p = cr.origin;
 //	NSLog(@"down:p={%f,%f}", p.x, p.y);
+
+	// Put some hysteresis on the mouse location.
+	float deltaX = ABS(p.x - _lastSentMousePoint.x);
+	float deltaY = ABS(p.y - _lastSentMousePoint.y);
 	
+	if (deltaX < kMouseHysteresisPixels && deltaY < kMouseHysteresisPixels)
+	{
+		p = _lastSentMousePoint;
+//		NSLog(@"down:using p={%f,%f}", p.x, p.y);
+	}
+	else
+	{
+		_lastSentMousePoint = p;
+	}
+		
 	QueuedEvent *event = [QueuedEvent mouseDownEventForButton: button location: p timestamp: GSEventGetTimestamp(theEvent)];
 	
 //	NSLog(@"q'd event=%@", event);
@@ -491,6 +509,24 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	CGRect cr = [_view convertRect:r fromView:nil];
     CGPoint	p = cr.origin;
 //	NSLog(@"up:p={%f,%f}", p.x, p.y);
+	
+	// If the location for this mouse up event is not over a certain
+	// distance away, send the last location instead. This should help
+	// double clicking work, since even a quick tap of the finger can
+	// have a distance between the down and up location larger than what
+	// most remote computers accept as a maximum double click delta.
+	float deltaX = ABS(p.x - _lastSentMousePoint.x);
+	float deltaY = ABS(p.y - _lastSentMousePoint.y);
+	
+	if (deltaX < kMouseHysteresisPixels && deltaY < kMouseHysteresisPixels)
+	{
+		p = _lastSentMousePoint;
+//		NSLog(@"up:using p={%f,%f}", p.x, p.y);
+	}
+	else
+	{
+		_lastSentMousePoint = p;
+	}
 	
 	QueuedEvent *event = [QueuedEvent mouseUpEventForButton:button location:p timestamp:GSEventGetTimestamp(theEvent)];
 	
