@@ -280,30 +280,34 @@
         case 8:
             format->bitsPerPixel = 8;
             format->depth = 8;
-            format->redMax = format->greenMax = format->blueMax = 3;
-            format->redShift = 6;
-            format->greenShift = 4;
-            format->blueShift = 2;
+            format->redMax = format->blueMax = 7;
+			format->greenMax = 3;
+			
+			// RGB 3:2:3
+            format->redShift = 5;
+            format->greenShift = 3;
+            format->blueShift = 0;
             break;
 			
         case 16:
             format->bitsPerPixel = 16;
             format->depth = 16;
-            format->redMax = format->greenMax = format->blueMax = 31; //15;
+            format->redMax = format->blueMax = 31;
+			format->greenMax = 63;
 			
             if (format->bigEndian)
 			{
-				// RGBA 5:5:5:1
-                format->redShift = 11; //12;
-                format->greenShift = 6; //8;
-                format->blueShift = 1; //4;
+				// RGB 5:6:5
+                format->redShift = 11;
+                format->greenShift = 5;
+                format->blueShift = 0;
             }
 			else
 			{
-				// RGBA 5:5:5:1
-                format->redShift = 5; //4;
-                format->greenShift = 0; //0;
-                format->blueShift = 11; //12;
+				// RGB 5:6:5
+                format->redShift = 0;
+                format->greenShift = 5;
+                format->blueShift = 11;
             }
             break;
 			
