@@ -228,6 +228,9 @@
 
 - (void)serverSelected:(int)serverIndex
 {
+	// Disable the server list view.
+	[_serversView setEnabled:NO];
+	
 	// Without the retain on serverInfo, we get a crash when theServer is released. Not sure why...
 	NSArray * servers = [self loadServers];
 	NSDictionary * serverInfo = [[servers objectAtIndex:serverIndex] retain];
@@ -292,6 +295,9 @@
 		[_connection setView:nil];
 		_connection = nil;
 	}
+
+	// Re-enable the server list view.
+	[_serversView setEnabled:YES];
 }
 
 //! This method is executed as a background thread. The thread doesn't use
