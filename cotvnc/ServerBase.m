@@ -44,10 +44,6 @@
 		[self setFullscreen:      NO];
 		[self setViewOnly:      NO];
 
-//		[[NSNotificationCenter defaultCenter] addObserver:self
-//												 selector:@selector(profileListUpdate:)
-//													 name:ProfileListChangeMsg
-//												   object:(id)[ProfileDataManager sharedInstance]];
 	}
 	
 	return self;
@@ -55,10 +51,6 @@
 
 - (void)dealloc
 {
-//	[[NSNotificationCenter defaultCenter] removeObserver:self
-//													name:ProfileListChangeMsg
-//												  object:(id)[ProfileDataManager sharedInstance]];
-												  
 	[_name release];
 	[_host release];
 	[_hostAndPort release];
@@ -147,8 +139,8 @@
 		_name = [[NSString stringWithString:@"localhost"] retain];
 	}
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+//														object:self];
 }
 
 - (void)setHost: (NSString*)host
@@ -163,8 +155,8 @@
 		_host = [[NSString stringWithString:@"new server"] retain];
 	}
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+//														object:self];
 }
 
 - (void)setHostAndPort: (NSString*)hostAndPort
@@ -181,15 +173,15 @@
 		if ( [self isPortSpecifiedInHost] )
 			[self setPort: [[items objectAtIndex: 1] intValue]];
 		else if ( portWasSpecifiedInHost )
-			[self setPort: [self display] + 5900];
+			[self setPort: 5900];
 	}
 	else
 	{
 		_hostAndPort = [_host copy];
 	}
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+//														object:self];
 }
 
 - (void)setPassword: (NSString*)password
@@ -205,78 +197,65 @@
 		_password = [[NSString stringWithString:@""] retain];
 	}
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+//														object:self];
 }
 
 - (void)setRememberPassword: (bool)rememberPassword
 {
 	_rememberPassword = rememberPassword;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+//														object:self];
 }
 
 - (void)setDisplay: (int)display
 {
 	_display = display;
-	[self setPort: _display + 5900];
+//	[self setPort: _display + 5900];
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+//														object:self];
 }
 
 - (void)setShared: (bool)shared
 {
 	_shared = shared;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+//														object:self];
 }
 
 - (void)setPort: (int)port
 {
 	_port = port;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+//														object:self];
 }
 
 - (void)setFullscreen: (bool)fullscreen
 {
 	_fullscreen =  fullscreen;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+//														object:self];
 }
 
 - (void)setViewOnly: (bool)viewOnly
 {
 	_viewOnly = viewOnly;
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+//														object:self];
 }
 
 - (void)setLastProfile: (NSString*)lastProfile
 {
-//	ProfileDataManager* profileManager = [ProfileDataManager sharedInstance];
-//	
-//	if( nil != [profileManager profileForKey: lastProfile] )
-//	{
-//		[_lastProfile autorelease];
-//		_lastProfile = [lastProfile retain];
-//	}
-//	else if( nil == [profileManager profileForKey: _lastProfile] )
-//	{
-//		// This can actually happen at load, and this is a good place to catch it
-//		[_lastProfile autorelease];
-//		[self setLastProfile:[NSString stringWithString:[profileManager defaultProfileName]]];
-//	}
 	[_lastProfile autorelease];
 	_lastProfile = lastProfile;
-	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
-														object:self];
+//	[[NSNotificationCenter defaultCenter] postNotificationName:ServerChangeMsg
+//														object:self];
 }
 
 - (int)pixelDepth
@@ -293,9 +272,11 @@
 {
     format->bigEndian = [FrameBuffer bigEndian];
     format->trueColour = YES;
-    switch(_pixelDepth) {
+    switch (_pixelDepth)
+	{
         case 0:
             break;
+			
         case 8:
             format->bitsPerPixel = 8;
             format->depth = 8;
@@ -304,29 +285,43 @@
             format->greenShift = 4;
             format->blueShift = 2;
             break;
+			
         case 16:
             format->bitsPerPixel = 16;
             format->depth = 16;
-            format->redMax = format->greenMax = format->blueMax = 15;
-            if(format->bigEndian) {
-                format->redShift = 12;
-                format->greenShift = 8;
-                format->blueShift = 4;
-            } else {
-                format->redShift = 4;
-                format->greenShift = 0;
-                format->blueShift = 12;
+            format->redMax = format->greenMax = format->blueMax = 31; //15;
+			
+            if (format->bigEndian)
+			{
+				// RGBA 5:5:5:1
+                format->redShift = 11; //12;
+                format->greenShift = 6; //8;
+                format->blueShift = 1; //4;
+            }
+			else
+			{
+				// RGBA 5:5:5:1
+                format->redShift = 5; //4;
+                format->greenShift = 0; //0;
+                format->blueShift = 11; //12;
             }
             break;
+			
         case 32:
             format->bitsPerPixel = 32;
             format->depth = 24;
             format->redMax = format->greenMax = format->blueMax = 255;
-            if(format->bigEndian) {
+			
+            if (format->bigEndian)
+			{
+				// ARGB 8:8:8:8
                 format->redShift = 16;
                 format->greenShift = 8;
                 format->blueShift = 0;
-            } else {
+            }
+			else
+			{
+				// RGBA ?
                 format->redShift = 0;
                 format->greenShift = 8;
                 format->blueShift = 16;
@@ -335,23 +330,7 @@
     }
 }
 
-//- (void)setDelegate: (id<IServerDataDelegate>)delegate
-//{
-//	_delegate = delegate;
-//}
-
-//- (void)profileListUpdate:(id)notification
-//{
-//	ProfileDataManager* profileManager = [ProfileDataManager sharedInstance];
-//	
-//	NSString *lastProfile = [self lastProfile];
-//	if( !lastProfile || (nil == [profileManager profileForKey: lastProfile]) )
-//	{
-//		[self setLastProfile:[NSString stringWithString:[profileManager defaultProfileName]]];
-//	}
-//}
-
-- (void)copyServer: (id/*<IServerData>*/)server
+- (void)copyServer: (id)server
 {
 	
 	[self setHostAndPort:[server hostAndPort]];

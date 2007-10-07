@@ -64,7 +64,7 @@
     id currentReader;
     id versionReader;
     id handshaker;
-    id server_;
+    ServerBase * server_;
     id serverVersion;
     RFBProtocol * rfbProtocol;
     id statisticField;
@@ -84,7 +84,7 @@
 	BOOL _cancelConnect;
 }
 
-- (id)initWithServer:(id)server profile:(Profile*)p view:(UIView<RFBViewProtocol> *)theView;
+- (id)initWithServer:(ServerBase *)server profile:(Profile*)p view:(UIView<RFBViewProtocol> *)theView;
 
 - (BOOL)openConnectionReturningError:(NSString **)errorMessage;
 - (void)startTalking;
@@ -124,7 +124,7 @@
 - (void)writeRFBString:(NSString *)aString;
 
 - (Profile*)profile;
-- (id)serverSettings;
+- (ServerBase *)serverSettings;
 - (NSString*)serverVersion;
 - (int) serverMajorVersion;
 - (int) serverMinorVersion;

@@ -434,10 +434,7 @@ NSLog(@"draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
 	// If we need to draw more pixels than will fit in the scratch pad
     if((int)(aRect.size.width * aRect.size.height) > SCRATCHPAD_SIZE)
 	{
-//		NSLog(@"drawing from pixels=%p", pixels);
-		
         bpr = (int)size.width * sizeof(FBColor);
-//        NSDrawBitmap(r, r.size.width, r.size.height, bitsPerColor, samplesPerPixel, sizeof(FBColor) * 8, bpr, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&start);
 		
 //		NSLog(@"CGBitmapContextCreate(buf=%p, w=%d, h=%d, bpc=%d, bpr=%d, cs=%p, info=%d", start, w, h, bitsPerColor, bpr, [self colorspace], (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);
 		bitmapContext = CGBitmapContextCreate(start, w, h, bitsPerColor, bpr, [self colorspace], (CGBitmapInfo)kCGImageAlphaNoneSkipLast);
@@ -445,15 +442,12 @@ NSLog(@"draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     }
 	else
 	{
-//		NSLog(@"drawing from scratchpad=%p", scratchpad);
-		
         FBColor* sp = scratchpad;
         int lines = h;
         int stride = (unsigned int)size.width - w;
 
         while(lines--)
 		{
-//            memcpy(sp, start, w * sizeof(sp));
             memcpy(sp, start, w * sizeof(FBColor));
             start += w;
             sp += w;
@@ -461,7 +455,6 @@ NSLog(@"draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
         }
 		
         bpr = w * sizeof(FBColor);
-//        NSDrawBitmap(r, r.size.width, r.size.height, bitsPerColor, samplesPerPixel, sizeof(FBColor) * 8, bpr, NO, NO, NSDeviceRGBColorSpace, (const unsigned char**)&scratchpad);
 
 //		NSLog(@"CGBitmapContextCreate(buf=%p, w=%d, h=%d, bpc=%d, bpr=%d, cs=%p, info=%d", scratchpad, w, h, bitsPerColor, bpr, [self colorspace], (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);
 		bitmapContext = CGBitmapContextCreate(scratchpad, w, h, bitsPerColor, bpr, [self colorspace], (CGBitmapInfo)kCGImageAlphaNoneSkipLast);

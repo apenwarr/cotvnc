@@ -132,7 +132,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	[standardUserDefaults registerDefaults: dict];
 }
 
-- (id)initWithServer:(id)server profile:(Profile*)p view:(UIView<RFBViewProtocol> *)theView
+- (id)initWithServer:(ServerBase *)server profile:(Profile*)p view:(UIView<RFBViewProtocol> *)theView
 {
     if (self = [super init])
 	{
@@ -195,7 +195,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	}
 
 	// Convert the host name to an address.
-	port = (int)[server_ port];
+	port = (int)[server_ port] + [server_ display];
 	socket_address(&remote, host, port);
 	if (INADDR_NONE == remote.sin_addr.s_addr)
 	{
@@ -290,7 +290,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     return _profile;
 }
 
-- (id)serverSettings
+- (ServerBase *)serverSettings
 {
 	return server_;
 }

@@ -219,9 +219,9 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
     int		i;
     double	rweight, gweight, bweight, gamma = 1.0/[[PrefController sharedController] gammaCorrection];
 
-    fprintf(stderr, "rfbPixelFormat redMax = %d\n", theFormat->redMax);
-    fprintf(stderr, "rfbPixelFormat greenMax = %d\n", theFormat->greenMax);
-    fprintf(stderr, "rfbPixelFormat blueMax = %d\n", theFormat->blueMax);
+//    fprintf(stderr, "rfbPixelFormat redMax = %d\n", theFormat->redMax);
+//    fprintf(stderr, "rfbPixelFormat greenMax = %d\n", theFormat->greenMax);
+//    fprintf(stderr, "rfbPixelFormat blueMax = %d\n", theFormat->blueMax);
     if(theFormat->redMax > 255)
         theFormat->redMax = 255;		/* limit at our LUT size */
     if(theFormat->greenMax > 255)
@@ -415,15 +415,6 @@ static void ns_pixel(unsigned char* v, FrameBuffer *this, float* clr)
 		tightBytesPerPixelOverride = (unsigned int *)malloc(sizeof(unsigned int));
 	*tightBytesPerPixelOverride = count;
 }
-
-/* --------------------------------------------------------------------------------- */
-//- (NSColor*)nsColorFromPixel:(unsigned char*)pixValue
-//{
-//    float nsv[3];
-//
-//    ns_pixel(pixValue, self, nsv);
-//    return [NSColor colorWithDeviceRed:nsv[0] green:nsv[1] blue:nsv[2] alpha:0.0];
-//}
 
 /* --------------------------------------------------------------------------------- */
 - (void)getRGB:(float*)rgb fromPixel:(unsigned char*)pixValue

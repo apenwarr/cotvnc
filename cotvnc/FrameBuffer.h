@@ -77,7 +77,6 @@ typedef unsigned char	FrameBufferPaletteIndex;
 - (BOOL)serverIsBigEndian;
 - (void)setCurrentReaderIsTight: (BOOL)flag;
 - (void)setServerMajorVersion: (int)major minorVersion: (int)minor;
-//- (NSColor*)nsColorFromPixel:(unsigned char*)pixValue;
 - (void)getRGB:(float*)rgb fromPixel:(unsigned char*)pixValue;
 - (CGSize)size;
 - (void)setPixelFormat:(rfbPixelFormat*)theFormat;

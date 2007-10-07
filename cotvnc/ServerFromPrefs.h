@@ -22,7 +22,6 @@
 #import <Foundation/Foundation.h>
 #import "ServerBase.h"
 #import "IServerData.h"
-//@class ServerDataManager;
 
 #define RFB_NAME          @"Name"
 #define RFB_HOST		  @"Host"
@@ -40,28 +39,8 @@
 
 @interface ServerFromPrefs : ServerBase
 
-//+ (id/*<IServerData>*/)createWithName:(NSString*)name;
-//+ (id/*<IServerData>*/)createWithHost:(NSString*)hostName preferenceDictionary:(NSDictionary*)prefDict;
-
 - (id)initWithPreferenceDictionary:(NSDictionary*)prefDict;
 
-/* @name Archiving and Unarchiving
- * Implements the NSCoding protocol for serialization
- */
-//@{
-//- (void)encodeWithCoder:(NSCoder*)coder;
-//- (id)initWithCoder:(NSCoder*)coder;
-//@}
-
-/** @name IServerData
- *  Implements elements of the IServerData protocol
- */
-//@{
 - (bool)doYouSupport: (SUPPORT_TYPE)type;
-
-//- (void)setName: (NSString*)name;
-//- (void)setPassword: (NSString*)password;
-//- (void)setRememberPassword: (bool)rememberPassword;
-//@}
 
 @end

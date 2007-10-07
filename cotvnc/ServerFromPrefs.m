@@ -20,19 +20,9 @@
 //
 
 #import "ServerFromPrefs.h"
-//#import "KeyChain.h"
 #import "IServerData.h"
-//#import "ServerDataManager.h"
-
-
-//#define KEYCHAIN_SERVICE_NAME	@"cotvnc" // This should really be the appname, but I'm too lame to know how to find that - kjw
 
 @implementation ServerFromPrefs
-
-//+ (void)initialize
-//{
-//	[ServerFromPrefs setVersion:1];
-//}
 
 - (id)initWithPreferenceDictionary:(NSDictionary*)prefDict
 {
@@ -58,57 +48,6 @@
 	[super dealloc];
 }
 
-//+ (id/*<IServerData>*/)createWithHost:(NSString*)hostName preferenceDictionary:(NSDictionary*)prefDict;
-//{
-//	return [[[ServerFromPrefs alloc] initWithHost:hostName preferenceDictionary:prefDict] autorelease];
-//}
-
-//+ (id/*<IServerData>*/)createWithName:(NSString*)name
-//{
-//	ServerFromPrefs* newServer = [[[ServerFromPrefs alloc] init] autorelease];
-//	[newServer setName:name];
-//	
-//	return newServer;
-//}
-/*
-- (void)encodeWithCoder:(NSCoder *)coder
-{
-    NSParameterAssert( [coder allowsKeyedCoding] );
-
-	[coder encodeObject:_name			 forKey:RFB_NAME];
-	[coder encodeObject:_host			 forKey:RFB_HOST];
-	[coder encodeObject:_hostAndPort     forKey:RFB_HOSTANDPORT];
-	[coder encodeBool:_rememberPassword  forKey:RFB_REMEMBER];
-	[coder encodeInt:_display			 forKey:RFB_DISPLAY];
-	[coder encodeObject:_lastProfile	 forKey:RFB_LAST_PROFILE];
-	[coder encodeBool:_shared			 forKey:RFB_SHARED];
-	[coder encodeBool:_fullscreen		 forKey:RFB_FULLSCREEN];
-	[coder encodeBool:_viewOnly          forKey:RFB_VIEWONLY];
-}
-
-- (id)initWithCoder:(NSCoder *)coder
-{
-	[self autorelease];
-	NSParameterAssert( [coder allowsKeyedCoding] );
-	[self retain];
-	
-	if( self = [super init] )
-	{				
-		[self setName:            [coder decodeObjectForKey:RFB_NAME]];
-		[self setHost:            [coder decodeObjectForKey:RFB_HOST]];
-		[self setPassword:        [NSString stringWithString:[[KeyChain defaultKeyChain] genericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name]]];
-		[self setRememberPassword:[coder decodeBoolForKey:RFB_REMEMBER]];
-		[self setDisplay:         [coder decodeIntForKey:RFB_DISPLAY]];
-		[self setLastProfile:     [coder decodeObjectForKey:RFB_LAST_PROFILE]];
-		[self setShared:          [coder decodeBoolForKey:RFB_SHARED]];
-		[self setFullscreen:      [coder decodeBoolForKey:RFB_FULLSCREEN]];
-		[self setViewOnly:  	  [coder decodeBoolForKey:RFB_VIEWONLY]];
-		[self setHostAndPort:     [coder decodeObjectForKey:RFB_HOSTANDPORT]]; // might not be present
-	}
-	
-    return self;
-}
-*/
 - (bool)doYouSupport: (SUPPORT_TYPE)type
 {
 	switch( type )
@@ -131,55 +70,5 @@
 	
 	return NO;
 }
-/*
-- (void)setName: (NSString*)name
-{
-	if( NSOrderedSame != [name compare:_name] )
-	{
-		NSMutableString *nameHelper = [NSMutableString stringWithString:name];
-		
-		[_delegate validateNameChange:nameHelper forServer:self];
-		
-		// if the password is saved, destroy the one off the old name key
-		if( YES == _rememberPassword)
-		{
-			[[KeyChain defaultKeyChain] removeGenericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name];
-		}
-		
-		[super setName:nameHelper];
-		
-		// if the password should be saved, save it with the new name key
-		if( YES == _rememberPassword)
-		{
-			[[KeyChain defaultKeyChain] setGenericPassword:_password forService:KEYCHAIN_SERVICE_NAME account:_name];
-		}
-	}
-}
 
-- (void)setPassword: (NSString*)password
-{
-	[super setPassword:password];
-	
-	// only save if set to do so
-	if( YES == _rememberPassword )
-	{
-		[[KeyChain defaultKeyChain] setGenericPassword:_password forService:KEYCHAIN_SERVICE_NAME account:_name];
-	}
-}
-
-- (void)setRememberPassword: (bool)rememberPassword
-{
-	[super setRememberPassword:rememberPassword];
-	
-	// make sure that the saved password reflects the new remember password setting
-	if( YES == _rememberPassword )
-	{
-		[[KeyChain defaultKeyChain] setGenericPassword:_password forService:KEYCHAIN_SERVICE_NAME account:_name];
-	}
-	else
-	{
-		[[KeyChain defaultKeyChain] removeGenericPasswordForService:KEYCHAIN_SERVICE_NAME account:_name];
-	}
-}
-*/
 @end
