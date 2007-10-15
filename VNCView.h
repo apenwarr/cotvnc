@@ -34,11 +34,12 @@
  */
 @interface VNCView : UIScroller <RFBViewProtocol>
 {
-    RFBConnection * _connection;	//!< The connection object.
+    RFBConnection * _connection;	//!< The connection object, nil if not currently connected.
 	EventFilter * _eventFilter;		//!< Event generation and queue object.
 	VNCContentView * _screenView;	//!< Child content view that draws the framebuffer.
 	bool _inRemoteAction;			//!< Are we controlling the remote mouse?
 	NSTimer * _tapTimer;	//!< Timer used to delay first mouse down.
+	bool _viewOnly;			//!< Are we only watching the remote computer?
 }
 
 //! \name Implementation of RFBViewProtocol

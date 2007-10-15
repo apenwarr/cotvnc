@@ -34,22 +34,27 @@
 
 - (id)initTarget:(id)aTarget serverInfo:(id)info
 {
-    if (self = [super initTarget:aTarget action:NULL]) {
-		rfbPixelFormat	myFormat;
-	
-		memcpy(&myFormat, (rfbPixelFormat*)[info pixelFormatData], sizeof(myFormat));
-		[self setPixelFormat:&myFormat];
-		[aTarget setDisplaySize:[info size] andPixelFormat:&myFormat];
-//		[aTarget setDisplayName:[info name]];
-		
-		[self setEncodings];
-		
+    if (self = [super initTarget:aTarget action:NULL])
+	{
+		// Create message readers.
 		typeReader = [[CARD8Reader alloc] initTarget:self action:@selector(receiveType:)];
 		msgTypeReader[rfbFramebufferUpdate] = [[FrameBufferUpdateReader alloc] initTarget:self action:@selector(frameBufferUpdateComplete:)];
 		msgTypeReader[rfbSetColourMapEntries] = [[SetColorMapEntriesReader alloc] initTarget:self action:@selector(setColormapEntries:)];
 		msgTypeReader[rfbBell] = nil;
 		msgTypeReader[rfbServerCutText] = [[ServerCutTextReader alloc] initTarget:self action:@selector(serverCutText:)];
 		
+		// Set the pixel format.
+		rfbPixelFormat myFormat;
+		memcpy(&myFormat, (rfbPixelFormat*)[info pixelFormatData], sizeof(myFormat));
+		[self setPixelFormat:&myFormat];
+		[aTarget setDisplaySize:[info size] andPixelFormat:&myFormat];
+		NSLog(@"server name: %@", [info name]);
+//		[aTarget setDisplayName:[info name]];
+		
+		// Send the server our supported encodings.
+		[self setEncodings];
+		
+		// Request the initial update.
 		[self requestUpdate:[aTarget visibleRect] incremental:NO];
 	}
     return self;
@@ -60,9 +65,11 @@
     int i;
 
     [typeReader release];
-    for(i=0; i<=MAX_MSGTYPE; i++) {
+    for (i=0; i<=MAX_MSGTYPE; i++)
+	{
         [msgTypeReader[i] release];
     }
+	
     [super dealloc];
 }
 
@@ -79,30 +86,33 @@
 - (void)changeEncodingsTo:(CARD32*)newEncodings length:(CARD16)l
 {
     int i;
-    rfbSetEncodingsMsg msg;
-    CARD32	enc[64];
+	struct {
+		rfbSetEncodingsMsg msg;
+		CARD32	enc[64];
+	} x;
 	
     numberOfEncodings = l;
-    msg.type = rfbSetEncodings;
-    msg.nEncodings = htons(l);
+    x.msg.type = rfbSetEncodings;
+    x.msg.nEncodings = htons(l);
 	
-    [target writeBytes:(unsigned char*)&msg length:sizeof(msg)];
-	
-    for(i=0; i<l; i++) {
+    for (i=0; i<l; i++)
+	{
         encodings[i] = newEncodings[i];
-        enc[i] = htonl(encodings[i]);
+        x.enc[i] = htonl(encodings[i]);
     }
 	
-    [target writeBytes:(unsigned char*)&enc length:numberOfEncodings * sizeof(CARD32)];
+    [target writeBytes:(unsigned char *)&x length:numberOfEncodings * sizeof(CARD32) + sizeof(x.msg)];
 }
 
 - (void)setEncodings
 {
     Profile* profile = [target profile];
-    CARD16 i, l = [profile numberOfEnabledEncodings];
+    CARD16 i;
+	CARD16 l = [profile numberOfEnabledEncodings];
     CARD32	enc[64];
 	
-    for(i=0; i<l; i++) {
+    for (i=0; i<l; i++)
+	{
         enc[i] = [profile encodingAtIndex:i];
     }
 	

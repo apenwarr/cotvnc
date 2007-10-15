@@ -84,6 +84,7 @@
 	if (_connection)
 	{
 		_eventFilter = [_connection eventFilter];
+		_viewOnly = [_connection viewOnly];
 	}
 	else
 	{
@@ -137,11 +138,17 @@
 
 - (void)mouseDown:(GSEventRef)theEvent
 {
+	// Do nothing if there is no connection.
+	if (!_connection)
+	{
+		return;
+	}
+	
 	bool isChording = GSEventIsChordingHandEvent(theEvent);	
 //	int count = GSEventGetClickCount(theEvent);
 //	NSLog(@"mouseDown:%c:%d", isChording ? 'y' : 'n', count);
 	
-	if (isChording)
+	if (isChording || _viewOnly)
 	{
 		// If the timer exists, it means we haven't yet sent the single finger mouse
 		// down. Kill the timer so that the event is never sent.
@@ -180,6 +187,12 @@
 
 - (void)mouseUp:(GSEventRef)theEvent
 {
+	// Do nothing if there is no connection.
+	if (!_connection)
+	{
+		return;
+	}
+	
 //	bool isChording = GSEventIsChordingHandEvent(theEvent);
 //	NSLog(@"mouseUp:%c", isChording ? 'y' : 'n');
 	
@@ -202,6 +215,12 @@
 
 - (void)mouseDragged:(GSEventRef)theEvent
 {
+	// Do nothing if there is no connection.
+	if (!_connection)
+	{
+		return;
+	}
+	
 //	bool isChording = GSEventIsChordingHandEvent(theEvent);	
 //	NSLog(@"mouseDragged:%c", isChording ? 'y' : 'n');
 	

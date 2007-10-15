@@ -50,12 +50,7 @@
 #define kDeleteKeyCode	0xffff
 #define kEscapeKeyCode	0xff1b
 
-
-// jason added a check for Jaguar
-//BOOL gIsJaguar;
-
-
-@implementation RFBConnection
+NSString * kConnectionTerminatedException = @"ConnectionTerminatedException";
 
 const unsigned int page0[256] = {
     0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0xff09, 0xa, 0xb, 0xc, 0xff0d, 0xe, 0xf,
@@ -118,6 +113,14 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     addr->sin_addr.s_addr = address_for_name((char*)[host cString]);
 }
 
+@interface RFBConnection (Private)
+
+- (void)connectionHasTerminated;
+
+@end
+
+@implementation RFBConnection
+
 - (NSString *)perror:(NSString*)theAction call:(NSString*)theFunction
 {
     NSString* s = [NSString stringWithFormat:@"%s: %@", strerror(errno), theFunction];
@@ -160,6 +163,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 - (void)dealloc
 {
 	[self terminateConnection: nil]; // just in case it didn't already get called somehow
+	[self connectionHasTerminated];
     [super dealloc];
 }
 
@@ -239,7 +243,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	// Deal with a cancel.
 	if (_cancelConnect)
 	{
-		NSLog(@"canceled connect");
+//		NSLog(@"canceled connect");
 		close(sock);
 		return NO;
 	}
@@ -255,13 +259,13 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     versionReader = [[NLTStringReader alloc] initTarget:self action:@selector(setServerVersion:)];
     [self setReader:versionReader];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readData:) 	name:NSFileHandleReadCompletionNotification object:socketHandler];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(readData:) 	name:nil /*NSFileHandleReadCompletionNotification*/ object:socketHandler];
     [socketHandler readInBackgroundAndNotify];
 }
 
 - (void)cancelConnect
 {
-	NSLog(@"requesting cancel connect");
+//	NSLog(@"requesting cancel connect");
 	_cancelConnect = YES;
 }
 
@@ -371,10 +375,10 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 - (void)terminateConnection:(NSString*)aReason
 {
-	NSLog(@"terminating connection: %@", aReason);
-	
     if (!terminating)
-	{		
+	{
+		NSLog(@"terminating connection: %@", aReason);
+		
         terminating = YES;
 
 		[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -383,12 +387,14 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 		[_eventFilter synthesizeRemainingEvents];
 		[_eventFilter sendAllPendingQueueEntriesNow];
 		
+//		[self connectionHasTerminated];
+
 		if (_delegate && [_delegate respondsToSelector:@selector(connection:hasTerminatedWithReason:)])
 		{
 			[_delegate connection:self hasTerminatedWithReason:aReason];
 		}
-
-		[self connectionHasTerminated];
+		
+//		[NSException raise:kConnectionTerminatedException format:@"connection terminated: %@", aReason];
     }
 }
 
@@ -475,48 +481,62 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 //    [window flushWindow];
 }
 
-- (void)pauseDrawing {
+- (void)pauseDrawing
+{
 //    [window disableFlushWindow];
 }
 
-- (void)flushDrawing {
+- (void)flushDrawing
+{
 //	if ([window isFlushWindowDisabled])
 //		[window enableFlushWindow];
 //    [window flushWindow];
     [self queueUpdateRequest];
 }
 
-- (void)readData:(NSNotification*)aNotification
+- (void)readData:(NSNotification *)aNotification
 {
-    NSData* data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
-    unsigned consumed, length = [data length];
-    unsigned char* bytes = (unsigned char*)[data bytes];
+//	fprintf(stderr, "readData:%s\n", [[aNotification description] cString]);
+
+    NSData * data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
+    unsigned consumed;
+	unsigned length = [data length];
+    unsigned char * bytes = (unsigned char *)[data bytes];
 //	NSLog(@"received %d bytes", length);
 
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; // if we process slower than our requests, we don't autorelease until we get a break, which could be never.
+	// If we process slower than our requests, we don't autorelease until
+	// we get a break, which could be never.
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-    if(!length) {	// server closed socket obviously
-		NSString *reason = NSLocalizedString( @"ServerClosed", nil );
+    if (!length)
+	{
+		// server closed socket obviously
+		NSString * reason = NSLocalizedString( @"ServerClosed", nil );
         [self terminateConnection:reason];
 		[pool release];
         return;
     }
     
-    while(length) {
-        consumed = [currentReader readBytes:bytes length:length];
-        length -= consumed;
-        bytes += consumed;
-        if(terminating) {
+	while (length)
+	{
+		consumed = [currentReader readBytes:bytes length:length];
+		length -= consumed;
+		bytes += consumed;
+		if (terminating)
+		{
 			[pool release];
-            return;
-        }
-    }
+			return;
+		}
+	}
+	
     [socketHandler readInBackgroundAndNotify];
 	[pool release];
 }
 
-- (void)_queueUpdateRequest {
-    if (!updateRequested) {
+- (void)_queueUpdateRequest
+{
+    if (!updateRequested)
+	{
         updateRequested = TRUE;
 		[self cancelFrameBufferUpdateRequest];
 		if (_frameBufferUpdateSeconds > 0.0) {
@@ -820,46 +840,46 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	return window;
 }
 
-
 - (EventFilter *)eventFilter
-{  return _eventFilter;  }
-
+{
+	return _eventFilter;
+}
 
 - (void)writeBytes:(unsigned char*)bytes length:(unsigned int)length
 {
     int result;
     int written = 0;
-//	NSLog(@"sending %d bytes from %p", length, bytes);
 	
-/*
-    {
-        int i;
-        
-        fprintf(stderr, "%s: ", [[window title] cString]);
-        for(i=0; i<length; i++) {
-            fprintf(stderr, "%02X ", bytes[i]);
-        }
-        fprintf(stderr, "\n");
-        fflush(stderr);
-    }
-*/
+	if (terminating)
+	{
+		return;
+	}
+
     do {
 //		NSLog(@"write(%d, %p, l=%d, w=%d)", [socketHandler fileDescriptor], bytes+written, length, written);
         result = write([socketHandler fileDescriptor], bytes + written, length);
 //		NSLog(@"wrote %d bytes", result);
-        if(result >= 0) {
+        
+		if (result >= 0)
+		{
             length -= result;
             written += result;
-        } else {
-            if(errno == EAGAIN) {
+        }
+		else
+		{
+            if (errno == EAGAIN)
+			{
                 continue;
             }
 //			NSLog(@"write:errno=%d", errno);
-            if(errno == EPIPE) {
+            
+			if (errno == EPIPE)
+			{
 				NSString *reason = NSLocalizedString( @"ServerClosed", nil );
                 [self terminateConnection:reason];
                 return;
             }
+			
 			NSString *reason = NSLocalizedString( @"ServerError", nil );
 			reason = [NSString stringWithFormat: reason, strerror(errno)];
             [self terminateConnection:reason];
@@ -868,7 +888,8 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     } while(length > 0);
 }
 
-- (void)writeRFBString:(NSString *)aString {
+- (void)writeRFBString:(NSString *)aString
+{
 	unsigned int stringLength=htonl([aString cStringLength]);
 	[self writeBytes:(unsigned char *)&stringLength length:4];
 	[self writeBytes:(unsigned char *)[aString cString] length:[aString cStringLength]];

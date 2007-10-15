@@ -10,6 +10,8 @@
 #import "ServerStandAlone.h"
 #import "ServerFromPrefs.h"
 #import "Shimmer.h"
+#import <stdlib.h>
+#import <signal.h>
 
 #define kControlsBarHeight (48.0f)
 
@@ -48,22 +50,20 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)unused
 {
-//	NSLog(@"Vnsea app launching");
+	// We ignore SIGPIPE instead of having the default handler terminate us when
+	// the other end of a socket disappears.
+	signal(SIGPIPE, SIG_IGN);
 	
 	CGRect screenRect = [UIHardware fullScreenApplicationContentRect];
-	CGRect frame;
+	CGRect frame = CGRectMake(0.0f, 0.0f, screenRect.size.width, screenRect.size.height);
 	
 	//Initialize window
 	_window = [[UIWindow alloc] initWithContentRect: screenRect];
 //	[_window _setHidden: YES];
 	
-	//Setup main view
-    screenRect.origin.x = 0.0;
-	screenRect.origin.y = 0.0f;
-    _mainView = [[UIView alloc] initWithFrame: screenRect];
+	// Setup main view
+    _mainView = [[UIView alloc] initWithFrame: frame];
     [_window setContentView: _mainView];
-	
-	frame = CGRectMake(0.0f, 0.0f, screenRect.size.width, screenRect.size.height);
 	
 	// Transition view
 	_transView = [[UITransitionView alloc] initWithFrame:frame];
@@ -83,26 +83,19 @@
 	
 	// Profile
 	_defaultProfile = [[Profile defaultProfile] retain];
-//	NSLog(@"profile=%@", _defaultProfile);
 	
 	// Switch to the list view
 	[_transView transition:0 toView:_serversView];
 
+	// Make things visible.
 	[_window orderFront: self];
 	[_window makeKey: self];
 	[_window _setHidden: NO];
 	
+	// Tell the system we're ready.
 	[self reportAppLaunchFinished];
 	
-//	NSLog(@"orientN=%d, orientY=%d", [UIHardware deviceOrientation:YES], [UIHardware deviceOrientation:NO]);
-//	NSLog(@"orient=%d", [self orientation]);
-//	NSLog(@"roleID=%@", [self roleID]);
-//	NSLog(@"displayIdentifier=%@", [self displayIdentifier]);
-	
-//	[self setIgnoresInteractionEvents:NO];
-
-//	[self displayAbout];
-	
+	// Kick off a thread to check for a new version.
 	[NSThread detachNewThreadSelector:@selector(checkForUpdate:) toTarget:self withObject:nil];
 }
 
@@ -373,7 +366,7 @@
 		[hotSheet popupAlertAnimated:YES];
 	}
 	
-	[_connection release];
+	[_connection autorelease];
 	_connection = nil;
 	
 	[_vncView setConnection:nil];
