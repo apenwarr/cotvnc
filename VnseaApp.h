@@ -19,6 +19,25 @@
 @class Shimmer;
 @class RFBConnection;
 
+//! Path to the file that server settings are stored in.
+#define kServersFilePath @"/var/root/Library/Preferences/vnsea_servers.plist"
+
+//! The top level dictionary key containing the array of server dictionaries in the
+//! server settings file.
+#define kServerArrayKey @"servers"
+
+//! URL for a plist that contains information about the latest version
+//! of the application, for use by Shimmer.
+#define kUpdateURL @"http://www.manyetas.com/creed/iphone/shimmer/vnsea.plist"
+
+//! If a connection attempt takes longer than this amount of time, then
+//! an alert is displayed telling the user what is going on.
+#define kConnectionAlertTime (0.6f)
+
+//! Amount of time in seconds to let the run loop run while waiting for
+//! a connection to be made.
+#define kConnectWaitRunLoopTime (0.1f)
+
 /*!
  * @brief Main application class for the VNC viewer program.
  *
@@ -29,17 +48,20 @@
  */
 @interface VnseaApp : UIApplication
 {
+	//! @name Views
+	//@{
 	UIWindow * _window;
 	UIView * _mainView;
 	UITransitionView * _transView;
-	UIScroller * _vncScroller;
 	VNCView * _vncView;
-	Profile * _defaultProfile;
 	VNCServerListView * _serversView;
 	VNCServerInfoView * _serverEditorView;
+	//@}
+	
+	Profile * _defaultProfile;	//!< Our single profile object, reused for every connection.
 	int _editingIndex;	//!< Index of the server currently being edited.
-	RFBConnection * _connection;
-	NSConditionLock * _connectLock;
+	RFBConnection * _connection;	//!< The active connection object.
+	NSConditionLock * _connectLock;	//!< Lock used for thread synchronisation during connect.
 	BOOL _didOpenConnection;	//!< YES if the connection was opened successfully.
 	NSString * _connectError;	//!< Error message from attempting to open a connection.
 	BOOL _closingConnection;	//!< True if the connection is intentionally being closed.
@@ -67,7 +89,6 @@
 //! @name Shimmer auto-update support
 //@{
 - (void)checkForUpdate:(id)unused;
-- (void)doUpdate:(Shimmer *)shimmer;
 //@}
 
 //! @brief Show the about alert.

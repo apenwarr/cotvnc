@@ -14,12 +14,17 @@
 #import <UIKit/UIHardware.h>
 #import <UIKit/UIKit.h>
 #import <UIKit/UIApplication.h>
+#import <UIKit/UINavBarButton.h>
+#import <UIKit/UIPushButton.h>
+#import <UIKit/UIKeyboard.h>
+#import <UIKit/UIKeyboardInput.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import "RFBConnection.h"
 #import "EventFilter.h"
 #import "FrameBuffer.h"
 #import "RFBViewProtocol.h"
 #import "VNCContentView.h"
+#import "VNCScrollerView.h"
 
 /*!
  * @brief Main view to display and control the remote computer.
@@ -32,15 +37,31 @@
  * behaviour. A number of method invocations are forwarded to the content
  * view rather than be implemented directly by this class.
  */
-@interface VNCView : UIScroller <RFBViewProtocol>
+@interface VNCView : UIView <RFBViewProtocol> //, UIKeyboardInput>
 {
     RFBConnection * _connection;	//!< The connection object, nil if not currently connected.
-	EventFilter * _eventFilter;		//!< Event generation and queue object.
+	EventFilter * _filter;			//!< Event filter for the current connection.
+	VNCScrollerView * _scroller;	//!< Scroller subview.
 	VNCContentView * _screenView;	//!< Child content view that draws the framebuffer.
-	bool _inRemoteAction;			//!< Are we controlling the remote mouse?
-	NSTimer * _tapTimer;	//!< Timer used to delay first mouse down.
-	bool _viewOnly;			//!< Are we only watching the remote computer?
+	UINavBarButton * _keyboardButton;	//
+	UIPushButton * _shiftButton;
+	UIPushButton * _commandButton;
+	UIPushButton * _optionButton;
+	UIPushButton * _controlButton;
+	id _keyboardView;
+	id _controlsView;
+//	id _textInputView;
+	bool _areControlsVisible;
+	bool _isKeyboardVisible;
 }
+
+//! \name Controls and keyboard
+//@{
+- (bool)areControlsVisible;
+- (void)showControls:(bool)show;
+- (void)toggleControls;
+- (void)toggleKeyboard:(id)sender;
+//@}
 
 //! \name Implementation of RFBViewProtocol
 //@{
@@ -51,6 +72,8 @@
 - (void)displayFromBuffer:(CGRect)aRect;
 - (void)drawRectList:(id)aList;
 //@}
+
+- (void)characterWasTyped:(NSString *)character;
 
 @end
 

@@ -164,6 +164,7 @@ typedef enum {
 - (void)keyDown: (GSEventRef)theEvent;
 - (void)keyUp: (GSEventRef)theEvent;
 - (void)flagsChanged:(GSEventRef)theEvent;
+- (void)keyTyped:(NSString *)characters;
 
 // Synthesized Events
 - (void)clearAllEmulationStates;

@@ -400,7 +400,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 - (void)setDisplaySize:(CGSize)aSize andPixelFormat:(rfbPixelFormat*)pixf
 {
-	NSLog(@"remote display size={%f,%f}", aSize.width, aSize.height);
+	NSLog(@"remote display size={%g,%g}", aSize.width, aSize.height);
 	
     id frameBufferClass;
     CGRect wf;
@@ -411,12 +411,9 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	[frameBuffer autorelease];
     frameBuffer = [[frameBufferClass alloc] initWithSize:aSize andFormat:pixf];
 	[frameBuffer setServerMajorVersion: serverMajorVersion minorVersion: serverMinorVersion];
-//	NSLog(@"frameBuffer=%@", frameBuffer);
 	
     [rfbView setFrameBuffer:frameBuffer];
-//    [rfbView setConnection:self];
 	[rfbView setRemoteDisplaySize:aSize];
-	[_eventFilter setView: rfbView];
 	
 	[self setFrameBufferUpdateSeconds: [[PrefController sharedController] frontFrameBufferUpdateSeconds]];
 	[self queueUpdateRequest];

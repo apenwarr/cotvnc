@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		021133D10CC51DF00059CA0E /* VNCScrollerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCScrollerView.h; sourceTree = "<group>"; };
+		021133D20CC51DF00059CA0E /* VNCScrollerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNCScrollerView.m; sourceTree = "<group>"; };
 		0259AC150C909383005285B7 /* VnseaApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VnseaApp.h; sourceTree = "<group>"; };
 		0259AC160C909383005285B7 /* VnseaApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VnseaApp.m; sourceTree = "<group>"; };
 		0259AC170C909383005285B7 /* VNCView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCView.h; sourceTree = "<group>"; };
@@ -129,15 +131,15 @@
 		0259ACAF0C9093BD005285B7 /* cotvnc */ = {
 			isa = PBXGroup;
 			children = (
-				0259AD4A0C909B5F005285B7 /* Preferences */,
-				0259AD4D0C909BC7005285B7 /* Profiles */,
-				0259AD4E0C909C0A005285B7 /* Server Management */,
 				0259AD500C909C83005285B7 /* Encoding Readers */,
-				0259AD510C909CBB005285B7 /* Readers */,
 				0259AD550C909DEA005285B7 /* Filter Readers */,
 				0259AD520C909CE2005285B7 /* Frame Buffers */,
-				0259AD540C909D8B005285B7 /* Protocol */,
 				0259AD560C909E1E005285B7 /* Misc */,
+				0259AD4A0C909B5F005285B7 /* Preferences */,
+				0259AD4D0C909BC7005285B7 /* Profiles */,
+				0259AD540C909D8B005285B7 /* Protocol */,
+				0259AD510C909CBB005285B7 /* Readers */,
+				0259AD4E0C909C0A005285B7 /* Server Management */,
 			);
 			path = cotvnc;
 			sourceTree = "<group>";
@@ -322,6 +324,8 @@
 				0259BE790C9B5E65005285B7 /* Shimmer.m */,
 				0259C1D80C9CBE70005285B7 /* VNCContentView.h */,
 				0259C1D90C9CBE70005285B7 /* VNCContentView.m */,
+				021133D10CC51DF00059CA0E /* VNCScrollerView.h */,
+				021133D20CC51DF00059CA0E /* VNCScrollerView.m */,
 				0259AD590C90AEED005285B7 /* VNCServerInfoView.h */,
 				0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */,
 				0259BAC40C94BCF7005285B7 /* VNCServerListView.h */,

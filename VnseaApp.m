@@ -27,24 +27,15 @@
 #define kRevertButtonWidth (100.0f)
 #define kRevertButtonHeight (32.0f)
 
-//! Path to the file that server settings are stored in.
-#define kServersFilePath @"/var/root/Library/Preferences/vnsea_servers.plist"
-
-//! The top level dictionary key containing the array of server dictionaries in the
-//! server settings file.
-#define kServerArrayKey @"servers"
-
-//! URL for a plist that contains information about the latest version
-//! of the application, for use by Shimmer.
-#define kUpdateURL @"http://www.manyetas.com/creed/iphone/shimmer/vnsea.plist"
-
-//! If a connection attempt takes longer than this amount of time, then
-//! an alert is displayed telling the user what is going on.
-#define kConnectionAlertTime (0.6f)
-
-//! Amount of time in seconds to let the run loop run while waiting for
-//! a connection to be made.
-#define kConnectWaitRunLoopTime (0.1f)
+//! @brief Signal handler for SIGINT.
+//!
+//! Simply terminates the application, which will cause any open connection
+//! to be gracefully shutdown.
+void handle_interrupt_signal(int sig)
+{
+	NSLog(@"received signal %d, exiting", sig);
+	[UIApp terminate];
+}
 
 @implementation VnseaApp
 
@@ -54,16 +45,14 @@
 	// the other end of a socket disappears.
 	signal(SIGPIPE, SIG_IGN);
 	
+	// Handle signal sent by ^C, mostly for development.
+	signal(SIGINT, handle_interrupt_signal);
+	
 	CGRect screenRect = [UIHardware fullScreenApplicationContentRect];
 	CGRect frame = CGRectMake(0.0f, 0.0f, screenRect.size.width, screenRect.size.height);
 	
-	//Initialize window
-	_window = [[UIWindow alloc] initWithContentRect: screenRect];
-//	[_window _setHidden: YES];
-	
 	// Setup main view
     _mainView = [[UIView alloc] initWithFrame: frame];
-    [_window setContentView: _mainView];
 	
 	// Transition view
 	_transView = [[UITransitionView alloc] initWithFrame:frame];
@@ -87,7 +76,9 @@
 	// Switch to the list view
 	[_transView transition:0 toView:_serversView];
 
-	// Make things visible.
+	//Initialize window
+	_window = [[UIWindow alloc] initWithContentRect: screenRect];
+    [_window setContentView: _mainView];
 	[_window orderFront: self];
 	[_window makeKey: self];
 	[_window _setHidden: NO];
@@ -105,6 +96,7 @@
 	{
 		_closingConnection = YES;
 		[_connection terminateConnection:nil];
+		_connection = nil;
 	}
 }
 
@@ -123,23 +115,18 @@
 {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	
-	Shimmer * shimmer = [[Shimmer alloc] init];
+	Shimmer * shimmer = [[[Shimmer alloc] init] autorelease];
 	if ([shimmer checkForUpdateHere:kUpdateURL])
 	{
 		// An update is available, so give the user the option to update.
 		// The update is performed on the main thread since it operates
 		// with the UI.
-		[self performSelectorOnMainThread:@selector(doUpdate:) withObject:shimmer waitUntilDone:NO];
+		[shimmer setAboveThisView:_transView];
+		[shimmer setUseCustomView:YES];
+		[shimmer doUpdate];
 	}
 	
 	[pool release];
-}
-
-- (void)doUpdate:(Shimmer *)shimmer
-{
-	[shimmer setAboveThisView:_transView];
-	[shimmer setUseCustomView:YES];
-	[shimmer doUpdate];
 }
 
 - (NSArray *)loadServers
@@ -253,6 +240,7 @@
 	{
 		NSLog(@"connection=%@", _connection);
 		[_vncView setConnection:_connection];
+		[_vncView showControls:YES];
 		[_connection setDelegate:self];
 		[_connection startTalking];
 		[_connection manuallyUpdateFrameBuffer:self];
@@ -307,7 +295,7 @@
 	[lock lockWhenCondition:0];
 	
 	// Attempt to open a connection to theServer.
-	NSString * message;
+	NSString * message = nil;
 	BOOL didOpen = [connection openConnectionReturningError:&message];
 	
 	// Just bail if the connection was canceled.
@@ -502,17 +490,20 @@
 
 - (void)statusBarMouseDown:(GSEvent *)event
 {
-	NSLog(@"statusBarMouseDown:%@", event);
+//	NSLog(@"statusBarMouseDown:%@", event);
 }
 
 - (void)statusBarMouseDragged:(GSEvent *)event
 {
-	NSLog(@"statusBarMouseDragged:%@", event);
+//	NSLog(@"statusBarMouseDragged:%@", event);
 }
 
 - (void)statusBarMouseUp:(GSEvent *)event
 {
-	NSLog(@"statusBarMouseUp:%@", event);
+	if (_connection)
+	{
+		[_vncView toggleControls];
+	}
 }
 /*
 - (void)volumeChanged:(GSEvent *)event

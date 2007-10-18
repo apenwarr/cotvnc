@@ -78,8 +78,6 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
         _unsentMouseMoveExists = NO;
 		_lastMousePoint.x = -1;
 		_lastMousePoint.y = -1;
-		
-//		[[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(applicationDidBecomeActive:) name: NSApplicationDidBecomeActiveNotification object: nil];
 	}
 	return self;
 }
@@ -94,7 +92,6 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	[self sendAllPendingQueueEntriesNow];
 	[_pendingEvents release];
 	[_pressedKeys release];
-//	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	[super dealloc];
 }
 
@@ -104,7 +101,9 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 
 
 - (RFBConnection *)connection
-{  return _connection;  }
+{
+	return _connection;
+}
 
 - (void)setConnection: (RFBConnection *)connection
 {
@@ -291,84 +290,110 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 #pragma mark -
 #pragma mark Local Keyboard Events
 
-// XXX handle key stuff later
-- (void)keyDown: (GSEventRef)theEvent
+CFStringRef GSEventCopyCharacters(GSEventRef);
+CFStringRef GSEventCopyCharactersIgnoringModifiers(GSEventRef);
+unsigned int GSEventGetKeyCode(GSEventRef);
+unsigned int GSEventGetModifierFlags(GSEventRef);
+
+- (void)keyDown:(GSEventRef)theEvent
 {
-//	[self _updateCapsLockStateIfNecessary];
-//	NSString *characters = [theEvent characters];
-//	NSString *charactersIgnoringModifiers = [theEvent charactersIgnoringModifiers];
-//	
-//	unsigned int modifiers = [theEvent modifierFlags];
-////	if ( [[KeyEquivalentManager defaultManager] performEquivalentWithCharacters: characters modifiers: modifiers] )
-////	{
-////		[self discardAllPendingQueueEntries];
-////		return;
-////	}
-//	
-//	unsigned int i, charLength = [characters length];
-//	unsigned int unmodLength = [charactersIgnoringModifiers length];
-//	unsigned int length = unmodLength > charLength ? unmodLength : charLength;
-//	
-//	NSParameterAssert( characters && charactersIgnoringModifiers );
-//	NSParameterAssert( charLength <= unmodLength );
-//	
-//	for ( i = 0; i < length; ++i )
-//	{
-//		unichar character;
-//		unichar characterIgnoringModifiers;
-//		
-//		if ( i < charLength )
-//			character = [characters characterAtIndex: i];
-//		else
-//			character = [charactersIgnoringModifiers characterAtIndex: i];
-//		
-//		if ( i < unmodLength )
-//			characterIgnoringModifiers = [charactersIgnoringModifiers characterAtIndex: i];
-//		else
-//			characterIgnoringModifiers = [characters characterAtIndex: i];
-//		
-//		QueuedEvent *event = [QueuedEvent keyDownEventWithCharacter: character
-//										 characterIgnoringModifiers: characterIgnoringModifiers
-//														  timestamp: [theEvent timestamp]];
-//		[_pendingEvents addObject: event];
-//		[self sendAnyValidEventsToServerNow];
-//	}
+	[self _updateCapsLockStateIfNecessary];
+	
+	NSString *characters = (NSString *)GSEventCopyCharacters(theEvent);
+	NSLog(@"%s:chars=%@", __PRETTY_FUNCTION__, characters);
+	
+	NSString *charactersIgnoringModifiers = (NSString *)GSEventCopyCharactersIgnoringModifiers(theEvent);
+	NSLog(@"%s:charsNoMods=%@", __PRETTY_FUNCTION__, charactersIgnoringModifiers);
+	
+	unsigned int modifiers = GSEventGetModifierFlags(theEvent);
+	NSLog(@"%s:mods=%d", __PRETTY_FUNCTION__, modifiers);
+	
+	unsigned int i;
+	unsigned int charLength = [characters length];
+	unsigned int unmodLength = [charactersIgnoringModifiers length];
+	unsigned int length = unmodLength > charLength ? unmodLength : charLength;
+	
+	NSParameterAssert( characters && charactersIgnoringModifiers );
+	NSParameterAssert( charLength <= unmodLength );
+	
+	for (i = 0; i < length; ++i)
+	{
+		unichar character;
+		unichar characterIgnoringModifiers;
+		
+		if (i < charLength)
+		{
+			character = [characters characterAtIndex: i];
+		}
+		else
+		{
+			character = [charactersIgnoringModifiers characterAtIndex: i];
+		}
+		
+		if (i < unmodLength)
+		{
+			characterIgnoringModifiers = [charactersIgnoringModifiers characterAtIndex: i];
+		}
+		else
+		{
+			characterIgnoringModifiers = [characters characterAtIndex: i];
+		}
+		
+		QueuedEvent *event = [QueuedEvent keyDownEventWithCharacter: character
+										 characterIgnoringModifiers: characterIgnoringModifiers
+														  timestamp: GSEventGetTimestamp(theEvent)];
+		[_pendingEvents addObject: event];
+		[self sendAnyValidEventsToServerNow];
+	}
 }
 
-- (void)keyUp: (GSEventRef)theEvent
+- (void)keyUp:(GSEventRef)theEvent
 {
-//	[self _updateCapsLockStateIfNecessary];
-//	NSString *characters = [theEvent characters];
-//	NSString *charactersIgnoringModifiers = [theEvent charactersIgnoringModifiers];
-//	
-//	unsigned int i, charLength = [characters length];
-//	unsigned int unmodLength = [charactersIgnoringModifiers length];
-//	unsigned int length = unmodLength > charLength ? unmodLength : charLength;
-//
-//	NSParameterAssert( characters && charactersIgnoringModifiers );
-//	NSParameterAssert( charLength <= unmodLength );
-//	
-//	for ( i = 0; i < length; ++i )
-//	{
-//		unichar character;
-//		unichar characterIgnoringModifiers;
-//		
-//		if ( i < charLength )
-//			character = [characters characterAtIndex: i];
-//		else
-//			character = [charactersIgnoringModifiers characterAtIndex: i];
-//		
-//		if ( i < unmodLength )
-//			characterIgnoringModifiers = [charactersIgnoringModifiers characterAtIndex: i];
-//		else
-//			characterIgnoringModifiers = [characters characterAtIndex: i];
-//		
-//		QueuedEvent *event = [QueuedEvent keyUpEventWithCharacter: character
-//									   characterIgnoringModifiers: characterIgnoringModifiers
-//														timestamp: [theEvent timestamp]];
-//		[_pendingEvents addObject: event];
-//		[self sendAnyValidEventsToServerNow];
-//	}
+	[self _updateCapsLockStateIfNecessary];
+	
+	NSString *characters = (NSString *)GSEventCopyCharacters(theEvent);
+	NSLog(@"%s:chars=%@", __PRETTY_FUNCTION__, characters);
+	
+	NSString *charactersIgnoringModifiers = (NSString *)GSEventCopyCharactersIgnoringModifiers(theEvent);
+	NSLog(@"%s:charsNoMods=%@", __PRETTY_FUNCTION__, charactersIgnoringModifiers);
+	
+	unsigned int i;
+	unsigned int charLength = [characters length];
+	unsigned int unmodLength = [charactersIgnoringModifiers length];
+	unsigned int length = unmodLength > charLength ? unmodLength : charLength;
+
+	NSParameterAssert( characters && charactersIgnoringModifiers );
+	NSParameterAssert( charLength <= unmodLength );
+	
+	for (i = 0; i < length; ++i)
+	{
+		unichar character;
+		unichar characterIgnoringModifiers;
+		
+		if (i < charLength)
+		{
+			character = [characters characterAtIndex: i];
+		}
+		else
+		{
+			character = [charactersIgnoringModifiers characterAtIndex: i];
+		}
+		
+		if (i < unmodLength)
+		{
+			characterIgnoringModifiers = [charactersIgnoringModifiers characterAtIndex: i];
+		}
+		else
+		{
+			characterIgnoringModifiers = [characters characterAtIndex: i];
+		}
+		
+		QueuedEvent *event = [QueuedEvent keyUpEventWithCharacter: character
+									   characterIgnoringModifiers: characterIgnoringModifiers
+														timestamp: GSEventGetTimestamp(theEvent)];
+		[_pendingEvents addObject: event];
+		[self sendAnyValidEventsToServerNow];
+	}
 }
 
 - (void)flagsChanged:(GSEventRef)theEvent
@@ -430,6 +455,54 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 //	}
 }
 
+- (void)keyTyped:(NSString *)characters
+{
+	unsigned int i;
+	unsigned int length = [characters length];
+	NSTimeInterval timestamp = [[NSDate date] timeIntervalSince1970];
+	
+	for (i = 0; i < length; ++i)
+	{
+		unichar character = [characters characterAtIndex: i];
+		unichar characterIgnoringModifiers;
+		unsigned int modifiers = 0;
+		bool isUpper = iswupper(character);
+		
+		NSLog(@"char=0x%04x", character);
+		
+		// Need to convert the return character.
+		if (character == '\n')
+		{
+			character = '\r';
+		}
+		
+		if (isUpper)
+		{
+			modifiers |= NSShiftKeyMask;
+			characterIgnoringModifiers = towlower(character);
+		}
+		else
+		{
+			characterIgnoringModifiers = character;
+		}
+		
+		if (isUpper)
+		{
+			[self queueModifierPressed:NSShiftKeyMask timestamp:timestamp];
+		}
+		
+		[_pendingEvents addObject:[QueuedEvent keyDownEventWithCharacter:character characterIgnoringModifiers:characterIgnoringModifiers timestamp:timestamp]];
+		
+		[_pendingEvents addObject:[QueuedEvent keyUpEventWithCharacter:character characterIgnoringModifiers:characterIgnoringModifiers timestamp:timestamp]];
+		
+		if (isUpper)
+		{
+			[self queueModifierReleased:NSShiftKeyMask timestamp:timestamp];
+		}
+		
+		[self sendAnyValidEventsToServerNow];
+	}
+}
 
 #pragma mark -
 #pragma mark Synthesized Events
@@ -598,14 +671,8 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 		_pressedModifiers |= NSAlphaShiftKeyMask;
 }
 
-
-- (void)applicationDidBecomeActive: (NSNotification *)notification
-{  _watchEventForCapsLock = YES;  }
-
-
 #pragma mark -
 #pragma mark Event Processing
-
 
 - (unsigned int)_sendAnyValidEventsToServerForButton: (unsigned int)button 
 									scenario: (EventFilterEmulationScenario)scenario
