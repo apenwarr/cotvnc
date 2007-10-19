@@ -1,5 +1,5 @@
 
-CC=/usr/local/arm-apple-darwin/bin/arm-apple-darwin-cc
+CC=/usr/local/bin/arm-apple-darwin-gcc
 
 LD=$(CC)
 
