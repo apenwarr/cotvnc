@@ -20,7 +20,7 @@
 #import "RectangleList.h"
 
 //! Height of the controls bar view.
-#define kControlsBarHeight (36.0f)
+#define kControlsBarHeight (48.0f)
 
 //! Height of buttons in the controls bar.
 #define kControlsBarButtonHeight (32.0f)
@@ -28,6 +28,8 @@
 #define kModifierKeyImageWidth (21.0f)
 #define kModifierKeyImageHeight (21.0f)
 
+// There's got to be a better way to do this, but for now this is just fine.
+// Thanks to the MobileTerminal team for this trick.
 @implementation UIKeyboardImpl (DisableFeatures)
 
 - (BOOL)autoCapitalizationPreference
@@ -41,62 +43,6 @@
 }
 
 @end
-
-/*
-@interface TextInputHandler : UITextView
-{
-	id _keysDelegate;
-}
-
-- (id)initWithKeysDelegate:(id)delegate;
-
-@end
-
-@implementation TextInputHandler
-
-- (id)initWithKeysDelegate:(id)delegate
-{
-	self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 0.0f)];
-	if (self)
-	{
-		_keysDelegate = delegate;
-	}
-
-	return self;
-}
-
-- (void)keyDown:(GSEventRef)theEvent
-{
-	NSLog(@"%s:%@", __PRETTY_FUNCTION__, theEvent);
-	[super keyDown:theEvent];
-}
-
-- (void)keyUp:(GSEventRef)theEvent
-{
-	NSLog(@"%s:%@", __PRETTY_FUNCTION__, theEvent);
-	[super keyUp:theEvent];
-}
-
-- (BOOL)webView:(id)webView shouldDeleteDOMRange:(id)domRange
-{
-	NSLog(@"webView:%@ shouldDeleteDOMRange:%@", webView, domRange);
-//  [shellKeyboard handleKeyPress:0x08];
-	[_keysDelegate characterWasTyped:[NSString stringWithCString:"\x08"]];
-}
-
-- (BOOL)webView:(id)webView shouldInsertText:(id)character replacingDOMRange:(id)domRange givenAction:(int)action
-{
-	NSLog(@"webView:%@ shouldInsertText:%@ replacingDOMRange:%@ givenAction:%d", webView, character, domRange, action);
-//  if ([character length] != 1) {
-//    [NSException raise:@"Unsupported" format:@"Unhandled multi-char insert!"];
-//    return false;
-//  }
-//  [shellKeyboard handleKeyPress:[character characterAtIndex:0]];
-	[_keysDelegate characterWasTyped:character];
-}
-
-@end
-*/
 
 @implementation VNCView
 
@@ -138,8 +84,6 @@
 		// Create keyboard button.
 		subframe = CGRectMake(10, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, 80, kControlsBarButtonHeight);
 		_keyboardButton = [[UINavBarButton alloc] initWithTitle:@"Keyboard" autosizesToFit:NO];
-//		subframe = [_keyboardButton frame];
-//		subframe.origin = CGPointMake(10, (kControlsBarHeight - subframe.size.height) / 2.0f);
 		[_keyboardButton setFrame:subframe];
 //		[_keyboardButton setTitle:@"Keyboard"];
 		[_keyboardButton setNavBarButtonStyle:0];
@@ -171,19 +115,12 @@
 		[_controlButton setFrame:subframe];
 		[_controlButton setShowPressFeedback:YES];
 		
-//		NSLog(@"created kbd btn");
-		
 		// Create keyboard.
 		CGSize defaultKeyboardSize = CGSizeMake(320, 215); //[UIKeyboard defaultSize];
 		subframe.origin = CGPointMake(0, frame.size.height - kControlsBarHeight - defaultKeyboardSize.height);
 		subframe.size = defaultKeyboardSize;
 		_keyboardView = [[UIKeyboard alloc] initWithFrame:subframe];
 		[_keyboardView setPreferredKeyboardType:kUIKeyboardLayoutAlphabetTransparent];
-		
-//		NSLog(@"created kbd");
-		
-//		_textInputView = [[TextInputHandler alloc] initWithKeysDelegate:self];
-//		[self addSubview:_textInputView];
 		
 		// Build view hierarchy.
 		[_controlsView addSubview:_keyboardButton];
@@ -195,12 +132,6 @@
 		
 		[_scroller addSubview:_screenView];
 		[self addSubview:_scroller];
-		
-		// We want the scroller to receive events.
-//		[(TextInputHandler *)_textInputView becomeFirstResponder];
-//		NSLog(@"input is first responder: %d", (int)[_textInputView isFirstResponder]);
-		
-		NSLog(@"done creating subviews");
 		
 		_areControlsVisible = NO;
 		_isKeyboardVisible = NO;
@@ -219,6 +150,8 @@
 	return _areControlsVisible;
 }
 
+//! Either hides or shows the controls bar at the bottom of the screen
+//! (in portrait orientation). The hiding or showing is animated.
 - (void)showControls:(bool)show
 {
 	if (_areControlsVisible != show)
@@ -282,9 +215,6 @@
 		[self addSubview:_keyboardView];
 		[_keyboardView activate];
 		
-//		[(TextInputHandler *)_textInputView becomeFirstResponder];
-//		NSLog(@"input is first responder: %d", (int)[_textInputView isFirstResponder]);
-		
 		[[UIKeyboardImpl activeInstance] setDelegate:self];
 	}
 	
@@ -296,11 +226,17 @@
 	return _connection;
 }
 
+//! The frame buffer has been created by the connection object and is
+//! being passed to us. We pass it along to the underlying content view
+//! that does the actual drawing.
 - (void)setFrameBuffer:(id)aBuffer;
 {
 	[_screenView setFrameBuffer:aBuffer];
 }
 
+//! Either a new connection is being set or the connection is being cleared
+//! because it was closed. When a new connection is being set, we hook up
+//! some objects to each other, such as the EventFilter.
 - (void)setConnection:(RFBConnection *)connection
 {
     _connection = connection;
@@ -320,6 +256,9 @@
 	}
 }
 
+//! The remote display size is being set or has changed, so we need to update
+//! the underlying content view and tell the scroller view that its content
+//! size has changed.
 - (void)setRemoteDisplaySize:(CGSize)remoteSize
 {
 	[_screenView setRemoteDisplaySize:remoteSize];
@@ -328,11 +267,17 @@
 	[_scroller setContentSize:remoteSize];
 }
 
+//! The connection object is telling us that a region of the framebuffer
+//! needs to be redrawn.
 - (void)displayFromBuffer:(CGRect)aRect
 {
 	[_screenView displayFromBuffer:aRect];
 }
 
+//! This method is supposed to draw a list of rectangles. Unfortunately, the UIKit
+//! doesn't seem to have an equivalent to lockFocus/unlockFocus, so there's no way
+//! to get a drawing context outside of the regular draw methods. But it seems
+//! that this method isn't called much (never seen it once), so it's not a big deal.
 - (void)drawRectList:(id)aList
 {
 	NSLog(@"VNCView:drawRectList:%@", aList);
@@ -347,23 +292,6 @@
 {
 	return [_screenView bounds];
 }
-
-//- (void)keyDown:(GSEventRef)theEvent
-//{
-//	NSLog(@"VNCView::keyDown:%@", theEvent);
-//}
-//
-//- (void)keyUp:(GSEventRef)theEvent
-//{
-//	NSLog(@"VNCView::keyUp:%@", theEvent);
-//}
-
-- (void)characterWasTyped:(NSString *)character
-{
-//	NSLog(@"typing '%@'", character);
-//	[_filter pasteString:character];
-}
-
 
 #pragma mark ** UIKeyboardInput **
 
@@ -571,7 +499,11 @@
 
 - (id)textTraits
 {
-	return [UITextTraits defaultTraits];
+	UITextTraits * traits = [UITextTraits defaultTraits];
+	[traits setAutoCapsType:0];	//?
+	[traits setAutoCorrectionType:0];	//?
+	[traits setAutoEnablesReturnKey:NO];
+	return traits;
 }
 
 - (BOOL)isShowingPlaceholder
@@ -580,16 +512,16 @@
 	return NO;
 }
 
-//- (void)setupPlaceholderTextIfNeeded
-//{
+- (void)setupPlaceholderTextIfNeeded
+{
 //	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (BOOL)isProxyFor:(id)fp8
-//{
+}
+
+- (BOOL)isProxyFor:(id)fp8
+{
 //	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return NO;
-//}
+	return NO;
+}
 
 - (BOOL)interceptKeyEvent:(GSEventRef)theEvent
 {

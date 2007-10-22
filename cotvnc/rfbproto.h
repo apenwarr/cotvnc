@@ -733,6 +733,7 @@ typedef struct {
  * PointerEvent - mouse/pen move and/or button press.
  */
 
+// This structure is padded out to 8 bytes in the llvm-gcc toolchain.
 typedef struct {
     CARD8 type;			/* always rfbPointerEvent */
     CARD8 buttonMask;		/* bits 0-7 are buttons 1-8, 0=up, 1=down */

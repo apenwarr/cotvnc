@@ -582,14 +582,14 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     if(thePoint.y >= s.height) thePoint.y = s.height - 1;
     if((_mouseLocation.x != thePoint.x) || (_mouseLocation.y != thePoint.y) || (_lastMask != mask))
 	{
-        //NSLog(@"here %d", mask);
+//        NSLog(@"here %d:{%g,%g}", mask, thePoint.x, thePoint.y);
         _mouseLocation = thePoint;
 		_lastMask = mask;
         msg.type = rfbPointerEvent;
         msg.buttonMask = mask;
         msg.x = htons((uint16_t)thePoint.x);
         msg.y = htons((uint16_t)thePoint.y);
-        [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
+        [self writeBytes:(unsigned char*)&msg length:sz_rfbPointerEventMsg];
     }
     [self queueUpdateRequest];
 }
@@ -853,6 +853,9 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	}
 
     do {
+//		NSData * d = [NSData dataWithBytesNoCopy:bytes+written length:length freeWhenDone:NO];
+//		NSLog(@"writing %@", d);
+		
 //		NSLog(@"write(%d, %p, l=%d, w=%d)", [socketHandler fileDescriptor], bytes+written, length, written);
         result = write([socketHandler fileDescriptor], bytes + written, length);
 //		NSLog(@"wrote %d bytes", result);
@@ -868,7 +871,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 			{
                 continue;
             }
-//			NSLog(@"write:errno=%d", errno);
+			NSLog(@"write:errno=%d", errno);
             
 			if (errno == EPIPE)
 			{

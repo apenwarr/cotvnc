@@ -32,12 +32,17 @@
  * This view class handles everything related to showing the remote display
  * and interacting with it. It is tightly coupled with the RFBConnection
  * instance and is its delegate. The actual drawing of the framebuffer
- * is done by the VNCContentView that is this view's child. And this view
- * inherits from UIScroller so it can modify the default scrolling
- * behaviour. A number of method invocations are forwarded to the content
+ * is done by the VNCContentView that the child of the scroller view.
+ * A number of method invocations are forwarded to the content
  * view rather than be implemented directly by this class.
+ *
+ * The view hierarchy looks like this:
+ * 
+ *		VNCView -> VNCScrollerView -> VNCContentView
+ *
+ * 
  */
-@interface VNCView : UIView <RFBViewProtocol> //, UIKeyboardInput>
+@interface VNCView : UIView <RFBViewProtocol>
 {
     RFBConnection * _connection;	//!< The connection object, nil if not currently connected.
 	EventFilter * _filter;			//!< Event filter for the current connection.
@@ -50,12 +55,11 @@
 	UIPushButton * _controlButton;
 	id _keyboardView;
 	id _controlsView;
-//	id _textInputView;
 	bool _areControlsVisible;
 	bool _isKeyboardVisible;
 }
 
-//! \name Controls and keyboard
+//! @name Controls and keyboard
 //@{
 - (bool)areControlsVisible;
 - (void)showControls:(bool)show;
@@ -63,7 +67,7 @@
 - (void)toggleKeyboard:(id)sender;
 //@}
 
-//! \name Implementation of RFBViewProtocol
+//! @name RFBViewProtocol
 //@{
 - (void)setRemoteDisplaySize:(CGSize)remoteSize;
 - (void)setFrameBuffer:(id)aBuffer;
@@ -72,8 +76,6 @@
 - (void)displayFromBuffer:(CGRect)aRect;
 - (void)drawRectList:(id)aList;
 //@}
-
-- (void)characterWasTyped:(NSString *)character;
 
 @end
 

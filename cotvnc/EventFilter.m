@@ -455,6 +455,103 @@ unsigned int GSEventGetModifierFlags(GSEventRef);
 //	}
 }
 
+//! @brief Entry in a map to convert from character to key and modifiers.
+struct _key_modifier_map
+{
+	unichar character;				//!< The actual character being typed.
+	unichar unmodifiedCharacter;	//!< What the character on a physical keyboard key would be.
+	unsigned int modifiers;			//!< The modified required to produce the original character.
+};
+
+typedef struct _key_modifier_map key_modifier_map_t;
+
+//! Map to convert from modified characters to the unmodified character
+//! and the modifiers required to produce it. This map is necessary
+//! because the UIKit keyboard does not give us an event with the raw
+//! unmodified characters and modifiers that are necessary for the RFB
+//! protocol. More characters than can currently be typed with the UIKit
+//! keyboard are in this map, but it won't hurt any more than a small
+//! performance penalty.
+//!
+//! @note Because Unicode characters are used here instead of ASCII, this
+//! map is too big to convert to a direct index table. Another option for
+//! speeding it up would be to sort by character value and use a binary
+//! search algorithm instead of linear.
+const key_modifier_map_t kKeyModifierMap[] = {
+		{ L'~', L'`', NSShiftKeyMask },
+		{ L'!', L'1', NSShiftKeyMask },
+		{ L'@', L'2', NSShiftKeyMask },
+		{ L'#', L'3', NSShiftKeyMask },
+		{ L'$', L'4', NSShiftKeyMask },
+		{ L'%', L'5', NSShiftKeyMask },
+		{ L'^', L'6', NSShiftKeyMask },
+		{ L'&', L'7', NSShiftKeyMask },
+		{ L'*', L'8', NSShiftKeyMask },
+		{ L'(', L'9', NSShiftKeyMask },
+		{ L')', L'0', NSShiftKeyMask },
+		{ L'_', L'-', NSShiftKeyMask },
+		{ L'+', L'=', NSShiftKeyMask },
+		{ L'{', L'[', NSShiftKeyMask },
+		{ L'}', L']', NSShiftKeyMask },
+		{ L'|', L'\\', NSShiftKeyMask },
+		{ L':', L';', NSShiftKeyMask },
+		{ L'"', L'\'', NSShiftKeyMask },
+		{ L'<', L',', NSShiftKeyMask },
+		{ L'>', L'.', NSShiftKeyMask },
+		{ L'?', L'/', NSShiftKeyMask },
+		
+		{ L'¡', L'1', NSAlternateKeyMask },
+		{ L'™', L'2', NSAlternateKeyMask },
+		{ L'£', L'3', NSAlternateKeyMask },
+		{ L'¢', L'4', NSAlternateKeyMask },
+		{ L'∞', L'5', NSAlternateKeyMask },
+		{ L'§', L'6', NSAlternateKeyMask },
+		{ L'¶', L'7', NSAlternateKeyMask },
+		{ L'•', L'8', NSAlternateKeyMask },
+		{ L'ª', L'9', NSAlternateKeyMask },
+		{ L'º', L'0', NSAlternateKeyMask },
+		{ L'–', L'-', NSAlternateKeyMask },
+		{ L'≠', L'=', NSAlternateKeyMask },
+		
+		{ L'œ', L'q', NSAlternateKeyMask },
+		{ L'∑', L'w', NSAlternateKeyMask },
+		{ L'®', L'r', NSAlternateKeyMask },
+		{ L'†', L't', NSAlternateKeyMask },
+		{ L'¥', L'y', NSAlternateKeyMask },
+		{ L'ø', L'o', NSAlternateKeyMask },
+		{ L'π', L'p', NSAlternateKeyMask },
+		{ L'“', L'[', NSAlternateKeyMask },
+		{ L'‘', L']', NSAlternateKeyMask },
+		{ L'«', L'\\', NSAlternateKeyMask },
+		
+		{ L'å', L'a', NSAlternateKeyMask },
+		{ L'ß', L's', NSAlternateKeyMask },
+		{ L'∂', L'd', NSAlternateKeyMask },
+		{ L'ƒ', L'f', NSAlternateKeyMask },
+		{ L'©', L'g', NSAlternateKeyMask },
+		{ L'˙', L'h', NSAlternateKeyMask },
+		{ L'∆', L'j', NSAlternateKeyMask },
+		{ L'˚', L'k', NSAlternateKeyMask },
+		{ L'¬', L'l', NSAlternateKeyMask },
+		{ L'…', L';', NSAlternateKeyMask },
+		{ L'æ', L'\'', NSAlternateKeyMask },
+		
+		{ L'Ω', L'z', NSAlternateKeyMask },
+		{ L'≈', L'x', NSAlternateKeyMask },
+		{ L'ç', L'c', NSAlternateKeyMask },
+		{ L'√', L'v', NSAlternateKeyMask },
+		{ L'∫', L'b', NSAlternateKeyMask },
+		{ L'µ', L'm', NSAlternateKeyMask },
+		{ L'≤', L',', NSAlternateKeyMask },
+		{ L'≥', L'.', NSAlternateKeyMask },
+		{ L'÷', L'/', NSAlternateKeyMask },
+		
+		{ L'€', L'2', NSShiftKeyMask | NSAlternateKeyMask },
+		
+		// Terminate the list with a zero entry
+		{ 0 }
+	};
+
 - (void)keyTyped:(NSString *)characters
 {
 	unsigned int i;
@@ -464,40 +561,66 @@ unsigned int GSEventGetModifierFlags(GSEventRef);
 	for (i = 0; i < length; ++i)
 	{
 		unichar character = [characters characterAtIndex: i];
-		unichar characterIgnoringModifiers;
+		unichar characterIgnoringModifiers = character;
 		unsigned int modifiers = 0;
-		bool isUpper = iswupper(character);
 		
 		NSLog(@"char=0x%04x", character);
 		
-		// Need to convert the return character.
+		// Perform any character conversions necessary to map from the UIKit
+		// keyboard characters to what the RFB protocol and servers expect.
 		if (character == '\n')
 		{
+			// Need to convert the return character.
 			character = '\r';
+			characterIgnoringModifiers = '\r';
 		}
-		
-		if (isUpper)
+		else if (iswupper(character))
 		{
+			// Handle upper case alphabetical characters.
 			modifiers |= NSShiftKeyMask;
 			characterIgnoringModifiers = towlower(character);
 		}
 		else
 		{
-			characterIgnoringModifiers = character;
+			// See if we need to apply modifier keys.
+			unsigned int j;
+			for (j = 0; kKeyModifierMap[j].character != 0; ++j)
+			{
+				if (kKeyModifierMap[j].character == character)
+				{
+					modifiers |= kKeyModifierMap[j].modifiers;
+					characterIgnoringModifiers = kKeyModifierMap[j].unmodifiedCharacter;
+					break;
+				}
+			}
 		}
 		
-		if (isUpper)
+		// Press any modifiers.
+		if (modifiers & NSShiftKeyMask)
 		{
 			[self queueModifierPressed:NSShiftKeyMask timestamp:timestamp];
 		}
 		
-		[_pendingEvents addObject:[QueuedEvent keyDownEventWithCharacter:character characterIgnoringModifiers:characterIgnoringModifiers timestamp:timestamp]];
-		
-		[_pendingEvents addObject:[QueuedEvent keyUpEventWithCharacter:character characterIgnoringModifiers:characterIgnoringModifiers timestamp:timestamp]];
-		
-		if (isUpper)
+		if (modifiers & NSAlternateKeyMask)
 		{
-			[self queueModifierReleased:NSShiftKeyMask timestamp:timestamp];
+			[self queueModifierPressed:NSAlternateKeyMask timestamp:timestamp + 0.001];
+		}
+		
+		// Send key down and up for the main character.
+		[_pendingEvents addObject:[QueuedEvent keyDownEventWithCharacter:character characterIgnoringModifiers:characterIgnoringModifiers timestamp:timestamp + 0.002]];
+		
+		[_pendingEvents addObject:[QueuedEvent keyUpEventWithCharacter:character characterIgnoringModifiers:characterIgnoringModifiers timestamp:timestamp + 0.003]];
+		
+		// Release any modifiers.
+		//! @todo Don't release modifiers that are manually turned on.
+		if (modifiers & NSAlternateKeyMask)
+		{
+			[self queueModifierReleased:NSAlternateKeyMask timestamp:timestamp + 0.004];
+		}
+		
+		if (modifiers & NSShiftKeyMask)
+		{
+			[self queueModifierReleased:NSShiftKeyMask timestamp:timestamp + 0.005];
 		}
 		
 		[self sendAnyValidEventsToServerNow];
