@@ -1,12 +1,15 @@
 
-CC=/usr/local/bin/arm-apple-darwin-gcc #/usr/local/arm-apple-darwin/bin/arm-apple-darwin-cc
+CC=/usr/local/bin/arm-apple-darwin-gcc
 
 LD=$(CC)
 
 LDFLAGS=-lobjc -lz -framework CoreFoundation -framework Foundation -framework UIKit -framework LayerKit -framework CoreGraphics -framework GraphicsServices
 
-CFLAGS=-I. -Icotvnc
+CFLAGS=-I. -Icotvnc -Isrc
 
+APP_PACKAGE=VNsea.app
+
+# Object files
 
 APP_OBJS=\
 	mainapp.o \
@@ -68,6 +71,7 @@ VNC_OBJS=\
 	cotvnc/EventFilter.o \
 	cotvnc/RFBConnection.o
 
+# This needs to be converted to a static library.
 LIBJPEG_OBJS=\
 	libjpeg/jcapimin.o \
 	libjpeg/jcapistd.o \
@@ -116,18 +120,25 @@ LIBJPEG_OBJS=\
 	libjpeg/jquant2.o \
 	libjpeg/jutils.o
 
-all:    vnsea
+OUTPUT_OBJS = $(addprefix output/,$(APP_OBJS) $(VNC_OBJS) $(LIBJPEG_OBJS))
 
-vnsea:  $(APP_OBJS) $(VNC_OBJS) $(LIBJPEG_OBJS)
+all:    output/vnsea
+
+output/vnsea:  $(OUTPUT_OBJS)
 	$(LD) $(LDFLAGS) -v -o $@ $^
-	cp vnsea VNsea.app
-	cp images/*key.png VNsea.app
+	cp output/vnsea $(APP_PACKAGE)
+	cp images/*key.png $(APP_PACKAGE)
 
-%.o:    %.m
+# There has to be a better way to do this, but I'm such a make newbie
+# and I don't really care as long as it works (for now).
+
+output/%.o:    %.m
+		if [ ! -d $(@D) ] ; then mkdir -p $(@D) ; fi 
 		$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
-%.o:    %.c
+output/%.o:    %.c
+		if [ ! -d $(@D) ] ; then mkdir -p $(@D) ; fi
 		$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
 clean:
-		rm -f *.o cotvnc/*.o libjpeg/*.o vnsea
+		rm -rf output vnsea
