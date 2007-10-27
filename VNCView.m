@@ -222,16 +222,17 @@
 		// Remove the keyboard view.
 		[_keyboardView removeFromSuperview];
 		
-		// Adjust scroller frame.
+		// Adjust scroller frame back to normal size (minus the controls bar).
 		frame = [self bounds];
 		frame.size.height -= kControlsBarHeight;
 		[_scroller setFrame:frame];
 	}
 	else
 	{
-		// Adjust scroller frame.
+		// Adjust scroller frame so that its height is from below the system
+		// status bar to the top of the keyboard.
 		frame = [self bounds];
-		frame.size.height -= kControlsBarHeight - [_keyboardView frame].size.height;
+		frame.size.height = frame.size.height - kControlsBarHeight - [_keyboardView frame].size.height;
 		[_scroller setFrame:frame];
 		
 		// Add in the keyboard view.
@@ -888,7 +889,7 @@
 //	NSLog(@"%s", __PRETTY_FUNCTION__);
 //	return nil;
 //}
-
+/*
 //These Methods track delegate calls made to the application
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)selector 
 {
@@ -907,5 +908,5 @@
 	NSLog(@"Called from: %@", NSStringFromSelector([anInvocation selector]));
 	[super forwardInvocation:anInvocation];
 }
-
+*/
 @end
