@@ -25,6 +25,10 @@
 //! Height of buttons in the controls bar.
 #define kControlsBarButtonHeight (32.0f)
 
+#define kKeyboardButtonWidth (80.0f)
+
+#define kExitButtonWidth (30.0f)
+
 #define kModifierKeyImageWidth (21.0f)
 #define kModifierKeyImageHeight (21.0f)
 
@@ -57,13 +61,11 @@
 		
 		// Create scroller view.
 		_scroller = [[VNCScrollerView alloc] initWithFrame:subframe];
-		
 		[_scroller setScrollingEnabled:YES];
 		[_scroller setShowScrollerIndicators:YES];
-//		[_scroller setAdjustForContentSizeChange:YES];// why isn't this working?
+		[_scroller setAdjustForContentSizeChange:YES];
 		[_scroller setAllowsRubberBanding:NO];
 		[_scroller setAllowsFourWayRubberBanding:NO];
-//		[_scroller setBottomBufferHeight:16.0f];
 		[_scroller setDelegate:self];
 		
 		// Create screen view.
@@ -73,8 +75,6 @@
 		subframe = CGRectMake(0, frame.size.height /*- kControlsBarHeight*/, frame.size.width, kControlsBarHeight);
 		_controlsView = [[UIGradientBar alloc] initWithFrame:subframe];
 		
-		NSLog(@"created controls bar");
-		
 		const float kBlackComponents[] = { 0, 0, 0, 0 };
 		const float kRedComponents[] = { 1, 0, 0, 0 };
 		CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
@@ -82,12 +82,18 @@
 		CGColorRef red = CGColorCreate(rgb, kRedComponents);
 		
 		// Create keyboard button.
-		subframe = CGRectMake(10, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, 80, kControlsBarButtonHeight);
+		subframe = CGRectMake(10, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kKeyboardButtonWidth, kControlsBarButtonHeight);
 		_keyboardButton = [[UINavBarButton alloc] initWithTitle:@"Keyboard" autosizesToFit:NO];
 		[_keyboardButton setFrame:subframe];
-//		[_keyboardButton setTitle:@"Keyboard"];
 		[_keyboardButton setNavBarButtonStyle:0];
 		[_keyboardButton addTarget:self action:@selector(toggleKeyboard:) forEvents:kUIControlEventMouseUpInside];
+		
+		// Terminate connection button.
+		subframe = CGRectMake(frame.size.width - kExitButtonWidth - 10, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kExitButtonWidth, kControlsBarButtonHeight);
+		_exitButton = [[UINavBarButton alloc] initWithTitle:@"X" autosizesToFit:NO];
+		[_exitButton setFrame:subframe];
+		[_exitButton setNavBarButtonStyle:0];
+		[_exitButton addTarget:self action:@selector(closeConnection:) forEvents:kUIControlEventMouseUpInside];
 		
 		subframe = CGRectMake(100, (kControlsBarHeight - kModifierKeyImageHeight) / 2.0f, kModifierKeyImageWidth, kModifierKeyImageHeight);
 		_shiftButton = [[UIPushButton alloc] initWithImage:[UIImage imageNamed:@"shift_key.png"]];
@@ -116,7 +122,7 @@
 		[_controlButton setShowPressFeedback:YES];
 		
 		// Create keyboard.
-		CGSize defaultKeyboardSize = CGSizeMake(320, 215); //[UIKeyboard defaultSize];
+		CGSize defaultKeyboardSize = [UIKeyboard defaultSize]; //CGSizeMake(320, 215); //
 		subframe.origin = CGPointMake(0, frame.size.height - kControlsBarHeight - defaultKeyboardSize.height);
 		subframe.size = defaultKeyboardSize;
 		_keyboardView = [[UIKeyboard alloc] initWithFrame:subframe];
@@ -124,6 +130,7 @@
 		
 		// Build view hierarchy.
 		[_controlsView addSubview:_keyboardButton];
+		[_controlsView addSubview:_exitButton];
 		[_controlsView addSubview:_shiftButton];
 		[_controlsView addSubview:_commandButton];
 		[_controlsView addSubview:_optionButton];
@@ -163,6 +170,12 @@
 
 		if (_areControlsVisible)
 		{
+			// Hide the keyboard if it was in view.
+			if (_isKeyboardVisible)
+			{
+				[self toggleKeyboard:nil];
+			}
+			
 			// Hide controls
 			frame = [_controlsView frame];
 			frame.origin.y = [self frame].size.height;
@@ -171,12 +184,6 @@
 			frame = [_scroller frame];
 			frame.size.height += kControlsBarHeight;
 			[_scroller setFrame:frame];
-			
-			// Hide the keyboard if it was in view.
-			if (_isKeyboardVisible)
-			{
-				[self toggleKeyboard:nil];
-			}
 		}
 		else
 		{
@@ -202,23 +209,64 @@
 	[self showControls:!_areControlsVisible];
 }
 
+//! This method assumes the controls bar is visible.
+//!
 - (void)toggleKeyboard:(id)sender
 {
 //	NSLog(@"toggling keyboard: old=%d", (int)_isKeyboardVisible);
 	
+	CGRect frame;
+	
 	if (_isKeyboardVisible)
 	{
+		// Remove the keyboard view.
 		[_keyboardView removeFromSuperview];
+		
+		// Adjust scroller frame.
+		frame = [self bounds];
+		frame.size.height -= kControlsBarHeight;
+		[_scroller setFrame:frame];
 	}
 	else
 	{
+		// Adjust scroller frame.
+		frame = [self bounds];
+		frame.size.height -= kControlsBarHeight - [_keyboardView frame].size.height;
+		[_scroller setFrame:frame];
+		
+		// Add in the keyboard view.
 		[self addSubview:_keyboardView];
 		[_keyboardView activate];
 		
+		// Set the delegate now that we have an active keyboard.
 		[[UIKeyboardImpl activeInstance] setDelegate:self];
 	}
 	
 	_isKeyboardVisible = !_isKeyboardVisible;
+}
+
+- (void)closeConnection:(id)sender
+{
+	// Hide the keyboard before closing.
+	if (_isKeyboardVisible)
+	{
+		[self toggleKeyboard:nil];
+	}
+	
+	if (_delegate && [_delegate respondsToSelector:@selector(closeConnection)])
+	{
+		[_delegate closeConnection];
+	}
+}
+
+- (id)delegate
+{
+	return _delegate;
+}
+
+- (void)setDelegate:(id)theDelegate
+{
+	_delegate = theDelegate;
 }
 
 - (RFBConnection *)connection;
@@ -246,6 +294,7 @@
 		[_filter setView:_scroller];
 		[_scroller setEventFilter:_filter];
 		[_scroller setViewOnly:[_connection viewOnly]];
+		[_scroller scrollPointVisibleAtTopLeft:CGPointMake(0, 0)];
 	}
 	else
 	{
@@ -253,6 +302,9 @@
 		_filter = nil;
 		[_scroller setEventFilter:nil];
 		[_screenView setFrameBuffer:nil];
+		
+		// Get the screen view to redraw itself in black.
+		[_screenView setNeedsDisplay];
 	}
 }
 

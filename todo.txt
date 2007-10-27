@@ -1,0 +1,14 @@
+
+vnsea todo list
+---------------
+
+- rewrite the frame buffer code to optimise the true colour version
+
+- clean out the remaining original commented out cotvnc code
+
+- improve makefile
+
+- rework EventFilter to be more UIKit specific
+
+- modified keys don't work on windows with free RealVNC
+

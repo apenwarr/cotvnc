@@ -98,6 +98,7 @@
 //@{
 - (void)waitForConnection:(RFBConnection *)connection;
 - (void)connectToServer:(RFBConnection *)connection;
+- (void)closeConnection;
 //@}
 
 @end

@@ -9,6 +9,7 @@
 /* Begin PBXFileReference section */
 		021133D10CC51DF00059CA0E /* VNCScrollerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCScrollerView.h; sourceTree = "<group>"; };
 		021133D20CC51DF00059CA0E /* VNCScrollerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNCScrollerView.m; sourceTree = "<group>"; };
+		02113A0D0CCEE8D30059CA0E /* todo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo.txt; sourceTree = "<group>"; };
 		0259AC150C909383005285B7 /* VnseaApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VnseaApp.h; sourceTree = "<group>"; };
 		0259AC160C909383005285B7 /* VnseaApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VnseaApp.m; sourceTree = "<group>"; };
 		0259AC170C909383005285B7 /* VNCView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCView.h; sourceTree = "<group>"; };
@@ -311,11 +312,12 @@
 			children = (
 				02F5393C0C8CDCEF00C99AC1 /* Makefile */,
 				0259BE670C98D303005285B7 /* VNsea.app */,
+				02113A0D0CCEE8D30059CA0E /* todo.txt */,
 			);
 			name = resources;
 			sourceTree = "<group>";
 		};
-		02F53B4C0C8CF00200C99AC1 /* src */ = {
+		02F53B4C0C8CF00200C99AC1 /* vnsea */ = {
 			isa = PBXGroup;
 			children = (
 				02F5393B0C8CDCEF00C99AC1 /* mainapp.m */,
@@ -335,14 +337,14 @@
 				0259AC150C909383005285B7 /* VnseaApp.h */,
 				0259AC160C909383005285B7 /* VnseaApp.m */,
 			);
-			name = src;
+			name = vnsea;
 			sourceTree = "<group>";
 		};
 		08FB7794FE84155DC02AAC07 /* scribble */ = {
 			isa = PBXGroup;
 			children = (
 				0259BE770C9B5267005285B7 /* resources */,
-				02F53B4C0C8CF00200C99AC1 /* src */,
+				02F53B4C0C8CF00200C99AC1 /* vnsea */,
 				0259ACAF0C9093BD005285B7 /* cotvnc */,
 				02F5393F0C8CEFFC00C99AC1 /* include */,
 			);

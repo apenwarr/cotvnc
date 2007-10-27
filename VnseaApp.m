@@ -60,6 +60,7 @@ void handle_interrupt_signal(int sig)
 
 	// vncsea view
 	_vncView = [[VNCView alloc] initWithFrame: frame];
+	[_vncView setDelegate:self];
 
 	// Server manager view
 	_serversView = [[VNCServerListView alloc] initWithFrame:frame];
@@ -92,12 +93,7 @@ void handle_interrupt_signal(int sig)
 
 - (void)applicationWillTerminate
 {
-	if (_connection)
-	{
-		_closingConnection = YES;
-		[_connection terminateConnection:nil];
-		_connection = nil;
-	}
+	[self closeConnection];
 }
 
 - (void)dealloc
@@ -363,6 +359,19 @@ void handle_interrupt_signal(int sig)
 	
 	// Switch back to the list view
 	[_transView transition:2 fromView:_vncView toView:_serversView];
+}
+
+//! This method is used to force the connection closed. It is used by the VNCView
+//! when the user wants t manually close the connection, as well as at application
+//! termination time.
+- (void)closeConnection
+{
+	if (_connection)
+	{
+		_closingConnection = YES;
+		[_connection terminateConnection:nil];
+		_connection = nil;
+	}
 }
 
 - (void)alertSheet:(id)sheet buttonClicked:(int)buttonIndex

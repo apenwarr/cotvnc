@@ -15,7 +15,7 @@
 		comments = "warning: 'NSThread' may not respond to '+detatchNewThreadSelector:toTarget:withObject:'";
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		rLen = 1;
-		rLoc = 89;
+		rLoc = 90;
 		rType = 1;
 	};
 	020DEF480CA57D83002FA5E8 /* PBXTextBookmark */ = {
@@ -23,7 +23,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -33,7 +33,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -43,7 +43,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -100,7 +100,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = NSThread;
 		rLen = 8;
-		rLoc = 2545;
+		rLoc = 2575;
 		rType = 0;
 		vrLen = 1770;
 		vrLoc = 2361;
@@ -147,7 +147,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 1769;
 		vrLoc = 2361;
@@ -157,7 +157,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -167,7 +167,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -177,7 +177,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -217,7 +217,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 1704;
 		vrLoc = 2426;
@@ -247,7 +247,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 144";
 		rLen = 0;
-		rLoc = 3592;
+		rLoc = 3533;
 		rType = 0;
 		vrLen = 1608;
 		vrLoc = 2658;
@@ -257,7 +257,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -267,7 +267,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -277,7 +277,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -287,7 +287,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 144";
 		rLen = 0;
-		rLoc = 3592;
+		rLoc = 3533;
 		rType = 0;
 		vrLen = 1609;
 		vrLoc = 2658;
@@ -307,7 +307,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 144";
 		rLen = 0;
-		rLoc = 3592;
+		rLoc = 3533;
 		rType = 0;
 		vrLen = 1609;
 		vrLoc = 2658;
@@ -327,7 +327,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 364";
 		rLen = 0;
-		rLoc = 14513;
+		rLoc = 14784;
 		rType = 0;
 		vrLen = 1107;
 		vrLoc = 9410;
@@ -337,7 +337,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -347,7 +347,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -357,7 +357,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 111";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 481;
 		vrLoc = 2950;
@@ -367,7 +367,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 364";
 		rLen = 0;
-		rLoc = 14513;
+		rLoc = 14784;
 		rType = 0;
 		vrLen = 1107;
 		vrLoc = 9410;
@@ -387,7 +387,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 121";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 536;
 		vrLoc = 3166;
@@ -405,7 +405,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 121";
 		rLen = 0;
-		rLoc = 2558;
+		rLoc = 2588;
 		rType = 0;
 		vrLen = 536;
 		vrLoc = 3166;
@@ -541,7 +541,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "- (void)serverSelected:(int)serverIndex";
 		rLen = 40;
-		rLoc = 6044;
+		rLoc = 5985;
 		rType = 0;
 		vrLen = 2069;
 		vrLoc = 5353;
@@ -561,7 +561,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "- (void)serverSelected:(int)serverIndex";
 		rLen = 40;
-		rLoc = 6044;
+		rLoc = 5985;
 		rType = 0;
 		vrLen = 2069;
 		vrLoc = 5353;
@@ -631,7 +631,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 300";
 		rLen = 0;
-		rLoc = 9860;
+		rLoc = 9801;
 		rType = 0;
 		vrLen = 1448;
 		vrLoc = 7508;
@@ -671,7 +671,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: serverSelected:";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1856;
 		vrLoc = 6039;
@@ -785,7 +785,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: serverSelected:";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1854;
 		vrLoc = 6217;
@@ -822,7 +822,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 306";
 		rLen = 0;
-		rLoc = 9529;
+		rLoc = 9470;
 		rType = 0;
 		vrLen = 1985;
 		vrLoc = 5680;
@@ -962,7 +962,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = UIAlertSheet;
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1985;
 		vrLoc = 5680;
@@ -982,7 +982,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 230";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 2029;
 		vrLoc = 5680;
@@ -1032,7 +1032,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 230";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 2029;
 		vrLoc = 5680;
@@ -1052,7 +1052,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 244";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 2035;
 		vrLoc = 5680;
@@ -1102,7 +1102,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 244";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 2035;
 		vrLoc = 5680;
@@ -1122,7 +1122,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 244";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 2078;
 		vrLoc = 5680;
@@ -1162,7 +1162,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 243";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 2079;
 		vrLoc = 5680;
@@ -1232,7 +1232,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 121";
 		rLen = 0;
-		rLoc = 2491;
+		rLoc = 2521;
 		rType = 0;
 		vrLen = 1696;
 		vrLoc = 2291;
@@ -1272,7 +1272,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 121";
 		rLen = 0;
-		rLoc = 2491;
+		rLoc = 2521;
 		rType = 0;
 		vrLen = 1658;
 		vrLoc = 2332;
@@ -1312,7 +1312,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 414";
 		rLen = 0;
-		rLoc = 13857;
+		rLoc = 14128;
 		rType = 0;
 		vrLen = 1718;
 		vrLoc = 10890;
@@ -1352,7 +1352,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 121";
 		rLen = 0;
-		rLoc = 2491;
+		rLoc = 2521;
 		rType = 0;
 		vrLen = 1971;
 		vrLoc = 5879;
@@ -1402,7 +1402,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 78";
 		rLen = 0;
-		rLoc = 1761;
+		rLoc = 1791;
 		rType = 0;
 		vrLen = 1853;
 		vrLoc = 5963;
@@ -1422,7 +1422,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 78";
 		rLen = 0;
-		rLoc = 1761;
+		rLoc = 1791;
 		rType = 0;
 		vrLen = 1853;
 		vrLoc = 5963;
@@ -1462,7 +1462,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 234";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1853;
 		vrLoc = 5963;
@@ -1522,7 +1522,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 233";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1889;
 		vrLoc = 5963;
@@ -1552,7 +1552,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 233";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1889;
 		vrLoc = 5963;
@@ -1669,7 +1669,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 242";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1949;
 		vrLoc = 5963;
@@ -1696,7 +1696,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 242";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1949;
 		vrLoc = 5963;
@@ -1736,7 +1736,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 235";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1947;
 		vrLoc = 5963;
@@ -1786,7 +1786,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = UIAlertSheet;
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1945;
 		vrLoc = 5963;
@@ -1806,7 +1806,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 236";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1950;
 		vrLoc = 5963;
@@ -1856,7 +1856,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 236";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1950;
 		vrLoc = 5963;
@@ -1876,7 +1876,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 235";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1942;
 		vrLoc = 5963;
@@ -1926,7 +1926,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 235";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1942;
 		vrLoc = 5963;
@@ -1946,7 +1946,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 231";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1942;
 		vrLoc = 5963;
@@ -1996,7 +1996,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 231";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1942;
 		vrLoc = 5963;
@@ -2016,7 +2016,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 235";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1947;
 		vrLoc = 5963;
@@ -2066,7 +2066,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 235";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1947;
 		vrLoc = 5963;
@@ -2086,7 +2086,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 235";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1949;
 		vrLoc = 5963;
@@ -2136,7 +2136,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = connectToServer;
 		rLen = 15;
-		rLoc = 8777;
+		rLoc = 8718;
 		rType = 0;
 		vrLen = 1504;
 		vrLoc = 7326;
@@ -2156,7 +2156,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: setRunsModal";
 		rLen = 0;
-		rLoc = 7998;
+		rLoc = 7939;
 		rType = 0;
 		vrLen = 2172;
 		vrLoc = 5061;
@@ -2196,7 +2196,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 208";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 2171;
 		vrLoc = 5061;
@@ -2236,7 +2236,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 225";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 2203;
 		vrLoc = 5061;
@@ -2276,7 +2276,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 281";
 		rLen = 0;
-		rLoc = 8413;
+		rLoc = 8354;
 		rType = 0;
 		vrLen = 2061;
 		vrLoc = 5319;
@@ -2286,7 +2286,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 281";
 		rLen = 0;
-		rLoc = 8413;
+		rLoc = 8354;
 		rType = 0;
 		vrLen = 1487;
 		vrLoc = 7772;
@@ -2316,7 +2316,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 281";
 		rLen = 0;
-		rLoc = 8413;
+		rLoc = 8354;
 		rType = 0;
 		vrLen = 1487;
 		vrLoc = 7772;
@@ -2394,7 +2394,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 296";
 		rLen = 0;
-		rLoc = 9529;
+		rLoc = 9470;
 		rType = 0;
 		vrLen = 1347;
 		vrLoc = 7790;
@@ -2422,7 +2422,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 296";
 		rLen = 0;
-		rLoc = 9529;
+		rLoc = 9470;
 		rType = 0;
 		vrLen = 1347;
 		vrLoc = 7790;
@@ -2492,7 +2492,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = _didConnect;
 		rLen = 12;
-		rLoc = 9103;
+		rLoc = 9044;
 		rType = 0;
 		vrLen = 1275;
 		vrLoc = 7769;
@@ -2522,7 +2522,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 201";
 		rLen = 0;
-		rLoc = 6794;
+		rLoc = 6735;
 		rType = 0;
 		vrLen = 2050;
 		vrLoc = 5547;
@@ -2542,7 +2542,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 298";
 		rLen = 0;
-		rLoc = 9529;
+		rLoc = 9470;
 		rType = 0;
 		vrLen = 1332;
 		vrLoc = 7741;
@@ -2592,7 +2592,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 298";
 		rLen = 0;
-		rLoc = 9529;
+		rLoc = 9470;
 		rType = 0;
 		vrLen = 1332;
 		vrLoc = 7741;
@@ -2682,7 +2682,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 200";
 		rLen = 0;
-		rLoc = 6742;
+		rLoc = 6683;
 		rType = 0;
 		vrLen = 2096;
 		vrLoc = 5467;
@@ -2692,7 +2692,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 200";
 		rLen = 0;
-		rLoc = 6742;
+		rLoc = 6683;
 		rType = 0;
 		vrLen = 2096;
 		vrLoc = 5467;
@@ -2702,7 +2702,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 200";
 		rLen = 0;
-		rLoc = 6742;
+		rLoc = 6683;
 		rType = 0;
 		vrLen = 2096;
 		vrLoc = 5467;
@@ -2812,7 +2812,7 @@
 		comments = "error: 'kAboutMessage' undeclared (first use in this function)";
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		rLen = 1;
-		rLoc = 472;
+		rLoc = 481;
 		rType = 1;
 	};
 	020DF10B0CA5E839002FA5E8 /* PBXTextBookmark */ = {
@@ -2840,7 +2840,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 397";
 		rLen = 0;
-		rLoc = 13823;
+		rLoc = 14094;
 		rType = 0;
 		vrLen = 1671;
 		vrLoc = 10591;
@@ -2870,7 +2870,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 391";
 		rLen = 0;
-		rLoc = 13630;
+		rLoc = 13901;
 		rType = 0;
 		vrLen = 445;
 		vrLoc = 11305;
@@ -2880,7 +2880,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 391";
 		rLen = 0;
-		rLoc = 13630;
+		rLoc = 13901;
 		rType = 0;
 		vrLen = 445;
 		vrLoc = 11305;
@@ -2890,7 +2890,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 391";
 		rLen = 0;
-		rLoc = 13630;
+		rLoc = 13901;
 		rType = 0;
 		vrLen = 445;
 		vrLoc = 11305;
@@ -2900,7 +2900,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 397";
 		rLen = 0;
-		rLoc = 13823;
+		rLoc = 14094;
 		rType = 0;
 		vrLen = 1673;
 		vrLoc = 10591;
@@ -2910,7 +2910,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 392";
 		rLen = 0;
-		rLoc = 13630;
+		rLoc = 13901;
 		rType = 0;
 		vrLen = 467;
 		vrLoc = 11277;
@@ -2920,7 +2920,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 392";
 		rLen = 0;
-		rLoc = 13630;
+		rLoc = 13901;
 		rType = 0;
 		vrLen = 467;
 		vrLoc = 11277;
@@ -2930,7 +2930,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 392";
 		rLen = 0;
-		rLoc = 13630;
+		rLoc = 13901;
 		rType = 0;
 		vrLen = 467;
 		vrLoc = 11277;
@@ -2940,7 +2940,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 392";
 		rLen = 0;
-		rLoc = 13630;
+		rLoc = 13901;
 		rType = 0;
 		vrLen = 467;
 		vrLoc = 11277;
@@ -2950,7 +2950,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 392";
 		rLen = 0;
-		rLoc = 13630;
+		rLoc = 13901;
 		rType = 0;
 		vrLen = 467;
 		vrLoc = 11277;
@@ -2960,7 +2960,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 392";
 		rLen = 0;
-		rLoc = 13630;
+		rLoc = 13901;
 		rType = 0;
 		vrLen = 467;
 		vrLoc = 11277;
@@ -3020,7 +3020,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 51";
 		rLen = 0;
-		rLoc = 6739;
+		rLoc = 8037;
 		rType = 0;
 		vrLen = 1219;
 		vrLoc = 1460;
@@ -3040,7 +3040,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: startTalking";
 		rLen = 0;
-		rLoc = 7406;
+		rLoc = 7347;
 		rType = 0;
 		vrLen = 1714;
 		vrLoc = 6354;
@@ -3060,7 +3060,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 51";
 		rLen = 0;
-		rLoc = 6739;
+		rLoc = 8037;
 		rType = 0;
 		vrLen = 1219;
 		vrLoc = 1460;
@@ -3080,7 +3080,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: setConnection";
 		rLen = 0;
-		rLoc = 7406;
+		rLoc = 7347;
 		rType = 0;
 		vrLen = 1673;
 		vrLoc = 6395;
@@ -3090,7 +3090,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 419";
 		rLen = 0;
-		rLoc = 13630;
+		rLoc = 13901;
 		rType = 0;
 		vrLen = 471;
 		vrLoc = 10980;
@@ -3100,7 +3100,7 @@
 		comments = "error: duplicate member '_delegate'";
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		rLen = 0;
-		rLoc = 59;
+		rLoc = 61;
 		rType = 1;
 	};
 	020DF13B0CA5F52F002FA5E8 /* PBXTextBookmark */ = {
@@ -3108,7 +3108,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 419";
 		rLen = 0;
-		rLoc = 13630;
+		rLoc = 13901;
 		rType = 0;
 		vrLen = 471;
 		vrLoc = 10980;
@@ -3118,7 +3118,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 38";
 		rLen = 0;
-		rLoc = 2064;
+		rLoc = 2196;
 		rType = 0;
 		vrLen = 465;
 		vrLoc = 772;
@@ -3128,7 +3128,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 38";
 		rLen = 0;
-		rLoc = 2064;
+		rLoc = 2196;
 		rType = 0;
 		vrLen = 465;
 		vrLoc = 772;
@@ -3138,7 +3138,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 38";
 		rLen = 0;
-		rLoc = 2064;
+		rLoc = 2196;
 		rType = 0;
 		vrLen = 465;
 		vrLoc = 772;
@@ -3168,7 +3168,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 37";
 		rLen = 0;
-		rLoc = 1899;
+		rLoc = 1948;
 		rType = 0;
 		vrLen = 1349;
 		vrLoc = 3;
@@ -3178,7 +3178,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: dealloc";
 		rLen = 0;
-		rLoc = 6739;
+		rLoc = 8037;
 		rType = 0;
 		vrLen = 906;
 		vrLoc = 1138;
@@ -3188,7 +3188,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 329";
 		rLen = 0;
-		rLoc = 10780;
+		rLoc = 11051;
 		rType = 0;
 		vrLen = 1469;
 		vrLoc = 8764;
@@ -3208,7 +3208,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 37";
 		rLen = 0;
-		rLoc = 1899;
+		rLoc = 1948;
 		rType = 0;
 		vrLen = 1349;
 		vrLoc = 3;
@@ -3218,7 +3218,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: dealloc";
 		rLen = 0;
-		rLoc = 6739;
+		rLoc = 8037;
 		rType = 0;
 		vrLen = 906;
 		vrLoc = 1138;
@@ -3228,7 +3228,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 308";
 		rLen = 0;
-		rLoc = 10063;
+		rLoc = 10004;
 		rType = 0;
 		vrLen = 1443;
 		vrLoc = 8790;
@@ -3238,7 +3238,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 38";
 		rLen = 0;
-		rLoc = 2064;
+		rLoc = 2196;
 		rType = 0;
 		vrLen = 465;
 		vrLoc = 772;
@@ -3248,7 +3248,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 38";
 		rLen = 0;
-		rLoc = 2064;
+		rLoc = 2196;
 		rType = 0;
 		vrLen = 465;
 		vrLoc = 772;
@@ -3258,7 +3258,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 38";
 		rLen = 0;
-		rLoc = 2064;
+		rLoc = 2196;
 		rType = 0;
 		vrLen = 465;
 		vrLoc = 772;
@@ -3268,7 +3268,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 323";
 		rLen = 0;
-		rLoc = 10650;
+		rLoc = 10591;
 		rType = 0;
 		vrLen = 1405;
 		vrLoc = 8790;
@@ -3619,7 +3619,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 142";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1580;
 		vrLoc = 2744;
@@ -3629,7 +3629,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: _connection";
 		rLen = 0;
-		rLoc = 1426;
+		rLoc = 1441;
 		rType = 0;
 		vrLen = 1921;
 		vrLoc = 0;
@@ -4603,7 +4603,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 90";
 		rLen = 0;
-		rLoc = 2299;
+		rLoc = 2329;
 		rType = 0;
 		vrLen = 1454;
 		vrLoc = 2161;
@@ -4623,7 +4623,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 90";
 		rLen = 0;
-		rLoc = 2299;
+		rLoc = 2329;
 		rType = 0;
 		vrLen = 1454;
 		vrLoc = 2161;
@@ -4723,7 +4723,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 366";
 		rLen = 0;
-		rLoc = 10562;
+		rLoc = 10503;
 		rType = 0;
 		vrLen = 1346;
 		vrLoc = 10177;
@@ -4753,7 +4753,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 366";
 		rLen = 0;
-		rLoc = 10562;
+		rLoc = 10503;
 		rType = 0;
 		vrLen = 1346;
 		vrLoc = 10177;
@@ -4901,7 +4901,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 366";
 		rLen = 0;
-		rLoc = 10562;
+		rLoc = 10503;
 		rType = 0;
 		vrLen = 1314;
 		vrLoc = 10209;
@@ -5121,7 +5121,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 369";
 		rLen = 21;
-		rLoc = 10594;
+		rLoc = 10535;
 		rType = 0;
 		vrLen = 1314;
 		vrLoc = 10209;
@@ -5151,7 +5151,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 369";
 		rLen = 0;
-		rLoc = 10595;
+		rLoc = 10536;
 		rType = 0;
 		vrLen = 1322;
 		vrLoc = 10070;
@@ -5221,7 +5221,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: _connection";
 		rLen = 0;
-		rLoc = 1426;
+		rLoc = 1441;
 		rType = 0;
 		vrLen = 1921;
 		vrLoc = 0;
@@ -5231,7 +5231,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 347";
 		rLen = 0;
-		rLoc = 10058;
+		rLoc = 9999;
 		rType = 0;
 		vrLen = 1331;
 		vrLoc = 10316;
@@ -5311,7 +5311,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: _connection";
 		rLen = 0;
-		rLoc = 1426;
+		rLoc = 1441;
 		rType = 0;
 		vrLen = 1921;
 		vrLoc = 0;
@@ -5321,7 +5321,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 347";
 		rLen = 0;
-		rLoc = 10058;
+		rLoc = 9999;
 		rType = 0;
 		vrLen = 1331;
 		vrLoc = 10316;
@@ -5451,7 +5451,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 140";
 		rLen = 0;
-		rLoc = 3592;
+		rLoc = 3533;
 		rType = 0;
 		vrLen = 1387;
 		vrLoc = 2886;
@@ -5491,7 +5491,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 126";
 		rLen = 0;
-		rLoc = 3267;
+		rLoc = 3208;
 		rType = 0;
 		vrLen = 1384;
 		vrLoc = 2948;
@@ -5571,7 +5571,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 197";
 		rLen = 0;
-		rLoc = 5704;
+		rLoc = 5645;
 		rType = 0;
 		vrLen = 2002;
 		vrLoc = 4505;
@@ -5621,7 +5621,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 121";
 		rLen = 0;
-		rLoc = 8758;
+		rLoc = 10205;
 		rType = 0;
 		vrLen = 1063;
 		vrLoc = 1907;
@@ -5631,7 +5631,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 197";
 		rLen = 0;
-		rLoc = 5704;
+		rLoc = 5645;
 		rType = 0;
 		vrLen = 2002;
 		vrLoc = 4505;
@@ -5681,7 +5681,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 126";
 		rLen = 0;
-		rLoc = 8758;
+		rLoc = 10205;
 		rType = 0;
 		vrLen = 1026;
 		vrLoc = 1907;
@@ -5731,7 +5731,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 126";
 		rLen = 0;
-		rLoc = 8758;
+		rLoc = 10205;
 		rType = 0;
 		vrLen = 1026;
 		vrLoc = 1907;
@@ -5901,7 +5901,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 124";
 		rLen = 0;
-		rLoc = 8758;
+		rLoc = 10205;
 		rType = 0;
 		vrLen = 1055;
 		vrLoc = 1910;
@@ -5951,7 +5951,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 131";
 		rLen = 0;
-		rLoc = 8788;
+		rLoc = 10235;
 		rType = 0;
 		vrLen = 1119;
 		vrLoc = 1910;
@@ -6021,7 +6021,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 126";
 		rLen = 0;
-		rLoc = 8758;
+		rLoc = 10205;
 		rType = 0;
 		vrLen = 1179;
 		vrLoc = 1910;
@@ -6101,7 +6101,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 126";
 		rLen = 0;
-		rLoc = 8758;
+		rLoc = 10205;
 		rType = 0;
 		vrLen = 1184;
 		vrLoc = 2011;
@@ -6121,7 +6121,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 142";
 		rLen = 0;
-		rLoc = 8788;
+		rLoc = 10235;
 		rType = 0;
 		vrLen = 1210;
 		vrLoc = 2011;
@@ -6191,7 +6191,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 136";
 		rLen = 0;
-		rLoc = 8758;
+		rLoc = 10205;
 		rType = 0;
 		vrLen = 1212;
 		vrLoc = 2011;
@@ -6313,7 +6313,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: _screenView";
 		rLen = 0;
-		rLoc = 1509;
+		rLoc = 1524;
 		rType = 0;
 		vrLen = 1731;
 		vrLoc = 0;
@@ -6353,7 +6353,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 89";
 		rLen = 0;
-		rLoc = 7983;
+		rLoc = 9430;
 		rType = 0;
 		vrLen = 1204;
 		vrLoc = 1790;
@@ -6373,7 +6373,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 19";
 		rLen = 0;
-		rLoc = 1044;
+		rLoc = 1116;
 		rType = 0;
 		vrLen = 1298;
 		vrLoc = 0;
@@ -6403,7 +6403,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: _screenView";
 		rLen = 0;
-		rLoc = 1509;
+		rLoc = 1524;
 		rType = 0;
 		vrLen = 1731;
 		vrLoc = 0;
@@ -6413,7 +6413,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 85";
 		rLen = 0;
-		rLoc = 7983;
+		rLoc = 9430;
 		rType = 0;
 		vrLen = 1102;
 		vrLoc = 1358;
@@ -6585,7 +6585,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = toggleControls;
 		rLen = 14;
-		rLoc = 14489;
+		rLoc = 14760;
 		rType = 0;
 		vrLen = 1045;
 		vrLoc = 14264;
@@ -6595,7 +6595,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: _controlView";
 		rLen = 0;
-		rLoc = 1840;
+		rLoc = 1889;
 		rType = 0;
 		vrLen = 1775;
 		vrLoc = 0;
@@ -6819,7 +6819,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 80";
 		rLen = 0;
-		rLoc = 5563;
+		rLoc = 6012;
 		rType = 0;
 		vrLen = 1224;
 		vrLoc = 1408;
@@ -6889,7 +6889,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 75";
 		rLen = 0;
-		rLoc = 5559;
+		rLoc = 6008;
 		rType = 0;
 		vrLen = 953;
 		vrLoc = 1863;
@@ -6959,7 +6959,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 86";
 		rLen = 0;
-		rLoc = 5728;
+		rLoc = 6292;
 		rType = 0;
 		vrLen = 1105;
 		vrLoc = 1953;
@@ -7099,7 +7099,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 78";
 		rLen = 0;
-		rLoc = 5558;
+		rLoc = 6007;
 		rType = 0;
 		vrLen = 1028;
 		vrLoc = 1883;
@@ -7169,7 +7169,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 41";
 		rLen = 0;
-		rLoc = 1880;
+		rLoc = 1919;
 		rType = 0;
 		vrLen = 1641;
 		vrLoc = 350;
@@ -7239,7 +7239,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 250";
 		rLen = 0;
-		rLoc = 7372;
+		rLoc = 7314;
 		rType = 0;
 		vrLen = 2024;
 		vrLoc = 6622;
@@ -7249,7 +7249,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: _controlsView";
 		rLen = 0;
-		rLoc = 1840;
+		rLoc = 1889;
 		rType = 0;
 		vrLen = 1775;
 		vrLoc = 0;
@@ -7319,7 +7319,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 136";
 		rLen = 0;
-		rLoc = 7469;
+		rLoc = 8767;
 		rType = 0;
 		vrLen = 1017;
 		vrLoc = 2709;
@@ -7359,7 +7359,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 136";
 		rLen = 0;
-		rLoc = 7469;
+		rLoc = 8767;
 		rType = 0;
 		vrLen = 1017;
 		vrLoc = 2709;
@@ -7429,7 +7429,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 135";
 		rLen = 0;
-		rLoc = 7431;
+		rLoc = 8729;
 		rType = 0;
 		vrLen = 1015;
 		vrLoc = 2709;
@@ -7439,7 +7439,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 135";
 		rLen = 0;
-		rLoc = 7431;
+		rLoc = 8729;
 		rType = 0;
 		vrLen = 1015;
 		vrLoc = 2709;
@@ -7459,7 +7459,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 135";
 		rLen = 0;
-		rLoc = 7431;
+		rLoc = 8729;
 		rType = 0;
 		vrLen = 1015;
 		vrLoc = 2709;
@@ -7559,7 +7559,7 @@
 		comments = "error: 'CGSize' has no member named 'size'";
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		rLen = 1;
-		rLoc = 119;
+		rLoc = 125;
 		rType = 1;
 	};
 	021134D10CC5ADDB0059CA0E /* PBXTextBookmark */ = {
@@ -7577,7 +7577,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 64";
 		rLen = 0;
-		rLoc = 4528;
+		rLoc = 4935;
 		rType = 0;
 		vrLen = 937;
 		vrLoc = 1613;
@@ -7597,7 +7597,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 64";
 		rLen = 0;
-		rLoc = 4528;
+		rLoc = 4935;
 		rType = 0;
 		vrLen = 937;
 		vrLoc = 1613;
@@ -7617,7 +7617,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 64";
 		rLen = 0;
-		rLoc = 4528;
+		rLoc = 4935;
 		rType = 0;
 		vrLen = 937;
 		vrLoc = 1613;
@@ -7969,7 +7969,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 64";
 		rLen = 0;
-		rLoc = 4528;
+		rLoc = 4935;
 		rType = 0;
 		vrLen = 2013;
 		vrLoc = 965;
@@ -7979,7 +7979,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4528;
+		rLoc = 4935;
 		rType = 0;
 		vrLen = 783;
 		vrLoc = 1613;
@@ -7999,7 +7999,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4528;
+		rLoc = 4935;
 		rType = 0;
 		vrLen = 783;
 		vrLoc = 1613;
@@ -8019,7 +8019,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4528;
+		rLoc = 4935;
 		rType = 0;
 		vrLen = 783;
 		vrLoc = 1613;
@@ -8039,7 +8039,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 83";
 		rLen = 0;
-		rLoc = 5084;
+		rLoc = 5533;
 		rType = 0;
 		vrLen = 2105;
 		vrLoc = 965;
@@ -8049,7 +8049,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 877;
 		vrLoc = 1829;
@@ -8069,7 +8069,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 877;
 		vrLoc = 1829;
@@ -8089,7 +8089,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 877;
 		vrLoc = 1829;
@@ -8109,7 +8109,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4407;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 2129;
 		vrLoc = 965;
@@ -8119,7 +8119,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 877;
 		vrLoc = 1829;
@@ -8139,7 +8139,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 877;
 		vrLoc = 1829;
@@ -8159,7 +8159,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 877;
 		vrLoc = 1829;
@@ -8179,7 +8179,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 251";
 		rLen = 0;
-		rLoc = 7372;
+		rLoc = 7314;
 		rType = 0;
 		vrLen = 2032;
 		vrLoc = 6622;
@@ -8189,7 +8189,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4407;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 1420;
 		vrLoc = 2086;
@@ -8199,7 +8199,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 251";
 		rLen = 0;
-		rLoc = 7372;
+		rLoc = 7314;
 		rType = 0;
 		vrLen = 2032;
 		vrLoc = 6622;
@@ -8209,7 +8209,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4407;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 1386;
 		vrLoc = 2086;
@@ -8219,7 +8219,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 822;
 		vrLoc = 1829;
@@ -8239,7 +8239,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 822;
 		vrLoc = 1829;
@@ -8259,7 +8259,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 822;
 		vrLoc = 1829;
@@ -8279,7 +8279,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 58";
 		rLen = 0;
-		rLoc = 2759;
+		rLoc = 2736;
 		rType = 0;
 		vrLen = 1593;
 		vrLoc = 1792;
@@ -8289,7 +8289,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 822;
 		vrLoc = 1829;
@@ -8309,7 +8309,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 822;
 		vrLoc = 1829;
@@ -8329,7 +8329,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 67";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 822;
 		vrLoc = 1829;
@@ -8359,7 +8359,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = UIKeyboard;
 		rLen = 10;
-		rLoc = 4597;
+		rLoc = 5004;
 		rType = 0;
 		vrLen = 1593;
 		vrLoc = 1792;
@@ -8379,7 +8379,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 283";
 		rLen = 0;
-		rLoc = 18361;
+		rLoc = 19808;
 		rType = 0;
 		vrLen = 1711;
 		vrLoc = 5712;
@@ -8389,7 +8389,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8409,7 +8409,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8429,7 +8429,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8469,7 +8469,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 72";
 		rLen = 0;
-		rLoc = 4721;
+		rLoc = 5128;
 		rType = 0;
 		vrLen = 1647;
 		vrLoc = 1858;
@@ -8509,7 +8509,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8529,7 +8529,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8549,7 +8549,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8569,7 +8569,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 96";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 1850;
 		vrLoc = 1528;
@@ -8579,7 +8579,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8599,7 +8599,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8619,7 +8619,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8639,7 +8639,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 73";
 		rLen = 0;
-		rLoc = 4721;
+		rLoc = 5128;
 		rType = 0;
 		vrLen = 1852;
 		vrLoc = 1528;
@@ -8649,7 +8649,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8669,7 +8669,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8689,7 +8689,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8709,7 +8709,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4400;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 1852;
 		vrLoc = 1528;
@@ -8719,7 +8719,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8739,7 +8739,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8759,7 +8759,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8779,7 +8779,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8799,7 +8799,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8819,7 +8819,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 68";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 786;
 		vrLoc = 1859;
@@ -8849,7 +8849,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -8869,7 +8869,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -8889,7 +8889,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -8909,7 +8909,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4402;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 2251;
 		vrLoc = 1035;
@@ -8919,7 +8919,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 63";
 		rLen = 0;
-		rLoc = 2929;
+		rLoc = 2862;
 		rType = 0;
 		vrLen = 2251;
 		vrLoc = 1035;
@@ -8929,7 +8929,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -8949,7 +8949,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -8969,7 +8969,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -8989,7 +8989,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -9009,7 +9009,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -9029,7 +9029,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -9049,7 +9049,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 63";
 		rLen = 0;
-		rLoc = 2929;
+		rLoc = 2862;
 		rType = 0;
 		vrLen = 2251;
 		vrLoc = 1035;
@@ -9059,7 +9059,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -9079,7 +9079,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -9099,7 +9099,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 69";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 725;
 		vrLoc = 1859;
@@ -9119,7 +9119,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 63";
 		rLen = 0;
-		rLoc = 2929;
+		rLoc = 2862;
 		rType = 0;
 		vrLen = 2251;
 		vrLoc = 1035;
@@ -9129,7 +9129,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 722;
 		vrLoc = 1859;
@@ -9149,7 +9149,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 722;
 		vrLoc = 1859;
@@ -9169,7 +9169,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 722;
 		vrLoc = 1859;
@@ -9189,7 +9189,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 58";
 		rLen = 0;
-		rLoc = 2714;
+		rLoc = 2691;
 		rType = 0;
 		vrLen = 2342;
 		vrLoc = 614;
@@ -9199,7 +9199,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 743;
 		vrLoc = 1859;
@@ -9219,7 +9219,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 743;
 		vrLoc = 1859;
@@ -9239,7 +9239,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 743;
 		vrLoc = 1859;
@@ -9259,7 +9259,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 59";
 		rLen = 0;
-		rLoc = 2802;
+		rLoc = 2779;
 		rType = 0;
 		vrLen = 2149;
 		vrLoc = 350;
@@ -9279,7 +9279,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 743;
 		vrLoc = 1859;
@@ -9299,7 +9299,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 743;
 		vrLoc = 1859;
@@ -9319,7 +9319,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 743;
 		vrLoc = 1859;
@@ -9349,7 +9349,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 743;
 		vrLoc = 1859;
@@ -9369,7 +9369,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 743;
 		vrLoc = 1859;
@@ -9389,7 +9389,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 743;
 		vrLoc = 1859;
@@ -9409,7 +9409,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 58";
 		rLen = 0;
-		rLoc = 2681;
+		rLoc = 2640;
 		rType = 0;
 		vrLen = 2404;
 		vrLoc = 493;
@@ -9419,7 +9419,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9439,7 +9439,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9459,7 +9459,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9479,7 +9479,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 58";
 		rLen = 0;
-		rLoc = 2681;
+		rLoc = 2640;
 		rType = 0;
 		vrLen = 2404;
 		vrLoc = 493;
@@ -9489,7 +9489,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9509,7 +9509,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9529,7 +9529,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9549,7 +9549,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9569,7 +9569,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9589,7 +9589,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9619,7 +9619,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 58";
 		rLen = 0;
-		rLoc = 2681;
+		rLoc = 2640;
 		rType = 0;
 		vrLen = 2404;
 		vrLoc = 493;
@@ -9639,7 +9639,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 171";
 		rLen = 0;
-		rLoc = 6687;
+		rLoc = 7625;
 		rType = 0;
 		vrLen = 1175;
 		vrLoc = 3633;
@@ -9649,7 +9649,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9669,7 +9669,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9689,7 +9689,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 70";
 		rLen = 0;
-		rLoc = 4389;
+		rLoc = 4787;
 		rType = 0;
 		vrLen = 669;
 		vrLoc = 1859;
@@ -9749,7 +9749,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 171";
 		rLen = 0;
-		rLoc = 6687;
+		rLoc = 7625;
 		rType = 0;
 		vrLen = 1175;
 		vrLoc = 3633;
@@ -9809,7 +9809,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 239";
 		rLen = 0;
-		rLoc = 8791;
+		rLoc = 10238;
 		rType = 0;
 		vrLen = 1101;
 		vrLoc = 5266;
@@ -9819,7 +9819,7 @@
 		comments = "error: parse error before 'ShellKeyboard'";
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		rLen = 0;
-		rLoc = 46;
+		rLoc = 50;
 		rType = 1;
 	};
 	021135F70CC5B60F0059CA0E /* PBXTextBookmark */ = {
@@ -9827,7 +9827,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: initWithKeyboard:";
 		rLen = 0;
-		rLoc = 1044;
+		rLoc = 1116;
 		rType = 0;
 		vrLen = 270;
 		vrLoc = 601;
@@ -9847,7 +9847,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: initWithKeyboard:";
 		rLen = 0;
-		rLoc = 1044;
+		rLoc = 1116;
 		rType = 0;
 		vrLen = 270;
 		vrLoc = 601;
@@ -9867,7 +9867,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: initWithKeyboard:";
 		rLen = 0;
-		rLoc = 1044;
+		rLoc = 1116;
 		rType = 0;
 		vrLen = 270;
 		vrLoc = 601;
@@ -9887,7 +9887,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[_textInputView becomeFirstResponder];";
 		rLen = 54;
-		rLoc = 6634;
+		rLoc = 7572;
 		rType = 0;
 		vrLen = 242;
 		vrLoc = 5891;
@@ -9905,7 +9905,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[_textInputView becomeFirstResponder];";
 		rLen = 54;
-		rLoc = 6634;
+		rLoc = 7572;
 		rType = 0;
 		vrLen = 242;
 		vrLoc = 5891;
@@ -10017,7 +10017,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = _textInputView;
 		rLen = 0;
-		rLoc = 1846;
+		rLoc = 1895;
 		rType = 0;
 		vrLen = 1754;
 		vrLoc = 0;
@@ -10027,7 +10027,7 @@
 		comments = "warning: multiple methods named '-becomeFirstResponder' found";
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		rLen = 1;
-		rLoc = 217;
+		rLoc = 241;
 		rType = 1;
 	};
 	0211360D0CC5B6550059CA0E /* PBXTextBookmark */ = {
@@ -10035,7 +10035,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = _textInputView;
 		rLen = 0;
-		rLoc = 1846;
+		rLoc = 1895;
 		rType = 0;
 		vrLen = 1754;
 		vrLoc = 0;
@@ -10081,7 +10081,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 224";
 		rLen = 0;
-		rLoc = 6634;
+		rLoc = 7572;
 		rType = 0;
 		vrLen = 1053;
 		vrLoc = 5517;
@@ -10151,7 +10151,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 131";
 		rLen = 0;
-		rLoc = 4724;
+		rLoc = 5131;
 		rType = 0;
 		vrLen = 2236;
 		vrLoc = 2427;
@@ -10221,7 +10221,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 225";
 		rLen = 0;
-		rLoc = 6634;
+		rLoc = 7572;
 		rType = 0;
 		vrLen = 1070;
 		vrLoc = 5326;
@@ -10291,7 +10291,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 145";
 		rLen = 0;
-		rLoc = 5084;
+		rLoc = 5533;
 		rType = 0;
 		vrLen = 1610;
 		vrLoc = 3373;
@@ -10361,7 +10361,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 230";
 		rLen = 0;
-		rLoc = 6687;
+		rLoc = 7625;
 		rType = 0;
 		vrLen = 1095;
 		vrLoc = 5432;
@@ -10441,7 +10441,7 @@
 		comments = "       previous definition of '-[VNCView keyboardInputView]' was here";
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		rLen = 0;
-		rLoc = 142;
+		rLoc = 149;
 		rType = 1;
 	};
 	021136480CC6679D0059CA0E /* PBXTextBookmark */ = {
@@ -10459,7 +10459,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -10479,7 +10479,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -10499,7 +10499,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -10835,7 +10835,7 @@
 		comments = "error: 'retunr' undeclared (first use in this function)";
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		rLen = 0;
-		rLoc = 296;
+		rLoc = 348;
 		rType = 1;
 	};
 	021136730CC667A50059CA0E /* PBXTextBookmark */ = {
@@ -10909,7 +10909,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 154";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 1131;
 		vrLoc = 4265;
@@ -10919,7 +10919,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -10939,7 +10939,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -10959,7 +10959,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -10989,7 +10989,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 154";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 1131;
 		vrLoc = 4265;
@@ -11009,7 +11009,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 813";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1037;
 		vrLoc = 15198;
@@ -11019,7 +11019,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -11039,7 +11039,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -11059,7 +11059,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -11079,7 +11079,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 303";
 		rLen = 3638;
-		rLoc = 8923;
+		rLoc = 10370;
 		rType = 0;
 		vrLen = 952;
 		vrLoc = 7076;
@@ -11089,7 +11089,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -11109,7 +11109,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -11129,7 +11129,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4783;
@@ -11159,7 +11159,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: keyUp:";
 		rLen = 0;
-		rLoc = 8825;
+		rLoc = 10272;
 		rType = 0;
 		vrLen = 952;
 		vrLoc = 7076;
@@ -11179,7 +11179,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 297";
 		rLen = 0;
-		rLoc = 8791;
+		rLoc = 10238;
 		rType = 0;
 		vrLen = 951;
 		vrLoc = 7077;
@@ -11189,7 +11189,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11209,7 +11209,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11229,7 +11229,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11249,7 +11249,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 126";
 		rLen = 0;
-		rLoc = 4721;
+		rLoc = 5128;
 		rType = 0;
 		vrLen = 1835;
 		vrLoc = 3120;
@@ -11259,7 +11259,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11279,7 +11279,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11299,7 +11299,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11319,7 +11319,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: keyboardInputView";
 		rLen = 0;
-		rLoc = 12032;
+		rLoc = 13479;
 		rType = 0;
 		vrLen = 979;
 		vrLoc = 10518;
@@ -11329,7 +11329,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11349,7 +11349,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11369,7 +11369,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11389,7 +11389,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: setCaretChangeListener:";
 		rLen = 82;
-		rLoc = 11726;
+		rLoc = 13173;
 		rType = 0;
 		vrLen = 928;
 		vrLoc = 10278;
@@ -11399,7 +11399,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11419,7 +11419,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11439,7 +11439,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11459,7 +11459,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 480";
 		rLen = 0;
-		rLoc = 11804;
+		rLoc = 13251;
 		rType = 0;
 		vrLen = 915;
 		vrLoc = 10367;
@@ -11469,7 +11469,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11489,7 +11489,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11509,7 +11509,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 146;
 		vrLoc = 4781;
@@ -11529,7 +11529,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: caretRect";
 		rLen = 125;
-		rLoc = 11907;
+		rLoc = 13354;
 		rType = 0;
 		vrLen = 903;
 		vrLoc = 10367;
@@ -11539,7 +11539,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11559,7 +11559,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11579,7 +11579,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11599,7 +11599,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11619,7 +11619,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11639,7 +11639,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11699,7 +11699,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 504";
 		rLen = 0;
-		rLoc = 12312;
+		rLoc = 13759;
 		rType = 0;
 		vrLen = 902;
 		vrLoc = 10309;
@@ -11749,7 +11749,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 504";
 		rLen = 0;
-		rLoc = 12178;
+		rLoc = 13625;
 		rType = 0;
 		vrLen = 870;
 		vrLoc = 10309;
@@ -11759,7 +11759,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11779,7 +11779,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11799,7 +11799,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11819,7 +11819,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: textTraits";
 		rLen = 84;
-		rLoc = 12316;
+		rLoc = 13763;
 		rType = 0;
 		vrLen = 918;
 		vrLoc = 10730;
@@ -11829,7 +11829,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11849,7 +11849,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11869,7 +11869,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11889,7 +11889,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: wordContainingCaretSelection";
 		rLen = 91;
-		rLoc = 10074;
+		rLoc = 11521;
 		rType = 0;
 		vrLen = 1035;
 		vrLoc = 8362;
@@ -11909,7 +11909,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 361";
 		rLen = 0;
-		rLoc = 9860;
+		rLoc = 11307;
 		rType = 0;
 		vrLen = 1012;
 		vrLoc = 6749;
@@ -11929,7 +11929,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 232";
 		rLen = 0;
-		rLoc = 6659;
+		rLoc = 7597;
 		rType = 0;
 		vrLen = 1148;
 		vrLoc = 5469;
@@ -11939,7 +11939,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11959,7 +11959,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11979,7 +11979,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -11999,7 +11999,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12019,7 +12019,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12039,7 +12039,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12059,7 +12059,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 310";
 		rLen = 0;
-		rLoc = 8924;
+		rLoc = 10371;
 		rType = 0;
 		vrLen = 1003;
 		vrLoc = 7591;
@@ -12069,7 +12069,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12089,7 +12089,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12109,7 +12109,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12129,7 +12129,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12149,7 +12149,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12169,7 +12169,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12189,7 +12189,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 312";
 		rLen = 0;
-		rLoc = 8996;
+		rLoc = 10443;
 		rType = 0;
 		vrLen = 1001;
 		vrLoc = 7591;
@@ -12199,7 +12199,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12219,7 +12219,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12239,7 +12239,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12259,7 +12259,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 368";
 		rLen = 0;
-		rLoc = 9978;
+		rLoc = 11425;
 		rType = 0;
 		vrLen = 1050;
 		vrLoc = 8173;
@@ -12269,7 +12269,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12289,7 +12289,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12309,7 +12309,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12329,7 +12329,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 346";
 		rLen = 0;
-		rLoc = 9597;
+		rLoc = 11044;
 		rType = 0;
 		vrLen = 1036;
 		vrLoc = 8173;
@@ -12339,7 +12339,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12359,7 +12359,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12379,7 +12379,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12399,7 +12399,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 357";
 		rLen = 0;
-		rLoc = 9728;
+		rLoc = 11175;
 		rType = 0;
 		vrLen = 1024;
 		vrLoc = 8173;
@@ -12409,7 +12409,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12429,7 +12429,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12449,7 +12449,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12469,7 +12469,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: wordContainingCaretSelection";
 		rLen = 1561;
-		rLoc = 10165;
+		rLoc = 11612;
 		rType = 0;
 		vrLen = 877;
 		vrLoc = 9812;
@@ -12479,7 +12479,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12499,7 +12499,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12519,7 +12519,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12579,7 +12579,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 452";
 		rLen = 0;
-		rLoc = 11352;
+		rLoc = 12799;
 		rType = 0;
 		vrLen = 877;
 		vrLoc = 9812;
@@ -12629,7 +12629,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 528";
 		rLen = 0;
-		rLoc = 13009;
+		rLoc = 14456;
 		rType = 0;
 		vrLen = 881;
 		vrLoc = 10786;
@@ -12639,7 +12639,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12659,7 +12659,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12679,7 +12679,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 159";
 		rLen = 0;
-		rLoc = 5161;
+		rLoc = 5610;
 		rType = 0;
 		vrLen = 172;
 		vrLoc = 4784;
@@ -12719,7 +12719,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: interceptKeyEvent:";
 		rLen = 0;
-		rLoc = 12996;
+		rLoc = 14443;
 		rType = 0;
 		vrLen = 907;
 		vrLoc = 10810;
@@ -12739,7 +12739,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 532";
 		rLen = 0;
-		rLoc = 12651;
+		rLoc = 14098;
 		rType = 0;
 		vrLen = 907;
 		vrLoc = 10810;
@@ -12769,7 +12769,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 532";
 		rLen = 0;
-		rLoc = 12651;
+		rLoc = 14098;
 		rType = 0;
 		vrLen = 907;
 		vrLoc = 10810;
@@ -12799,7 +12799,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: setFrameBuffer:";
 		rLen = 0;
-		rLoc = 6634;
+		rLoc = 7572;
 		rType = 0;
 		vrLen = 1154;
 		vrLoc = 5690;
@@ -12809,7 +12809,7 @@
 		comments = "error: duplicate member '_delegate'";
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		rLen = 0;
-		rLoc = 46;
+		rLoc = 50;
 		rType = 1;
 	};
 	0211375C0CC6AE9C0059CA0E /* PBXTextBookmark */ = {
@@ -12817,7 +12817,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: _delegate";
 		rLen = 0;
-		rLoc = 1044;
+		rLoc = 1116;
 		rType = 0;
 		vrLen = 167;
 		vrLoc = 813;
@@ -12837,7 +12837,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: _delegate";
 		rLen = 0;
-		rLoc = 1044;
+		rLoc = 1116;
 		rType = 0;
 		vrLen = 167;
 		vrLoc = 813;
@@ -12857,7 +12857,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: _delegate";
 		rLen = 0;
-		rLoc = 1044;
+		rLoc = 1116;
 		rType = 0;
 		vrLen = 167;
 		vrLoc = 813;
@@ -12877,7 +12877,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 58";
 		rLen = 0;
-		rLoc = 1044;
+		rLoc = 1116;
 		rType = 0;
 		vrLen = 1059;
 		vrLoc = 723;
@@ -12887,7 +12887,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: _keysDelegate";
 		rLen = 0;
-		rLoc = 1044;
+		rLoc = 1116;
 		rType = 0;
 		vrLen = 167;
 		vrLoc = 813;
@@ -12907,7 +12907,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: _keysDelegate";
 		rLen = 0;
-		rLoc = 1044;
+		rLoc = 1116;
 		rType = 0;
 		vrLen = 167;
 		vrLoc = 813;
@@ -12927,7 +12927,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: _keysDelegate";
 		rLen = 0;
-		rLoc = 1044;
+		rLoc = 1116;
 		rType = 0;
 		vrLen = 167;
 		vrLoc = 813;
@@ -12946,16 +12946,16 @@
 		isa = PBXTextBookmark;
 		comments = "warning: 'VNCView' may not respond to '-toggleKeyboard:'";
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
-		rLen = 1;
-		rLoc = 177;
+		rLen = 0;
+		rLoc = 186;
 		rType = 1;
 	};
 	0211376C0CC6B1040059CA0E /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5607;
@@ -12974,8 +12974,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5607;
@@ -12994,8 +12994,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5607;
@@ -13014,8 +13014,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5607;
@@ -13034,8 +13034,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5607;
@@ -13065,7 +13065,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: ";
 		rLen = 0;
-		rLoc = 2058;
+		rLoc = 2190;
 		rType = 0;
 		vrLen = 1922;
 		vrLoc = 352;
@@ -13075,7 +13075,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: toggleControls";
 		rLen = 0;
-		rLoc = 6386;
+		rLoc = 6892;
 		rType = 0;
 		vrLen = 1138;
 		vrLoc = 5365;
@@ -13085,7 +13085,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: ";
 		rLen = 0;
-		rLoc = 2058;
+		rLoc = 2190;
 		rType = 0;
 		vrLen = 1922;
 		vrLoc = 352;
@@ -13105,7 +13105,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: toggleControls";
 		rLen = 0;
-		rLoc = 6386;
+		rLoc = 6892;
 		rType = 0;
 		vrLen = 1138;
 		vrLoc = 5365;
@@ -13114,8 +13114,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5628;
@@ -13134,8 +13134,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5628;
@@ -13154,8 +13154,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5628;
@@ -13175,7 +13175,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 149";
 		rLen = 0;
-		rLoc = 4724;
+		rLoc = 5131;
 		rType = 0;
 		vrLen = 2058;
 		vrLoc = 3134;
@@ -13184,8 +13184,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5628;
@@ -13204,8 +13204,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5628;
@@ -13224,8 +13224,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5628;
@@ -13244,8 +13244,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5628;
@@ -13262,8 +13262,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "[self toggleKeyboard:nil];";
-		rLen = 31;
-		rLoc = 5917;
+		rLen = 0;
+		rLoc = 6402;
 		rType = 0;
 		vrLen = 330;
 		vrLoc = 5628;
@@ -13463,7 +13463,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 572";
 		rLen = 0;
-		rLoc = 12651;
+		rLoc = 14098;
 		rType = 0;
 		vrLen = 862;
 		vrLoc = 11333;
@@ -13483,7 +13483,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 145";
 		rLen = 0;
-		rLoc = 4721;
+		rLoc = 5128;
 		rType = 0;
 		vrLen = 1402;
 		vrLoc = 4016;
@@ -13615,7 +13615,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 337";
 		rLen = 0;
-		rLoc = 9011;
+		rLoc = 10458;
 		rType = 0;
 		vrLen = 878;
 		vrLoc = 7632;
@@ -13667,7 +13667,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 330";
 		rLen = 0;
-		rLoc = 8887;
+		rLoc = 10334;
 		rType = 0;
 		vrLen = 902;
 		vrLoc = 7561;
@@ -13737,7 +13737,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 246";
 		rLen = 0;
-		rLoc = 6634;
+		rLoc = 7572;
 		rType = 0;
 		vrLen = 1810;
 		vrLoc = 3404;
@@ -13807,7 +13807,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 246";
 		rLen = 0;
-		rLoc = 6634;
+		rLoc = 7572;
 		rType = 0;
 		vrLen = 1810;
 		vrLoc = 3404;
@@ -13817,7 +13817,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 246";
 		rLen = 0;
-		rLoc = 6634;
+		rLoc = 7572;
 		rType = 0;
 		vrLen = 1810;
 		vrLoc = 3404;
@@ -13917,7 +13917,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 332";
 		rLen = 0;
-		rLoc = 8917;
+		rLoc = 10364;
 		rType = 0;
 		vrLen = 904;
 		vrLoc = 7559;
@@ -14047,7 +14047,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 332";
 		rLen = 0;
-		rLoc = 8917;
+		rLoc = 10364;
 		rType = 0;
 		vrLen = 904;
 		vrLoc = 7559;
@@ -14057,7 +14057,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 332";
 		rLen = 0;
-		rLoc = 8917;
+		rLoc = 10364;
 		rType = 0;
 		vrLen = 904;
 		vrLoc = 7559;
@@ -14087,7 +14087,7 @@
 		comments = "error: '_textInputView' undeclared (first use in this function)";
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		rLen = 1;
-		rLoc = 496;
+		rLoc = 548;
 		rType = 1;
 	};
 	021137F90CC6CE260059CA0E /* PBXTextBookmark */ = {
@@ -14105,7 +14105,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 530";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 207;
 		vrLoc = 11129;
@@ -14125,7 +14125,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 530";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 207;
 		vrLoc = 11129;
@@ -14145,7 +14145,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 530";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 207;
 		vrLoc = 11129;
@@ -14175,7 +14175,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: _textInputView";
 		rLen = 0;
-		rLoc = 1846;
+		rLoc = 1895;
 		rType = 0;
 		vrLen = 1924;
 		vrLoc = 352;
@@ -14185,7 +14185,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: _textInputView";
 		rLen = 0;
-		rLoc = 1846;
+		rLoc = 1895;
 		rType = 0;
 		vrLen = 1924;
 		vrLoc = 352;
@@ -14205,7 +14205,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 530";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 896;
 		vrLoc = 10787;
@@ -14215,7 +14215,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 530";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 211;
 		vrLoc = 11191;
@@ -14235,7 +14235,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 530";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 211;
 		vrLoc = 11191;
@@ -14255,7 +14255,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 530";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 211;
 		vrLoc = 11191;
@@ -14275,7 +14275,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 868";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1161;
 		vrLoc = 16308;
@@ -14285,7 +14285,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 551";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 259;
 		vrLoc = 11604;
@@ -14305,7 +14305,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 551";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 259;
 		vrLoc = 11604;
@@ -14325,7 +14325,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 551";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 259;
 		vrLoc = 11604;
@@ -14345,7 +14345,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 155";
 		rLen = 0;
-		rLoc = 4199;
+		rLoc = 4603;
 		rType = 0;
 		vrLen = 2333;
 		vrLoc = 3140;
@@ -14355,7 +14355,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 551";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 259;
 		vrLoc = 11643;
@@ -14375,7 +14375,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 551";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 259;
 		vrLoc = 11643;
@@ -14395,7 +14395,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 551";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 259;
 		vrLoc = 11643;
@@ -14445,7 +14445,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = UIImage;
 		rLen = 7;
-		rLoc = 3708;
+		rLoc = 4112;
 		rType = 0;
 		vrLen = 2319;
 		vrLoc = 3140;
@@ -14465,7 +14465,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 154";
 		rLen = 0;
-		rLoc = 4119;
+		rLoc = 4523;
 		rType = 0;
 		vrLen = 2369;
 		vrLoc = 3140;
@@ -14475,7 +14475,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: keyboardInputView";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11724;
@@ -14495,7 +14495,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: keyboardInputView";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11724;
@@ -14515,7 +14515,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: keyboardInputView";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11724;
@@ -14535,7 +14535,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 140";
 		rLen = 0;
-		rLoc = 3044;
+		rLoc = 3448;
 		rType = 0;
 		vrLen = 2356;
 		vrLoc = 3140;
@@ -14545,7 +14545,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11728;
@@ -14565,7 +14565,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11728;
@@ -14585,7 +14585,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11728;
@@ -14605,7 +14605,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 139";
 		rLen = 0;
-		rLoc = 3044;
+		rLoc = 3448;
 		rType = 0;
 		vrLen = 2360;
 		vrLoc = 3140;
@@ -14615,7 +14615,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11744;
@@ -14635,7 +14635,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11744;
@@ -14655,7 +14655,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11744;
@@ -14675,7 +14675,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 4239;
+		rLoc = 4643;
 		rType = 0;
 		vrLen = 2376;
 		vrLoc = 3140;
@@ -14685,7 +14685,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11827;
@@ -14705,7 +14705,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11827;
@@ -14725,7 +14725,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11827;
@@ -14745,7 +14745,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 157";
 		rLen = 0;
-		rLoc = 4148;
+		rLoc = 4552;
 		rType = 0;
 		vrLen = 2520;
 		vrLoc = 3152;
@@ -14765,7 +14765,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = UIGradientBar;
 		rLen = 13;
-		rLoc = 2206;
+		rLoc = 2202;
 		rType = 0;
 		vrLen = 2574;
 		vrLoc = 2881;
@@ -14785,7 +14785,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 147";
 		rLen = 0;
-		rLoc = 3647;
+		rLoc = 4051;
 		rType = 0;
 		vrLen = 2238;
 		vrLoc = 3833;
@@ -14795,7 +14795,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11824;
@@ -14815,7 +14815,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11824;
@@ -14835,7 +14835,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 554";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 243;
 		vrLoc = 11824;
@@ -14855,7 +14855,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 147";
 		rLen = 0;
-		rLoc = 3647;
+		rLoc = 4051;
 		rType = 0;
 		vrLen = 2238;
 		vrLoc = 3833;
@@ -14865,7 +14865,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 558";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 229;
 		vrLoc = 11874;
@@ -14885,7 +14885,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 558";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 229;
 		vrLoc = 11874;
@@ -14905,7 +14905,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 558";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 229;
 		vrLoc = 11874;
@@ -14945,7 +14945,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 158";
 		rLen = 0;
-		rLoc = 4183;
+		rLoc = 4587;
 		rType = 0;
 		vrLen = 2227;
 		vrLoc = 3833;
@@ -14965,7 +14965,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 164";
 		rLen = 0;
-		rLoc = 4327;
+		rLoc = 4731;
 		rType = 0;
 		vrLen = 2257;
 		vrLoc = 3833;
@@ -14975,7 +14975,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 558";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 229;
 		vrLoc = 11876;
@@ -14995,7 +14995,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 558";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 229;
 		vrLoc = 11876;
@@ -15015,7 +15015,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 558";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 229;
 		vrLoc = 11876;
@@ -15035,7 +15035,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 263";
 		rLen = 0;
-		rLoc = 6424;
+		rLoc = 6930;
 		rType = 0;
 		vrLen = 2364;
 		vrLoc = 3421;
@@ -15045,7 +15045,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: keyboardInputView";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 228;
 		vrLoc = 11977;
@@ -15065,7 +15065,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: keyboardInputView";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 228;
 		vrLoc = 11977;
@@ -15085,7 +15085,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: keyboardInputView";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 228;
 		vrLoc = 11977;
@@ -15115,7 +15115,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 160";
 		rLen = 0;
-		rLoc = 4145;
+		rLoc = 4549;
 		rType = 0;
 		vrLen = 2357;
 		vrLoc = 3421;
@@ -15135,7 +15135,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 169";
 		rLen = 0;
-		rLoc = 4327;
+		rLoc = 4731;
 		rType = 0;
 		vrLen = 2430;
 		vrLoc = 3421;
@@ -15145,7 +15145,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: _isKeyboardVisible";
 		rLen = 0;
-		rLoc = 1807;
+		rLoc = 1856;
 		rType = 0;
 		vrLen = 1952;
 		vrLoc = 352;
@@ -15155,7 +15155,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 188";
 		rLen = 0;
-		rLoc = 4974;
+		rLoc = 5423;
 		rType = 0;
 		vrLen = 2570;
 		vrLoc = 2797;
@@ -15195,7 +15195,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: _isKeyboardVisible";
 		rLen = 0;
-		rLoc = 1807;
+		rLoc = 1856;
 		rType = 0;
 		vrLen = 1952;
 		vrLoc = 352;
@@ -15205,7 +15205,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 188";
 		rLen = 0;
-		rLoc = 4974;
+		rLoc = 5423;
 		rType = 0;
 		vrLen = 2570;
 		vrLoc = 2797;
@@ -15245,7 +15245,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 563";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 194;
 		vrLoc = 12187;
@@ -15265,7 +15265,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 563";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 194;
 		vrLoc = 12187;
@@ -15285,7 +15285,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 563";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 194;
 		vrLoc = 12187;
@@ -15305,7 +15305,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 563";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 194;
 		vrLoc = 12187;
@@ -15385,7 +15385,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 188";
 		rLen = 0;
-		rLoc = 4974;
+		rLoc = 5423;
 		rType = 0;
 		vrLen = 2531;
 		vrLoc = 2836;
@@ -15395,7 +15395,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: textTraits";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 209;
 		vrLoc = 12435;
@@ -15415,7 +15415,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: textTraits";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 209;
 		vrLoc = 12435;
@@ -15435,7 +15435,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: textTraits";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 209;
 		vrLoc = 12435;
@@ -15507,7 +15507,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 151";
 		rLen = 0;
-		rLoc = 3344;
+		rLoc = 3748;
 		rType = 0;
 		vrLen = 2585;
 		vrLoc = 3421;
@@ -15563,7 +15563,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 154";
 		rLen = 0;
-		rLoc = 3344;
+		rLoc = 3748;
 		rType = 0;
 		vrLen = 2626;
 		vrLoc = 3421;
@@ -15573,7 +15573,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 575";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 224;
 		vrLoc = 12537;
@@ -15593,7 +15593,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 575";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 224;
 		vrLoc = 12537;
@@ -15613,7 +15613,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 575";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 224;
 		vrLoc = 12537;
@@ -15633,7 +15633,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 585";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 284;
 		vrLoc = 12824;
@@ -15653,7 +15653,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 585";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 284;
 		vrLoc = 12824;
@@ -15673,7 +15673,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 585";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 284;
 		vrLoc = 12824;
@@ -15713,7 +15713,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 154";
 		rLen = 0;
-		rLoc = 3344;
+		rLoc = 3748;
 		rType = 0;
 		vrLen = 2626;
 		vrLoc = 3421;
@@ -15743,7 +15743,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 164";
 		rLen = 0;
-		rLoc = 3828;
+		rLoc = 4232;
 		rType = 0;
 		vrLen = 2464;
 		vrLoc = 4733;
@@ -15753,7 +15753,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 164";
 		rLen = 0;
-		rLoc = 3828;
+		rLoc = 4232;
 		rType = 0;
 		vrLen = 2464;
 		vrLoc = 4733;
@@ -15803,7 +15803,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 251";
 		rLen = 0;
-		rLoc = 7372;
+		rLoc = 7314;
 		rType = 0;
 		vrLen = 1935;
 		vrLoc = 6719;
@@ -15813,7 +15813,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 164";
 		rLen = 0;
-		rLoc = 3828;
+		rLoc = 4232;
 		rType = 0;
 		vrLen = 2464;
 		vrLoc = 4733;
@@ -15873,7 +15873,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 585";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 284;
 		vrLoc = 12824;
@@ -15893,7 +15893,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 585";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 284;
 		vrLoc = 12824;
@@ -15913,7 +15913,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 585";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 284;
 		vrLoc = 12824;
@@ -15953,7 +15953,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 113";
 		rLen = 0;
-		rLoc = 2695;
+		rLoc = 2705;
 		rType = 0;
 		vrLen = 1357;
 		vrLoc = 2177;
@@ -15983,7 +15983,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 113";
 		rLen = 0;
-		rLoc = 2695;
+		rLoc = 2705;
 		rType = 0;
 		vrLen = 1811;
 		vrLoc = 336;
@@ -15993,7 +15993,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 585";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 284;
 		vrLoc = 12824;
@@ -16013,7 +16013,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 585";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 284;
 		vrLoc = 12824;
@@ -16033,7 +16033,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 585";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 284;
 		vrLoc = 12824;
@@ -16053,7 +16053,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 569";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 209;
 		vrLoc = 12402;
@@ -16073,7 +16073,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 569";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 209;
 		vrLoc = 12402;
@@ -16093,7 +16093,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 569";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 209;
 		vrLoc = 12402;
@@ -16233,7 +16233,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 4282;
+		rLoc = 4686;
 		rType = 0;
 		vrLen = 2484;
 		vrLoc = 4188;
@@ -16243,7 +16243,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16263,7 +16263,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16283,7 +16283,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16313,7 +16313,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: areControlsVisible";
 		rLen = 0;
-		rLoc = 1898;
+		rLoc = 1947;
 		rType = 0;
 		vrLen = 1643;
 		vrLoc = 706;
@@ -16323,7 +16323,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 522";
 		rLen = 0;
-		rLoc = 12511;
+		rLoc = 13958;
 		rType = 0;
 		vrLen = 970;
 		vrLoc = 12112;
@@ -16333,7 +16333,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: areControlsVisible";
 		rLen = 0;
-		rLoc = 1898;
+		rLoc = 1947;
 		rType = 0;
 		vrLen = 1643;
 		vrLoc = 706;
@@ -16363,7 +16363,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16383,7 +16383,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16403,7 +16403,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16433,7 +16433,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16453,7 +16453,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16473,7 +16473,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16493,7 +16493,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16513,7 +16513,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16533,7 +16533,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16553,7 +16553,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16573,7 +16573,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16593,7 +16593,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16613,7 +16613,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16633,7 +16633,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16653,7 +16653,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16723,7 +16723,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16743,7 +16743,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16763,7 +16763,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16783,7 +16783,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16803,7 +16803,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16823,7 +16823,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -16841,7 +16841,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 497";
 		rLen = 0;
-		rLoc = 12108;
+		rLoc = 13555;
 		rType = 0;
 		vrLen = 334;
 		vrLoc = 12509;
@@ -18158,12 +18158,1142 @@
 		vrLen = 1672;
 		vrLoc = 18018;
 	};
+	02113A130CCFC5BA0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A140CCFC5BA0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A150CCFC5BA0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A160CCFC5BA0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A170CCFC5BA0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A180CCFC5BA0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A190CD3DFC90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 659";
+		rLen = 0;
+		rLoc = 18216;
+		rType = 0;
+		vrLen = 1672;
+		vrLoc = 18018;
+	};
+	02113A1A0CD3DFC90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 02113A0D0CCEE8D30059CA0E /* todo.txt */;
+		name = "todo.txt: 11";
+		rLen = 0;
+		rLoc = 288;
+		rType = 0;
+		vrLen = 233;
+		vrLoc = 0;
+	};
+	02113A1B0CD3DFC90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
+		name = "VNCView.h: _isKeyboardVisible";
+		rLen = 0;
+		rLoc = 1947;
+		rType = 0;
+		vrLen = 1671;
+		vrLoc = 678;
+	};
+	02113A1C0CD3DFC90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 856";
+		rLen = 0;
+		rLoc = 19206;
+		rType = 0;
+		vrLen = 1954;
+		vrLoc = 934;
+	};
+	02113A1D0CD3DFC90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
+		name = "VNCView.h: _isKeyboardVisible";
+		rLen = 0;
+		rLoc = 1947;
+		rType = 0;
+		vrLen = 1671;
+		vrLoc = 678;
+	};
+	02113A1E0CD3DFC90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 856";
+		rLen = 0;
+		rLoc = 19206;
+		rType = 0;
+		vrLen = 1917;
+		vrLoc = 971;
+	};
+	02113A220CD3E2630059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A230CD3E2630059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A240CD3E2630059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A250CD3E2630059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A260CD3E2640059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A270CD3E2640059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A280CD3E2690059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD070C9093BD005285B7 /* RFBProtocol.m */;
+		name = "- (void)requestIncrementalFrameBufferUpdateForVisibleRect:(id)aReader";
+		rLen = 70;
+		rLoc = 5705;
+		rType = 0;
+		vrLen = 1435;
+		vrLoc = 4783;
+	};
+	02113A290CD3E2690059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC150C909383005285B7 /* VnseaApp.h */;
+		name = "- (void)closeConnection";
+		rLen = 23;
+		rLoc = 3217;
+		rType = 0;
+		vrLen = 1635;
+		vrLoc = 1642;
+	};
+	02113A2A0CD3E2690059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
+		name = "VnseaApp.m: 366";
+		rLen = 0;
+		rLoc = 10908;
+		rType = 0;
+		vrLen = 1233;
+		vrLoc = 10311;
+	};
+	02113A2B0CD3E2690059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
+		name = "VNCView.h: 94";
+		rLen = 0;
+		rLoc = 2548;
+		rType = 0;
+		vrLen = 1318;
+		vrLoc = 1232;
+	};
+	02113A2C0CD3E2690059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 263";
+		rLen = 0;
+		rLoc = 7927;
+		rType = 0;
+		vrLen = 1075;
+		vrLoc = 7103;
+	};
+	02113A2D0CD3E2690059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD070C9093BD005285B7 /* RFBProtocol.m */;
+		name = "- (void)requestIncrementalFrameBufferUpdateForVisibleRect:(id)aReader";
+		rLen = 70;
+		rLoc = 5705;
+		rType = 0;
+		vrLen = 1435;
+		vrLoc = 4783;
+	};
+	02113A2E0CD3E2690059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
+		name = "VNCView.h: 94";
+		rLen = 0;
+		rLoc = 2548;
+		rType = 0;
+		vrLen = 1318;
+		vrLoc = 1232;
+	};
+	02113A2F0CD3E2690059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC150C909383005285B7 /* VnseaApp.h */;
+		name = "- (void)closeConnection";
+		rLen = 23;
+		rLoc = 3217;
+		rType = 0;
+		vrLen = 1635;
+		vrLoc = 1642;
+	};
+	02113A300CD3E2690059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
+		name = "VnseaApp.m: 366";
+		rLen = 0;
+		rLoc = 10908;
+		rType = 0;
+		vrLen = 1233;
+		vrLoc = 10311;
+	};
+	02113A310CD3E2690059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 263";
+		rLen = 0;
+		rLoc = 7927;
+		rType = 0;
+		vrLen = 1075;
+		vrLoc = 7103;
+	};
+	02113A340CD3E30E0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 02113A0D0CCEE8D30059CA0E /* todo.txt */;
+		name = "todo.txt: 13";
+		rLen = 0;
+		rLoc = 280;
+		rType = 0;
+		vrLen = 290;
+		vrLoc = 0;
+	};
+	02113A350CD3E30E0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 263";
+		rLen = 0;
+		rLoc = 7927;
+		rType = 0;
+		vrLen = 1075;
+		vrLoc = 7103;
+	};
+	02113A360CD3E30E0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 02113A0D0CCEE8D30059CA0E /* todo.txt */;
+		name = "todo.txt: 13";
+		rLen = 0;
+		rLoc = 280;
+		rType = 0;
+		vrLen = 290;
+		vrLoc = 0;
+	};
+	02113A370CD3E30E0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 263";
+		rLen = 0;
+		rLoc = 7927;
+		rType = 0;
+		vrLen = 1075;
+		vrLoc = 7103;
+	};
+	02113A480CD3E44B0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A490CD3E44B0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A4A0CD3E44B0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A4B0CD3E44B0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A4C0CD3E44B0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A4D0CD3E44B0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A4E0CD3E44D0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259A4B60C8D0020005285B7 /* CGContext.h */;
+		name = CGContextFillRect;
+		rLen = 17;
+		rLoc = 10444;
+		rType = 0;
+		vrLen = 1838;
+		vrLoc = 9593;
+	};
+	02113A4F0CD3E44D0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259A5560C8D0020005285B7 /* UIKit.h */;
+		name = "CGContextRef UICurrentContext();";
+		rLen = 32;
+		rLoc = 1675;
+		rType = 0;
+		vrLen = 1605;
+		vrLoc = 258;
+	};
+	02113A500CD3E44D0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
+		name = "VNCContentView.m: 58";
+		rLen = 0;
+		rLoc = 1150;
+		rType = 0;
+		vrLen = 1288;
+		vrLoc = 360;
+	};
+	02113A510CD3E44D0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259A6980C8D0A72005285B7 /* UIScroller.h */;
+		name = scrollPointVisibleAtTopLeft;
+		rLen = 27;
+		rLoc = 4068;
+		rType = 0;
+		vrLen = 2243;
+		vrLoc = 3813;
+	};
+	02113A520CD3E44D0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 301";
+		rLen = 0;
+		rLoc = 8840;
+		rType = 0;
+		vrLen = 1448;
+		vrLoc = 8040;
+	};
+	02113A530CD3E44D0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259A6980C8D0A72005285B7 /* UIScroller.h */;
+		name = scrollPointVisibleAtTopLeft;
+		rLen = 27;
+		rLoc = 4068;
+		rType = 0;
+		vrLen = 2243;
+		vrLoc = 3813;
+	};
+	02113A540CD3E44D0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 301";
+		rLen = 0;
+		rLoc = 8870;
+		rType = 0;
+		vrLen = 1448;
+		vrLoc = 8040;
+	};
+	02113A580CD3E50F0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A590CD3E50F0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A5A0CD3E50F0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A5B0CD3E50F0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A5C0CD3E50F0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A5D0CD3E50F0059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A5E0CD3E5100059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259A6980C8D0A72005285B7 /* UIScroller.h */;
+		name = "UIScroller.h: 145";
+		rLen = 0;
+		rLoc = 5585;
+		rType = 0;
+		vrLen = 2243;
+		vrLoc = 3813;
+	};
+	02113A5F0CD3E5100059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 301";
+		rLen = 0;
+		rLoc = 8878;
+		rType = 0;
+		vrLen = 1448;
+		vrLoc = 8040;
+	};
+	02113A600CD3E5100059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259A6980C8D0A72005285B7 /* UIScroller.h */;
+		name = "UIScroller.h: 145";
+		rLen = 0;
+		rLoc = 5585;
+		rType = 0;
+		vrLen = 2243;
+		vrLoc = 3813;
+	};
+	02113A610CD3E5100059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 125";
+		rLen = 0;
+		rLoc = 4839;
+		rType = 0;
+		vrLen = 1722;
+		vrLoc = 4289;
+	};
+	02113A650CD3E5E70059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A660CD3E5E70059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A670CD3E5E70059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A680CD3E5E70059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A690CD3E5E80059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A6A0CD3E5E80059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A6B0CD3E5E90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD070C9093BD005285B7 /* RFBProtocol.m */;
+		name = "- (void)requestIncrementalFrameBufferUpdateForVisibleRect:(id)aReader";
+		rLen = 70;
+		rLoc = 5705;
+		rType = 0;
+		vrLen = 1435;
+		vrLoc = 4783;
+	};
+	02113A6C0CD3E5E90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
+		name = "VNCView.h: 94";
+		rLen = 0;
+		rLoc = 2548;
+		rType = 0;
+		vrLen = 1356;
+		vrLoc = 1193;
+	};
+	02113A6D0CD3E5E90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
+		name = "VnseaApp.m: 366";
+		rLen = 0;
+		rLoc = 10908;
+		rType = 0;
+		vrLen = 1673;
+		vrLoc = 6684;
+	};
+	02113A6E0CD3E5E90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
+		name = "VNCContentView.m: 58";
+		rLen = 0;
+		rLoc = 1150;
+		rType = 0;
+		vrLen = 1300;
+		vrLoc = 538;
+	};
+	02113A6F0CD3E5E90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 125";
+		rLen = 0;
+		rLoc = 4839;
+		rType = 0;
+		vrLen = 1720;
+		vrLoc = 8091;
+	};
+	02113A700CD3E5E90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD070C9093BD005285B7 /* RFBProtocol.m */;
+		name = "- (void)requestIncrementalFrameBufferUpdateForVisibleRect:(id)aReader";
+		rLen = 70;
+		rLoc = 5705;
+		rType = 0;
+		vrLen = 1435;
+		vrLoc = 4783;
+	};
+	02113A710CD3E5E90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
+		name = "VNCView.h: 94";
+		rLen = 0;
+		rLoc = 2548;
+		rType = 0;
+		vrLen = 1356;
+		vrLoc = 1193;
+	};
+	02113A720CD3E5E90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
+		name = "VnseaApp.m: 366";
+		rLen = 0;
+		rLoc = 10908;
+		rType = 0;
+		vrLen = 1673;
+		vrLoc = 6684;
+	};
+	02113A730CD3E5E90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
+		name = "VNCContentView.m: 58";
+		rLen = 0;
+		rLoc = 1150;
+		rType = 0;
+		vrLen = 1300;
+		vrLoc = 538;
+	};
+	02113A740CD3E5E90059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 297";
+		rLen = 0;
+		rLoc = 8818;
+		rType = 0;
+		vrLen = 1883;
+		vrLoc = 8094;
+	};
+	02113A780CD3E6200059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A790CD3E6200059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A7A0CD3E6200059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A7B0CD3E6200059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A7C0CD3E6200059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A7D0CD3E6200059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A7E0CD3E6210059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 297";
+		rLen = 0;
+		rLoc = 8818;
+		rType = 0;
+		vrLen = 1881;
+		vrLoc = 8094;
+	};
+	02113A7F0CD3E6210059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 297";
+		rLen = 0;
+		rLoc = 8818;
+		rType = 0;
+		vrLen = 1881;
+		vrLoc = 8094;
+	};
+	02113A800CD3E6210059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
+		name = "VNCContentView.m: 79";
+		rLen = 0;
+		rLoc = 1665;
+		rType = 0;
+		vrLen = 1300;
+		vrLoc = 538;
+	};
+	02113A840CD3E6E30059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A850CD3E6E30059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A860CD3E6E30059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A870CD3E6E30059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A880CD3E6E30059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A890CD3E6E30059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A8A0CD3E6E40059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "NSLog(@\"%s\", __PRETTY_FUNCTION__);";
+		rLen = 0;
+		rLoc = 9602;
+		rType = 0;
+		vrLen = 1832;
+		vrLoc = 8094;
+	};
+	02113A8B0CD3E6E40059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
+		name = "VNCContentView.m: 79";
+		rLen = 0;
+		rLoc = 1667;
+		rType = 0;
+		vrLen = 1300;
+		vrLoc = 538;
+	};
+	02113A8C0CD3E6E40059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "NSLog(@\"%s\", __PRETTY_FUNCTION__);";
+		rLen = 0;
+		rLoc = 9602;
+		rType = 0;
+		vrLen = 1832;
+		vrLoc = 8094;
+	};
+	02113A8D0CD3E6E40059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
+		name = "VNCContentView.m: 68";
+		rLen = 0;
+		rLoc = 1325;
+		rType = 0;
+		vrLen = 1351;
+		vrLoc = 538;
+	};
+	02113A8F0CD3E7B50059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A900CD3E7B50059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A910CD3E7B50059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A920CD3E7B50059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A930CD3E7B50059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A940CD3E7B50059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A950CD3E7B60059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
+		name = "VNCContentView.m: 90";
+		rLen = 0;
+		rLoc = 1808;
+		rType = 0;
+		vrLen = 1391;
+		vrLoc = 615;
+	};
+	02113A970CD3E8120059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A980CD3E8120059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A990CD3E8120059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A9A0CD3E8120059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A9B0CD3E8120059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113A9C0CD3E8120059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113A9D0CD3E8130059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
+		name = "VNCContentView.m: 50";
+		rLen = 0;
+		rLoc = 763;
+		rType = 0;
+		vrLen = 1430;
+		vrLoc = 615;
+	};
+	02113A9F0CD3E8660059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113AA00CD3E8660059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113AA10CD3E8660059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113AA20CD3E8660059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113AA30CD3E8660059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259ACC50C9093BD005285B7 /* EventFilter.m */;
+		name = "EventFilter.m: 618";
+		rLen = 0;
+		rLoc = 17153;
+		rType = 0;
+		vrLen = 511;
+		vrLoc = 12773;
+	};
+	02113AA40CD3E8660059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD050C9093BD005285B7 /* RFBHandshaker.m */;
+		name = shared;
+		rLen = 6;
+		rLoc = 2530;
+		rType = 0;
+		vrLen = 382;
+		vrLoc = 2371;
+	};
+	02113AA50CD3E8670059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
+		name = "VNCContentView.m: 50";
+		rLen = 0;
+		rLoc = 747;
+		rType = 0;
+		vrLen = 1313;
+		vrLoc = 591;
+	};
+	02113AA60CD3E8670059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
+		name = "VNCContentView.m: 50";
+		rLen = 0;
+		rLoc = 747;
+		rType = 0;
+		vrLen = 1313;
+		vrLoc = 591;
+	};
+	02113AA70CD3E8670059CA0E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
+		name = "VNCView.m: 326";
+		rLen = 0;
+		rLoc = 9602;
+		rType = 0;
+		vrLen = 1881;
+		vrLoc = 8094;
+	};
 	021295290CA6F8EB001783A7 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 323";
 		rLen = 0;
-		rLoc = 10650;
+		rLoc = 10591;
 		rType = 0;
 		vrLen = 1405;
 		vrLoc = 8790;
@@ -18267,7 +19397,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 442";
 		rLen = 0;
-		rLoc = 14115;
+		rLoc = 14386;
 		rType = 0;
 		vrLen = 1393;
 		vrLoc = 12333;
@@ -18277,7 +19407,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 457";
 		rLen = 0;
-		rLoc = 14311;
+		rLoc = 14582;
 		rType = 0;
 		vrLen = 1680;
 		vrLoc = 12333;
@@ -18287,7 +19417,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 435";
 		rLen = 0;
-		rLoc = 14115;
+		rLoc = 14386;
 		rType = 0;
 		vrLen = 1109;
 		vrLoc = 12333;
@@ -18297,7 +19427,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 435";
 		rLen = 0;
-		rLoc = 14115;
+		rLoc = 14386;
 		rType = 0;
 		vrLen = 999;
 		vrLoc = 12605;
@@ -18317,7 +19447,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 435";
 		rLen = 0;
-		rLoc = 14115;
+		rLoc = 14386;
 		rType = 0;
 		vrLen = 999;
 		vrLoc = 12605;
@@ -18853,6 +19983,11 @@
 		name = CGContext.h;
 		path = "/usr/local/arm-apple-darwin/include/CoreGraphics/CGContext.h";
 		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {724, 11354}}";
+			sepNavSelRange = "{10444, 17}";
+			sepNavVisRect = "{{0, 4124}, {724, 782}}";
+		};
 	};
 	0259A4C00C8D0020005285B7 /* SBSuspensionWindow.h */ = {
 		isa = PBXFileReference;
@@ -19012,8 +20147,8 @@
 		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {724, 966}}";
-			sepNavSelRange = "{1480, 16}";
-			sepNavVisRect = "{{0, 140}, {724, 782}}";
+			sepNavSelRange = "{1675, 32}";
+			sepNavVisRect = "{{0, 134}, {724, 782}}";
 		};
 	};
 	0259A56E0C8D00AE005285B7 /* Info.plist */ = {
@@ -19319,9 +20454,9 @@
 		path = "/usr/local/arm-apple-darwin/include/UIKit/UIScroller.h";
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {727, 2842}}";
-			sepNavSelRange = "{6585, 0}";
-			sepNavVisRect = "{{0, 1456}, {727, 782}}";
+			sepNavIntBoundsRect = "{{0, 0}, {724, 2842}}";
+			sepNavSelRange = "{5585, 0}";
+			sepNavVisRect = "{{0, 1456}, {724, 782}}";
 		};
 	};
 	0259A6990C8D0A72005285B7 /* PBXTextBookmark */ = {
@@ -21134,31 +22269,31 @@
 	};
 	0259AC150C909383005285B7 /* VnseaApp.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {724, 1484}}";
-			sepNavSelRange = "{2340, 0}";
-			sepNavVisRect = "{{0, 699}, {724, 782}}";
+			sepNavIntBoundsRect = "{{0, 0}, {724, 1498}}";
+			sepNavSelRange = "{3217, 23}";
+			sepNavVisRect = "{{0, 702}, {724, 782}}";
 		};
 	};
 	0259AC160C909383005285B7 /* VnseaApp.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {724, 7854}}";
-			sepNavSelRange = "{744, 0}";
-			sepNavVisRect = "{{0, 294}, {724, 782}}";
+			sepNavIntBoundsRect = "{{0, 0}, {724, 7980}}";
+			sepNavSelRange = "{10908, 0}";
+			sepNavVisRect = "{{0, 3116}, {724, 782}}";
 			sepNavWindowFrame = "{{15, -5}, {777, 878}}";
 		};
 	};
 	0259AC170C909383005285B7 /* VNCView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {724, 1162}}";
-			sepNavSelRange = "{1898, 0}";
-			sepNavVisRect = "{{0, 380}, {724, 782}}";
+			sepNavIntBoundsRect = "{{0, 0}, {724, 1358}}";
+			sepNavSelRange = "{2548, 0}";
+			sepNavVisRect = "{{0, 534}, {724, 782}}";
 		};
 	};
 	0259AC180C909383005285B7 /* VNCView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {724, 12096}}";
-			sepNavSelRange = "{583, 0}";
-			sepNavVisRect = "{{0, 1454}, {724, 782}}";
+			sepNavIntBoundsRect = "{{0, 0}, {724, 12838}}";
+			sepNavSelRange = "{9602, 0}";
+			sepNavVisRect = "{{0, 3936}, {724, 782}}";
 			sepNavWindowFrame = "{{15, -5}, {777, 878}}";
 		};
 	};
@@ -21269,9 +22404,9 @@
 	};
 	0259ACC50C9093BD005285B7 /* EventFilter.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {724, 18984}}";
-			sepNavSelRange = "{18216, 0}";
-			sepNavVisRect = "{{0, 9143}, {724, 782}}";
+			sepNavIntBoundsRect = "{{0, 0}, {746, 18970}}";
+			sepNavSelRange = "{17153, 0}";
+			sepNavVisRect = "{{0, 6750}, {746, 207}}";
 			sepNavWindowFrame = "{{15, -5}, {777, 878}}";
 		};
 	};
@@ -21586,9 +22721,9 @@
 	};
 	0259AD070C9093BD005285B7 /* RFBProtocol.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {727, 3486}}";
+			sepNavIntBoundsRect = "{{0, 0}, {724, 3486}}";
 			sepNavSelRange = "{5705, 70}";
-			sepNavVisRect = "{{0, 2262}, {727, 782}}";
+			sepNavVisRect = "{{0, 2262}, {724, 782}}";
 		};
 	};
 	0259AD080C9093BD005285B7 /* RFBServerInitReader.h */ = {
@@ -24448,9 +25583,9 @@
 	};
 	0259C1D90C9CBE70005285B7 /* VNCContentView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {727, 1176}}";
-			sepNavSelRange = "{1094, 0}";
-			sepNavVisRect = "{{0, 33}, {727, 782}}";
+			sepNavIntBoundsRect = "{{0, 0}, {724, 1344}}";
+			sepNavSelRange = "{747, 0}";
+			sepNavVisRect = "{{0, 548}, {724, 782}}";
 		};
 	};
 	0259C1FD0C9CD783005285B7 /* PBXTextBookmark */ = {
@@ -24705,7 +25840,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 51";
 		rLen = 0;
-		rLoc = 6739;
+		rLoc = 8037;
 		rType = 0;
 		vrLen = 942;
 		vrLoc = 4188;
@@ -24715,7 +25850,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: displayFromBuffer:";
 		rLen = 0;
-		rLoc = 2263;
+		rLoc = 2395;
 		rType = 0;
 		vrLen = 1281;
 		vrLoc = 0;
@@ -24805,7 +25940,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 300";
 		rLen = 0;
-		rLoc = 13352;
+		rLoc = 13623;
 		rType = 0;
 		vrLen = 1635;
 		vrLoc = 7903;
@@ -24865,7 +26000,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 300";
 		rLen = 0;
-		rLoc = 13352;
+		rLoc = 13623;
 		rType = 0;
 		vrLen = 1635;
 		vrLoc = 7903;
@@ -25082,7 +26217,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 214";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 276;
 		vrLoc = 2160;
@@ -25100,7 +26235,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 214";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 276;
 		vrLoc = 2160;
@@ -25180,7 +26315,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 435";
 		rLen = 0;
-		rLoc = 14115;
+		rLoc = 14386;
 		rType = 0;
 		vrLen = 1001;
 		vrLoc = 12603;
@@ -25190,7 +26325,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 55";
 		rLen = 0;
-		rLoc = 2348;
+		rLoc = 2550;
 		rType = 0;
 		vrLen = 1758;
 		vrLoc = 0;
@@ -25571,7 +26706,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 155";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 885;
 		vrLoc = 2160;
@@ -25591,7 +26726,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 435";
 		rLen = 0;
-		rLoc = 14115;
+		rLoc = 14386;
 		rType = 0;
 		vrLen = 1001;
 		vrLoc = 12603;
@@ -25601,7 +26736,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 155";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 885;
 		vrLoc = 2160;
@@ -25781,7 +26916,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 122";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 883;
 		vrLoc = 2160;
@@ -25791,7 +26926,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 128";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1071;
 		vrLoc = 2160;
@@ -25861,7 +26996,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 128";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1071;
 		vrLoc = 2160;
@@ -25871,7 +27006,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 41";
 		rLen = 0;
-		rLoc = 1899;
+		rLoc = 1948;
 		rType = 0;
 		vrLen = 1823;
 		vrLoc = 0;
@@ -25908,7 +27043,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 154";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1131;
 		vrLoc = 2160;
@@ -25935,7 +27070,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 128";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1550;
 		vrLoc = 2260;
@@ -26015,7 +27150,7 @@
 		comments = "warning: passing argument 4 of 'scheduledTimerWithTimeInterval:target:selector:userInfo:repeats:' from incompatible pointer type";
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		rLen = 0;
-		rLoc = 838;
+		rLoc = 890;
 		rType = 1;
 	};
 	02EAB67A0CAF0AA400CC262F /* PBXTextBookmark */ = {
@@ -26033,7 +27168,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 171";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 613;
 		vrLoc = 3249;
@@ -26053,7 +27188,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 171";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 613;
 		vrLoc = 3249;
@@ -26073,7 +27208,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 171";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 613;
 		vrLoc = 3249;
@@ -26093,7 +27228,7 @@
 		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
 		name = "VNCContentView.m: 58";
 		rLen = 0;
-		rLoc = 1094;
+		rLoc = 1160;
 		rType = 0;
 		vrLen = 1140;
 		vrLoc = 24;
@@ -26103,7 +27238,7 @@
 		comments = "warning: initialization from incompatible pointer type";
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		rLen = 0;
-		rLoc = 838;
+		rLoc = 890;
 		rType = 1;
 	};
 	02EAB6830CAF0AA600CC262F /* PBXTextBookmark */ = {
@@ -26111,7 +27246,7 @@
 		fRef = 0259C1D90C9CBE70005285B7 /* VNCContentView.m */;
 		name = "VNCContentView.m: 58";
 		rLen = 0;
-		rLoc = 1094;
+		rLoc = 1160;
 		rType = 0;
 		vrLen = 1140;
 		vrLoc = 24;
@@ -26121,7 +27256,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 137";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1518;
 		vrLoc = 2346;
@@ -26131,7 +27266,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26151,7 +27286,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26171,7 +27306,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26191,7 +27326,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 145";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1547;
 		vrLoc = 2346;
@@ -26201,7 +27336,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26221,7 +27356,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26241,7 +27376,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26271,7 +27406,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = NSTimer;
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1235;
 		vrLoc = 2109;
@@ -26291,7 +27426,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 216";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1177;
 		vrLoc = 3277;
@@ -26301,7 +27436,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26321,7 +27456,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26341,7 +27476,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26361,7 +27496,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 178";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1169;
 		vrLoc = 3277;
@@ -26371,7 +27506,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 205";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1179;
 		vrLoc = 3341;
@@ -26381,7 +27516,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26401,7 +27536,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26421,7 +27556,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26441,7 +27576,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26461,7 +27596,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26481,7 +27616,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3277;
@@ -26501,7 +27636,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 212";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1141;
 		vrLoc = 3341;
@@ -26511,7 +27646,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 171";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 613;
 		vrLoc = 3285;
@@ -26531,7 +27666,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 171";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 613;
 		vrLoc = 3285;
@@ -26551,7 +27686,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 171";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 613;
 		vrLoc = 3285;
@@ -26581,7 +27716,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 135";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1602;
 		vrLoc = 2192;
@@ -26601,7 +27736,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 135";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1600;
 		vrLoc = 2194;
@@ -26611,7 +27746,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 171";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 613;
 		vrLoc = 3285;
@@ -26631,7 +27766,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 171";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 613;
 		vrLoc = 3285;
@@ -26651,7 +27786,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 171";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 613;
 		vrLoc = 3285;
@@ -26671,7 +27806,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 135";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1600;
 		vrLoc = 2194;
@@ -26681,7 +27816,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 135";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1600;
 		vrLoc = 2194;
@@ -26701,7 +27836,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3335;
@@ -26721,7 +27856,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3335;
@@ -26741,7 +27876,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3335;
@@ -26801,7 +27936,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 137";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1618;
 		vrLoc = 2194;
@@ -26811,7 +27946,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3339;
@@ -26831,7 +27966,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3339;
@@ -26851,7 +27986,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3339;
@@ -26881,7 +28016,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 136";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1622;
 		vrLoc = 2194;
@@ -26901,7 +28036,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 136";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1622;
 		vrLoc = 2194;
@@ -26911,7 +28046,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3339;
@@ -26931,7 +28066,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3339;
@@ -26951,7 +28086,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3339;
@@ -26971,7 +28106,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3339;
@@ -27001,7 +28136,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 42";
 		rLen = 0;
-		rLoc = 2063;
+		rLoc = 2195;
 		rType = 0;
 		vrLen = 1824;
 		vrLoc = 0;
@@ -27011,7 +28146,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 136";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 1570;
 		vrLoc = 2455;
@@ -27061,7 +28196,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 106";
 		rLen = 0;
-		rLoc = 2722;
+		rLoc = 2705;
 		rType = 0;
 		vrLen = 1524;
 		vrLoc = 2274;
@@ -27101,7 +28236,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 333";
 		rLen = 0;
-		rLoc = 10411;
+		rLoc = 10352;
 		rType = 0;
 		vrLen = 1343;
 		vrLoc = 8672;
@@ -27127,7 +28262,7 @@
 		fRef = 0259AC170C909383005285B7 /* VNCView.h */;
 		name = "VNCView.h: 42";
 		rLen = 0;
-		rLoc = 2063;
+		rLoc = 2195;
 		rType = 0;
 		vrLen = 1824;
 		vrLoc = 0;
@@ -27177,7 +28312,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 345";
 		rLen = 0;
-		rLoc = 10780;
+		rLoc = 11051;
 		rType = 0;
 		vrLen = 1572;
 		vrLoc = 7302;
@@ -27217,7 +28352,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 205";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 2029;
 		vrLoc = 5247;
@@ -27227,7 +28362,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3339;
@@ -27245,7 +28380,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 172";
 		rLen = 0;
-		rLoc = 17759;
+		rLoc = 19206;
 		rType = 0;
 		vrLen = 557;
 		vrLoc = 3339;
@@ -27325,7 +28460,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 343";
 		rLen = 0;
-		rLoc = 10648;
+		rLoc = 10589;
 		rType = 0;
 		vrLen = 1713;
 		vrLoc = 6468;
@@ -27355,7 +28490,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 343";
 		rLen = 0;
-		rLoc = 10648;
+		rLoc = 10589;
 		rType = 0;
 		vrLen = 1713;
 		vrLoc = 6468;
@@ -27435,7 +28570,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 81";
 		rLen = 0;
-		rLoc = 7431;
+		rLoc = 8729;
 		rType = 0;
 		vrLen = 956;
 		vrLoc = 1218;
@@ -27445,7 +28580,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 345";
 		rLen = 0;
-		rLoc = 10648;
+		rLoc = 10589;
 		rType = 0;
 		vrLen = 1285;
 		vrLoc = 9044;
@@ -27455,7 +28590,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 81";
 		rLen = 0;
-		rLoc = 7431;
+		rLoc = 8729;
 		rType = 0;
 		vrLen = 956;
 		vrLoc = 1218;
@@ -27465,7 +28600,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 345";
 		rLen = 0;
-		rLoc = 10648;
+		rLoc = 10589;
 		rType = 0;
 		vrLen = 1285;
 		vrLoc = 9044;
@@ -27535,7 +28670,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 345";
 		rLen = 0;
-		rLoc = 10648;
+		rLoc = 10589;
 		rType = 0;
 		vrLen = 1285;
 		vrLoc = 9044;
@@ -27555,7 +28690,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 345";
 		rLen = 0;
-		rLoc = 10648;
+		rLoc = 10589;
 		rType = 0;
 		vrLen = 1285;
 		vrLoc = 9044;
@@ -27655,7 +28790,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 230";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1984;
 		vrLoc = 5625;
@@ -27725,7 +28860,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 230";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1984;
 		vrLoc = 5625;
@@ -27795,7 +28930,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 230";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1984;
 		vrLoc = 5625;
@@ -27865,7 +29000,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 230";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1984;
 		vrLoc = 5625;
@@ -27935,7 +29070,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 230";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1984;
 		vrLoc = 5625;
@@ -28065,7 +29200,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 227";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 2054;
 		vrLoc = 5522;
@@ -28165,7 +29300,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 217";
 		rLen = 0;
-		rLoc = 7081;
+		rLoc = 7022;
 		rType = 0;
 		vrLen = 1956;
 		vrLoc = 5878;
@@ -28205,7 +29340,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 296";
 		rLen = 0;
-		rLoc = 8319;
+		rLoc = 8260;
 		rType = 0;
 		vrLen = 1542;
 		vrLoc = 7349;
@@ -28275,7 +29410,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 307";
 		rLen = 0;
-		rLoc = 8975;
+		rLoc = 8916;
 		rType = 0;
 		vrLen = 1386;
 		vrLoc = 8583;
@@ -28345,7 +29480,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 307";
 		rLen = 0;
-		rLoc = 8975;
+		rLoc = 8916;
 		rType = 0;
 		vrLen = 1386;
 		vrLoc = 8583;
@@ -28355,7 +29490,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 307";
 		rLen = 0;
-		rLoc = 8975;
+		rLoc = 8916;
 		rType = 0;
 		vrLen = 1386;
 		vrLoc = 8583;
@@ -28455,7 +29590,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = ":(RFBConnection *)connection";
 		rLen = 28;
-		rLoc = 4061;
+		rLoc = 4002;
 		rType = 0;
 		vrLen = 1965;
 		vrLoc = 4834;
@@ -28485,7 +29620,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 311";
 		rLen = 0;
-		rLoc = 8768;
+		rLoc = 8709;
 		rType = 0;
 		vrLen = 1635;
 		vrLoc = 8901;
@@ -28495,7 +29630,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 28";
 		rLen = 0;
-		rLoc = 1464;
+		rLoc = 1536;
 		rType = 0;
 		vrLen = 1367;
 		vrLoc = 2169;
@@ -28505,7 +29640,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 311";
 		rLen = 0;
-		rLoc = 8768;
+		rLoc = 8709;
 		rType = 0;
 		vrLen = 1635;
 		vrLoc = 8901;
@@ -28515,7 +29650,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 28";
 		rLen = 0;
-		rLoc = 1464;
+		rLoc = 1536;
 		rType = 0;
 		vrLen = 1367;
 		vrLoc = 2169;
@@ -28525,7 +29660,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 311";
 		rLen = 0;
-		rLoc = 8768;
+		rLoc = 8709;
 		rType = 0;
 		vrLen = 1635;
 		vrLoc = 8901;
@@ -28595,7 +29730,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 311";
 		rLen = 0;
-		rLoc = 8768;
+		rLoc = 8709;
 		rType = 0;
 		vrLen = 1635;
 		vrLoc = 8901;
@@ -28605,7 +29740,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 311";
 		rLen = 0;
-		rLoc = 8768;
+		rLoc = 8709;
 		rType = 0;
 		vrLen = 1635;
 		vrLoc = 8901;
@@ -28631,7 +29766,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 28";
 		rLen = 0;
-		rLoc = 1464;
+		rLoc = 1536;
 		rType = 0;
 		vrLen = 1337;
 		vrLoc = 2169;
@@ -28641,7 +29776,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 311";
 		rLen = 0;
-		rLoc = 8768;
+		rLoc = 8709;
 		rType = 0;
 		vrLen = 1635;
 		vrLoc = 8901;
@@ -28651,7 +29786,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 28";
 		rLen = 0;
-		rLoc = 1464;
+		rLoc = 1536;
 		rType = 0;
 		vrLen = 1337;
 		vrLoc = 2169;
@@ -28861,7 +29996,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 275";
 		rLen = 0;
-		rLoc = 7880;
+		rLoc = 7821;
 		rType = 0;
 		vrLen = 1838;
 		vrLoc = 8228;
@@ -28871,7 +30006,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 28";
 		rLen = 0;
-		rLoc = 1464;
+		rLoc = 1536;
 		rType = 0;
 		vrLen = 1337;
 		vrLoc = 2169;
@@ -28901,7 +30036,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 275";
 		rLen = 0;
-		rLoc = 7880;
+		rLoc = 7821;
 		rType = 0;
 		vrLen = 1838;
 		vrLoc = 8228;
@@ -28911,7 +30046,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 28";
 		rLen = 0;
-		rLoc = 1464;
+		rLoc = 1536;
 		rType = 0;
 		vrLen = 1337;
 		vrLoc = 2169;
@@ -29061,7 +30196,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 275";
 		rLen = 0;
-		rLoc = 7880;
+		rLoc = 7821;
 		rType = 0;
 		vrLen = 2030;
 		vrLoc = 4586;
@@ -29071,7 +30206,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 28";
 		rLen = 0;
-		rLoc = 1464;
+		rLoc = 1536;
 		rType = 0;
 		vrLen = 1337;
 		vrLoc = 2169;
@@ -29091,7 +30226,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 275";
 		rLen = 0;
-		rLoc = 7880;
+		rLoc = 7821;
 		rType = 0;
 		vrLen = 2030;
 		vrLoc = 4586;
@@ -29101,7 +30236,7 @@
 		fRef = 0259AC180C909383005285B7 /* VNCView.m */;
 		name = "VNCView.m: 28";
 		rLen = 0;
-		rLoc = 1464;
+		rLoc = 1536;
 		rType = 0;
 		vrLen = 1337;
 		vrLoc = 2169;
@@ -29397,6 +30532,7 @@
 		activeBuildConfigurationName = Debug;
 		activeTarget = D28A88AD04BDD90700651E21 /* vnsea */;
 		addToTargets = (
+			D28A88AD04BDD90700651E21 /* vnsea */,
 		);
 		breakpoints = (
 		);
@@ -31288,6 +32424,119 @@
 			021139FE0CCD6CEE0059CA0E /* PBXTextBookmark */ = 021139FE0CCD6CEE0059CA0E /* PBXTextBookmark */;
 			021139FF0CCD6CEE0059CA0E /* PBXTextBookmark */ = 021139FF0CCD6CEE0059CA0E /* PBXTextBookmark */;
 			02113A000CCD6CEE0059CA0E /* PBXTextBookmark */ = 02113A000CCD6CEE0059CA0E /* PBXTextBookmark */;
+			02113A130CCFC5BA0059CA0E /* PBXTextBookmark */ = 02113A130CCFC5BA0059CA0E /* PBXTextBookmark */;
+			02113A140CCFC5BA0059CA0E /* PBXTextBookmark */ = 02113A140CCFC5BA0059CA0E /* PBXTextBookmark */;
+			02113A150CCFC5BA0059CA0E /* PBXTextBookmark */ = 02113A150CCFC5BA0059CA0E /* PBXTextBookmark */;
+			02113A160CCFC5BA0059CA0E /* PBXTextBookmark */ = 02113A160CCFC5BA0059CA0E /* PBXTextBookmark */;
+			02113A170CCFC5BA0059CA0E /* PBXTextBookmark */ = 02113A170CCFC5BA0059CA0E /* PBXTextBookmark */;
+			02113A180CCFC5BA0059CA0E /* PBXTextBookmark */ = 02113A180CCFC5BA0059CA0E /* PBXTextBookmark */;
+			02113A190CD3DFC90059CA0E /* PBXTextBookmark */ = 02113A190CD3DFC90059CA0E /* PBXTextBookmark */;
+			02113A1A0CD3DFC90059CA0E /* PBXTextBookmark */ = 02113A1A0CD3DFC90059CA0E /* PBXTextBookmark */;
+			02113A1B0CD3DFC90059CA0E /* PBXTextBookmark */ = 02113A1B0CD3DFC90059CA0E /* PBXTextBookmark */;
+			02113A1C0CD3DFC90059CA0E /* PBXTextBookmark */ = 02113A1C0CD3DFC90059CA0E /* PBXTextBookmark */;
+			02113A1D0CD3DFC90059CA0E /* PBXTextBookmark */ = 02113A1D0CD3DFC90059CA0E /* PBXTextBookmark */;
+			02113A1E0CD3DFC90059CA0E /* PBXTextBookmark */ = 02113A1E0CD3DFC90059CA0E /* PBXTextBookmark */;
+			02113A220CD3E2630059CA0E /* PBXTextBookmark */ = 02113A220CD3E2630059CA0E /* PBXTextBookmark */;
+			02113A230CD3E2630059CA0E /* PBXTextBookmark */ = 02113A230CD3E2630059CA0E /* PBXTextBookmark */;
+			02113A240CD3E2630059CA0E /* PBXTextBookmark */ = 02113A240CD3E2630059CA0E /* PBXTextBookmark */;
+			02113A250CD3E2630059CA0E /* PBXTextBookmark */ = 02113A250CD3E2630059CA0E /* PBXTextBookmark */;
+			02113A260CD3E2640059CA0E /* PBXTextBookmark */ = 02113A260CD3E2640059CA0E /* PBXTextBookmark */;
+			02113A270CD3E2640059CA0E /* PBXTextBookmark */ = 02113A270CD3E2640059CA0E /* PBXTextBookmark */;
+			02113A280CD3E2690059CA0E /* PBXTextBookmark */ = 02113A280CD3E2690059CA0E /* PBXTextBookmark */;
+			02113A290CD3E2690059CA0E /* PBXTextBookmark */ = 02113A290CD3E2690059CA0E /* PBXTextBookmark */;
+			02113A2A0CD3E2690059CA0E /* PBXTextBookmark */ = 02113A2A0CD3E2690059CA0E /* PBXTextBookmark */;
+			02113A2B0CD3E2690059CA0E /* PBXTextBookmark */ = 02113A2B0CD3E2690059CA0E /* PBXTextBookmark */;
+			02113A2C0CD3E2690059CA0E /* PBXTextBookmark */ = 02113A2C0CD3E2690059CA0E /* PBXTextBookmark */;
+			02113A2D0CD3E2690059CA0E /* PBXTextBookmark */ = 02113A2D0CD3E2690059CA0E /* PBXTextBookmark */;
+			02113A2E0CD3E2690059CA0E /* PBXTextBookmark */ = 02113A2E0CD3E2690059CA0E /* PBXTextBookmark */;
+			02113A2F0CD3E2690059CA0E /* PBXTextBookmark */ = 02113A2F0CD3E2690059CA0E /* PBXTextBookmark */;
+			02113A300CD3E2690059CA0E /* PBXTextBookmark */ = 02113A300CD3E2690059CA0E /* PBXTextBookmark */;
+			02113A310CD3E2690059CA0E /* PBXTextBookmark */ = 02113A310CD3E2690059CA0E /* PBXTextBookmark */;
+			02113A340CD3E30E0059CA0E /* PBXTextBookmark */ = 02113A340CD3E30E0059CA0E /* PBXTextBookmark */;
+			02113A350CD3E30E0059CA0E /* PBXTextBookmark */ = 02113A350CD3E30E0059CA0E /* PBXTextBookmark */;
+			02113A360CD3E30E0059CA0E /* PBXTextBookmark */ = 02113A360CD3E30E0059CA0E /* PBXTextBookmark */;
+			02113A370CD3E30E0059CA0E /* PBXTextBookmark */ = 02113A370CD3E30E0059CA0E /* PBXTextBookmark */;
+			02113A480CD3E44B0059CA0E /* PBXTextBookmark */ = 02113A480CD3E44B0059CA0E /* PBXTextBookmark */;
+			02113A490CD3E44B0059CA0E /* PBXTextBookmark */ = 02113A490CD3E44B0059CA0E /* PBXTextBookmark */;
+			02113A4A0CD3E44B0059CA0E /* PBXTextBookmark */ = 02113A4A0CD3E44B0059CA0E /* PBXTextBookmark */;
+			02113A4B0CD3E44B0059CA0E /* PBXTextBookmark */ = 02113A4B0CD3E44B0059CA0E /* PBXTextBookmark */;
+			02113A4C0CD3E44B0059CA0E /* PBXTextBookmark */ = 02113A4C0CD3E44B0059CA0E /* PBXTextBookmark */;
+			02113A4D0CD3E44B0059CA0E /* PBXTextBookmark */ = 02113A4D0CD3E44B0059CA0E /* PBXTextBookmark */;
+			02113A4E0CD3E44D0059CA0E /* PBXTextBookmark */ = 02113A4E0CD3E44D0059CA0E /* PBXTextBookmark */;
+			02113A4F0CD3E44D0059CA0E /* PBXTextBookmark */ = 02113A4F0CD3E44D0059CA0E /* PBXTextBookmark */;
+			02113A500CD3E44D0059CA0E /* PBXTextBookmark */ = 02113A500CD3E44D0059CA0E /* PBXTextBookmark */;
+			02113A510CD3E44D0059CA0E /* PBXTextBookmark */ = 02113A510CD3E44D0059CA0E /* PBXTextBookmark */;
+			02113A520CD3E44D0059CA0E /* PBXTextBookmark */ = 02113A520CD3E44D0059CA0E /* PBXTextBookmark */;
+			02113A530CD3E44D0059CA0E /* PBXTextBookmark */ = 02113A530CD3E44D0059CA0E /* PBXTextBookmark */;
+			02113A540CD3E44D0059CA0E /* PBXTextBookmark */ = 02113A540CD3E44D0059CA0E /* PBXTextBookmark */;
+			02113A580CD3E50F0059CA0E /* PBXTextBookmark */ = 02113A580CD3E50F0059CA0E /* PBXTextBookmark */;
+			02113A590CD3E50F0059CA0E /* PBXTextBookmark */ = 02113A590CD3E50F0059CA0E /* PBXTextBookmark */;
+			02113A5A0CD3E50F0059CA0E /* PBXTextBookmark */ = 02113A5A0CD3E50F0059CA0E /* PBXTextBookmark */;
+			02113A5B0CD3E50F0059CA0E /* PBXTextBookmark */ = 02113A5B0CD3E50F0059CA0E /* PBXTextBookmark */;
+			02113A5C0CD3E50F0059CA0E /* PBXTextBookmark */ = 02113A5C0CD3E50F0059CA0E /* PBXTextBookmark */;
+			02113A5D0CD3E50F0059CA0E /* PBXTextBookmark */ = 02113A5D0CD3E50F0059CA0E /* PBXTextBookmark */;
+			02113A5E0CD3E5100059CA0E /* PBXTextBookmark */ = 02113A5E0CD3E5100059CA0E /* PBXTextBookmark */;
+			02113A5F0CD3E5100059CA0E /* PBXTextBookmark */ = 02113A5F0CD3E5100059CA0E /* PBXTextBookmark */;
+			02113A600CD3E5100059CA0E /* PBXTextBookmark */ = 02113A600CD3E5100059CA0E /* PBXTextBookmark */;
+			02113A610CD3E5100059CA0E /* PBXTextBookmark */ = 02113A610CD3E5100059CA0E /* PBXTextBookmark */;
+			02113A650CD3E5E70059CA0E /* PBXTextBookmark */ = 02113A650CD3E5E70059CA0E /* PBXTextBookmark */;
+			02113A660CD3E5E70059CA0E /* PBXTextBookmark */ = 02113A660CD3E5E70059CA0E /* PBXTextBookmark */;
+			02113A670CD3E5E70059CA0E /* PBXTextBookmark */ = 02113A670CD3E5E70059CA0E /* PBXTextBookmark */;
+			02113A680CD3E5E70059CA0E /* PBXTextBookmark */ = 02113A680CD3E5E70059CA0E /* PBXTextBookmark */;
+			02113A690CD3E5E80059CA0E /* PBXTextBookmark */ = 02113A690CD3E5E80059CA0E /* PBXTextBookmark */;
+			02113A6A0CD3E5E80059CA0E /* PBXTextBookmark */ = 02113A6A0CD3E5E80059CA0E /* PBXTextBookmark */;
+			02113A6B0CD3E5E90059CA0E /* PBXTextBookmark */ = 02113A6B0CD3E5E90059CA0E /* PBXTextBookmark */;
+			02113A6C0CD3E5E90059CA0E /* PBXTextBookmark */ = 02113A6C0CD3E5E90059CA0E /* PBXTextBookmark */;
+			02113A6D0CD3E5E90059CA0E /* PBXTextBookmark */ = 02113A6D0CD3E5E90059CA0E /* PBXTextBookmark */;
+			02113A6E0CD3E5E90059CA0E /* PBXTextBookmark */ = 02113A6E0CD3E5E90059CA0E /* PBXTextBookmark */;
+			02113A6F0CD3E5E90059CA0E /* PBXTextBookmark */ = 02113A6F0CD3E5E90059CA0E /* PBXTextBookmark */;
+			02113A700CD3E5E90059CA0E /* PBXTextBookmark */ = 02113A700CD3E5E90059CA0E /* PBXTextBookmark */;
+			02113A710CD3E5E90059CA0E /* PBXTextBookmark */ = 02113A710CD3E5E90059CA0E /* PBXTextBookmark */;
+			02113A720CD3E5E90059CA0E /* PBXTextBookmark */ = 02113A720CD3E5E90059CA0E /* PBXTextBookmark */;
+			02113A730CD3E5E90059CA0E /* PBXTextBookmark */ = 02113A730CD3E5E90059CA0E /* PBXTextBookmark */;
+			02113A740CD3E5E90059CA0E /* PBXTextBookmark */ = 02113A740CD3E5E90059CA0E /* PBXTextBookmark */;
+			02113A780CD3E6200059CA0E /* PBXTextBookmark */ = 02113A780CD3E6200059CA0E /* PBXTextBookmark */;
+			02113A790CD3E6200059CA0E /* PBXTextBookmark */ = 02113A790CD3E6200059CA0E /* PBXTextBookmark */;
+			02113A7A0CD3E6200059CA0E /* PBXTextBookmark */ = 02113A7A0CD3E6200059CA0E /* PBXTextBookmark */;
+			02113A7B0CD3E6200059CA0E /* PBXTextBookmark */ = 02113A7B0CD3E6200059CA0E /* PBXTextBookmark */;
+			02113A7C0CD3E6200059CA0E /* PBXTextBookmark */ = 02113A7C0CD3E6200059CA0E /* PBXTextBookmark */;
+			02113A7D0CD3E6200059CA0E /* PBXTextBookmark */ = 02113A7D0CD3E6200059CA0E /* PBXTextBookmark */;
+			02113A7E0CD3E6210059CA0E /* PBXTextBookmark */ = 02113A7E0CD3E6210059CA0E /* PBXTextBookmark */;
+			02113A7F0CD3E6210059CA0E /* PBXTextBookmark */ = 02113A7F0CD3E6210059CA0E /* PBXTextBookmark */;
+			02113A800CD3E6210059CA0E /* PBXTextBookmark */ = 02113A800CD3E6210059CA0E /* PBXTextBookmark */;
+			02113A840CD3E6E30059CA0E /* PBXTextBookmark */ = 02113A840CD3E6E30059CA0E /* PBXTextBookmark */;
+			02113A850CD3E6E30059CA0E /* PBXTextBookmark */ = 02113A850CD3E6E30059CA0E /* PBXTextBookmark */;
+			02113A860CD3E6E30059CA0E /* PBXTextBookmark */ = 02113A860CD3E6E30059CA0E /* PBXTextBookmark */;
+			02113A870CD3E6E30059CA0E /* PBXTextBookmark */ = 02113A870CD3E6E30059CA0E /* PBXTextBookmark */;
+			02113A880CD3E6E30059CA0E /* PBXTextBookmark */ = 02113A880CD3E6E30059CA0E /* PBXTextBookmark */;
+			02113A890CD3E6E30059CA0E /* PBXTextBookmark */ = 02113A890CD3E6E30059CA0E /* PBXTextBookmark */;
+			02113A8A0CD3E6E40059CA0E /* PBXTextBookmark */ = 02113A8A0CD3E6E40059CA0E /* PBXTextBookmark */;
+			02113A8B0CD3E6E40059CA0E /* PBXTextBookmark */ = 02113A8B0CD3E6E40059CA0E /* PBXTextBookmark */;
+			02113A8C0CD3E6E40059CA0E /* PBXTextBookmark */ = 02113A8C0CD3E6E40059CA0E /* PBXTextBookmark */;
+			02113A8D0CD3E6E40059CA0E /* PBXTextBookmark */ = 02113A8D0CD3E6E40059CA0E /* PBXTextBookmark */;
+			02113A8F0CD3E7B50059CA0E /* PBXTextBookmark */ = 02113A8F0CD3E7B50059CA0E /* PBXTextBookmark */;
+			02113A900CD3E7B50059CA0E /* PBXTextBookmark */ = 02113A900CD3E7B50059CA0E /* PBXTextBookmark */;
+			02113A910CD3E7B50059CA0E /* PBXTextBookmark */ = 02113A910CD3E7B50059CA0E /* PBXTextBookmark */;
+			02113A920CD3E7B50059CA0E /* PBXTextBookmark */ = 02113A920CD3E7B50059CA0E /* PBXTextBookmark */;
+			02113A930CD3E7B50059CA0E /* PBXTextBookmark */ = 02113A930CD3E7B50059CA0E /* PBXTextBookmark */;
+			02113A940CD3E7B50059CA0E /* PBXTextBookmark */ = 02113A940CD3E7B50059CA0E /* PBXTextBookmark */;
+			02113A950CD3E7B60059CA0E /* PBXTextBookmark */ = 02113A950CD3E7B60059CA0E /* PBXTextBookmark */;
+			02113A970CD3E8120059CA0E /* PBXTextBookmark */ = 02113A970CD3E8120059CA0E /* PBXTextBookmark */;
+			02113A980CD3E8120059CA0E /* PBXTextBookmark */ = 02113A980CD3E8120059CA0E /* PBXTextBookmark */;
+			02113A990CD3E8120059CA0E /* PBXTextBookmark */ = 02113A990CD3E8120059CA0E /* PBXTextBookmark */;
+			02113A9A0CD3E8120059CA0E /* PBXTextBookmark */ = 02113A9A0CD3E8120059CA0E /* PBXTextBookmark */;
+			02113A9B0CD3E8120059CA0E /* PBXTextBookmark */ = 02113A9B0CD3E8120059CA0E /* PBXTextBookmark */;
+			02113A9C0CD3E8120059CA0E /* PBXTextBookmark */ = 02113A9C0CD3E8120059CA0E /* PBXTextBookmark */;
+			02113A9D0CD3E8130059CA0E /* PBXTextBookmark */ = 02113A9D0CD3E8130059CA0E /* PBXTextBookmark */;
+			02113A9F0CD3E8660059CA0E /* PBXTextBookmark */ = 02113A9F0CD3E8660059CA0E /* PBXTextBookmark */;
+			02113AA00CD3E8660059CA0E /* PBXTextBookmark */ = 02113AA00CD3E8660059CA0E /* PBXTextBookmark */;
+			02113AA10CD3E8660059CA0E /* PBXTextBookmark */ = 02113AA10CD3E8660059CA0E /* PBXTextBookmark */;
+			02113AA20CD3E8660059CA0E /* PBXTextBookmark */ = 02113AA20CD3E8660059CA0E /* PBXTextBookmark */;
+			02113AA30CD3E8660059CA0E /* PBXTextBookmark */ = 02113AA30CD3E8660059CA0E /* PBXTextBookmark */;
+			02113AA40CD3E8660059CA0E /* PBXTextBookmark */ = 02113AA40CD3E8660059CA0E /* PBXTextBookmark */;
+			02113AA50CD3E8670059CA0E /* PBXTextBookmark */ = 02113AA50CD3E8670059CA0E /* PBXTextBookmark */;
+			02113AA60CD3E8670059CA0E /* PBXTextBookmark */ = 02113AA60CD3E8670059CA0E /* PBXTextBookmark */;
+			02113AA70CD3E8670059CA0E /* PBXTextBookmark */ = 02113AA70CD3E8670059CA0E /* PBXTextBookmark */;
 			021295290CA6F8EB001783A7 = 021295290CA6F8EB001783A7 /* PBXTextBookmark */;
 			021295460CA7088A001783A7 = 021295460CA7088A001783A7 /* PBXTextBookmark */;
 			021295480CA7088A001783A7 = 021295480CA7088A001783A7 /* PBXTextBookmark */;

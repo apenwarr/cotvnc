@@ -47,7 +47,9 @@
 
 - (void)setRemoteDisplaySize:(CGSize)remoteSize
 {
-	CGRect bounds = [self bounds];
+	// Rebuild our bounds based on the new size.
+	CGRect bounds;
+	bounds.origin = CGPointMake(0, 0);
 	bounds.size = remoteSize;
 	[self setBounds:bounds];
 		
@@ -64,11 +66,21 @@
 
 - (void)drawRect:(CGRect)destRect
 {
-    CGRect b = [self bounds];
-    CGRect r = destRect;
+	if (_frameBuffer)
+	{
+		CGRect b = [self bounds];
+		CGRect r = destRect;
 
-    r.origin.y = b.size.height - CGRectGetMaxY(r);
-    [_frameBuffer drawRect:r at:destRect.origin];
+		r.origin.y = b.size.height - CGRectGetMaxY(r);
+		[_frameBuffer drawRect:r at:destRect.origin];
+	}
+	else
+	{
+		// If there is no framebuffer, we just draw a black background.
+		CGContextRef context = UICurrentContext();
+		CGContextSetRGBFillColor(context, 0, 0, 0, 1);
+		CGContextFillRect(context, destRect);
+	}
 }
 
 - (void)displayFromBuffer:(CGRect)aRect

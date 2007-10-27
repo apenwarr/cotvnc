@@ -44,11 +44,13 @@
  */
 @interface VNCView : UIView <RFBViewProtocol>
 {
+	id _delegate;
     RFBConnection * _connection;	//!< The connection object, nil if not currently connected.
 	EventFilter * _filter;			//!< Event filter for the current connection.
 	VNCScrollerView * _scroller;	//!< Scroller subview.
 	VNCContentView * _screenView;	//!< Child content view that draws the framebuffer.
 	UINavBarButton * _keyboardButton;	//
+	UINavBarButton * _exitButton;	//
 	UIPushButton * _shiftButton;
 	UIPushButton * _commandButton;
 	UIPushButton * _optionButton;
@@ -58,6 +60,12 @@
 	bool _areControlsVisible;
 	bool _isKeyboardVisible;
 }
+
+//! @name Delegate
+//@{
+- (id)delegate;
+- (void)setDelegate:(id)theDelegate;
+//@}
 
 //! @name Controls and keyboard
 //@{
@@ -76,6 +84,12 @@
 - (void)displayFromBuffer:(CGRect)aRect;
 - (void)drawRectList:(id)aList;
 //@}
+
+@end
+
+@interface VNCView (DelegateMethods)
+
+- (void)closeConnection;
 
 @end
 
