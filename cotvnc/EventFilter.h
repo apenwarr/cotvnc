@@ -145,6 +145,9 @@ typedef enum {
 - (UIView *)view;
 - (void)setView: (UIView *)view;
 
+- (unsigned int)pressedButtons;
+- (unsigned int)pressedModifiers;
+
 // Local Mouse Events
 - (void)mouseDown: (GSEventRef)theEvent;
 - (void)mouseUp: (GSEventRef)theEvent;
@@ -161,7 +164,7 @@ typedef enum {
 - (void)clearUnpublishedMouseMove;
 
 // Local Keyboard Events
-- (void)flagsChanged:(GSEventRef)theEvent;
+- (void)flagsChanged:(unsigned int)newState;
 - (void)keyTyped:(NSString *)characters;
 
 // Synthesized Events

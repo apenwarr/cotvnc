@@ -50,12 +50,12 @@
 	VNCScrollerView * _scroller;	//!< Scroller subview.
 	VNCContentView * _screenView;	//!< Child content view that draws the framebuffer.
 	UINavBarButton * _keyboardButton;	//
-	UINavBarButton * _exitButton;	//
-	UIPushButton * _shiftButton;
-	UIPushButton * _commandButton;
-	UIPushButton * _optionButton;
-	UIPushButton * _controlButton;
+	UINavBarButton * _shiftButton;
+	UINavBarButton * _commandButton;
+	UINavBarButton * _optionButton;
+	UINavBarButton * _controlButton;
 	UINavBarButton * _rightMouseButton;
+	UINavBarButton * _exitButton;	//
 	id _keyboardView;
 	id _controlsView;
 	bool _areControlsVisible;
@@ -76,6 +76,7 @@
 - (void)toggleKeyboard:(id)sender;
 - (void)closeConnection:(id)sender;
 - (void)toggleRightMouse:(id)sender;
+- (void)toggleModifierKey:(id)sender;
 //@}
 
 //! @name RFBViewProtocol

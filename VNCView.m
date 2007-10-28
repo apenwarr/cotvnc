@@ -18,6 +18,7 @@
 #import <UIKit/UITextTraits.h>
 #import <GraphicsServices/GraphicsServices.h>
 #import "RectangleList.h"
+#import "QueuedEvent.h"
 
 //! Height of the controls bar view.
 #define kControlsBarHeight (48.0f)
@@ -25,9 +26,10 @@
 //! Height of buttons in the controls bar.
 #define kControlsBarButtonHeight (32.0f)
 
-#define kKeyboardButtonWidth (80.0f)
-#define kExitButtonWidth (30.0f)
-#define kRightMouseButtonWidth (30.0f)
+#define kKeyboardButtonWidth (40.0f)
+#define kExitButtonWidth (32.0f)
+#define kRightMouseButtonWidth (32.0f)
+#define kModifierKeyButtonWidth (32.0f)
 
 #define kModifierKeyImageWidth (21.0f)
 #define kModifierKeyImageHeight (21.0f)
@@ -83,17 +85,35 @@
 		
 		// Create keyboard button.
 		subframe = CGRectMake(10, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kKeyboardButtonWidth, kControlsBarButtonHeight);
-		_keyboardButton = [[UINavBarButton alloc] initWithTitle:@"Keyboard" autosizesToFit:NO];
+		_keyboardButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"keyboard.png"]];// Title:@"Keyboard" autosizesToFit:NO];
 		[_keyboardButton setFrame:subframe];
 		[_keyboardButton setNavBarButtonStyle:0];
 		[_keyboardButton addTarget:self action:@selector(toggleKeyboard:) forEvents:kUIControlEventMouseUpInside];
 		
-		// Terminate connection button.
-		subframe = CGRectMake(frame.size.width - kExitButtonWidth - 10, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kExitButtonWidth, kControlsBarButtonHeight);
-		_exitButton = [[UINavBarButton alloc] initWithTitle:@"X" autosizesToFit:NO];
-		[_exitButton setFrame:subframe];
-		[_exitButton setNavBarButtonStyle:0];
-		[_exitButton addTarget:self action:@selector(closeConnection:) forEvents:kUIControlEventMouseUpInside];
+		// Modifier key buttons.
+		subframe = CGRectMake(CGRectGetMaxX(subframe) + 6, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kModifierKeyButtonWidth, kControlsBarButtonHeight);
+		_shiftButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"shift_key.png"]];
+		[_shiftButton setFrame:subframe];
+		[_shiftButton setNavBarButtonStyle:0];
+		[_shiftButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
+		
+		subframe.origin.x = CGRectGetMaxX(subframe) + 6.0f;
+		_commandButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"cmd_key.png"]];
+		[_commandButton setFrame:subframe];
+		[_commandButton setNavBarButtonStyle:0];
+		[_commandButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
+		
+		subframe.origin.x = CGRectGetMaxX(subframe) + 6.0f;
+		_optionButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"opt_key.png"]];
+		[_optionButton setFrame:subframe];
+		[_optionButton setNavBarButtonStyle:0];
+		[_optionButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
+		
+		subframe.origin.x = CGRectGetMaxX(subframe) + 6.0f;
+		_controlButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"ctrl_key.png"]];
+		[_controlButton setFrame:subframe];
+		[_controlButton setNavBarButtonStyle:0];
+		[_controlButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
 		
 		// Right mouse button.
 		subframe = CGRectMake(frame.size.width - kExitButtonWidth - 10 - kRightMouseButtonWidth - 6, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kRightMouseButtonWidth, kControlsBarButtonHeight);
@@ -102,34 +122,15 @@
 		[_rightMouseButton setNavBarButtonStyle:0];
 		[_rightMouseButton addTarget:self action:@selector(toggleRightMouse:) forEvents:kUIControlEventMouseUpInside];
 		
-		subframe = CGRectMake(100, (kControlsBarHeight - kModifierKeyImageHeight) / 2.0f, kModifierKeyImageWidth, kModifierKeyImageHeight);
-		_shiftButton = [[UIPushButton alloc] initWithImage:[UIImage imageNamed:@"shift_key.png"]];
-		[_shiftButton setFrame:subframe];
-		[_shiftButton setDrawsShadow:YES];
-//		[_shiftButton setShadowOffset:3.0f];
-//		[_shiftButton setShadowColor:black forState:0];
-//		[_shiftButton setShadowColor:red forState:1];
-//		[_shiftButton setReverseShadowDirectionWhenHighlighted:YES];
-		[_shiftButton setShowPressFeedback:YES];
-		
-		subframe.origin.x += kModifierKeyImageWidth + 6.0f;
-		_commandButton = [[UIPushButton alloc] initWithImage:[UIImage imageNamed:@"cmd_key.png"]];
-		[_commandButton setFrame:subframe];
-		[_commandButton setShowPressFeedback:YES];
-		
-		subframe.origin.x += kModifierKeyImageWidth + 6.0f;
-		_optionButton = [[UIPushButton alloc] initWithImage:[UIImage imageNamed:@"opt_key.png"]];
-		[_optionButton setFrame:subframe];
-		[_optionButton setShowPressFeedback:YES];
-		[_optionButton setSelected:YES];
-		
-		subframe.origin.x += kModifierKeyImageWidth + 6.0f;
-		_controlButton = [[UIPushButton alloc] initWithImage:[UIImage imageNamed:@"ctrl_key.png"]];
-		[_controlButton setFrame:subframe];
-		[_controlButton setShowPressFeedback:YES];
+		// Terminate connection button.
+		subframe = CGRectMake(frame.size.width - kExitButtonWidth - 10, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kExitButtonWidth, kControlsBarButtonHeight);
+		_exitButton = [[UINavBarButton alloc] initWithTitle:@"X" autosizesToFit:NO];
+		[_exitButton setFrame:subframe];
+		[_exitButton setNavBarButtonStyle:0];
+		[_exitButton addTarget:self action:@selector(closeConnection:) forEvents:kUIControlEventMouseUpInside];
 		
 		// Create keyboard.
-		CGSize defaultKeyboardSize = [UIKeyboard defaultSize]; //CGSizeMake(320, 215); //
+		CGSize defaultKeyboardSize = [UIKeyboard defaultSize];
 		subframe.origin = CGPointMake(0, frame.size.height - kControlsBarHeight - defaultKeyboardSize.height);
 		subframe.size = defaultKeyboardSize;
 		_keyboardView = [[UIKeyboard alloc] initWithFrame:subframe];
@@ -217,8 +218,8 @@
 	[self showControls:!_areControlsVisible];
 }
 
-//! This method assumes the controls bar is visible.
-//!
+//! The toggle keyboard button has been pressed. This method assumes
+//! the controls bar is visible.
 - (void)toggleKeyboard:(id)sender
 {
 //	NSLog(@"toggling keyboard: old=%d", (int)_isKeyboardVisible);
@@ -254,6 +255,8 @@
 	_isKeyboardVisible = !_isKeyboardVisible;
 }
 
+//! This message is received when the user has pressed the close connection
+//! button.
 - (void)closeConnection:(id)sender
 {
 	// Hide the keyboard before closing.
@@ -268,11 +271,53 @@
 	}
 }
 
+//! Handle the right mouse button being pressed.
+//!
 - (void)toggleRightMouse:(id)sender
 {
 	bool useRight = ![_scroller useRightMouse];
 	[_rightMouseButton setNavBarButtonStyle:useRight ? 3 : 0];
 	[_scroller setUseRightMouse:useRight];
+}
+
+//! Handle one of the modifier key buttons being pressed.
+//!
+- (void)toggleModifierKey:(id)sender
+{
+	unsigned int modifier;
+	if (sender == _shiftButton)
+	{
+		modifier = NSShiftKeyMask;
+	}
+	else if (sender == _commandButton)
+	{
+		modifier = NSCommandKeyMask;
+	}
+	else if (sender == _optionButton)
+	{
+		modifier = NSAlternateKeyMask;
+	}
+	else if (sender == _controlButton)
+	{
+		modifier = NSControlKeyMask;
+	}
+	else
+	{
+		// Unexpected sender.
+		return;
+	}
+	
+	// Determine the new modifier mask.
+	//! @todo This logic should be in EventFilter, not here.
+	unsigned int currentModifiers = [_filter pressedModifiers];
+	unsigned int newModifiers = currentModifiers ^ modifier;
+	bool isPressed = newModifiers & modifier;
+	
+	// Change the button color.
+	[sender setNavBarButtonStyle:isPressed ? 3 : 0];
+	
+	// Queue the modifier changed event.
+	[_filter flagsChanged:newModifiers];
 }
 
 - (id)delegate

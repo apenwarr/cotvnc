@@ -242,12 +242,12 @@ ButtonNumberToArrayIndex( unsigned int buttonNumber )
 
 - (CARD32)commandKeyCode
 {
-    return kMetaKeyCode; //commandKeyCode;
+    return kAltKeyCode; //commandKeyCode;
 }
 
-- (CARD32)altKeyCode
+- (CARD32)altKeyCode // option
 {
-    return kAltKeyCode; //altKeyCode;
+    return kMetaKeyCode; //altKeyCode;
 }
 
 - (CARD32)shiftKeyCode

@@ -231,6 +231,16 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	_view = view;
 }
 
+- (unsigned int)pressedButtons
+{
+	return _pressedButtons;
+}
+
+- (unsigned int)pressedModifiers
+{
+	return _pressedModifiers;
+}
+
 #pragma mark Local Mouse Events
 
 - (void)mouseDown: (GSEventRef)theEvent
@@ -385,63 +395,91 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 
 #pragma mark Local Keyboard Events
 
-- (void)flagsChanged:(GSEventRef)theEvent
+- (void)flagsChanged:(unsigned int)newState
 {
 //	unsigned int newState = [theEvent modifierFlags];
-//    newState = ~(~newState | 0xFFFF);
-//	unsigned int changedState = newState ^ _queuedModifiers;
-//	NSTimeInterval timestamp = [theEvent timestamp];
-//	_queuedModifiers = newState;
-//	
-//	if ( NSShiftKeyMask & changedState )
-//	{
-//		if ( NSShiftKeyMask & newState )
-//			[self queueModifierPressed: NSShiftKeyMask timestamp: timestamp];
-//		else
-//			[self queueModifierReleased: NSShiftKeyMask timestamp: timestamp];
-//	}
-//	if ( NSControlKeyMask & changedState )
-//	{
-//		if ( NSControlKeyMask & newState )
-//			[self queueModifierPressed: NSControlKeyMask timestamp: timestamp];
-//		else
-//			[self queueModifierReleased: NSControlKeyMask timestamp: timestamp];
-//	}
-//	if ( NSAlternateKeyMask & changedState )
-//	{
-//		if ( NSAlternateKeyMask & newState )
-//			[self queueModifierPressed: NSAlternateKeyMask timestamp: timestamp];
-//		else
-//			[self queueModifierReleased: NSAlternateKeyMask timestamp: timestamp];
-//	}
-//	if ( NSCommandKeyMask & changedState )
-//	{
-//		if ( NSCommandKeyMask & newState )
-//			[self queueModifierPressed: NSCommandKeyMask timestamp: timestamp];
-//		else
-//			[self queueModifierReleased: NSCommandKeyMask timestamp: timestamp];
-//	}
-//	if ( NSAlphaShiftKeyMask & changedState )
-//	{
-//		if ( NSAlphaShiftKeyMask & newState )
-//			[self queueModifierPressed: NSAlphaShiftKeyMask timestamp: timestamp];
-//		else
-//			[self queueModifierReleased: NSAlphaShiftKeyMask timestamp: timestamp];
-//	}
-//	if ( NSNumericPadKeyMask & changedState )
-//	{
-//		if ( NSNumericPadKeyMask & newState )
-//			[self queueModifierPressed: NSNumericPadKeyMask timestamp: timestamp];
-//		else
-//			[self queueModifierReleased: NSNumericPadKeyMask timestamp: timestamp];
-//	}
-//	if ( NSHelpKeyMask & changedState )
-//	{
-//		if ( NSHelpKeyMask & newState )
-//			[self queueModifierPressed: NSHelpKeyMask timestamp: timestamp];
-//		else
-//			[self queueModifierReleased: NSHelpKeyMask timestamp: timestamp];
-//	}
+    newState = ~(~newState | 0xFFFF);
+	unsigned int changedState = newState ^ _queuedModifiers;
+	NSTimeInterval timestamp = [[NSDate date] timeIntervalSince1970];
+	_queuedModifiers = newState;
+	
+	if ( NSShiftKeyMask & changedState )
+	{
+		if ( NSShiftKeyMask & newState )
+		{
+			[self queueModifierPressed: NSShiftKeyMask timestamp: timestamp];
+		}
+		else
+		{
+			[self queueModifierReleased: NSShiftKeyMask timestamp: timestamp];
+		}
+	}
+	if ( NSControlKeyMask & changedState )
+	{
+		if ( NSControlKeyMask & newState )
+		{
+			[self queueModifierPressed: NSControlKeyMask timestamp: timestamp];
+		}
+		else
+		{
+			[self queueModifierReleased: NSControlKeyMask timestamp: timestamp];
+		}
+	}
+	if ( NSAlternateKeyMask & changedState )
+	{
+		if ( NSAlternateKeyMask & newState )
+		{
+			[self queueModifierPressed: NSAlternateKeyMask timestamp: timestamp];
+		}
+		else
+		{
+			[self queueModifierReleased: NSAlternateKeyMask timestamp: timestamp];
+		}
+	}
+	if ( NSCommandKeyMask & changedState )
+	{
+		if ( NSCommandKeyMask & newState )
+		{
+			[self queueModifierPressed: NSCommandKeyMask timestamp: timestamp];
+		}
+		else
+		{
+			[self queueModifierReleased: NSCommandKeyMask timestamp: timestamp];
+		}
+	}
+	if ( NSAlphaShiftKeyMask & changedState )
+	{
+		if ( NSAlphaShiftKeyMask & newState )
+		{
+			[self queueModifierPressed: NSAlphaShiftKeyMask timestamp: timestamp];
+		}
+		else
+		{
+			[self queueModifierReleased: NSAlphaShiftKeyMask timestamp: timestamp];
+		}
+	}
+	if ( NSNumericPadKeyMask & changedState )
+	{
+		if ( NSNumericPadKeyMask & newState )
+		{
+			[self queueModifierPressed: NSNumericPadKeyMask timestamp: timestamp];
+		}
+		else
+		{
+			[self queueModifierReleased: NSNumericPadKeyMask timestamp: timestamp];
+		}
+	}
+	if ( NSHelpKeyMask & changedState )
+	{
+		if ( NSHelpKeyMask & newState )
+		{
+			[self queueModifierPressed: NSHelpKeyMask timestamp: timestamp];
+		}
+		else
+		{
+			[self queueModifierReleased: NSHelpKeyMask timestamp: timestamp];
+		}
+	}
 }
 
 - (void)keyTyped:(NSString *)characters

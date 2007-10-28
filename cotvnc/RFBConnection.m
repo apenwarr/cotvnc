@@ -596,21 +596,21 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 - (void)sendModifier:(unsigned int)m pressed: (BOOL)pressed
 {
-/*	NSString *modifierStr =nil;
-	switch (m)
-	{
-		case NSShiftKeyMask:
-			modifierStr = @"NSShiftKeyMask";		break;
-		case NSControlKeyMask:
-			modifierStr = @"NSControlKeyMask";		break;
-		case NSAlternateKeyMask:
-			modifierStr = @"NSAlternateKeyMask";	break;
-		case NSCommandKeyMask:
-			modifierStr = @"NSCommandKeyMask";		break;
-		case NSAlphaShiftKeyMask:
-			modifierStr = @"NSAlphaShiftKeyMask";	break;
-	}
-	NSLog(@"modifier %@ %s", modifierStr, pressed ? "pressed" : "released"); */
+//	NSString *modifierStr =nil;
+//	switch (m)
+//	{
+//		case NSShiftKeyMask:
+//			modifierStr = @"NSShiftKeyMask";		break;
+//		case NSControlKeyMask:
+//			modifierStr = @"NSControlKeyMask";		break;
+//		case NSAlternateKeyMask:
+//			modifierStr = @"NSAlternateKeyMask";	break;
+//		case NSCommandKeyMask:
+//			modifierStr = @"NSCommandKeyMask";		break;
+//		case NSAlphaShiftKeyMask:
+//			modifierStr = @"NSAlphaShiftKeyMask";	break;
+//	}
+//	NSLog(@"modifier %@ %s", modifierStr, pressed ? "pressed" : "released");
 
     rfbKeyEventMsg msg;
 	
