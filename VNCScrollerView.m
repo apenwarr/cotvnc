@@ -20,6 +20,43 @@
 	_eventFilter = filter;
 }
 
+- (BOOL)canHandleGestures
+{
+  return NO;
+}
+
+- (void)doubleTap
+{
+	NSLog(@"Double Tap");
+}
+
+- (void)gestureStarted:(GSEvent *)event
+{
+	NSLog(@"Gesture Started");
+}
+
+- (void)gestureChanged:(GSEvent *)event
+{
+	CGRect r = GSEventGetLocationInWindow(event);
+        CGRect cr = [self convertRect:r fromView:nil];
+	NSLog(@"Gesture Changed %f %f,  %f %f", cr.origin.x, cr.origin.y, cr.size.width, cr.size.height);
+
+	CGPoint pt1 = GSEventGetInnerMostPathPosition(event);
+	CGPoint pt2 = GSEventGetOuterMostPathPosition(event);
+	NSLog(@"PT1 %f %f, PT2 %f %f", pt1.x, pt1.y, pt2.x, pt2.y);
+	
+}
+
+- (void) setVNCView:(void *)view
+{
+	_vncView = view;
+}
+
+- (void)gestureEnded:(GSEvent *)event
+{
+	NSLog(@"Gesture Ended");
+}
+
 - (void)setViewOnly:(bool)isViewOnly
 {
 	_viewOnly = isViewOnly;
@@ -95,8 +132,20 @@
 	}
 	
 	bool isChording = GSEventIsChordingHandEvent(theEvent);	
-//	int count = GSEventGetClickCount(theEvent);
-//	NSLog(@"mouseDown:%c:%d", isChording ? 'y' : 'n', count);
+	int count = GSEventGetClickCount(theEvent);
+	NSLog(@"mouseDown:%c:%d", isChording ? 'y' : 'n', count);
+
+	if (isChording && _viewOnly)
+	{	
+		CGPoint pt1 = GSEventGetInnerMostPathPosition(theEvent);
+		CGPoint pt2 = GSEventGetOuterMostPathPosition(theEvent);
+
+		_fDistanceStart = sqrt((pt2.x-pt1.x)*(pt2.x-pt1.x) + (pt2.y - pt1.y) * (pt2.y - pt2.y));
+		_fDistancePrev = _fDistanceStart;
+
+		return;
+	}
+
 	
 	if (isChording || _viewOnly)
 	{
@@ -162,6 +211,29 @@
 	}
 }
 
+- (void)pinnedPTViewChange:(CGPoint)ptPinned fScale:(float)fScale wOrientationState:(UIHardwareOrientation)wOrientationState bForce:(BOOL)bForce
+{
+	VNCView *vncView = _vncView;
+
+	CGRect r = CGRectMake(ptPinned.x, ptPinned.y, 1,1);
+	CGPoint ptVNCBefore = [_eventFilter getVNCScreenPoint: r];
+	r.origin = ptVNCBefore;
+	CGRect bounds = [self bounds];
+	CGPoint ptIPodBefore = [vncView getIPodScreenPoint: r bounds: bounds];
+	CGPoint ptLeftTop = bounds.origin;
+
+	[vncView setScalePercent: fScale];
+	[vncView setOrientation:wOrientationState bForce:bForce];
+	r.origin = ptVNCBefore;
+	CGPoint ptIPodAfter = [vncView getIPodScreenPoint: r bounds: bounds];
+	NSLog(@"IPod After %f,%f", ptIPodAfter.x, ptIPodAfter.y);
+	NSLog(@"");
+	ptLeftTop.x = ptLeftTop.x + (ptIPodAfter.x - ptIPodBefore.x);
+	ptLeftTop.y = ptLeftTop.y + (ptIPodAfter.y - ptIPodBefore.y);
+	[self scrollPointVisibleAtTopLeft: ptLeftTop];
+}
+
+
 - (void)mouseDragged:(GSEventRef)theEvent
 {
 	// Do nothing if there is no connection.
@@ -170,8 +242,26 @@
 		return;
 	}
 	
-//	bool isChording = GSEventIsChordingHandEvent(theEvent);	
-//	NSLog(@"mouseDragged:%c", isChording ? 'y' : 'n');
+	bool isChording = GSEventIsChordingHandEvent(theEvent);	
+
+	if (isChording && _viewOnly)
+	{	
+		CGPoint pt1 = GSEventGetInnerMostPathPosition(theEvent), pt2 = GSEventGetOuterMostPathPosition(theEvent);
+		float fDistance = sqrt((pt2.x-pt1.x)*(pt2.x-pt1.x) + (pt2.y - pt1.y) * (pt2.y - pt2.y));
+		float fHowFar = fDistance - _fDistancePrev;
+		CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
+
+		if (abs(fHowFar) > 3)
+		{
+			VNCView *vncView = _vncView;
+
+			[self pinnedPTViewChange:ptCenter fScale:[vncView getScalePercent]+(.0025 * fHowFar) wOrientationState:[vncView getOrientationState] bForce:true];
+			_fDistancePrev = fDistance;
+		}
+
+		return;
+	}
+
 	
 	if (_tapTimer)
 	{

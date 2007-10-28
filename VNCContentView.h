@@ -15,12 +15,26 @@
 @interface VNCContentView : UIView
 {
     FrameBuffer * _frameBuffer;
+    float _orientationDeg;
+    float _scalePercent;
+    UIHardwareOrientation _orientationState;
+    CGAffineTransform _matrixPreviousTransform;
+    CGRect _frame;
 }
 
 - (void)setFrameBuffer:(FrameBuffer *)buffer;
 
-- (void)setRemoteDisplaySize:(CGSize)remoteSize;
+- (void)setRemoteDisplaySize:(CGSize)remoteSize animate:(BOOL)bAnimate;
 
 - (void)displayFromBuffer:(CGRect)aRect;
+
+- (float)getScalePercent;
+- (void)setScalePercent:(float)fPercent;
+- (UIHardwareOrientation)getOrientationState;
+- (void)setOrientationState:(UIHardwareOrientation)wState;
+- (void)setOrientationDeg:(float)fDeg;
+- (float)getOrientationDeg;
+- (CGRect)getFrame;
+- (CGPoint)getIPodScreenPoint:(CGRect)r bounds:(CGRect)bounds;
 
 @end

@@ -106,6 +106,7 @@
 - (void)setServerVersion:(NSString*)aVersion;
 - (void)terminateConnection:(NSString*)aReason;
 - (void)setDisplaySize:(CGSize)aSize andPixelFormat:(rfbPixelFormat*)pixf;
+- (CGSize)displaySize;
 - (void)ringBell;
 
 - (void)drawRectFromBuffer:(CGRect)aRect;

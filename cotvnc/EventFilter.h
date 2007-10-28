@@ -107,6 +107,8 @@ typedef enum {
 @interface EventFilter : NSObject {
 	RFBConnection *_connection;
 	UIView *_view;
+	CGAffineTransform _matrixBackToVNCTransform;
+	int _orientation;
 	
 	NSMutableArray *_pendingEvents;
 	unsigned int _queuedModifiers;
@@ -144,6 +146,9 @@ typedef enum {
 - (void)setConnection: (RFBConnection *)connection;
 - (UIView *)view;
 - (void)setView: (UIView *)view;
+- (void)setBackToVNCTransform: (CGAffineTransform)matrix;
+- (void)setOrientation: (int) wState;
+- (CGPoint)getVNCScreenPoint: (CGRect)r;
 
 - (unsigned int)pressedButtons;
 - (unsigned int)pressedModifiers;

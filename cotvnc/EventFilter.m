@@ -231,11 +231,46 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	_view = view;
 }
 
+- (void)setBackToVNCTransform: (CGAffineTransform)matrix
+{
+	_matrixBackToVNCTransform = matrix;
+}
+
 - (unsigned int)pressedButtons
 {
 	return _pressedButtons;
 }
 
+- (void)setOrientation:(int)wOrientation
+{
+	_orientation = wOrientation;
+}
+
+- (CGPoint)getVNCScreenPoint: (CGRect)r
+{
+	CGRect cr = [_view convertRect:r fromView:nil];
+	CGPoint pt = CGPointApplyAffineTransform(cr.origin, _matrixBackToVNCTransform);
+	switch (_orientation)
+	{
+		case 1:
+			pt.y = 0-pt.y;
+			break;
+		case 2:
+			pt.x = pt.x+[_connection displaySize].width;
+			pt.y = [_connection displaySize].height - pt.y;	
+			break;
+		case 4:
+			pt.y = 0-pt.y;
+			pt.x = pt.x+[_connection displaySize].width;
+			break;
+		case 3:
+			pt.y = [_connection displaySize].height - pt.y;
+			break;
+	}
+	return pt;
+}
+
+#pragma mark -
 - (unsigned int)pressedModifiers
 {
 	return _pressedModifiers;
@@ -305,16 +340,15 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 		return;
 	
 	if( nil != _mouseTimer )
-	{
+    {
         [_mouseTimer invalidate];
 		[_mouseTimer release];
         _mouseTimer = nil;
     }
 
 	CGRect r = GSEventGetLocationInWindow(theEvent);
-	CGRect cr = [_view convertRect:r fromView:nil];
-    CGPoint	currentPoint = cr.origin;
-
+    CGPoint	currentPoint = [self getVNCScreenPoint: r];
+	
 	static int ct = IGNORE_COUNT;
     bool bSendEventImmediately = NO;
 	
@@ -592,8 +626,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 
 	// The convertPoint:fromView: call crashes. Probably a compiler issue.
 	// So instead we use convertRect:fromView:.
-	CGRect cr = [_view convertRect:r fromView:nil];
-    CGPoint	p = cr.origin;
+    CGPoint	p = [self getVNCScreenPoint: r];
 //	NSLog(@"down:p={%f,%f}", p.x, p.y);
 
 	// Put some hysteresis on the mouse location.
@@ -627,8 +660,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	}
 	
 	CGRect r = GSEventGetLocationInWindow(theEvent);
-	CGRect cr = [_view convertRect:r fromView:nil];
-    CGPoint	p = cr.origin;
+    CGPoint	p  = [self getVNCScreenPoint: r];
 //	NSLog(@"up:p={%f,%f}", p.x, p.y);
 	
 	// If the location for this mouse up event is not over a certain

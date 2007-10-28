@@ -18,6 +18,7 @@
 #import <UIKit/UIPushButton.h>
 #import <UIKit/UIKeyboard.h>
 #import <UIKit/UIKeyboardInput.h>
+#import <UIKit/UISegmentedControl.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import "RFBConnection.h"
 #import "EventFilter.h"
@@ -42,6 +43,16 @@
  *
  * 
  */
+
+typedef enum 
+{
+        kScaleFitNone = 0,
+        kScaleFitWidth = 1,
+        kScaleFitHeight = 2, 
+        kScaleFitWhole = 3
+} scaleSpecialTypes;
+
+
 @interface VNCView : UIView <RFBViewProtocol>
 {
 	id _delegate;
@@ -56,10 +67,14 @@
 	UINavBarButton * _controlButton;
 	UINavBarButton * _rightMouseButton;
 	UINavBarButton * _exitButton;	//
+	UINavBarButton * _fitWidthButton, * _fitHeightButton;
+	UISegmentedControl * _widthHeightFullSegment;
 	id _keyboardView;
 	id _controlsView;
 	bool _areControlsVisible;
 	bool _isKeyboardVisible;
+	CGSize _vncScreenSize, _ipodScreenSize;
+	scaleSpecialTypes _scaleState;
 }
 
 //! @name Delegate
@@ -74,6 +89,7 @@
 - (void)showControls:(bool)show;
 - (void)toggleControls;
 - (void)toggleKeyboard:(id)sender;
+- (void)toggleFitWidthHeight:(id)sender;
 - (void)closeConnection:(id)sender;
 - (void)toggleRightMouse:(id)sender;
 - (void)toggleModifierKey:(id)sender;
@@ -88,6 +104,19 @@
 - (void)displayFromBuffer:(CGRect)aRect;
 - (void)drawRectList:(id)aList;
 //@}
+
+
+- (void)mouseUp:(struct __GSEvent *)fp8;
+
+- (void)setOrientation:(UIHardwareOrientation)wOrientation bForce:(int)bForce;
+- (void)pinnedPTViewChange:(CGPoint)ptPinned fScale:(float)fScale wOrientationState:(UIHardwareOrientation)wOrientationState bForce:(BOOL)bForce;
+- (void)setScalePercent:(float)x;
+- (float)getScalePercent;
+- (CGRect)getFrame;
+- (UIHardwareOrientation)getOrientationState;
+- (CGPoint)getIPodScreenPoint:(CGRect)r bounds:(CGRect)bounds;
+- (void)setScaleState: (scaleSpecialTypes)wState;
+- (scaleSpecialTypes)getScaleState;
 
 @end
 

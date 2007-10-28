@@ -25,6 +25,9 @@
 	bool _inRemoteAction;			//!< Are we currently controlling the remote mouse?
 	NSTimer * _tapTimer;	//!< Timer used to delay first mouse down.
 	bool _viewOnly;			//!< Are we only watching the remote computer?
+	float _fDistancePrev;
+	float _fDistanceStart;
+	void * _vncView;
 	bool _useRightMouse;	//!< Whether to send a right mouse event.
 	bool _inRightMouse;		//!< True if the last mouse down was for the right button.
 }
@@ -32,6 +35,12 @@
 - (void)setEventFilter:(EventFilter *)filter;
 
 - (void)setViewOnly:(bool)isViewOnly;
+- (BOOL)canHandleGestures;
+- (void)gestureStarted:(GSEvent *)event;
+- (void)gestureChanged:(GSEvent *)event;
+- (void)gestureEnded:(GSEvent *)event;
+- (void)setVNCView:(void *)view;
+- (void)pinnedPTViewChange:(CGPoint)ptPinned fScale:(float)fScale wOrientationState:(UIHardwareOrientation)wOrientationState bForce:(BOOL)bForce;
 
 - (bool)useRightMouse;
 - (void)setUseRightMouse:(bool)useRight;

@@ -47,6 +47,8 @@ void handle_interrupt_signal(int sig)
 	
 	// Handle signal sent by ^C, mostly for development.
 	signal(SIGINT, handle_interrupt_signal);
+
+//	[UIHardware _setStatusBarHeight:0.0f];
 	
 	CGRect screenRect = [UIHardware fullScreenApplicationContentRect];
 	CGRect frame = CGRectMake(0.0f, 0.0f, screenRect.size.width, screenRect.size.height);
@@ -89,6 +91,23 @@ void handle_interrupt_signal(int sig)
 	
 	// Kick off a thread to check for a new version.
 	[NSThread detachNewThreadSelector:@selector(checkForUpdate:) toTarget:self withObject:nil];
+}
+
+- (void)applicationSuspend:(GSEvent *)event
+{
+	[self applicationWillTerminate];
+	exit(0);
+	NSLog(@"Process Suspend");
+}
+
+- (void)applicationResume:(GSEvent *)event
+{
+	NSLog(@"Process Resume");
+}
+
+- (void)applicationExited:(GSEvent *)event
+{
+	NSLog(@"Process exited");
 }
 
 - (void)applicationWillTerminate
@@ -489,7 +508,23 @@ void handle_interrupt_signal(int sig)
 
 - (void)deviceOrientationChanged:(GSEvent *)event
 {
-	NSLog(@"orientation changed: %@ to: %d", event, [UIHardware deviceOrientation:YES]);
+	[_vncView pinnedPTViewChange:CGPointMake(160,240) fScale:[_vncView getScalePercent] wOrientationState:[UIHardware deviceOrientation:YES] bForce:false];
+		
+		/*
+		UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
+					initWithTitle:NSLocalizedString(@"Orientation Changed", nil)
+					buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
+					defaultButtonIndex:0
+					delegate:self
+					context:self];
+		
+		[hotSheet setBodyText:[NSString stringWithFormat:@"%d", [UIHardware deviceOrientation:YES]]];
+		[hotSheet setDimsBackground:NO];
+		[hotSheet setRunsModal:YES];
+		[hotSheet setShowsOverSpringBoardAlerts:NO];
+		[hotSheet popupAlertAnimated:YES];
+		*/
+		
 }
 
 - (void)acceleratedInX:(float)x Y:(float)y Z:(float)z
@@ -565,5 +600,4 @@ void handle_interrupt_signal(int sig)
 }
 */
 @end
-
 
