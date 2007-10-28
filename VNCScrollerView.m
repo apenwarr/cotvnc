@@ -7,6 +7,7 @@
 //
 
 #import "VNCScrollerView.h"
+#import "VNCView.h"
 
 //! Number of seconds to wait before sending a mouse down, during which we
 //! check to see if the user is really wanting to scroll.
@@ -24,9 +25,49 @@
 	_viewOnly = isViewOnly;
 }
 
+- (bool)useRightMouse
+{
+	return _useRightMouse;
+}
+
+- (void)setUseRightMouse:(bool)useRight
+{
+	_useRightMouse = useRight;
+}
+
 - (BOOL)canBecomeFirstResponder
 {
 	return YES;
+}
+
+- (void)sendMouseDown:(GSEventRef)theEvent
+{
+	if (_useRightMouse)
+	{
+		[_eventFilter rightMouseDown:theEvent];
+		_inRightMouse = YES;
+		
+		[[self superview] toggleRightMouse:self];
+	}
+	else
+	{
+		[_eventFilter mouseDown:theEvent];
+	}
+}
+
+- (void)sendMouseUp:(GSEventRef)theEvent
+{
+	// Need to send the corresponding mouse up, regardless the current
+	// use right mouse state.
+	if (_inRightMouse)
+	{
+		[_eventFilter rightMouseUp:theEvent];
+		_inRightMouse = NO;
+	}
+	else
+	{
+		[_eventFilter mouseUp:theEvent];
+	}
 }
 
 - (void)handleTapTimer:(NSTimer *)timer
@@ -36,7 +77,8 @@
 	// Send the original event.
 	GSEventRef theEvent = (GSEventRef)[timer userInfo];
 //	NSLog(@"tapTimer:%@", theEvent);
-	[_eventFilter mouseDown:theEvent];
+	
+	[self sendMouseDown:theEvent];
 	
 	// The event is no longer needed.
 	CFRelease(theEvent);
@@ -72,8 +114,8 @@
 		// down and before a mouse up.
 		if (_inRemoteAction)
 		{
-			[_eventFilter mouseUp:theEvent];
-			_inRemoteAction = false;
+			[self sendMouseUp:theEvent];
+			_inRemoteAction = NO;
 		}
 		
 		// Let the superclass handle scrolling.
@@ -111,15 +153,14 @@
 
 	if (_inRemoteAction)
 	{
-		[_eventFilter mouseUp:theEvent];
-		_inRemoteAction = false;
+		[self sendMouseUp:theEvent];
+		_inRemoteAction = NO;
 	}
 	else
 	{
 		[super mouseUp:theEvent];
 	}
 }
-
 
 - (void)mouseDragged:(GSEventRef)theEvent
 {
@@ -145,16 +186,6 @@
 	{
 		[super mouseDragged:theEvent];
 	}
-}
-
-- (void)keyDown:(GSEventRef)theEvent
-{
-	NSLog(@"keyDown:%@", theEvent);
-}
-
-- (void)keyUp:(GSEventRef)theEvent
-{
-	NSLog(@"keyUp:%@", theEvent);
 }
 
 @end

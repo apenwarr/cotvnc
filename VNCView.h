@@ -55,6 +55,7 @@
 	UIPushButton * _commandButton;
 	UIPushButton * _optionButton;
 	UIPushButton * _controlButton;
+	UINavBarButton * _rightMouseButton;
 	id _keyboardView;
 	id _controlsView;
 	bool _areControlsVisible;
@@ -73,6 +74,8 @@
 - (void)showControls:(bool)show;
 - (void)toggleControls;
 - (void)toggleKeyboard:(id)sender;
+- (void)closeConnection:(id)sender;
+- (void)toggleRightMouse:(id)sender;
 //@}
 
 //! @name RFBViewProtocol

@@ -26,8 +26,8 @@
 #define kControlsBarButtonHeight (32.0f)
 
 #define kKeyboardButtonWidth (80.0f)
-
 #define kExitButtonWidth (30.0f)
+#define kRightMouseButtonWidth (30.0f)
 
 #define kModifierKeyImageWidth (21.0f)
 #define kModifierKeyImageHeight (21.0f)
@@ -95,6 +95,13 @@
 		[_exitButton setNavBarButtonStyle:0];
 		[_exitButton addTarget:self action:@selector(closeConnection:) forEvents:kUIControlEventMouseUpInside];
 		
+		// Right mouse button.
+		subframe = CGRectMake(frame.size.width - kExitButtonWidth - 10 - kRightMouseButtonWidth - 6, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kRightMouseButtonWidth, kControlsBarButtonHeight);
+		_rightMouseButton = [[UINavBarButton alloc] initWithTitle:@"R" autosizesToFit:NO];
+		[_rightMouseButton setFrame:subframe];
+		[_rightMouseButton setNavBarButtonStyle:0];
+		[_rightMouseButton addTarget:self action:@selector(toggleRightMouse:) forEvents:kUIControlEventMouseUpInside];
+		
 		subframe = CGRectMake(100, (kControlsBarHeight - kModifierKeyImageHeight) / 2.0f, kModifierKeyImageWidth, kModifierKeyImageHeight);
 		_shiftButton = [[UIPushButton alloc] initWithImage:[UIImage imageNamed:@"shift_key.png"]];
 		[_shiftButton setFrame:subframe];
@@ -135,6 +142,7 @@
 		[_controlsView addSubview:_commandButton];
 		[_controlsView addSubview:_optionButton];
 		[_controlsView addSubview:_controlButton];
+		[_controlsView addSubview:_rightMouseButton];
 		[self addSubview:_controlsView];
 		
 		[_scroller addSubview:_screenView];
@@ -258,6 +266,13 @@
 	{
 		[_delegate closeConnection];
 	}
+}
+
+- (void)toggleRightMouse:(id)sender
+{
+	bool useRight = ![_scroller useRightMouse];
+	[_rightMouseButton setNavBarButtonStyle:useRight ? 3 : 0];
+	[_scroller setUseRightMouse:useRight];
 }
 
 - (id)delegate
