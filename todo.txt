@@ -12,3 +12,9 @@ vnsea todo list
 
 - modified keys don't work on windows with free RealVNC
 
+- separate EventFilter into a filter and a queue, thus allowing the filter to be changed more easily
+
+- get rid of emulation buttons and multitap emulation stuff
+
+- text cursor sometimes appears on top of screen view after keyboard is made visible
+

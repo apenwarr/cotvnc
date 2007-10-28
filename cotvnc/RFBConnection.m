@@ -618,25 +618,41 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     msg.type = rfbKeyEvent;
 	msg.down = pressed;
 	
-    if( NSShiftKeyMask == m )
-        msg.key = htonl([_profile shiftKeyCode]);
-	else if( NSControlKeyMask == m )
-        msg.key = htonl([_profile controlKeyCode]);
-	else if( NSAlternateKeyMask == m )
-        msg.key = htonl([_profile altKeyCode]);
-	else if( NSCommandKeyMask == m )
-        msg.key = htonl([_profile commandKeyCode]);
-    else if(NSAlphaShiftKeyMask == m)
-        msg.key = htonl(CAPSLOCK);
-    else if(NSHelpKeyMask == m)		// this is F1
-        msg.key = htonl(F1_KEYCODE);
-	else if (NSNumericPadKeyMask == m) // don't know how to handle, eat it
-		return;
+	switch (m)
+	{
+		case NSShiftKeyMask:
+			msg.key = htonl([_profile shiftKeyCode]);
+			break;
+
+		case NSControlKeyMask:
+			msg.key = htonl([_profile controlKeyCode]);
+			break;
+
+		case NSAlternateKeyMask:
+			msg.key = htonl([_profile altKeyCode]);
+			break;
+
+		case NSCommandKeyMask:
+			msg.key = htonl([_profile commandKeyCode]);
+			break;
+
+		case NSAlphaShiftKeyMask:
+			msg.key = htonl(CAPSLOCK);
+			break;
+
+		case NSHelpKeyMask:	// this is F1
+			msg.key = htonl(F1_KEYCODE);
+			break;
+
+		// don't know how to handle, eat it
+		case NSNumericPadKeyMask:
+		default:
+			return;
+	}
 	
 	[self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
 }
 
-/* --------------------------------------------------------------------------------- */
 - (void)sendKey:(unichar)c pressed:(BOOL)pressed
 {
     rfbKeyEventMsg msg;
@@ -645,17 +661,22 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     memset(&msg, 0, sizeof(msg));
     msg.type = rfbKeyEvent;
     msg.down = pressed;
-	if(c < 256) {
+	if (c < 256)
+	{
         kc = page0[c & 0xff];
-    } else if((c & 0xff00) == 0xf700) {
+    }
+	else if((c & 0xff00) == 0xf700)
+	{
         kc = pagef7[c & 0xff];
-    } else {
+    }
+	else
+	{
 		kc = c;
     }
 
-/*	unichar _kc = (unichar)kc;
-	NSString *keyStr = [NSString stringWithCharacters: &_kc length: 1];
-	NSLog(@"key '%@' %s", keyStr, pressed ? "pressed" : "released"); */
+//	unichar _kc = (unichar)kc;
+//	NSString *keyStr = [NSString stringWithCharacters: &_kc length: 1];
+//	NSLog(@"key '%@' [c:0x%04x] [kc:0x%04x] %s", keyStr, c, kc, pressed ? "pressed" : "released");
 
 	msg.key = htonl(kc);
     [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];

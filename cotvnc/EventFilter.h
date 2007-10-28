@@ -161,8 +161,6 @@ typedef enum {
 - (void)clearUnpublishedMouseMove;
 
 // Local Keyboard Events
-- (void)keyDown: (GSEventRef)theEvent;
-- (void)keyUp: (GSEventRef)theEvent;
 - (void)flagsChanged:(GSEventRef)theEvent;
 - (void)keyTyped:(NSString *)characters;
 

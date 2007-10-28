@@ -12,6 +12,112 @@
 #import "QueuedEvent.h"
 #import "RFBConnection.h"
 
+#define CHANGE_DIFF 3
+
+//! Ignore up to 10 drag events in a row, unless the delta X/Y from the
+//! last event we sent is greater than 3 pixels.
+#define IGNORE_COUNT 10
+
+#define kMouseHysteresisPixels (5.0)
+
+//! @brief Entry in a map to convert from character to key and modifiers.
+struct _key_modifier_map
+{
+	unichar character;				//!< The actual character being typed.
+	unichar unmodifiedCharacter;	//!< What the character on a physical keyboard key would be.
+	unsigned int modifiers;			//!< The modified required to produce the original character.
+};
+
+typedef struct _key_modifier_map key_modifier_map_t;
+
+//! Map to convert from modified characters to the unmodified character
+//! and the modifiers required to produce it. This map is necessary
+//! because the UIKit keyboard does not give us an event with the raw
+//! unmodified characters and modifiers that are necessary for the RFB
+//! protocol. More characters than can currently be typed with the UIKit
+//! keyboard are in this map, but it won't hurt any more than a small
+//! performance penalty.
+//!
+//! @note Because Unicode characters are used here instead of ASCII, this
+//! map is too big to convert to a direct index table. Another option for
+//! speeding it up would be to sort by character value and use a binary
+//! search algorithm instead of linear.
+//!
+//! @todo Convert the non-ASCII characters in this table into hex codes.
+const key_modifier_map_t kKeyModifierMap[] = {
+		{ L'~', L'`', NSShiftKeyMask },
+		{ L'!', L'1', NSShiftKeyMask },
+		{ L'@', L'2', NSShiftKeyMask },
+		{ L'#', L'3', NSShiftKeyMask },
+		{ L'$', L'4', NSShiftKeyMask },
+		{ L'%', L'5', NSShiftKeyMask },
+		{ L'^', L'6', NSShiftKeyMask },
+		{ L'&', L'7', NSShiftKeyMask },
+		{ L'*', L'8', NSShiftKeyMask },
+		{ L'(', L'9', NSShiftKeyMask },
+		{ L')', L'0', NSShiftKeyMask },
+		{ L'_', L'-', NSShiftKeyMask },
+		{ L'+', L'=', NSShiftKeyMask },
+		{ L'{', L'[', NSShiftKeyMask },
+		{ L'}', L']', NSShiftKeyMask },
+		{ L'|', L'\\', NSShiftKeyMask },
+		{ L':', L';', NSShiftKeyMask },
+		{ L'"', L'\'', NSShiftKeyMask },
+		{ L'<', L',', NSShiftKeyMask },
+		{ L'>', L'.', NSShiftKeyMask },
+		{ L'?', L'/', NSShiftKeyMask },
+		
+		{ L'¡', L'1', NSAlternateKeyMask },
+		{ L'™', L'2', NSAlternateKeyMask },
+		{ L'£', L'3', NSAlternateKeyMask },
+		{ L'¢', L'4', NSAlternateKeyMask },
+		{ L'∞', L'5', NSAlternateKeyMask },
+		{ L'§', L'6', NSAlternateKeyMask },
+		{ L'¶', L'7', NSAlternateKeyMask },
+		{ L'•', L'8', NSAlternateKeyMask },
+		{ L'ª', L'9', NSAlternateKeyMask },
+		{ L'º', L'0', NSAlternateKeyMask },
+		{ L'–', L'-', NSAlternateKeyMask },
+		{ L'≠', L'=', NSAlternateKeyMask },
+		
+		{ L'œ', L'q', NSAlternateKeyMask },
+		{ L'∑', L'w', NSAlternateKeyMask },
+		{ L'®', L'r', NSAlternateKeyMask },
+		{ L'†', L't', NSAlternateKeyMask },
+		{ L'¥', L'y', NSAlternateKeyMask },
+		{ L'ø', L'o', NSAlternateKeyMask },
+		{ L'π', L'p', NSAlternateKeyMask },
+		{ L'“', L'[', NSAlternateKeyMask },
+		{ L'‘', L']', NSAlternateKeyMask },
+		{ L'«', L'\\', NSAlternateKeyMask },
+		
+		{ L'å', L'a', NSAlternateKeyMask },
+		{ L'ß', L's', NSAlternateKeyMask },
+		{ L'∂', L'd', NSAlternateKeyMask },
+		{ L'ƒ', L'f', NSAlternateKeyMask },
+		{ L'©', L'g', NSAlternateKeyMask },
+		{ L'˙', L'h', NSAlternateKeyMask },
+		{ L'∆', L'j', NSAlternateKeyMask },
+		{ L'˚', L'k', NSAlternateKeyMask },
+		{ L'¬', L'l', NSAlternateKeyMask },
+		{ L'…', L';', NSAlternateKeyMask },
+		{ L'æ', L'\'', NSAlternateKeyMask },
+		
+		{ L'Ω', L'z', NSAlternateKeyMask },
+		{ L'≈', L'x', NSAlternateKeyMask },
+		{ L'ç', L'c', NSAlternateKeyMask },
+		{ L'√', L'v', NSAlternateKeyMask },
+		{ L'∫', L'b', NSAlternateKeyMask },
+		{ L'µ', L'm', NSAlternateKeyMask },
+		{ L'≤', L',', NSAlternateKeyMask },
+		{ L'≥', L'.', NSAlternateKeyMask },
+		{ L'÷', L'/', NSAlternateKeyMask },
+		
+		{ L'€', L'2', NSShiftKeyMask | NSAlternateKeyMask },
+		
+		// Terminate the list with a zero entry
+		{ 0 }
+	};
 
 static inline unsigned int
 ButtonNumberToArrayIndex( unsigned int buttonNumber )
@@ -95,10 +201,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	[super dealloc];
 }
 
-
-#pragma mark -
 #pragma mark Talking to the server
-
 
 - (RFBConnection *)connection
 {
@@ -118,18 +221,17 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	}
 }
 
-
 - (UIView *)view
-{  return _view;  }
-
+{
+	return _view;
+}
 
 - (void)setView: (UIView *)view
-{  _view = view;  }
+{
+	_view = view;
+}
 
-
-#pragma mark -
 #pragma mark Local Mouse Events
-
 
 - (void)mouseDown: (GSEventRef)theEvent
 {
@@ -203,11 +305,6 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	CGRect cr = [_view convertRect:r fromView:nil];
     CGPoint	currentPoint = cr.origin;
 
-	// Ignore up to 10 drag events in a row, unless the delta X/Y from the
-	// last event we sent is greater than 3 pixels.
-	#define CHANGE_DIFF 3
-	#define IGNORE_COUNT 10
-	
 	static int ct = IGNORE_COUNT;
     bool bSendEventImmediately = NO;
 	
@@ -286,115 +383,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	[self mouseMoved:theEvent];
 }
 
-
-#pragma mark -
 #pragma mark Local Keyboard Events
-
-CFStringRef GSEventCopyCharacters(GSEventRef);
-CFStringRef GSEventCopyCharactersIgnoringModifiers(GSEventRef);
-unsigned int GSEventGetKeyCode(GSEventRef);
-unsigned int GSEventGetModifierFlags(GSEventRef);
-
-- (void)keyDown:(GSEventRef)theEvent
-{
-	[self _updateCapsLockStateIfNecessary];
-	
-	NSString *characters = (NSString *)GSEventCopyCharacters(theEvent);
-	NSLog(@"%s:chars=%@", __PRETTY_FUNCTION__, characters);
-	
-	NSString *charactersIgnoringModifiers = (NSString *)GSEventCopyCharactersIgnoringModifiers(theEvent);
-	NSLog(@"%s:charsNoMods=%@", __PRETTY_FUNCTION__, charactersIgnoringModifiers);
-	
-	unsigned int modifiers = GSEventGetModifierFlags(theEvent);
-	NSLog(@"%s:mods=%d", __PRETTY_FUNCTION__, modifiers);
-	
-	unsigned int i;
-	unsigned int charLength = [characters length];
-	unsigned int unmodLength = [charactersIgnoringModifiers length];
-	unsigned int length = unmodLength > charLength ? unmodLength : charLength;
-	
-	NSParameterAssert( characters && charactersIgnoringModifiers );
-	NSParameterAssert( charLength <= unmodLength );
-	
-	for (i = 0; i < length; ++i)
-	{
-		unichar character;
-		unichar characterIgnoringModifiers;
-		
-		if (i < charLength)
-		{
-			character = [characters characterAtIndex: i];
-		}
-		else
-		{
-			character = [charactersIgnoringModifiers characterAtIndex: i];
-		}
-		
-		if (i < unmodLength)
-		{
-			characterIgnoringModifiers = [charactersIgnoringModifiers characterAtIndex: i];
-		}
-		else
-		{
-			characterIgnoringModifiers = [characters characterAtIndex: i];
-		}
-		
-		QueuedEvent *event = [QueuedEvent keyDownEventWithCharacter: character
-										 characterIgnoringModifiers: characterIgnoringModifiers
-														  timestamp: GSEventGetTimestamp(theEvent)];
-		[_pendingEvents addObject: event];
-		[self sendAnyValidEventsToServerNow];
-	}
-}
-
-- (void)keyUp:(GSEventRef)theEvent
-{
-	[self _updateCapsLockStateIfNecessary];
-	
-	NSString *characters = (NSString *)GSEventCopyCharacters(theEvent);
-	NSLog(@"%s:chars=%@", __PRETTY_FUNCTION__, characters);
-	
-	NSString *charactersIgnoringModifiers = (NSString *)GSEventCopyCharactersIgnoringModifiers(theEvent);
-	NSLog(@"%s:charsNoMods=%@", __PRETTY_FUNCTION__, charactersIgnoringModifiers);
-	
-	unsigned int i;
-	unsigned int charLength = [characters length];
-	unsigned int unmodLength = [charactersIgnoringModifiers length];
-	unsigned int length = unmodLength > charLength ? unmodLength : charLength;
-
-	NSParameterAssert( characters && charactersIgnoringModifiers );
-	NSParameterAssert( charLength <= unmodLength );
-	
-	for (i = 0; i < length; ++i)
-	{
-		unichar character;
-		unichar characterIgnoringModifiers;
-		
-		if (i < charLength)
-		{
-			character = [characters characterAtIndex: i];
-		}
-		else
-		{
-			character = [charactersIgnoringModifiers characterAtIndex: i];
-		}
-		
-		if (i < unmodLength)
-		{
-			characterIgnoringModifiers = [charactersIgnoringModifiers characterAtIndex: i];
-		}
-		else
-		{
-			characterIgnoringModifiers = [characters characterAtIndex: i];
-		}
-		
-		QueuedEvent *event = [QueuedEvent keyUpEventWithCharacter: character
-									   characterIgnoringModifiers: characterIgnoringModifiers
-														timestamp: GSEventGetTimestamp(theEvent)];
-		[_pendingEvents addObject: event];
-		[self sendAnyValidEventsToServerNow];
-	}
-}
 
 - (void)flagsChanged:(GSEventRef)theEvent
 {
@@ -455,103 +444,6 @@ unsigned int GSEventGetModifierFlags(GSEventRef);
 //	}
 }
 
-//! @brief Entry in a map to convert from character to key and modifiers.
-struct _key_modifier_map
-{
-	unichar character;				//!< The actual character being typed.
-	unichar unmodifiedCharacter;	//!< What the character on a physical keyboard key would be.
-	unsigned int modifiers;			//!< The modified required to produce the original character.
-};
-
-typedef struct _key_modifier_map key_modifier_map_t;
-
-//! Map to convert from modified characters to the unmodified character
-//! and the modifiers required to produce it. This map is necessary
-//! because the UIKit keyboard does not give us an event with the raw
-//! unmodified characters and modifiers that are necessary for the RFB
-//! protocol. More characters than can currently be typed with the UIKit
-//! keyboard are in this map, but it won't hurt any more than a small
-//! performance penalty.
-//!
-//! @note Because Unicode characters are used here instead of ASCII, this
-//! map is too big to convert to a direct index table. Another option for
-//! speeding it up would be to sort by character value and use a binary
-//! search algorithm instead of linear.
-const key_modifier_map_t kKeyModifierMap[] = {
-		{ L'~', L'`', NSShiftKeyMask },
-		{ L'!', L'1', NSShiftKeyMask },
-		{ L'@', L'2', NSShiftKeyMask },
-		{ L'#', L'3', NSShiftKeyMask },
-		{ L'$', L'4', NSShiftKeyMask },
-		{ L'%', L'5', NSShiftKeyMask },
-		{ L'^', L'6', NSShiftKeyMask },
-		{ L'&', L'7', NSShiftKeyMask },
-		{ L'*', L'8', NSShiftKeyMask },
-		{ L'(', L'9', NSShiftKeyMask },
-		{ L')', L'0', NSShiftKeyMask },
-		{ L'_', L'-', NSShiftKeyMask },
-		{ L'+', L'=', NSShiftKeyMask },
-		{ L'{', L'[', NSShiftKeyMask },
-		{ L'}', L']', NSShiftKeyMask },
-		{ L'|', L'\\', NSShiftKeyMask },
-		{ L':', L';', NSShiftKeyMask },
-		{ L'"', L'\'', NSShiftKeyMask },
-		{ L'<', L',', NSShiftKeyMask },
-		{ L'>', L'.', NSShiftKeyMask },
-		{ L'?', L'/', NSShiftKeyMask },
-		
-		{ L'¡', L'1', NSAlternateKeyMask },
-		{ L'™', L'2', NSAlternateKeyMask },
-		{ L'£', L'3', NSAlternateKeyMask },
-		{ L'¢', L'4', NSAlternateKeyMask },
-		{ L'∞', L'5', NSAlternateKeyMask },
-		{ L'§', L'6', NSAlternateKeyMask },
-		{ L'¶', L'7', NSAlternateKeyMask },
-		{ L'•', L'8', NSAlternateKeyMask },
-		{ L'ª', L'9', NSAlternateKeyMask },
-		{ L'º', L'0', NSAlternateKeyMask },
-		{ L'–', L'-', NSAlternateKeyMask },
-		{ L'≠', L'=', NSAlternateKeyMask },
-		
-		{ L'œ', L'q', NSAlternateKeyMask },
-		{ L'∑', L'w', NSAlternateKeyMask },
-		{ L'®', L'r', NSAlternateKeyMask },
-		{ L'†', L't', NSAlternateKeyMask },
-		{ L'¥', L'y', NSAlternateKeyMask },
-		{ L'ø', L'o', NSAlternateKeyMask },
-		{ L'π', L'p', NSAlternateKeyMask },
-		{ L'“', L'[', NSAlternateKeyMask },
-		{ L'‘', L']', NSAlternateKeyMask },
-		{ L'«', L'\\', NSAlternateKeyMask },
-		
-		{ L'å', L'a', NSAlternateKeyMask },
-		{ L'ß', L's', NSAlternateKeyMask },
-		{ L'∂', L'd', NSAlternateKeyMask },
-		{ L'ƒ', L'f', NSAlternateKeyMask },
-		{ L'©', L'g', NSAlternateKeyMask },
-		{ L'˙', L'h', NSAlternateKeyMask },
-		{ L'∆', L'j', NSAlternateKeyMask },
-		{ L'˚', L'k', NSAlternateKeyMask },
-		{ L'¬', L'l', NSAlternateKeyMask },
-		{ L'…', L';', NSAlternateKeyMask },
-		{ L'æ', L'\'', NSAlternateKeyMask },
-		
-		{ L'Ω', L'z', NSAlternateKeyMask },
-		{ L'≈', L'x', NSAlternateKeyMask },
-		{ L'ç', L'c', NSAlternateKeyMask },
-		{ L'√', L'v', NSAlternateKeyMask },
-		{ L'∫', L'b', NSAlternateKeyMask },
-		{ L'µ', L'm', NSAlternateKeyMask },
-		{ L'≤', L',', NSAlternateKeyMask },
-		{ L'≥', L'.', NSAlternateKeyMask },
-		{ L'÷', L'/', NSAlternateKeyMask },
-		
-		{ L'€', L'2', NSShiftKeyMask | NSAlternateKeyMask },
-		
-		// Terminate the list with a zero entry
-		{ 0 }
-	};
-
 - (void)keyTyped:(NSString *)characters
 {
 	unsigned int i;
@@ -564,7 +456,7 @@ const key_modifier_map_t kKeyModifierMap[] = {
 		unichar characterIgnoringModifiers = character;
 		unsigned int modifiers = 0;
 		
-		NSLog(@"char=0x%04x", character);
+//		NSLog(@"char=0x%04x", character);
 		
 		// Perform any character conversions necessary to map from the UIKit
 		// keyboard characters to what the RFB protocol and servers expect.
@@ -627,9 +519,7 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	}
 }
 
-#pragma mark -
 #pragma mark Synthesized Events
-
 
 - (void)clearAllEmulationStates
 {
@@ -651,9 +541,6 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	[_pendingEvents addObject: mousedown];
 }
 
-#define kMouseHysteresisPixels (5.0)
-
-// XXX why does the convertPoint:fromView: method crash???
 - (void)queueMouseDownEventFromEvent: (GSEventRef)theEvent buttonNumber: (unsigned int)button
 {
 //	NSLog(@"queueMouseDownEventFromEvent:%@ n:%d", theEvent, button);
@@ -794,7 +681,6 @@ const key_modifier_map_t kKeyModifierMap[] = {
 		_pressedModifiers |= NSAlphaShiftKeyMask;
 }
 
-#pragma mark -
 #pragma mark Event Processing
 
 - (unsigned int)_sendAnyValidEventsToServerForButton: (unsigned int)button 
@@ -820,7 +706,6 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	return eventsToDelay;
 }
 
-
 - (void)sendAnyValidEventsToServerNow
 {
 	unsigned int eventsToDelay2;
@@ -840,9 +725,10 @@ const key_modifier_map_t kKeyModifierMap[] = {
 		}
 	}
 	else
+	{
 		[self sendAllPendingQueueEntriesNow];
+	}
 }
-
 
 - (void)_sendMouseEvent: (QueuedEvent *)event
 {
@@ -882,12 +768,11 @@ const key_modifier_map_t kKeyModifierMap[] = {
     }
 }
 
-
 - (void)_sendKeyEvent: (QueuedEvent *)event
 {
 	unichar character = [event character];
 	unichar characterIgnoringModifiers = [event characterIgnoringModifiers];
-	NSNumber *encodedChar = [NSNumber numberWithInt: (int)characterIgnoringModifiers];
+	NSNumber * encodedChar = [NSNumber numberWithInt: (int)characterIgnoringModifiers];
 	unichar sendKey;
 	
 	// turns out that servers seem to ignore any keycodes over 128.  so no point in 
@@ -898,9 +783,17 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	// caps lock and then keyrepeat something and unset caps lock while you're doing it, 
 	// the key up character will be for the lowercase letter.
 	if ( NSAlphaShiftKeyMask & _pressedModifiers )
+	{
 		character = toupper(characterIgnoringModifiers);
-	else
+	}
+	else if ((_pressedModifiers & NSShiftKeyMask) == 0)
+	{
+		// If the shift key is not pressed, send unmodified character. Otherwise,
+		// send the modifiers (shifted) character, because shift is supposed to only
+		// be a hint to the server.
 		character = characterIgnoringModifiers;
+	}
+	
 	sendKey = character;
 	
 	if ( kQueuedKeyDownEvent == [event type] )
@@ -916,7 +809,6 @@ const key_modifier_map_t kKeyModifierMap[] = {
 		[_connection sendKey: sendKey pressed: NO];
 	}
 }
-
 
 - (void)_sendModifierEvent: (QueuedEvent *)event
 {
@@ -936,22 +828,28 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	}
 }
 
-
 - (void)_sendEvent: (QueuedEvent *)event
 {
 	if ( _viewOnly )
+	{
 		return;
+	}
 	
 	QueuedEventType eventType = [event type];
 	
 	if ( eventType <= kQueuedMouse3UpEvent )
+	{
 		[self _sendMouseEvent: event];
+	}
 	else if ( eventType <= kQueuedKeyUpEvent )
+	{
 		[self _sendKeyEvent: event];
+	}
 	else
+	{
 		[self _sendModifierEvent: event];
+	}
 }
-
 
 - (void)sendAllPendingQueueEntriesNow
 {
@@ -959,10 +857,12 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	QueuedEvent *event;
 	
 	while ( event = [eventEnumerator nextObject] )
+	{
 		[self _sendEvent: event]; // this sets stuff like _pressedKeyes, _pressedButtons, etc.
+	}
+	
 	[self discardAllPendingQueueEntries];
 }
-
 
 - (void)sendPendingQueueEntriesInRange: (NSRange)range
 {
@@ -976,10 +876,10 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	[_pendingEvents removeObjectsInRange: range];
 }
 
-
 - (void)discardAllPendingQueueEntries
-{  [_pendingEvents removeAllObjects];  }
-
+{
+	[_pendingEvents removeAllObjects];
+}
 
 - (void)_synthesizeRemainingMouseUpEvents
 {
@@ -1023,7 +923,6 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	}
 }
 
-
 - (void)_synthesizeRemainingKeyUpEvents
 {
 	NSEnumerator *keyEnumerator = [_pressedKeys objectEnumerator];
@@ -1039,7 +938,6 @@ const key_modifier_map_t kKeyModifierMap[] = {
 		[_pendingEvents addObject: event];
 	}
 }
-
 
 - (void)_synthesizeRemainingModifierUpEvents
 {
@@ -1071,14 +969,12 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	}
 }
 
-
 - (void)synthesizeRemainingEvents
 {
 	[self _synthesizeRemainingMouseUpEvents];
 	[self _synthesizeRemainingKeyUpEvents];
 	[self _synthesizeRemainingModifierUpEvents];
 }
-
 
 - (unsigned int)handleClickWhileHoldingForButton: (unsigned int)button
 {
@@ -1129,7 +1025,6 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	
 	return 0;
 }
-
 
 - (unsigned int)handleMultiTapForButton: (unsigned int)button
 {
@@ -1183,7 +1078,6 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	
 	return validEvents;
 }
-
 
 - (unsigned int)handleTapModifierAndClickForButton: (unsigned int)button
 {
@@ -1245,10 +1139,7 @@ const key_modifier_map_t kKeyModifierMap[] = {
 	return eventCount;
 }
 
-
-#pragma mark -
 #pragma mark Configuration
-
 
 - (void)_updateConfigurationForButton: (unsigned int)button
 {

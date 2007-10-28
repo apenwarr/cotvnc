@@ -350,14 +350,14 @@
 
 - (void)deleteBackward
 {
-	NSLog(@"%s", __PRETTY_FUNCTION__);
+//	NSLog(@"%s", __PRETTY_FUNCTION__);
 	
 	[_filter keyTyped:@"\x007f"];
 }
 
 - (void)insertText:(id)text
 {
-	NSLog(@"%s:%@", __PRETTY_FUNCTION__, text);
+//	NSLog(@"%s:%@", __PRETTY_FUNCTION__, text);
 	
 	[_filter keyTyped:text];
 }
