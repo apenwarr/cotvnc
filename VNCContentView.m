@@ -98,22 +98,26 @@
 - (CGPoint)getIPodScreenPoint:(CGRect)r bounds:(CGRect)bounds
 {
 	CGPoint ptIPod = CGPointApplyAffineTransform(r.origin, _matrixPreviousTransform);
-        CGRect rcFrame = _frame;
+	CGRect rcFrame = _frame;
 
         switch (_orientationState)
                {
-                                case kOrientationVerticalUpsideDown:
-                                        ptIPod.x = (rcFrame.size.width + ptIPod.x) - bounds.origin.x;
-                                        ptIPod.y = (rcFrame.size.height - ptIPod.y) - bounds.origin.y;
-                                        break;
-                                case kOrientationVertical:                                        
+				case kOrientationVerticalUpsideDown:
+					ptIPod.x = (rcFrame.size.width + ptIPod.x) - bounds.origin.x;
+					ptIPod.y = (rcFrame.size.height - ptIPod.y) - bounds.origin.y;
+				break;
+				case kOrientationVertical:                                        
 					ptIPod.x = ptIPod.x - bounds.origin.x;
-                                        ptIPod.y = 0 - (ptIPod.y + bounds.origin.y);
-                                        break;
-                                case kOrientationHorizontalLeft:
-                                        ptIPod.x = (rcFrame.size.width - ptIPod.x) - bounds.origin.x;
-                                        ptIPod.y = (ptIPod.y - bounds.origin.y);
-                                        break;
+					ptIPod.y = 0 - (ptIPod.y + bounds.origin.y);
+				break;
+				case kOrientationHorizontalRight:
+					ptIPod.x = 0 - (ptIPod.x + bounds.origin.x);
+					ptIPod.y = (rcFrame.size.height + ptIPod.y) - bounds.origin.y ;
+				break;
+				case kOrientationHorizontalLeft:
+					ptIPod.x = (rcFrame.size.width - ptIPod.x) - bounds.origin.x;
+					ptIPod.y = (ptIPod.y - bounds.origin.y);
+				break;
                }
 
 	return ptIPod;
@@ -128,9 +132,7 @@
 	NSLog(@"Bounds = %f %f %f %f ", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
 	NSLog(@"RemoteSize = %f %f", remoteSize.width, remoteSize.height);
 
-
 	_frame = frame;
-	
 	[self setFrame:frame];
 	[self setBounds:bounds];
 		
@@ -142,11 +144,11 @@
 	CGAffineTransform matrix = CGAffineTransformRotate(CGAffineTransformMakeScale(0-_scalePercent, _scalePercent), _orientationDeg  * M_PI / 180.0f);
 	if (bAnimate)
 		{
-  	UITransformAnimation *scaleAnim = [[UITransformAnimation alloc] initWithTarget: self];
-  	[scaleAnim setStartTransform: _matrixPreviousTransform];
-  	[scaleAnim setEndTransform: matrix];
-  	UIAnimator *anim = [[UIAnimator alloc] init];
-  	[anim addAnimation:scaleAnim withDuration:0.30f start:YES]; 
+		UITransformAnimation *scaleAnim = [[UITransformAnimation alloc] initWithTarget: self];
+		[scaleAnim setStartTransform: _matrixPreviousTransform];
+		[scaleAnim setEndTransform: matrix];
+		UIAnimator *anim = [[UIAnimator alloc] init];
+		[anim addAnimation:scaleAnim withDuration:0.30f start:YES]; 
 		}
 
 	[self setTransform:matrix];

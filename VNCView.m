@@ -147,7 +147,7 @@
 
 		// Right mouse button.
 		subframe = CGRectMake(frame.size.width - kExitButtonWidth - 5 - kRightMouseButtonWidth - 6, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kRightMouseButtonWidth, kControlsBarButtonHeight);
-		_rightMouseButton = [[UINavBarButton alloc] initWithTitle:@"R" autosizesToFit:NO];
+		_rightMouseButton = [[UINavBarButton alloc] initWithTitle:@"W" autosizesToFit:NO];
 		[_rightMouseButton setFrame:subframe];
 		[_rightMouseButton setNavBarButtonStyle:0];
 		[_rightMouseButton addTarget:self action:@selector(toggleRightMouse:) forEvents:kUIControlEventMouseUpInside];

@@ -259,11 +259,11 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 			pt.x = pt.x+[_connection displaySize].width;
 			pt.y = [_connection displaySize].height - pt.y;	
 			break;
-		case kOrientationHorizontalLeft:
+		case kOrientationHorizontalRight:
 			pt.y = 0-pt.y;
 			pt.x = pt.x+[_connection displaySize].width;
 			break;
-		case kOrientationHorizontalRight:
+		case kOrientationHorizontalLeft:
 			pt.y = [_connection displaySize].height - pt.y;
 			break;
 	}

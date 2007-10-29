@@ -221,6 +221,8 @@
 	CGRect bounds = [self bounds];
 	CGPoint ptIPodBefore = [vncView getIPodScreenPoint: r bounds: bounds];
 	CGPoint ptLeftTop = bounds.origin;
+	
+	NSLog(@"iPodScreen Point (160, 240) %f,%f", ptIPodBefore.x, ptIPodBefore.y);
 
 	[vncView setScalePercent: fScale];
 	[vncView setOrientation:wOrientationState bForce:bForce];
@@ -254,7 +256,7 @@
 		if (abs(fHowFar) > 3)
 		{
 			VNCView *vncView = _vncView;
-
+			
 			[self pinnedPTViewChange:ptCenter fScale:[vncView getScalePercent]+(.0025 * fHowFar) wOrientationState:[vncView getOrientationState] bForce:true];
 			_fDistancePrev = fDistance;
 		}
