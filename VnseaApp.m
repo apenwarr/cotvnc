@@ -48,7 +48,6 @@ void handle_interrupt_signal(int sig)
 	// Handle signal sent by ^C, mostly for development.
 	signal(SIGINT, handle_interrupt_signal);
 
-//	[UIHardware _setStatusBarHeight:0.0f];
 	
 	CGRect screenRect = [UIHardware fullScreenApplicationContentRect];
 	CGRect frame = CGRectMake(0.0f, 0.0f, screenRect.size.width, screenRect.size.height);
