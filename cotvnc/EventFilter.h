@@ -147,7 +147,7 @@ typedef enum {
 - (UIView *)view;
 - (void)setView: (UIView *)view;
 - (void)setBackToVNCTransform: (CGAffineTransform)matrix;
-- (void)setOrientation: (int) wState;
+- (void)setOrientation: (UIHardwareOrientation) wState;
 - (CGPoint)getVNCScreenPoint: (CGRect)r;
 
 - (unsigned int)pressedButtons;

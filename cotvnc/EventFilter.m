@@ -241,7 +241,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	return _pressedButtons;
 }
 
-- (void)setOrientation:(int)wOrientation
+- (void)setOrientation:(UIHardwareOrientation)wOrientation
 {
 	_orientation = wOrientation;
 }
@@ -252,18 +252,18 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	CGPoint pt = CGPointApplyAffineTransform(cr.origin, _matrixBackToVNCTransform);
 	switch (_orientation)
 	{
-		case 1:
+		case kOrientationVertical:
 			pt.y = 0-pt.y;
 			break;
-		case 2:
+		case kOrientationVerticalUpsideDown:
 			pt.x = pt.x+[_connection displaySize].width;
 			pt.y = [_connection displaySize].height - pt.y;	
 			break;
-		case 4:
+		case kOrientationHorizontalLeft:
 			pt.y = 0-pt.y;
 			pt.x = pt.x+[_connection displaySize].width;
 			break;
-		case 3:
+		case kOrientationHorizontalRight:
 			pt.y = [_connection displaySize].height - pt.y;
 			break;
 	}

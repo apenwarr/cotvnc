@@ -27,7 +27,7 @@
 	bool _viewOnly;			//!< Are we only watching the remote computer?
 	float _fDistancePrev;
 	float _fDistanceStart;
-	void * _vncView;
+	id _vncView;
 	bool _useRightMouse;	//!< Whether to send a right mouse event.
 	bool _inRightMouse;		//!< True if the last mouse down was for the right button.
 }
@@ -39,7 +39,7 @@
 - (void)gestureStarted:(GSEvent *)event;
 - (void)gestureChanged:(GSEvent *)event;
 - (void)gestureEnded:(GSEvent *)event;
-- (void)setVNCView:(void *)view;
+- (void)setVNCView:(id)view;
 - (void)pinnedPTViewChange:(CGPoint)ptPinned fScale:(float)fScale wOrientationState:(UIHardwareOrientation)wOrientationState bForce:(BOOL)bForce;
 
 - (bool)useRightMouse;

@@ -47,7 +47,7 @@
 	
 }
 
-- (void) setVNCView:(void *)view
+- (void) setVNCView:(id)view
 {
 	_vncView = view;
 }
