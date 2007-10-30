@@ -4,7 +4,7 @@
 //
 //  Created by Chris Reed on 9/5/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
-//
+// Modified by: Glenn Kreisel
 
 #import "VNCView.h"
 #import "VNCPopupView.h"
