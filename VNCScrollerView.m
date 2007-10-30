@@ -4,7 +4,7 @@
 //
 //  Created by Chris Reed on 10/16/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
-//
+//  Modified by: Glenn Kreisel
 
 #import "VNCScrollerView.h"
 #import "VNCView.h"
@@ -265,7 +265,7 @@
 		float fHowFar = fDistance - _fDistancePrev;
 		CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
 
-		if (abs(fHowFar) > (_viewOnly ? 3 : 10))
+		if (abs(fHowFar) > (_viewOnly ? 3 : 8))
 		{
 			VNCView *vncView = _vncView;
 			float fNewScale = [vncView getScalePercent]+(.0025 * fHowFar);
@@ -279,8 +279,8 @@
 				}
 			_fDistancePrev = fDistance;
 		}
-
-
+		else
+			[_windowPopupScalePercent setCenterLocation: ptCenter]; 
 	}
 
 	
