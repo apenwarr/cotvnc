@@ -151,6 +151,7 @@
 			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,60,60) bCenter:true bShow:true fOrientation:[vncView orientationDegree]];			
 			[_windowPopupScalePercent setCenterLocation: ptCenter]; 
 			[_windowPopupScalePercent setTextPercent: [vncView getScalePercent]];
+			_bZooming = false;
 			}
 
 	}
@@ -198,6 +199,7 @@
 	// Do nothing if there is no connection.
 	if (_windowPopupScalePercent != nil)
 		{
+		_bZooming = false;
 		[_windowPopupScalePercent setHidden:true];
 		[_windowPopupScalePercent dealloc];
 		_windowPopupScalePercent = nil;
@@ -265,10 +267,12 @@
 		float fHowFar = fDistance - _fDistancePrev;
 		CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
 
-		if (abs(fHowFar) > (_viewOnly ? 3 : 8))
+		if (abs(fHowFar) > (_viewOnly || _bZooming ? 3 : 20))
 		{
 			VNCView *vncView = _vncView;
 			float fNewScale = [vncView getScalePercent]+(.0025 * fHowFar);
+			
+			_bZooming = true;
 			
 			if (fNewScale > .10)
 				{
@@ -278,9 +282,13 @@
 				[self pinnedPTViewChange:ptCenter fScale:fNewScale wOrientationState:[vncView getOrientationState] bForce:true];
 				}
 			_fDistancePrev = fDistance;
+			return;
 		}
 		else
-			[_windowPopupScalePercent setCenterLocation: ptCenter]; 
+			[_windowPopupScalePercent setCenterLocation: ptCenter];
+			
+		if (_viewOnly || _bZooming)
+			return;
 	}
 
 	
