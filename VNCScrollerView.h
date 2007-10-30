@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "EventFilter.h"
+#import "VNCPopupWindow.h"
 
 /*!
  * @brief Subclass of UIScroller that modifies its behaviour.
@@ -30,6 +31,7 @@
 	id _vncView;
 	bool _useRightMouse;	//!< Whether to send a right mouse event.
 	bool _inRightMouse;		//!< True if the last mouse down was for the right button.
+	VNCPopupWindow *_windowPopupScalePercent;
 }
 
 - (void)setEventFilter:(EventFilter *)filter;

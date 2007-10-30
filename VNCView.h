@@ -26,6 +26,7 @@
 #import "RFBViewProtocol.h"
 #import "VNCContentView.h"
 #import "VNCScrollerView.h"
+#import "VNCPopupWindow.h"
 
 /*!
  * @brief Main view to display and control the remote computer.
@@ -61,6 +62,7 @@ typedef enum
 	VNCScrollerView * _scroller;	//!< Scroller subview.
 	VNCContentView * _screenView;	//!< Child content view that draws the framebuffer.
 	UINavBarButton * _keyboardButton;	//
+	UINavBarButton * _keyboardButton1;	//
 	UINavBarButton * _shiftButton;
 	UINavBarButton * _commandButton;
 	UINavBarButton * _optionButton;
@@ -82,6 +84,7 @@ typedef enum
 - (id)delegate;
 - (void)setDelegate:(id)theDelegate;
 //@}
+
 
 //! @name Controls and keyboard
 //@{
@@ -108,6 +111,7 @@ typedef enum
 
 - (void)mouseUp:(struct __GSEvent *)fp8;
 
+- (float)orientationDegree;
 - (void)setOrientation:(UIHardwareOrientation)wOrientation bForce:(int)bForce;
 - (void)pinnedPTViewChange:(CGPoint)ptPinned fScale:(float)fScale wOrientationState:(UIHardwareOrientation)wOrientationState bForce:(BOOL)bForce;
 - (void)setScalePercent:(float)x;

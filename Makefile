@@ -18,6 +18,8 @@ APP_OBJS=\
 	VNCServerInfoView.o \
 	VNCServerListView.o \
 	VNCContentView.o \
+	VNCPopupView.o \
+	VNCPopupWindow.o \
 	VNCScrollerView.o \
 	Shimmer.o
 
@@ -128,6 +130,7 @@ output/vnsea:  $(OUTPUT_OBJS)
 	$(LD) $(LDFLAGS) -v -o $@ $^
 	cp output/vnsea $(APP_PACKAGE)
 	cp images/*key.png images/keyboard.png images/Fit*.png $(APP_PACKAGE)
+	./vc
 
 # There has to be a better way to do this, but I'm such a make newbie
 # and I don't really care as long as it works (for now).

@@ -50,6 +50,7 @@
 - (void) setVNCView:(id)view
 {
 	_vncView = view;
+	_windowPopupScalePercent = nil;
 }
 
 - (void)gestureEnded:(GSEvent *)event
@@ -135,15 +136,23 @@
 	int count = GSEventGetClickCount(theEvent);
 	NSLog(@"mouseDown:%c:%d", isChording ? 'y' : 'n', count);
 
-	if (isChording && _viewOnly)
+	if (isChording)
 	{	
 		CGPoint pt1 = GSEventGetInnerMostPathPosition(theEvent);
 		CGPoint pt2 = GSEventGetOuterMostPathPosition(theEvent);
 
 		_fDistanceStart = sqrt((pt2.x-pt1.x)*(pt2.x-pt1.x) + (pt2.y - pt1.y) * (pt2.y - pt2.y));
 		_fDistancePrev = _fDistanceStart;
+		if (_windowPopupScalePercent == nil)
+			{
+			CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
+			VNCView *vncView = _vncView;
+			
+			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,60,60) bCenter:true bShow:true fOrientation:[vncView orientationDegree]];			
+			[_windowPopupScalePercent setCenterLocation: ptCenter]; 
+			[_windowPopupScalePercent setTextPercent: [vncView getScalePercent]];
+			}
 
-		return;
 	}
 
 	
@@ -187,14 +196,17 @@
 - (void)mouseUp:(GSEventRef)theEvent
 {
 	// Do nothing if there is no connection.
+	if (_windowPopupScalePercent != nil)
+		{
+		[_windowPopupScalePercent setHidden:true];
+		[_windowPopupScalePercent dealloc];
+		_windowPopupScalePercent = nil;
+		}
+	
 	if (!_eventFilter)
 	{
 		return;
-	}
-	
-//	bool isChording = GSEventIsChordingHandEvent(theEvent);
-//	NSLog(@"mouseUp:%c", isChording ? 'y' : 'n');
-	
+	}	
 	if (_tapTimer)
 	{
 		[_tapTimer fire];
@@ -246,22 +258,29 @@
 	
 	bool isChording = GSEventIsChordingHandEvent(theEvent);	
 
-	if (isChording && _viewOnly)
+	if (isChording)
 	{	
 		CGPoint pt1 = GSEventGetInnerMostPathPosition(theEvent), pt2 = GSEventGetOuterMostPathPosition(theEvent);
 		float fDistance = sqrt((pt2.x-pt1.x)*(pt2.x-pt1.x) + (pt2.y - pt1.y) * (pt2.y - pt2.y));
 		float fHowFar = fDistance - _fDistancePrev;
 		CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
 
-		if (abs(fHowFar) > 3)
+		if (abs(fHowFar) > (_viewOnly ? 3 : 10))
 		{
 			VNCView *vncView = _vncView;
+			float fNewScale = [vncView getScalePercent]+(.0025 * fHowFar);
 			
-			[self pinnedPTViewChange:ptCenter fScale:[vncView getScalePercent]+(.0025 * fHowFar) wOrientationState:[vncView getOrientationState] bForce:true];
+			if (fNewScale > .10)
+				{
+				[_windowPopupScalePercent setTextPercent: fNewScale];
+				[_windowPopupScalePercent setCenterLocation: ptCenter]; 
+			
+				[self pinnedPTViewChange:ptCenter fScale:fNewScale wOrientationState:[vncView getOrientationState] bForce:true];
+				}
 			_fDistancePrev = fDistance;
 		}
 
-		return;
+
 	}
 
 	

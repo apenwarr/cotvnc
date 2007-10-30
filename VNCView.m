@@ -7,6 +7,7 @@
 //
 
 #import "VNCView.h"
+#import "VNCPopupView.h"
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 #import <UIKit/UITextView.h>
@@ -74,12 +75,17 @@
 
 		NSLog(@"SubFrame = %f %f", subframe.size.width, subframe.size.height);
 		
-		[_scroller setVNCView: (void *)self];
+		[_scroller setVNCView: self];
 		[_scroller setScrollingEnabled:YES];
 		[_scroller setShowScrollerIndicators:YES];
 		[_scroller setAdjustForContentSizeChange:YES];
-		[_scroller setAllowsRubberBanding:NO];
-		[_scroller setAllowsFourWayRubberBanding:NO];
+		[_scroller setAllowsRubberBanding:YES];
+		[_scroller setAllowsFourWayRubberBanding:YES];
+		[_scroller setRubberBand: 50 forEdges:0];
+		[_scroller setRubberBand: 50 forEdges:1];
+		[_scroller setRubberBand: 50 forEdges:2];
+		[_scroller setRubberBand: 50 forEdges:3];
+		
 		[_scroller setDelegate:self];
 		
 		// Create screen view.
@@ -177,7 +183,7 @@
 		[_controlsView addSubview:_fitHeightButton];
 		[_controlsView addSubview:_rightMouseButton];
 		[self addSubview:_controlsView];
-		
+
 		[_scroller addSubview:_screenView];
 		[self addSubview:_scroller];
 		
@@ -254,6 +260,11 @@
 	}
 }
 
+- (float)orientationDegree
+{
+	return [_screenView getOrientationDeg];
+}
+
 - (void)toggleControls
 {
 	[self showControls:!_areControlsVisible];
@@ -267,7 +278,6 @@
 
 - (void)toggleFitWidthHeight:(id)sender
 {
-	
 	UIPushButton *pButton = (UIPushButton *)sender;	
 	CGRect rc = [pButton frame];
 	scaleSpecialTypes wScaleState = [self getScaleState], 
