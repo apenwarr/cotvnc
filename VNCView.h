@@ -108,7 +108,6 @@ typedef enum
 - (void)drawRectList:(id)aList;
 //@}
 
-
 - (void)mouseUp:(struct __GSEvent *)fp8;
 
 - (float)orientationDegree;
@@ -122,11 +121,14 @@ typedef enum
 - (void)setScaleState: (scaleSpecialTypes)wState;
 - (scaleSpecialTypes)getScaleState;
 
+- (BOOL)showMouseTracks;
+
 @end
 
 @interface VNCView (DelegateMethods)
 
 - (void)closeConnection;
+- (BOOL)showMouseTracks;
 
 @end
 

@@ -8,6 +8,7 @@
 
 #import "VNCView.h"
 #import "VNCPopupView.h"
+#import "VnseaApp.h"
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 #import <UIKit/UITextView.h>
@@ -204,6 +205,7 @@
 	return _areControlsVisible;
 }
 
+
 //! Either hides or shows the controls bar at the bottom of the screen
 //! (in portrait orientation). The hiding or showing is animated.
 - (void)showControls:(bool)show
@@ -337,6 +339,14 @@
 	_isKeyboardVisible = !_isKeyboardVisible;
 }
 
+- (BOOL)showMouseTracks
+{
+	if (_delegate && [_delegate respondsToSelector:@selector(showMouseTracks)])
+	{
+		[_delegate showMouseTracks];
+	}
+}
+
 //! This message is received when the user has pressed the close connection
 //! button.
 - (void)closeConnection:(id)sender
@@ -433,6 +443,8 @@
     _connection = connection;
 	if (_connection)
 	{
+		NSLog(@"Statusbar Transparent");
+
 		_filter = [_connection eventFilter];
 		[_filter setView:_scroller];
 		[_scroller setEventFilter:_filter];
@@ -440,16 +452,14 @@
 		[_scroller scrollPointVisibleAtTopLeft:CGPointMake(0, 0)];
 	}
 	else
-	{
-		// The connection was closed.
+	{		
 		_filter = nil;
 		[_scroller setEventFilter:nil];
 		[_screenView setFrameBuffer:nil];
 		[_screenView setOrientationState:0];
-		NSLog(@"Setting Orientation to 0");
-		
 		// Get the screen view to redraw itself in black.
 		[_screenView setNeedsDisplay];
+		
 	}
 }
 
@@ -543,12 +553,14 @@
 		{
 			newRemoteSize = vncScreenSize;
 			[self showControls:1];
+			[[self delegate] setStatusBarMode:kUIStatusBarBlack duration:0];
 		}
 		else
 		{
 			newRemoteSize.width = vncScreenSize.height;
 			newRemoteSize.height = vncScreenSize.width;
 			[self showControls:0];
+			[[self delegate] setStatusBarMode:kUIStatusBarNone duration:0];
 		}
 
 		if ([self getScaleState] != kScaleFitNone)
