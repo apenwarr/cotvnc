@@ -28,6 +28,8 @@
 #define kRevertButtonWidth (100.0f)
 #define kRevertButtonHeight (32.0f)
 
+#define SERVER_SCALE @"SCALE"
+
 //! @brief Signal handler for SIGINT.
 //!
 //! Simply terminates the application, which will cause any open connection
@@ -312,7 +314,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 		}
 	
 	[serverInfo setObject:nsPassword forKey:RFB_PASSWORD];
-	NSNumber *nsScale = [serverInfo objectForKey:@"Scale"];
+	NSNumber *nsScale = [serverInfo objectForKey:SERVER_SCALE];
 	if (nsScale != nil)
 		{
 		NSLog(@"Setting remembered scale to %f", [nsScale floatValue]);
@@ -493,12 +495,13 @@ int compareServers(id obj1, id obj2, void *reverse)
 	if (_connection)
 	{
 		NSMutableArray * servers = [[self loadServers] mutableCopy];
-		NSMutableDictionary * serverInfo = [[[servers objectAtIndex:_serverConnectingIndex] mutableCopy] retain];
-		[serverInfo setObject:[NSNumber numberWithFloat:[_vncView getScalePercent]] forKey:@"SCALE"];
+		NSMutableDictionary * serverInfo = [[servers objectAtIndex:_serverConnectingIndex] mutableCopy];
+		
+		NSLog(@"Saved Scale %f", [_vncView getScalePercent]);
+		[serverInfo setObject:[NSNumber numberWithFloat:[_vncView getScalePercent]] forKey:SERVER_SCALE];
 		[servers replaceObjectAtIndex:_serverConnectingIndex withObject:serverInfo];
 		[self saveServers: servers];
-		[_serversView setServerList:servers];
-
+		
 		_closingConnection = YES;
 		[_connection terminateConnection:nil];
 		[_vncView setConnection: nil];
