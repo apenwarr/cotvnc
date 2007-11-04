@@ -10,6 +10,7 @@
 #import "ServerStandAlone.h"
 #import "ServerFromPrefs.h"
 #import "Shimmer.h"
+#import "VNCServerInfoView.h"
 #import <stdlib.h>
 #import <signal.h>
 
@@ -37,6 +38,19 @@ void handle_interrupt_signal(int sig)
 	[UIApp terminate];
 }
 
+/*
+@implementation NSDictionary (CategorySort)
+
+- (NSComparisonResult)compareServers:(NSDictionary *)dict
+{
+  NSLog(@"Sorting");
+  return 0;
+}
+
+@end
+*/
+
+
 @implementation VnseaApp
 
 - (void)applicationDidFinishLaunching:(NSNotification *)unused
@@ -47,7 +61,6 @@ void handle_interrupt_signal(int sig)
 	
 	// Handle signal sent by ^C, mostly for development.
 	signal(SIGINT, handle_interrupt_signal);
-
 	
 	CGRect screenRect = [UIHardware fullScreenApplicationContentRect];
 	CGRect frame = CGRectMake(0.0f, 0.0f, screenRect.size.width, screenRect.size.height);
@@ -60,7 +73,10 @@ void handle_interrupt_signal(int sig)
 	[_mainView addSubview: _transView];
 
 	// vncsea view
-	_vncView = [[VNCView alloc] initWithFrame: frame];
+	CGRect rcNewFrame = frame;
+	
+	rcNewFrame.size.height += [self statusBarRect].size.height;
+	_vncView = [[VNCView alloc] initWithFrame: rcNewFrame];
 	[_vncView setDelegate:self];
 
 	// Server manager view
@@ -71,6 +87,17 @@ void handle_interrupt_signal(int sig)
 	// Server editor view
 	_serverEditorView = [[VNCServerInfoView alloc] initWithFrame:frame];
 	[_serverEditorView setDelegate:self];
+
+	_prefsView = [[VNCPrefsView alloc] initWithFrame:frame];
+	[_prefsView setDelegate:self];
+	
+	NSArray * prefs = [self loadPrefs];
+	NSDictionary *prefsInfo;
+	if ([prefs count] > 0)
+		prefsInfo = [prefs objectAtIndex:0];
+	[_prefsView setPrefsInfo:prefsInfo];
+	
+	NSLog(@" Mouse Tracks = %d", (int)[self showMouseTracks]);
 	
 	// Profile
 	_defaultProfile = [[Profile defaultProfile] retain];
@@ -122,6 +149,11 @@ void handle_interrupt_signal(int sig)
 	[super dealloc];
 }
 
+- (BOOL)showMouseTracks
+{
+	return [_prefsView showMouseTracks];
+}
+		
 //! Use Shimmer to check for an available update, ask the user if it should be
 //! installed, and then download and install it. This method is executed on a
 //! separate thread, so attempting the connection will not freeze the UI.
@@ -143,15 +175,25 @@ void handle_interrupt_signal(int sig)
 	[pool release];
 }
 
+int compareServers(id obj1, id obj2, void *reverse)
+{
+	NSDictionary *serverInfo = (NSDictionary *)obj1;
+	NSDictionary *serverInfo1 = (NSDictionary *)obj2;
+	
+	return [[serverInfo objectForKey:RFB_NAME] compare: [serverInfo1 objectForKey:RFB_NAME]];
+}
+
 - (NSArray *)loadServers
 {
 	NSDictionary * dict = [NSDictionary dictionaryWithContentsOfFile:kServersFilePath];
-//	NSLog(@"load");
+	
 	if (dict == nil)
-	{
+		{
 		return [NSArray array];
-	}
-	return [dict objectForKey:kServerArrayKey];
+		}
+	
+	NSArray *nsArray = [dict objectForKey:kServerArrayKey];	
+	return [nsArray sortedArrayUsingFunction: compareServers context:nil];
 }
 
 - (void)saveServers:(NSArray *)theServers
@@ -220,6 +262,17 @@ void handle_interrupt_signal(int sig)
 	}
 }
 
+- (void)_endedEditing;
+{
+	NSLog(@"Editing Ended");
+}
+
+- (BOOL)_shouldEndEditing;
+{
+	NSLog(@"Should Ended");
+	return true;
+}
+
 - (void)serverSelected:(int)serverIndex
 {
 	// Disable the server list view.
@@ -227,8 +280,51 @@ void handle_interrupt_signal(int sig)
 	
 	// Without the retain on serverInfo, we get a crash when theServer is released. Not sure why...
 	NSArray * servers = [self loadServers];
-	NSDictionary * serverInfo = [[servers objectAtIndex:serverIndex] retain];
+	NSMutableDictionary * serverInfo = [[[servers objectAtIndex:serverIndex] mutableCopy] retain];
+	
+	// Decrypt password before passing to VNC
+	NSString *nsPassword = [_serverEditorView decryptPassword:[serverInfo objectForKey:RFB_PASSWORD]];
+	if (nsPassword == nil || [nsPassword length] == 0)
+		{
+		UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
+		initWithTitle:NSLocalizedString(@"PasswordRequestTitle", nil)
+		buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
+		defaultButtonIndex:1
+		delegate:self
+		context:self];
+		
+		[hotSheet setBodyText:NSLocalizedString(@"PasswordRequestText", nil)];
+		[hotSheet addTextFieldWithValue: @"" label: @"password"];
+		UITextField *tf = [hotSheet textFieldAtIndex:0];
+		[tf setSecure:true];
+		[tf setAutoCapsType: 0];
+		[tf setAutoEnablesReturnKey:true];
+		[hotSheet setDimsBackground:YES];
+		[hotSheet setRunsModal:YES];
+		[hotSheet setShowsOverSpringBoardAlerts:NO];
+		[hotSheet popupAlertAnimated:YES];
+				
+		if (_lastAlertButtonIndexClicked == 2)
+			{
+			// Re-enable the server list view.
+			[_serversView setEnabled:YES];
+			return;
+			}
+		nsPassword = [tf text];
+		NSLog(@"Input Password = %s", [nsPassword cString]);
+		}
+	
+	[serverInfo setObject:nsPassword forKey:RFB_PASSWORD];
+	NSNumber *nsScale = [serverInfo objectForKey:@"Scale"];
+	if (nsScale != nil)
+		{
+		NSLog(@"Setting remembered scale to %f", [nsScale floatValue]);
+		[_vncView setScalePercent: [nsScale floatValue]];
+		}
+	
 	ServerFromPrefs * theServer = [[[ServerFromPrefs alloc] initWithPreferenceDictionary:serverInfo] autorelease];
+	
+	_serverConnectingIndex = serverIndex;
 	
 	NSLog(@"opening connection...");
 	NSLog(@"  server:  %@", theServer);
@@ -253,6 +349,12 @@ void handle_interrupt_signal(int sig)
 	if (_didOpenConnection)
 	{
 		NSLog(@"connection=%@", _connection);
+		[self statusBarWillAnimateToHeight:0 duration:.2 fence:0];
+		[self setStatusBarMode:kUIStatusBarBlack duration:0];
+		CGRect rcFrame = [_window frame];
+		rcFrame.origin.y = 0;
+		[_window setFrame: rcFrame];
+
 		[_vncView setConnection:_connection];
 		[_vncView showControls:YES];
 		[_connection setDelegate:self];
@@ -375,6 +477,11 @@ void handle_interrupt_signal(int sig)
 	
 	_closingConnection = NO;
 	
+	CGRect rcFrame = [_window frame];
+	rcFrame.origin.y = 20;
+	[_window setFrame: rcFrame];
+	[self setStatusBarMode:kUIStatusBarWhite duration:1];
+	
 	// Switch back to the list view
 	[_transView transition:2 fromView:_vncView toView:_serversView];
 }
@@ -384,16 +491,28 @@ void handle_interrupt_signal(int sig)
 //! termination time.
 - (void)closeConnection
 {
+	NSLog(@"Set statusbar white");
+		
 	if (_connection)
 	{
+		NSMutableArray * servers = [[self loadServers] mutableCopy];
+		NSMutableDictionary * serverInfo = [[[servers objectAtIndex:_serverConnectingIndex] mutableCopy] retain];
+		[serverInfo setObject:[NSNumber numberWithFloat:[_vncView getScalePercent]] forKey:@"SCALE"];
+		[servers replaceObjectAtIndex:_serverConnectingIndex withObject:serverInfo];
+		[self saveServers: servers];
+		[_serversView setServerList:servers];
+
 		_closingConnection = YES;
 		[_connection terminateConnection:nil];
+		[_vncView setConnection: nil];
 		_connection = nil;
 	}
 }
 
 - (void)alertSheet:(id)sheet buttonClicked:(int)buttonIndex
 {
+	_lastAlertButtonIndexClicked = buttonIndex;
+	
 	if (sheet == _connectAlert)
 	{
 		// The user hit the Cancel button on the "Connecting to server" alert.
@@ -410,17 +529,19 @@ void handle_interrupt_signal(int sig)
 
 - (void)editServer:(int)serverIndex
 {
+	NSDictionary * serverInfo = nil;
 	NSLog(@"editServer:%d", serverIndex);
 	
 	_editingIndex = serverIndex;
-	
-	NSArray * servers = [self loadServers];
-	NSDictionary * serverInfo = [servers objectAtIndex:serverIndex];
+	if (serverIndex != -1)
+		{
+		NSArray * servers = [self loadServers];
+		serverInfo = [servers objectAtIndex:serverIndex];
+		}
 	[_serverEditorView setServerInfo:serverInfo];
 	
 	// Hide keyboard before switching in case it was visible.
-	[_serverEditorView setKeyboardVisible:NO];
-	
+	[_serverEditorView setKeyboardVisible:NO];	
 	// Switch to the editor view
 	[_transView transition:1 fromView:_serversView toView:_serverEditorView];
 }
@@ -428,25 +549,97 @@ void handle_interrupt_signal(int sig)
 - (void)addNewServer
 {
 	NSLog(@"add server");
+	[self editServer:-1];
+}
+
+- (void)serverValidationFailed:(NSString *)pnsBodyText
+{
+	UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
+		initWithTitle:NSLocalizedString(@"ServerInformationTitle", nil)
+		buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
+		defaultButtonIndex:1
+		delegate:self
+		context:self];
+
+	[hotSheet setBodyText:pnsBodyText];
+	[hotSheet setDimsBackground:YES];
+	[hotSheet setRunsModal:YES];
+	[hotSheet setShowsOverSpringBoardAlerts:NO];
+	[hotSheet popupAlertAnimated:YES];
+}
+
+- (NSArray *)loadPrefs
+{
+	NSDictionary * dict = [NSDictionary dictionaryWithContentsOfFile:kPrefsFilePath];
 	
-	NSMutableArray * servers = [[self loadServers] mutableCopy];
-	NSDictionary * info = [self defaultServerInfo];
-	[servers addObject:info];
-	[self saveServers:servers];
+	if (dict == nil)
+		{
+		NSArray *ns = [NSArray array];
+		return ns;
+		}
+		
+	NSArray *nsArray = [dict objectForKey:kPrefsArrayKey];	
+	return nsArray;
+}
+
+- (void)savePrefs:(NSArray *)thePrefs
+{
+	NSLog(@"save prefs");
+	NSDictionary * prefs = [NSDictionary dictionaryWithObject:thePrefs forKey:kPrefsArrayKey];
+	[prefs writeToFile:kPrefsFilePath atomically:YES];
+}
+
+- (void)displayPrefs
+{
+	NSDictionary *prefsInfo = nil;
+	NSLog(@"Display Prefs");
 	
-	int newIndex = [servers count] - 1;
-	[self editServer:newIndex];
+	NSArray * prefs = [self loadPrefs];
+	if ([prefs count] > 0)
+		prefsInfo = [prefs objectAtIndex:0];
+	[_prefsView setPrefsInfo:prefsInfo];
+	
+	// Hide keyboard before switching in case it was visible.
+	[_prefsView setKeyboardVisible:NO];	
+	// Switch to the editor view
+	[_transView transition:1 fromView:_serversView toView:_prefsView];
+}
+
+- (void)finishedPrefs:(NSDictionary *)prefsInfo
+{
+	NSLog(@"finished prefs:%@", prefsInfo);
+	
+	[_prefsView setKeyboardVisible:NO];	
+
+	NSMutableArray * prefs = [[self loadPrefs] mutableCopy];
+	if (prefsInfo)
+		{
+		if ([prefs count] <= 0)
+			[prefs addObject:prefsInfo];
+		else
+			[prefs replaceObjectAtIndex:0 withObject:prefsInfo];
+		[self savePrefs: prefs];
+		}
+	
+	// Switch back to the list view
+	[_transView transition:2 fromView:_prefsView toView:_serversView];
 }
 
 - (void)finishedEditingServer:(NSDictionary *)serverInfo
 {
 	NSLog(@"finished editing:%@", serverInfo);
 	
+	[_serverEditorView setKeyboardVisible:NO];	
+
 	NSMutableArray * servers = [[self loadServers] mutableCopy];
 	if (serverInfo)
 	{
-		[servers replaceObjectAtIndex:_editingIndex withObject:serverInfo];
-		[self saveServers:servers];
+		if (_editingIndex == -1)
+			[servers addObject:serverInfo];
+		else
+			[servers replaceObjectAtIndex:_editingIndex withObject:serverInfo];
+		[self saveServers: servers];
+		servers = [[self loadServers] mutableCopy];
 	}
 	
 	// Reload list
@@ -460,9 +653,29 @@ void handle_interrupt_signal(int sig)
 //! Delete Server button.
 - (void)deleteServer
 {
+	UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
+		initWithTitle:NSLocalizedString(@"DeleteServerTitle", nil)
+		buttons:[NSArray arrayWithObjects:NSLocalizedString(@"No", nil), NSLocalizedString(@"Yes", nil)]
+		defaultButtonIndex:1
+		delegate:self
+		context:self];
+
+	[hotSheet setBodyText:NSLocalizedString(@"DeleteServerMessage", nil)];
+	[hotSheet setDimsBackground:YES];
+	[hotSheet setRunsModal:YES];
+	[hotSheet setShowsOverSpringBoardAlerts:NO];
+	[hotSheet popupAlertAnimated:YES];
+	
 	NSMutableArray * servers = [[self loadServers] mutableCopy];
-	[servers removeObjectAtIndex:_editingIndex];
-	[self saveServers:servers];
+	if (_lastAlertButtonIndexClicked == 2)
+		{	
+		NSLog(@"Trying to Delete ServerInfo %d", _editingIndex);
+		if (_editingIndex != -1)
+			{
+			[servers removeObjectAtIndex:_editingIndex];
+			[self saveServers:servers];
+			}
+		}
 	
 	// Reload list
 	[_serversView setServerList:servers];
@@ -474,56 +687,22 @@ void handle_interrupt_signal(int sig)
 - (NSDictionary *)defaultServerInfo
 {
 	NSMutableDictionary * info = [NSMutableDictionary dictionary];
-	[info setObject:@"new server" forKey:RFB_NAME];
-	[info setObject:@"localhost" forKey:RFB_HOSTANDPORT];
+	
+	[info setObject:@"" forKey:RFB_NAME];
+	[info setObject:@"" forKey:RFB_HOSTANDPORT];
 	[info setObject:@"" forKey:RFB_PASSWORD];
 	[info setObject:[NSNumber numberWithBool:YES] forKey:RFB_REMEMBER];
 	[info setObject:[NSNumber numberWithInt:0] forKey:RFB_DISPLAY];
 	[info setObject:@"Default" forKey:RFB_LAST_PROFILE];
 	[info setObject:[NSNumber numberWithBool:NO] forKey:RFB_SHARED];
-	[info setObject:[NSNumber numberWithInt:32] forKey:RFB_PIXEL_DEPTH];
+	[info setObject:[NSNumber numberWithInt:16] forKey:RFB_PIXEL_DEPTH];
 	[info setObject:[NSNumber numberWithBool:NO] forKey:RFB_FULLSCREEN];
 	[info setObject:[NSNumber numberWithBool:NO] forKey:RFB_VIEWONLY];
-	
 	return info;
 }
-
-- (void)displayAbout
-{
-	UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
-		initWithTitle:NSLocalizedString(@"AboutVersion", nil)
-		buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
-		defaultButtonIndex:0
-		delegate:self
-		context:self];
-
-	[hotSheet setBodyText:NSLocalizedString(@"AboutMessage", nil)];
-	[hotSheet setDimsBackground:NO];
-	[hotSheet setRunsModal:YES];
-	[hotSheet setShowsOverSpringBoardAlerts:NO];
-	
-	[hotSheet popupAlertAnimated:YES];
-}
-
 - (void)deviceOrientationChanged:(GSEvent *)event
 {
-	[_vncView pinnedPTViewChange:CGPointMake(160,240) fScale:[_vncView getScalePercent] wOrientationState:[UIHardware deviceOrientation:YES] bForce:false];
-		
-		/*
-		UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
-					initWithTitle:NSLocalizedString(@"Orientation Changed", nil)
-					buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
-					defaultButtonIndex:0
-					delegate:self
-					context:self];
-		
-		[hotSheet setBodyText:[NSString stringWithFormat:@"%d", [UIHardware deviceOrientation:YES]]];
-		[hotSheet setDimsBackground:NO];
-		[hotSheet setRunsModal:YES];
-		[hotSheet setShowsOverSpringBoardAlerts:NO];
-		[hotSheet popupAlertAnimated:YES];
-		*/
-		
+	[_vncView pinnedPTViewChange:CGPointMake(160,240) fScale:[_vncView getScalePercent] wOrientationState:[UIHardware deviceOrientation:YES] bForce:false];		
 }
 
 - (void)acceleratedInX:(float)x Y:(float)y Z:(float)z
@@ -599,4 +778,6 @@ void handle_interrupt_signal(int sig)
 }
 */
 @end
+
+
 

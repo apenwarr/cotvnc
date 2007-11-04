@@ -34,9 +34,10 @@
 		
 		// Setup navbar
 		_navBar = [[UINavigationBar alloc] initWithFrame: subframe];
-		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"About", nil) rightTitle:NSLocalizedString(@"New", nil) leftBack: NO];
+		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"Preferences", nil) rightTitle:NSLocalizedString(@"New", nil) leftBack: NO];
 		[_navBar setBarStyle: 3];
 		[_navBar setDelegate: self];
+		
 		[self addSubview: _navBar];
 		
 		UINavigationItem * item = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"VNC Servers", nil)];
@@ -122,10 +123,10 @@
 			[self addNewServer:nil];
 			break;
 			
-		case kNavBarAboutButton:
-			if (_delegate && [_delegate respondsToSelector:@selector(displayAbout)])
+		case kNavBarPrefsButton:
+			if (_delegate && [_delegate respondsToSelector:@selector(displayPrefs)])
 			{
-				[_delegate displayAbout];
+				[_delegate displayPrefs];
 			}
 			break;
 	}

@@ -21,7 +21,7 @@ enum _disclosure_style
 enum _server_list_navbar_buttons
 {
 	kNavBarEditButton = 0,
-	kNavBarAboutButton = 1
+	kNavBarPrefsButton = 1
 };
 
 /*!
@@ -55,6 +55,6 @@ enum _server_list_navbar_buttons
 
 - (void)addNewServer;
 
-- (void)displayAbout;
+- (void)displayPrefs;
 
 @end

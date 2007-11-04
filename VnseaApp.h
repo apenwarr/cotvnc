@@ -14,6 +14,7 @@
 #import "VNCView.h"
 #import "VNCServerInfoView.h"
 #import "VNCServerListView.h"
+#import "VNCPrefsView.h"
 
 @class Profile;
 @class Shimmer;
@@ -22,9 +23,12 @@
 //! Path to the file that server settings are stored in.
 #define kServersFilePath @"/var/root/Library/Preferences/vnsea_servers.plist"
 
+#define kPrefsFilePath @"/var/root/Library/Preferences/vnsea_prefs.plist"
+
 //! The top level dictionary key containing the array of server dictionaries in the
 //! server settings file.
 #define kServerArrayKey @"servers"
+#define kPrefsArrayKey @"prefs"
 
 //! URL for a plist that contains information about the latest version
 //! of the application, for use by Shimmer.
@@ -56,16 +60,18 @@
 	VNCView * _vncView;
 	VNCServerListView * _serversView;
 	VNCServerInfoView * _serverEditorView;
+	VNCPrefsView *_prefsView;
 	//@}
 	
 	Profile * _defaultProfile;	//!< Our single profile object, reused for every connection.
-	int _editingIndex;	//!< Index of the server currently being edited.
+	int _editingIndex, _serverConnectingIndex;	//!< Index of the server currently being edited.
 	RFBConnection * _connection;	//!< The active connection object.
 	NSConditionLock * _connectLock;	//!< Lock used for thread synchronisation during connect.
 	BOOL _didOpenConnection;	//!< YES if the connection was opened successfully.
 	NSString * _connectError;	//!< Error message from attempting to open a connection.
 	BOOL _closingConnection;	//!< True if the connection is intentionally being closed.
 	UIAlertSheet * _connectAlert;	//!< Sheet saying we're connecting to a server.
+	int _lastAlertButtonIndexClicked;
 }
 
 //! @name Server list I/O
@@ -74,12 +80,21 @@
 - (void)saveServers:(NSArray *)theServers;
 //@}
 
+- (NSArray *)loadPrefs;
+- (void)savePrefs:(NSArray *)thePrefs;
+- (void)finishedPrefs:(NSDictionary *)prefInfo;
+- (void)displayPrefs;
+- (BOOL)showMouseTracks;
+
+- (void)_endedEditing;
+- (BOOL)_shouldEndEditing;
 //! @name List and editor delegate messages
 //@{
 - (void)serverSelected:(int)serverIndex;
 - (void)editServer:(int)serverIndex;
 - (void)addNewServer;
 - (void)finishedEditingServer:(NSDictionary *)serverInfo;
+- (void)serverValidationFailed:(NSString *)pnsBodyText;
 - (void)deleteServer;
 //@}
 
@@ -91,8 +106,6 @@
 - (void)checkForUpdate:(id)unused;
 //@}
 
-//! @brief Show the about alert.
-- (void)displayAbout;
 
 //! @name Connection methods
 //@{
