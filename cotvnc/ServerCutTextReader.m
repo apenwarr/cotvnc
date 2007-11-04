@@ -26,6 +26,7 @@
 
 - (id)initTarget:(id)aTarget action:(SEL)anAction
 {
+	NSLog(@"Cut Paste");
 	if (self = [super initTarget:aTarget action:anAction]) {
 		dummyReader = [[ByteBlockReader alloc] initTarget:self action:@selector(padding:) size:3];
 		textReader = [[RFBStringReader alloc] initTarget:self action:@selector(setText:)];
@@ -42,21 +43,28 @@
 
 - (void)resetReader
 {
+	NSLog(@"Reset clip");
     [target setReader:dummyReader];
 }
 
 - (void)padding:(NSData*)pad
 {
+	NSLog(@"Padding");
     [target setReader:textReader];
 }
 
 - (void)setText:(NSString*)aText
 {
-//    NSPasteboard* pb = [NSPasteboard generalPasteboard];
-//
-//    [pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-//    [pb setString:aText forType:NSStringPboardType];
-//    [target performSelector:action withObject:aText];
+	NSLog(@"Set text: %s", [aText cString]);
+
+/*
+    NSPasteboard* pb = [NSPasteboard generalPasteboard];
+
+    [pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+    [pb setString:aText forType:NSStringPboardType];
+*/
+    [target performSelector:action withObject:aText];
+
 }
 
 @end
