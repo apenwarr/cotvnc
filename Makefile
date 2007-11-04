@@ -5,7 +5,7 @@ LD=$(CC)
 
 LDFLAGS=-lobjc -lz -framework CoreFoundation -framework Foundation -framework UIKit -framework LayerKit -framework CoreGraphics -framework GraphicsServices
 
-CFLAGS=-I. -Icotvnc -Isrc
+CFLAGS=-O -I. -Icotvnc -Isrc
 
 APP_PACKAGE=VNsea.app
 
@@ -21,6 +21,7 @@ APP_OBJS=\
 	VNCPopupView.o \
 	VNCPopupWindow.o \
 	VNCScrollerView.o \
+	VNCPrefsView.o \
 	Shimmer.o
 
 VNC_OBJS=\
