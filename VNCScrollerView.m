@@ -12,6 +12,8 @@
 //! Number of seconds to wait before sending a mouse down, during which we
 //! check to see if the user is really wanting to scroll.
 #define kSendMouseDownDelay (0.185)
+#define kMinScale (.10f)
+#define kMaxScale (3.0f)
 
 @implementation VNCScrollerView
 
@@ -51,6 +53,7 @@
 {
 	_vncView = view;
 	_windowPopupScalePercent = nil;
+	_windowPopupMouseDown = nil;
 }
 
 - (void)gestureEnded:(GSEvent *)event
@@ -118,6 +121,24 @@
 	
 	[self sendMouseDown:theEvent];
 	
+	VNCView *vncView = _vncView;
+
+	if ([vncView showMouseTracks])
+		{
+	if (_windowPopupMouseDown != nil)
+		{
+		[_windowPopupMouseDown setHidden:true];
+		[_windowPopupMouseDown release];
+		_windowPopupMouseDown = nil;
+		}
+	_windowPopupMouseDown = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,10,10) bCenter:true bShow:true fOrientation:90 style:kPopupStyleMouseDown];			
+	CGPoint ptCenter = GSEventGetLocationInWindow(theEvent).origin;
+	[_windowPopupMouseDown setCenterLocation: ptCenter]; 
+	NSLog(@"Setting Timer on Popup");
+	[_windowPopupMouseDown setTimer: 2.0f info:(&_windowPopupMouseDown)]; 	
+	NSLog(@"Mouse Down at %f,%f", ptCenter.x, ptCenter.y);
+	}
+	
 	// The event is no longer needed.
 	CFRelease(theEvent);
 	
@@ -148,7 +169,7 @@
 			CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
 			VNCView *vncView = _vncView;
 			
-			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,60,60) bCenter:true bShow:true fOrientation:[vncView orientationDegree]];			
+			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,60,60) bCenter:true bShow:true fOrientation:[vncView orientationDegree] style:kPopupStyleScalePercent];			
 			[_windowPopupScalePercent setCenterLocation: ptCenter]; 
 			[_windowPopupScalePercent setTextPercent: [vncView getScalePercent]];
 			_bZooming = false;
@@ -209,6 +230,7 @@
 	{
 		return;
 	}	
+	
 	if (_tapTimer)
 	{
 		[_tapTimer fire];
@@ -216,6 +238,23 @@
 
 	if (_inRemoteAction)
 	{
+	VNCView *vncView = _vncView;
+
+	if ([vncView showMouseTracks])
+		{
+		if (_windowPopupMouseUp != nil)
+			{
+			[_windowPopupMouseUp setHidden:true];
+			[_windowPopupMouseUp release];
+			_windowPopupMouseUp = nil;
+			}
+		_windowPopupMouseUp = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,10,10) bCenter:true bShow:true fOrientation:90 style:kPopupStyleMouseUp];			
+		CGPoint ptCenter = GSEventGetLocationInWindow(theEvent).origin;
+		[_windowPopupMouseUp setCenterLocation: ptCenter]; 
+		NSLog(@"Setting Timer on Popup");
+		[_windowPopupMouseUp setTimer: 2.0f info:(&_windowPopupMouseUp)]; 
+		}
+
 		[self sendMouseUp:theEvent];
 		_inRemoteAction = NO;
 	}
@@ -236,14 +275,14 @@
 	CGPoint ptIPodBefore = [vncView getIPodScreenPoint: r bounds: bounds];
 	CGPoint ptLeftTop = bounds.origin;
 	
-	NSLog(@"iPodScreen Point (160, 240) %f,%f", ptIPodBefore.x, ptIPodBefore.y);
+//	NSLog(@"iPodScreen Point (160, 240) %f,%f", ptIPodBefore.x, ptIPodBefore.y);
 
 	[vncView setScalePercent: fScale];
 	[vncView setOrientation:wOrientationState bForce:bForce];
 	r.origin = ptVNCBefore;
 	CGPoint ptIPodAfter = [vncView getIPodScreenPoint: r bounds: bounds];
-	NSLog(@"IPod After %f,%f", ptIPodAfter.x, ptIPodAfter.y);
-	NSLog(@"");
+//	NSLog(@"IPod After %f,%f", ptIPodAfter.x, ptIPodAfter.y);
+//	NSLog(@"");
 	ptLeftTop.x = ptLeftTop.x + (ptIPodAfter.x - ptIPodBefore.x);
 	ptLeftTop.y = ptLeftTop.y + (ptIPodAfter.y - ptIPodBefore.y);
 	[self scrollPointVisibleAtTopLeft: ptLeftTop];
@@ -274,18 +313,21 @@
 			
 			_bZooming = true;
 			
-			if (fNewScale > .10)
+			if (fNewScale > kMinScale && fNewScale < kMaxScale)
 				{
 				[_windowPopupScalePercent setTextPercent: fNewScale];
 				[_windowPopupScalePercent setCenterLocation: ptCenter]; 
-			
+				
 				[self pinnedPTViewChange:ptCenter fScale:fNewScale wOrientationState:[vncView getOrientationState] bForce:true];
 				}
 			_fDistancePrev = fDistance;
 			return;
 		}
 		else
+			{
 			[_windowPopupScalePercent setCenterLocation: ptCenter];
+			}
+
 			
 		if (_viewOnly || _bZooming)
 			return;
