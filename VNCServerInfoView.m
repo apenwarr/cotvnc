@@ -6,6 +6,8 @@
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
+#include <d3des.h>
+#import "VNseaApp.h"
 #import "VNCServerInfoView.h"
 #import <UIKit/UIPreferencesTextTableCell.h>
 #import <UIKit/UIPreferencesControlTableCell.h>
@@ -41,13 +43,21 @@
 		// Create edit field cells.
 		UIPreferencesTextTableCell * nameCell = [[UIPreferencesTextTableCell alloc] init];
 		[nameCell setTitle:NSLocalizedString(@"Name", nil)];
+		[[nameCell textField] setPreferredKeyboardType: 1];
+		[nameCell setPlaceHolderValue:NSLocalizedString(@"NamePlace", nil)];
 		
 		UIPreferencesTextTableCell * addressCell = [[UIPreferencesTextTableCell alloc] init];
 		[addressCell setTitle:NSLocalizedString(@"Address", nil)];
+//		[[addressCell textField] setPreferredKeyboardType: 3]; .com and /
+//		[[addressCell textField] setPreferredKeyboardType: 9]; .com and @
+		[[addressCell textField] setPreferredKeyboardType: 3];
+		[addressCell setPlaceHolderValue:NSLocalizedString(@"AddressPlace", nil)];
 		
 		UIPreferencesTextTableCell * passwordCell = [[UIPreferencesTextTableCell alloc] init];
 		[passwordCell setTitle:NSLocalizedString(@"Password", nil)];
-		[passwordCell setPlaceHolderValue:NSLocalizedString(@"enter password", nil)];
+		[[passwordCell textField] setSecure:true];
+		[[passwordCell textField] setAutoCapsType: 0];
+		[passwordCell setPlaceHolderValue:NSLocalizedString(@"PasswordPlace", nil)];
 		
 		UIPreferencesTextTableCell * displayCell = [[UIPreferencesTextTableCell alloc] init];
 		[displayCell setTitle:NSLocalizedString(@"Display", nil)];
@@ -67,6 +77,13 @@
 		[_viewOnlySwitch setOrigin:controlOrigin];
 		[viewOnlyCell setControl:_viewOnlySwitch];
 		
+		UIPreferencesControlTableCell * keepRemoteMouseVisibleCell = [[UIPreferencesControlTableCell alloc] init];
+		[keepRemoteMouseVisibleCell setTitle:NSLocalizedString(@"Keep Mouse Visible", nil)];
+		
+		_keepRemoteMouseVisibleSwitch = [[UISwitchControl alloc] init];
+		[_keepRemoteMouseVisibleSwitch setOrigin:controlOrigin];
+		[keepRemoteMouseVisibleCell setControl:_keepRemoteMouseVisibleSwitch];
+		
 		subviewFrame = [_table frameOfPreferencesCellAtRow:6 inGroup:0];
 		UIPreferencesTableCell * pixelDepthCell = [[UIPreferencesTableCell alloc] initWithFrame:subviewFrame];
 		[pixelDepthCell setTitle:NSLocalizedString(@"Pixel Depth", nil)];
@@ -76,15 +93,18 @@
 		subviewFrame.size.width = 140;
 		NSArray * segmentItems = [NSArray arrayWithObjects:@"8", @"16", @"32", nil];
 		_pixelDepthControl = [[UISegmentedControl alloc] initWithFrame:subviewFrame withStyle:2 withItems:segmentItems];
+		[_pixelDepthControl selectSegment:1];
 		[pixelDepthCell addSubview:_pixelDepthControl];
 		
-		_cells = [[NSArray arrayWithObjects:nameCell, addressCell, passwordCell, displayCell, sharedCell, viewOnlyCell, pixelDepthCell, nil] retain];
+		
+		_cells = [[NSArray arrayWithObjects:nameCell, addressCell, passwordCell, displayCell, sharedCell, viewOnlyCell, /*keepRemoteMouseVisibleCell,*/ pixelDepthCell,  nil] retain];
 		
 		// Create Delete Server button
 		subviewFrame = [_table frameOfPreferencesCellAtRow:0 inGroup:1];
 		_deleteCell = [[UIPreferencesDeleteTableCell alloc] initWithFrame:subviewFrame];
 		[[_deleteCell button] setTitle:NSLocalizedString(@"Delete Server", nil)];
-		[[_deleteCell button] addTarget:self action:@selector(deleteButtonPressed:) forEvents:kGSEventTypeButtonSelected];
+		[[_deleteCell button] addTarget:self action:@selector(deleteButtonPressed:) forEvents:kGSEventTypeButtonSelected];		
+
 	}
 	
 	return self;
@@ -115,23 +135,100 @@
 	[_table setKeyboardVisible:visible animated:NO];
 }
 
+static unsigned char s_fixedkey[8] = {23,82,107,6,35,78,88,7};
+
+NSString *vncEncryptPasswd(NSString *pnsPassword)
+{
+	int i, wNewSize;
+	char *szTemp, *szPassword, szNew[400];
+	
+	if (pnsPassword == nil)
+		return nil;
+	else
+		{
+		szPassword = (char *)malloc([pnsPassword length]+2);
+		strcpy(szPassword, [pnsPassword cString]);
+		}
+	wNewSize = ((strlen(szPassword)+7) / 8) * 8;
+	szTemp = (char *)calloc(wNewSize+1, 1);
+	*szNew = 0;
+    deskey(s_fixedkey, EN0);
+	for(i=0;i<wNewSize / 8;i++)
+		{
+		des((unsigned char *)(szPassword+(i*8)), (unsigned char *)(szPassword+(i*8)));
+		}
+	strcpy(szNew, "^");
+	for(i=0;i<wNewSize;i++)
+		{
+		sprintf(szNew+strlen(szNew), "%x ", szPassword[i]);
+		}
+	szNew[strlen(szNew)-1] = 0;
+	return [NSString stringWithFormat: @"%s",szNew];
+}
+
+
+NSString *vncDecryptPasswd(NSString *pnsEncrypted)
+{
+	unsigned char szBinary[200];
+	char szEncrypted[400];
+	char *pch = szEncrypted;
+	int i, ii = 0;
+	
+	if (pnsEncrypted == nil)
+		return nil;
+	else
+		strcpy(szEncrypted, [pnsEncrypted cString]);
+	if (*szEncrypted == '^')
+		strcpy(szEncrypted, szEncrypted+1);
+	else
+		return [NSString stringWithFormat:@"%s", szEncrypted];
+
+	NSLog(@"%s", szEncrypted);
+	
+    deskey(s_fixedkey, DE1);
+	for(i=0;*pch != 0;i++)
+		{
+		unsigned char ch = (unsigned char)strtol(pch, &pch, 16);
+		szBinary[ii++] = ch;
+		}
+	szBinary[ii] = 0;
+	for(i=0;i<ii/8;i++)
+		{
+		des(szBinary + (i*8), szBinary + (i*8));
+		}
+	return [NSString stringWithFormat:@"%s", (char *)szBinary];
+}
+
+- (NSString *)decryptPassword:(NSString *)pns
+{
+	return vncDecryptPasswd(pns);
+}
+
 - (void)setServerInfo:(NSDictionary *)info
 {
-	[_serverInfo release];
-	_serverInfo = [[info mutableCopy] retain];
-	
-	UIPreferencesTextTableCell * cell;
+	if (info == nil)
+		_serverInfo =  [NSMutableDictionary dictionary];
+	else
+		{
+		[_serverInfo release];
+		_serverInfo = [[info mutableCopy] retain];
+		}
 	
 	// Update cell values from the server info
+	
 	[(UIPreferencesTextTableCell *)[_cells objectAtIndex:kServerNameCellIndex] setValue:[_serverInfo objectForKey:RFB_NAME]];
 	[(UIPreferencesTextTableCell *)[_cells objectAtIndex:kServerAddressCellIndex] setValue:[_serverInfo objectForKey:RFB_HOSTANDPORT]];
-	[(UIPreferencesTextTableCell *)[_cells objectAtIndex:kServerPasswordCellIndex] setValue:[_serverInfo objectForKey:RFB_PASSWORD]];
+	[(UIPreferencesTextTableCell *)[_cells objectAtIndex:kServerPasswordCellIndex] setValue:vncDecryptPasswd([_serverInfo objectForKey:RFB_PASSWORD])];
 	[(UIPreferencesTextTableCell *)[_cells objectAtIndex:kServerDisplayCellIndex] setValue:[NSString stringWithFormat:@"%d", [[_serverInfo objectForKey:RFB_DISPLAY] intValue]]];
 	[_sharedSwitch setValue:[[_serverInfo objectForKey:RFB_SHARED] boolValue] ? 1.0f : 0.0f];
 	[_viewOnlySwitch setValue:[[_serverInfo objectForKey:RFB_VIEWONLY] boolValue] ? 1.0f : 0.0f];
+	[_keepRemoteMouseVisibleSwitch setValue:[[_serverInfo objectForKey:MOUSE_VISIBLE] boolValue] ? 1.0f : 0.0f];
+
 	
 	int depth = [[_serverInfo objectForKey:RFB_PIXEL_DEPTH] intValue];
-	int segment = 2;
+	
+	int segment = 1;
+	
 	switch (depth)
 	{
 		case 8:
@@ -144,8 +241,10 @@
 			segment = 2;
 			break;
 	}
-	[_pixelDepthControl setSelectedSegment:segment];
+	[_pixelDepthControl setSelectedSegment:segment];	
 	
+	if (info == nil)
+		_serverInfo = nil;
 	[_table reloadData];
 }
 
@@ -165,15 +264,38 @@
 	{
 		// Done
 		case 0:
+			{
+			char szError[400] = "";
+
+			if ([[_cells objectAtIndex:kServerNameCellIndex] value] == nil || [[[_cells objectAtIndex:kServerNameCellIndex] value] length] == 0)
+				strcat(szError, "Server Name Field is Empty\n");
+			if ([[_cells objectAtIndex:kServerNameCellIndex] value] == nil || [[[_cells objectAtIndex:kServerAddressCellIndex] value] length] == 0)
+				strcat(szError, "Server Address Field is Empty\n");
+
+			if (strlen(szError) > 0)
+				{
+				if (_delegate && [_delegate respondsToSelector:@selector(serverValidationFailed:)])
+					[_delegate serverValidationFailed:[NSString stringWithFormat:@"%s", szError]];
+				return;
+				}
+
+			if (_serverInfo == nil)
+				_serverInfo = [NSMutableDictionary dictionary];
+
+			NSString *nsEncrypted = vncEncryptPasswd([[_cells objectAtIndex:kServerPasswordCellIndex] value]);
+
 			// Update server info dict from the cell values
 			[_serverInfo setObject:[[_cells objectAtIndex:kServerNameCellIndex] value] forKey:RFB_NAME];
 			[_serverInfo setObject:[[_cells objectAtIndex:kServerAddressCellIndex] value] forKey:RFB_HOSTANDPORT];
-			[_serverInfo setObject:[[_cells objectAtIndex:kServerPasswordCellIndex] value] forKey:RFB_PASSWORD];
+			if (nsEncrypted != nil)
+				[_serverInfo setObject:nsEncrypted forKey:RFB_PASSWORD];
 			[_serverInfo setObject:[NSNumber numberWithInt:[[[_cells objectAtIndex:kServerDisplayCellIndex] value] intValue]] forKey:RFB_DISPLAY];
 			[_serverInfo setObject:[NSNumber numberWithBool:([_sharedSwitch value] > 0.1)] forKey:RFB_SHARED];
 			[_serverInfo setObject:[NSNumber numberWithBool:([_viewOnlySwitch value] > 0.1)] forKey:RFB_VIEWONLY];
+			[_serverInfo setObject:[NSNumber numberWithBool:([_keepRemoteMouseVisibleSwitch value] > 0.1)] forKey:MOUSE_VISIBLE];
 			
 			int depth = 32;
+			
 			switch ([_pixelDepthControl selectedSegment])
 			{
 				case 0:
@@ -189,7 +311,9 @@
 			[_serverInfo setObject:[NSNumber numberWithInt:depth] forKey:RFB_PIXEL_DEPTH];
 			
 			resultDict = _serverInfo;
+			
 			break;
+			}
 		
 		// Back
 		case 1:
