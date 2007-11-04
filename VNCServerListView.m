@@ -34,7 +34,7 @@
 		
 		// Setup navbar
 		_navBar = [[UINavigationBar alloc] initWithFrame: subframe];
-		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"Preferences", nil) rightTitle:NSLocalizedString(@"New", nil) leftBack: NO];
+		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"New", nil) rightTitle:NSLocalizedString(@"Preferences", nil) leftBack: NO];
 		[_navBar setBarStyle: 3];
 		[_navBar setDelegate: self];
 		

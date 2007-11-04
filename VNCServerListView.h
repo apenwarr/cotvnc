@@ -20,8 +20,8 @@ enum _disclosure_style
 //! @brief Navigation bar button indices.
 enum _server_list_navbar_buttons
 {
-	kNavBarEditButton = 0,
-	kNavBarPrefsButton = 1
+	kNavBarEditButton = 1,
+	kNavBarPrefsButton = 0
 };
 
 /*!

@@ -92,10 +92,7 @@ void handle_interrupt_signal(int sig)
 	[_prefsView setDelegate:self];
 	
 	NSArray * prefs = [self loadPrefs];
-	NSDictionary *prefsInfo;
-	if ([prefs count] > 0)
-		prefsInfo = [prefs objectAtIndex:0];
-	[_prefsView setPrefsInfo:prefsInfo];
+	[_prefsView setPrefsInfo:([prefs count] > 0 ? [prefs objectAtIndex:0] : nil)];
 	
 	NSLog(@" Mouse Tracks = %d", (int)[self showMouseTracks]);
 	
@@ -676,7 +673,9 @@ int compareServers(id obj1, id obj2, void *reverse)
 			[self saveServers:servers];
 			}
 		}
-	
+	else
+		return;
+		
 	// Reload list
 	[_serversView setServerList:servers];
 	

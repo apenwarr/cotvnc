@@ -43,7 +43,6 @@
 		// Create edit field cells.
 		UIPreferencesTextTableCell * nameCell = [[UIPreferencesTextTableCell alloc] init];
 		[nameCell setTitle:NSLocalizedString(@"Name", nil)];
-		[[nameCell textField] setPreferredKeyboardType: 1];
 		[nameCell setPlaceHolderValue:NSLocalizedString(@"NamePlace", nil)];
 		
 		UIPreferencesTextTableCell * addressCell = [[UIPreferencesTextTableCell alloc] init];
@@ -206,8 +205,11 @@ NSString *vncDecryptPasswd(NSString *pnsEncrypted)
 
 - (void)setServerInfo:(NSDictionary *)info
 {
+	[[_deleteCell button] setEnabled: (info == nil ? NO : YES)];
 	if (info == nil)
+		{
 		_serverInfo =  [NSMutableDictionary dictionary];
+		}	
 	else
 		{
 		[_serverInfo release];
@@ -346,6 +348,7 @@ NSString *vncDecryptPasswd(NSString *pnsEncrypted)
 
 - (int)preferencesTable:(id)prefsTable numberOfRowsInGroup:(int)groupIndex
 {
+	NSLog(@"in pref rows %x", _serverInfo);
 	if (groupIndex == 0)
 	{
 		return [_cells count];

@@ -26,7 +26,7 @@
 		// Create nav bar
 		subviewFrame = CGRectMake(0.0f, 0.0f, frame.size.width, 48);
 		_navBar = [[UINavigationBar alloc] initWithFrame:subviewFrame];
-		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"Server List", nil) rightTitle:NSLocalizedString(@"About", nil) leftBack: YES];
+		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"Back", nil) rightTitle:NSLocalizedString(@"About", nil) leftBack: YES];
 		[_navBar setBarStyle: 3];
 		[_navBar setDelegate: self];
 		[self addSubview: _navBar];
@@ -85,15 +85,18 @@
 - (void)setPrefsInfo:(NSDictionary *)info
 {
 	if (info == nil)
+		{
 		_prefsInfo =  [NSMutableDictionary dictionary];
+		// Setup Defaults Here
+		[_prefsInfo setObject:[NSNumber numberWithBool:YES] forKey:MOUSE_TRACKS];
+		}
 	else
 		{
 		[_prefsInfo release];
 		_prefsInfo = [[info mutableCopy] retain];
 		}
 	
-	// Update cell values from the server info
-	
+	// Update cell values from the prefs info
 	[_mouseTracksSwitch setValue:[[_prefsInfo objectForKey:MOUSE_TRACKS] boolValue] ? 1.0f : 0.0f];
 	
 	if (info == nil)
