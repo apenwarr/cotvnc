@@ -48,6 +48,24 @@
 		_buttonBar = [[UIGradientBar alloc] initWithFrame:subframe];
 		[self addSubview:_buttonBar];
 		
+		subframe = CGRectMake(0, 2, frame.size.width-4, kButtonBarHeight-4);
+		UITextLabel *_copyText = [[UITextLabel alloc] initWithFrame: subframe];
+
+        const float kTextComponents[] = { .94, .94, .94, .7 };
+        const float kTransparentComponents[] = { 0, 0, 1, 0 };
+        CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
+        CGColorRef textColor = CGColorCreate(rgb, kTextComponents);
+        CGColorRef rgbTransparent = CGColorCreate(rgb, kTransparentComponents);
+		
+		GSFontRef font = GSFontCreateWithName("Helvetica", 0, 16.0f);
+		[_copyText setFont:font];
+		CFRelease(font);
+		[_copyText setBackgroundColor: rgbTransparent];
+		[_copyText setText:@"Copyright 2007 Chris Reed, Glenn Kreisel"];
+		[_copyText setColor:textColor];
+		[_copyText setCentersHorizontally: true];
+		[_buttonBar addSubview: _copyText];
+		
 		// Add server button
 /*		subframe = CGRectMake(frame.size.width - 10.0f - kAddButtonWidth, (kButtonBarHeight - kAddButtonHeight) / 2.0, kAddButtonWidth, kAddButtonHeight);
 		_addButton = [[UINavBarButton alloc] initWithFrame:subframe];

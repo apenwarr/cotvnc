@@ -21,6 +21,7 @@ ServerInformationTitle = "Server Information";
 
 AboutVersion = "VNsea 0.5";
 AboutMessage = "Copyright © 2007 Chris Reed, Glenn Kreisel\nLicensed under GPLv3\nhttp://code.google.com/p/vnsea";
+StatusBarMessage = "Copyright © 2007 Chris Reed, Glenn Kreisel"; 
 
 OK = "OK";
 Cancel = "Cancel";

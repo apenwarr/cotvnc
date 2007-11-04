@@ -557,7 +557,6 @@ int compareServers(id obj1, id obj2, void *reverse)
 		defaultButtonIndex:1
 		delegate:self
 		context:self];
-
 	[hotSheet setBodyText:pnsBodyText];
 	[hotSheet setDimsBackground:YES];
 	[hotSheet setRunsModal:YES];

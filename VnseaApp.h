@@ -88,6 +88,7 @@
 
 - (void)_endedEditing;
 - (BOOL)_shouldEndEditing;
+
 //! @name List and editor delegate messages
 //@{
 - (void)serverSelected:(int)serverIndex;
