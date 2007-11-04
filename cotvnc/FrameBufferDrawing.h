@@ -107,8 +107,8 @@ static inline unsigned int cvt_pixel(unsigned char* v, FrameBuffer *this)
 /* --------------------------------------------------------------------------------- */
 - (void)fillRect:(CGRect)aRect withColor:(FBColor)aColor
 {	
-    FBColor* start;
-    unsigned int stride, i, lines;
+    register FBColor* start;
+    register unsigned int stride, i, lines;
 
 #ifdef DEBUG_DRAW
 NSLog(@"fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect.size.width, aRect.size.height, aColor);
@@ -133,8 +133,8 @@ NSLog(@"fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
 /* --------------------------------------------------------------------------------- */
 - (void)putRect:(CGRect)aRect withColors:(FrameBufferPaletteIndex*)data fromPalette:(FrameBufferColor*)palette
 {
-	FBColor*		start;
-	unsigned int	stride, i, lines;
+	register FBColor*		start;
+	register unsigned int	stride, i, lines;
 
     start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;
     lines = (unsigned)aRect.size.height;
@@ -151,8 +151,8 @@ NSLog(@"fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
 /* --------------------------------------------------------------------------------- */
 - (void)putRun:(FrameBufferColor*)fbc ofLength:(int)length at:(CGRect)aRect pixelOffset:(int)offset
 {
-	FBColor*		start;
-	unsigned int	stride, width;
+	register FBColor*		start;
+	register unsigned int	stride, width;
 	unsigned int	offLines, offPixels;
 
 	offLines = offset / (int)aRect.size.width;
@@ -167,9 +167,10 @@ NSLog(@"fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
 	}
 	do {
 		length -= width;
-		while(width--) {
+		while(width--)
+			{
 			*start++ = *((FBColor*)fbc);
-		}
+			}
 		start += stride;
 		width = (unsigned)aRect.size.width;
 		if(width > length) {
@@ -213,6 +214,7 @@ NSLog(@"fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
 NSLog(@"copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y, aRect.size.width, aRect.size.height, aPoint.x, aPoint.y);
 #endif
 
+	NSLog(@"****** CopyRect");
 #ifdef PINFO
     copyRectCount++;
     copyPixelCount += (int)aRect.size.width * (int)aRect.size.height;
@@ -260,6 +262,7 @@ NSLog(@"copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     #ifdef DEBUG_DRAW
     NSLog(@"put x=%f y=%f w=%f h=%f\n", aRect.origin.x, aRect.origin.y, aRect.size.width, aRect.size.height);
     #endif
+    NSLog(@"Put Rect XX");
 
     #ifdef PINFO
         putRectCount++;
@@ -286,6 +289,8 @@ NSLog(@"copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
 {
 	FBColor* start;
 	unsigned int stride, i, lines, col;
+
+	NSLog(@"Put Rect 12");
 
 #ifdef PINFO
 	putRectCount++;
@@ -329,6 +334,8 @@ NSLog(@"put x=%f y=%f w=%f h=%f\n", aRect.origin.x, aRect.origin.y, aRect.size.w
     start = pixels + (int)(aRect.origin.y * size.width) + (int)aRect.origin.x;
     lines = (unsigned)aRect.size.height;
     stride = (unsigned)size.width - (unsigned)aRect.size.width;
+
+	NSLog(@"PutRect 888");
 
 	switch(pixelFormat.bitsPerPixel / 8) {
 		case 1:
@@ -442,17 +449,17 @@ NSLog(@"draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     }
 	else
 	{
-        FBColor* sp = scratchpad;
-        int lines = h;
-        int stride = (unsigned int)size.width - w;
+        register FBColor* sp = scratchpad;
+        register int lines = h;
+        register int stride = (unsigned int)size.width - w;
 
         while(lines--)
 		{
-            memcpy(sp, start, w * sizeof(FBColor));
-            start += w;
-            sp += w;
-            start += stride;
-        }
+            	memcpy(sp, start, w * sizeof(FBColor));
+            	start += w;
+            	sp += w;
+            	start += stride;
+        	}
 		
         bpr = w * sizeof(FBColor);
 
@@ -460,12 +467,10 @@ NSLog(@"draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
 		bitmapContext = CGBitmapContextCreate(scratchpad, w, h, bitsPerColor, bpr, [self colorspace], (CGBitmapInfo)kCGImageAlphaNoneSkipLast);
     }
 
-//	NSLog(@"bitmapContext=%@", bitmapContext);
 	
 	// Finally, draw the bitmap we just created.
 	CGContextRef context = UICurrentContext();
 	CGImageRef snapshot = CGBitmapContextCreateImage(bitmapContext);
-//	NSLog(@"snapshot=%@", snapshot);
 	CGContextSetAlpha(context, 1.0f);
 	CGContextDrawImage(context, r, snapshot);
 	CGContextFlush(context);
