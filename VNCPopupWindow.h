@@ -16,15 +16,17 @@
 @interface VNCPopupWindow : UIWindow
 {
 	VNCPopupView *_viewPopup;
-
+	CGPoint _ptCenterOld;
+	NSTimer *_popupTimer;
 }
 
-- (id)initWithFrame:(CGRect)frame bCenter:(BOOL)bCenter bShow:(BOOL)bShow fOrientation:(float)fOrientaion;
+- (id)initWithFrame:(CGRect)frame bCenter:(BOOL)bCenter bShow:(BOOL)bShow fOrientation:(float)fOrientaion style:(popupWindowStyles)wStyle;
 - (void)setHidden:(BOOL)bHide;
 
 - (void)setTextPercent:(float)fScale;
-- (void)setText:(id)szText;
+- (void)setText:(NSString *)szText;
 - (void)setCenterLocation:(CGPoint)ptCenter;
-
+- (void)setStyleWindow:(popupWindowStyles)wStyle;
+- (void)setTimer:(float)fSeconds info:(VNCPopupWindow **)info;
 
 @end

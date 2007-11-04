@@ -9,15 +9,26 @@
 #import <UIKit/UIKit.h>
 #import "FrameBuffer.h"
 
+typedef enum 
+{
+        kPopupStyleScalePercent = 0,
+        kPopupStyleMouseDown = 1,
+		kPopupStyleMouseUp = 2,
+} popupWindowStyles;
+
+
 /*!
  * @brief Subview of VNCView that draws the screen.
  */
 @interface VNCPopupView : UIView
 {
-	char _szBubbleText[100];
+	char *_szBubbleText;
+	popupWindowStyles _styleWindow;
 }
 
+- (id)initWithFrame:(CGRect)frame style:(popupWindowStyles)wStyle;
+- (void)setStyleWindow:(popupWindowStyles)wStyle;
 - (void)drawRect:(CGRect)destRect;
-- (void)setText:(id)szText;
+- (void)setText:(NSString *)szText;
 
 @end

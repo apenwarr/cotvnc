@@ -10,22 +10,61 @@
 
 @implementation VNCPopupView
 
-- (void)setText:(id)szText
+- (id)initWithFrame:(CGRect)frame style:(popupWindowStyles)wStyle;
 {
-	NSLog(@"Got text set %s", szText);
-	strcpy(_szBubbleText, (char *)szText);	
+	if ([super initWithFrame:frame])
+		{
+		_styleWindow = wStyle;
+		_szBubbleText = nil;
+		}
+	return self;
+}
+
+- (void)dealloc
+{
+	if (_szBubbleText != nil)
+		free(_szBubbleText);
+	[super dealloc];
+}
+
+- (void)setStyleWindow:(popupWindowStyles)wStyle
+{
+	_styleWindow = wStyle;
+}
+
+- (void)setText:(NSString *)text
+{
+	NSLog(@"Got text: ");
+	if (text != nil)
+		{
+		_szBubbleText = (char *)malloc([text length]+1);
+		strcpy(_szBubbleText, [text cString]);
+		}
     [self setNeedsDisplayInRect: [self bounds]];
 }
 
 - (void)drawRect:(CGRect)destRect
 {
 		CGContextRef context = UICurrentContext();
-		CGContextSaveGState(context);
-		
-		CGContextSetRGBFillColor(context, 0, 0, 1, .3);
 		CGRect rcElipse = [self bounds];
 		
-		rcElipse=CGRectInset(rcElipse, 4,4);
+		CGContextSaveGState(context);
+		if (_styleWindow == kPopupStyleMouseDown)
+			{
+			rcElipse = CGRectInset(rcElipse, 1, 1);
+			CGContextSetRGBFillColor(context, 1, 0, 0, .7);
+			CGContextFillEllipseInRect(context, rcElipse);
+			}
+		else if (_styleWindow == kPopupStyleMouseUp)
+			{
+			rcElipse = CGRectInset(rcElipse, 1, 1);
+			CGContextSetRGBFillColor(context, 0, 1, 0, .7);
+			CGContextFillEllipseInRect(context, rcElipse);
+			}
+		else if (_styleWindow == kPopupStyleScalePercent)
+			{
+		CGContextSetRGBFillColor(context, 0, 0, 1, .3);
+		rcElipse = CGRectInset(rcElipse, 4,4);
 	
 		CGContextFillEllipseInRect(context, rcElipse);
 		CGContextSetRGBFillColor(context, 1, 1, 1, .7);
@@ -36,15 +75,19 @@
 		
 		CGContextTranslateCTM(context, [self bounds].size.width / 2, [self bounds].size.height/2);
 		CGContextSetRGBFillColor(context, 1, 1, 1, .7);		
-		CGContextSelectFont(context, "MarkerFeltThin", 18.0, kCGEncodingMacRoman);
-		CGContextSetTextPosition(context, 0, 0);
-		CGPoint ptBefore = CGContextGetTextPosition(context);
-		CGContextSetTextDrawingMode(context, kCGTextInvisible);
-		CGContextShowText(context, _szBubbleText, strlen(_szBubbleText));
-		CGPoint ptAfter = CGContextGetTextPosition(context);
-		float dxText = ptAfter.x - ptBefore.x;
-		CGContextSetTextDrawingMode(context, kCGTextFill);
-		CGContextShowTextAtPoint(context, 0-(dxText / 2), -6, _szBubbleText, strlen(_szBubbleText));
+		if (_szBubbleText != nil)
+			{			
+			CGContextSelectFont(context, "MarkerFeltThin", 18.0, kCGEncodingMacRoman);
+			CGContextSetTextPosition(context, 0, 0);
+			CGPoint ptBefore = CGContextGetTextPosition(context);
+			CGContextSetTextDrawingMode(context, kCGTextInvisible);
+			CGContextShowText(context, _szBubbleText, strlen(_szBubbleText));
+			CGPoint ptAfter = CGContextGetTextPosition(context);
+			float dxText = ptAfter.x - ptBefore.x;
+			CGContextSetTextDrawingMode(context, kCGTextFill);
+			CGContextShowTextAtPoint(context, 0-(dxText / 2), -6, _szBubbleText, strlen(_szBubbleText));
+			}
+			}
 		CGContextRestoreGState(context);
 }
 @end
