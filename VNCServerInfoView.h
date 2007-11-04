@@ -12,6 +12,8 @@
 #import <UIKit/UIPreferencesDeleteTableCell.h>
 #import <UIKit/UISegmentedControl.h>
 
+#define MOUSE_VISIBLE @"MOUSE_VISIBLE"
+
 //! @brief Array indices for the preferences table cells.
 enum _server_info_cell_indices
 {
@@ -35,7 +37,7 @@ enum _server_info_cell_indices
 	id _delegate;
 	NSArray * _cells;
 	UISwitchControl * _sharedSwitch;
-	UISwitchControl * _viewOnlySwitch;
+	UISwitchControl * _viewOnlySwitch, *_keepRemoteMouseVisibleSwitch;
 	UISegmentedControl * _pixelDepthControl;
 	UIPreferencesDeleteTableCell * _deleteCell;
 }
@@ -50,6 +52,10 @@ enum _server_info_cell_indices
 - (void)setKeyboardVisible:(BOOL)visible;
 
 - (void)deleteButtonPressed:(id)sender;
+
+- (NSString *)decryptPassword:(NSString *)pns;
+
+NSString *vncDecryptPasswd(NSString *pnsEncrypted);
 
 @end
 
