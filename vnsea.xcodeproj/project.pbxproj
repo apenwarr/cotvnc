@@ -121,11 +121,17 @@
 		0259BE670C98D303005285B7 /* VNsea.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = VNsea.app; sourceTree = "<group>"; };
 		0259BE780C9B5E65005285B7 /* Shimmer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shimmer.h; sourceTree = "<group>"; };
 		0259BE790C9B5E65005285B7 /* Shimmer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shimmer.m; sourceTree = "<group>"; };
-		0259C1D80C9CBE70005285B7 /* VNCContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCContentView.h; sourceTree = "<group>"; };
-		0259C1D90C9CBE70005285B7 /* VNCContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNCContentView.m; sourceTree = "<group>"; };
+		0259C1D80C9CBE70005285B7 /* VNCPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCPopupView.h; sourceTree = "<group>"; };
+		0259C1D90C9CBE70005285B7 /* VNCPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNCPopupView.m; sourceTree = "<group>"; };
 		02F5393B0C8CDCEF00C99AC1 /* mainapp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mainapp.m; sourceTree = "<group>"; };
 		02F5393C0C8CDCEF00C99AC1 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		02F5393F0C8CEFFC00C99AC1 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; name = include; path = "/usr/local/arm-apple-darwin/include"; sourceTree = "<absolute>"; };
+		8ED2B7250CDD5DF900F0C19E /* VNCPrefsView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = VNCPrefsView.h; sourceTree = "<group>"; };
+		8ED2B7260CDD5DF900F0C19E /* VNCPrefsView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VNCPrefsView.m; sourceTree = "<group>"; };
+		8ED342580CD6C9CF004B17CE /* VNCContentView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = VNCContentView.h; sourceTree = "<group>"; };
+		8ED342590CD6C9CF004B17CE /* VNCContentView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VNCContentView.m; sourceTree = "<group>"; };
+		8ED343F40CD77F6D004B17CE /* VNCPopupWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = VNCPopupWindow.h; sourceTree = "<group>"; };
+		8ED343F50CD77F6D004B17CE /* VNCPopupWindow.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VNCPopupWindow.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -320,12 +326,18 @@
 		02F53B4C0C8CF00200C99AC1 /* vnsea */ = {
 			isa = PBXGroup;
 			children = (
+				8ED2B7250CDD5DF900F0C19E /* VNCPrefsView.h */,
+				8ED2B7260CDD5DF900F0C19E /* VNCPrefsView.m */,
+				8ED342580CD6C9CF004B17CE /* VNCContentView.h */,
+				8ED342590CD6C9CF004B17CE /* VNCContentView.m */,
 				02F5393B0C8CDCEF00C99AC1 /* mainapp.m */,
 				0259B2660C931875005285B7 /* RFBViewProtocol.h */,
 				0259BE790C9B5E65005285B7 /* Shimmer.m */,
-				0259C1D80C9CBE70005285B7 /* VNCContentView.h */,
 				0259BE780C9B5E65005285B7 /* Shimmer.h */,
-				0259C1D90C9CBE70005285B7 /* VNCContentView.m */,
+				0259C1D80C9CBE70005285B7 /* VNCPopupView.h */,
+				0259C1D90C9CBE70005285B7 /* VNCPopupView.m */,
+				8ED343F40CD77F6D004B17CE /* VNCPopupWindow.h */,
+				8ED343F50CD77F6D004B17CE /* VNCPopupWindow.m */,
 				021133D10CC51DF00059CA0E /* VNCScrollerView.h */,
 				021133D20CC51DF00059CA0E /* VNCScrollerView.m */,
 				0259AD590C90AEED005285B7 /* VNCServerInfoView.h */,
