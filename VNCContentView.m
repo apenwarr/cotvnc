@@ -150,7 +150,6 @@
 		UIAnimator *anim = [[UIAnimator alloc] init];
 		[anim addAnimation:scaleAnim withDuration:0.30f start:YES]; 
 		}
-
 	[self setTransform:matrix];
 	_matrixPreviousTransform = matrix;
 }
@@ -161,7 +160,10 @@
 	{
 		CGRect b = [self bounds];
 		CGRect r = destRect;
-
+		
+		NSLog(@"Drawing frame buffer");
+		CGContextRef context = UICurrentContext();
+		CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
 		r.origin.y = b.size.height - CGRectGetMaxY(r);
 		[_frameBuffer drawRect:r at:destRect.origin];
 	}
