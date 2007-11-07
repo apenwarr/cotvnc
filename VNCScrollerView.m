@@ -8,6 +8,8 @@
 
 #import "VNCScrollerView.h"
 #import "VNCView.h"
+#import "VNCMouseTracks.h"
+
 
 //! Number of seconds to wait before sending a mouse down, during which we
 //! check to see if the user is really wanting to scroll.
@@ -49,7 +51,7 @@
 	
 }
 
-- (void) setVNCView:(id)view
+- (void) setVNCView:(VNCView *)view
 {
 	_vncView = view;
 	_windowPopupScalePercent = nil;
@@ -111,6 +113,44 @@
 	}
 }
 
+- (void)cleanUpMouseTracks
+{
+	if (_windowPopupMouseDown != nil)
+		{
+		[_windowPopupMouseDown hide];
+		_windowPopupMouseDown = nil;
+		}
+	if (_windowPopupMouseUp != nil)
+		{
+		[_windowPopupMouseUp hide];
+		_windowPopupMouseUp = nil;
+		}
+}
+
+
+// Auto scroll function called by timer and mouse is on edges of device and dragging
+// This also submits the original drag event so that the vnc server updates the mouse to the new location 
+// under your finger
+- (void)handleScrollTimer:(NSTimer *)timer
+{
+	int dxAutoScroll = 3, dyAutoScroll = 3;
+	CGPoint ptLeftTop = [self bounds].origin;
+	
+	if (_currentAutoScrollerType & kAutoScrollerRight)
+		ptLeftTop.x += dxAutoScroll;
+	else if (_currentAutoScrollerType & kAutoScrollerLeft)
+		ptLeftTop.x -= dxAutoScroll;
+					
+	if (_currentAutoScrollerType & kAutoScrollerUp)
+		ptLeftTop.y -= dyAutoScroll;
+	else if (_currentAutoScrollerType & kAutoScrollerDown)
+		ptLeftTop.y += dyAutoScroll;
+				
+	[self scrollPointVisibleAtTopLeft: ptLeftTop];	
+	[_eventFilter mouseDragged:_autoLastDragEvent];
+}
+
+
 - (void)handleTapTimer:(NSTimer *)timer
 {
 	_inRemoteAction = true;
@@ -121,26 +161,23 @@
 	
 	[self sendMouseDown:theEvent];
 	
-	VNCView *vncView = _vncView;
-
-	if ([vncView showMouseTracks])
+	// Do mouse tracks
+	if ([_vncView showMouseTracks])
 		{
-	if (_windowPopupMouseDown != nil)
-		{
-		[_windowPopupMouseDown setHidden:true];
-		[_windowPopupMouseDown release];
-		_windowPopupMouseDown = nil;
+		if (_windowPopupMouseDown != nil)
+			{
+			[_windowPopupMouseDown hide];
+			_windowPopupMouseDown = nil;
+			}
+		CGPoint ptVNC = [_eventFilter getVNCScreenPoint: GSEventGetLocationInWindow(theEvent)];
+	
+		_windowPopupMouseDown = [[VNCMouseTracks alloc] initWithFrame: CGRectMake(ptVNC.x,ptVNC.y,10,10) style:kPopupStyleMouseDown scroller:self];	
+		[_windowPopupMouseDown setTimer: 1.5f info:nil]; 
 		}
-	_windowPopupMouseDown = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,10,10) bCenter:true bShow:true fOrientation:90 style:kPopupStyleMouseDown];			
-	CGPoint ptCenter = GSEventGetLocationInWindow(theEvent).origin;
-	[_windowPopupMouseDown setCenterLocation: ptCenter]; 
-	NSLog(@"Setting Timer on Popup");
-	[_windowPopupMouseDown setTimer: 2.0f info:(&_windowPopupMouseDown)]; 	
-	NSLog(@"Mouse Down at %f,%f", ptCenter.x, ptCenter.y);
-	}
 	
 	// The event is no longer needed.
 	CFRelease(theEvent);
+	
 	
 	_tapTimer = nil;
 }
@@ -152,10 +189,13 @@
 	{
 		return;
 	}
+	// if mousedown then we must not be in a drag event so reset Autoscroll during drag
+	_scrollTimer = nil;
+	_currentAutoScrollerType = kAutoScrollerNone;
 	
 	bool isChording = GSEventIsChordingHandEvent(theEvent);	
-	int count = GSEventGetClickCount(theEvent);
-	NSLog(@"mouseDown:%c:%d", isChording ? 'y' : 'n', count);
+//	int count = GSEventGetClickCount(theEvent);
+//	NSLog(@"mouseDown:%c:%d", isChording ? 'y' : 'n', count);
 
 	if (isChording)
 	{	
@@ -167,11 +207,10 @@
 		if (_windowPopupScalePercent == nil)
 			{
 			CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
-			VNCView *vncView = _vncView;
 			
-			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,60,60) bCenter:true bShow:true fOrientation:[vncView orientationDegree] style:kPopupStyleScalePercent];			
+			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,60,60) bCenter:true bShow:true fOrientation:[_vncView orientationDegree] style:kPopupStyleScalePercent];			
 			[_windowPopupScalePercent setCenterLocation: ptCenter]; 
-			[_windowPopupScalePercent setTextPercent: [vncView getScalePercent]];
+			[_windowPopupScalePercent setTextPercent: [_vncView getScalePercent]];
 			_bZooming = false;
 			}
 
@@ -215,6 +254,11 @@
 	}
 }
 
+- (CGPoint)getIPodScreenPoint:(CGRect)r bounds:(CGRect)bounds
+{
+	return [_vncView getIPodScreenPoint: r bounds: bounds];
+}
+
 - (void)mouseUp:(GSEventRef)theEvent
 {
 	// Do nothing if there is no connection.
@@ -231,6 +275,14 @@
 		return;
 	}	
 	
+	// Autoscroll during drag must be over
+	if (_scrollTimer != nil)
+		{
+		[_scrollTimer invalidate];
+		_scrollTimer = nil;
+		CFRelease(_autoLastDragEvent);
+		}
+	
 	if (_tapTimer)
 	{
 		[_tapTimer fire];
@@ -238,21 +290,18 @@
 
 	if (_inRemoteAction)
 	{
-	VNCView *vncView = _vncView;
-
-	if ([vncView showMouseTracks])
+	if ([_vncView showMouseTracks])
 		{
 		if (_windowPopupMouseUp != nil)
 			{
-			[_windowPopupMouseUp setHidden:true];
-			[_windowPopupMouseUp release];
+			[_windowPopupMouseUp hide];
 			_windowPopupMouseUp = nil;
 			}
-		_windowPopupMouseUp = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,10,10) bCenter:true bShow:true fOrientation:90 style:kPopupStyleMouseUp];			
-		CGPoint ptCenter = GSEventGetLocationInWindow(theEvent).origin;
-		[_windowPopupMouseUp setCenterLocation: ptCenter]; 
-		NSLog(@"Setting Timer on Popup");
-		[_windowPopupMouseUp setTimer: 2.0f info:(&_windowPopupMouseUp)]; 
+		CGPoint ptVNC = [_eventFilter getVNCScreenPoint: GSEventGetLocationInWindow(theEvent)];
+
+		_windowPopupMouseUp = [[VNCMouseTracks alloc] initWithFrame: CGRectMake(ptVNC.x,ptVNC.y,10,10) style:kPopupStyleMouseUp scroller:self];			
+//		NSLog(@"Setting Timer on Popup");
+		[_windowPopupMouseUp setTimer: 1.5f info:nil]; 
 		}
 
 		[self sendMouseUp:theEvent];
@@ -266,28 +315,95 @@
 
 - (void)pinnedPTViewChange:(CGPoint)ptPinned fScale:(float)fScale wOrientationState:(UIHardwareOrientation)wOrientationState bForce:(BOOL)bForce
 {
-	VNCView *vncView = _vncView;
-
 	CGRect r = CGRectMake(ptPinned.x, ptPinned.y, 1,1);
 	CGPoint ptVNCBefore = [_eventFilter getVNCScreenPoint: r];
 	r.origin = ptVNCBefore;
 	CGRect bounds = [self bounds];
-	CGPoint ptIPodBefore = [vncView getIPodScreenPoint: r bounds: bounds];
+	CGPoint ptIPodBefore = [_vncView getIPodScreenPoint: r bounds: bounds];
 	CGPoint ptLeftTop = bounds.origin;
+	bool bOrientationChange;
 	
-//	NSLog(@"iPodScreen Point (160, 240) %f,%f", ptIPodBefore.x, ptIPodBefore.y);
+//	NSLog(@"iPodScreen Point %f,%f", ptIPodBefore.x, ptIPodBefore.y);
 
-	[vncView setScalePercent: fScale];
-	[vncView setOrientation:wOrientationState bForce:bForce];
+	[_vncView setScalePercent: fScale];
+	bOrientationChange = [_vncView getOrientationState] != wOrientationState;
+	[_vncView setOrientation:wOrientationState bForce:bForce];
 	r.origin = ptVNCBefore;
-	CGPoint ptIPodAfter = [vncView getIPodScreenPoint: r bounds: bounds];
+	CGPoint ptIPodAfter = [_vncView getIPodScreenPoint: r bounds: bounds];
 //	NSLog(@"IPod After %f,%f", ptIPodAfter.x, ptIPodAfter.y);
 //	NSLog(@"");
-	ptLeftTop.x = ptLeftTop.x + (ptIPodAfter.x - ptIPodBefore.x);
-	ptLeftTop.y = ptLeftTop.y + (ptIPodAfter.y - ptIPodBefore.y);
+	ptLeftTop.x +=(ptIPodAfter.x - ptIPodBefore.x);
+	ptLeftTop.y += (ptIPodAfter.y - ptIPodBefore.y);
+	
+//  Try to prevent orientation change from making the screen scroll too far
+	if (bOrientationChange)
+		{
+		ptLeftTop.x = MAX(0, ptLeftTop.x);
+		ptLeftTop.y = MAX(0, ptLeftTop.y);
+//		if (ptLeftTop.x + [_scroller frame].size.width > [_scroller bounds].size.width)
+//			{
+//			NSLog(@"Scroller set too far");
+//			}
+		}
+//	NSLog(@"topleft %f,%f", ptLeftTop.x, ptLeftTop.y);
 	[self scrollPointVisibleAtTopLeft: ptLeftTop];
+	
+// Make sure the MouseTracks get updated to the new Scale / Orientation
+	if (_windowPopupMouseDown != nil)
+		[_windowPopupMouseDown zoomOrientationChange];
+	if (_windowPopupMouseUp != nil)
+		[_windowPopupMouseUp zoomOrientationChange];
 }
 
+
+// Determines if we need to autoscroll while drag or not
+// starts timer if ready to autoscroll
+- (void)checkForAutoscrollEvents:(GSEventRef) theEvent
+{
+	CGPoint ptDrag = GSEventGetLocationInWindow(theEvent).origin;
+	CGRect rcFrame = [self frame];
+	AutoScrollerTypes newAutoScroller = kAutoScrollerNone;
+	
+	if (ptDrag.x > (rcFrame.origin.x+rcFrame.size.width) - LEFTRIGHT_AUTOSCROLL_BORDER)
+		{
+		newAutoScroller = kAutoScrollerRight;
+		}
+	else if (ptDrag.x < LEFTRIGHT_AUTOSCROLL_BORDER)
+		{
+		newAutoScroller = kAutoScrollerLeft;
+		}
+		
+	if (ptDrag.y < TOPBOTTOM_AUTOSCROLL_BORDER)
+		{
+		newAutoScroller |= kAutoScrollerUp;
+		}
+	else if (ptDrag.y > rcFrame.size.height - TOPBOTTOM_AUTOSCROLL_BORDER)
+		{
+		newAutoScroller |= kAutoScrollerDown;
+		}
+	
+	if (newAutoScroller != _currentAutoScrollerType)
+		{
+		_currentAutoScrollerType = newAutoScroller;
+		NSLog(@"In border Area %d", newAutoScroller);
+		if (_scrollTimer != nil)
+			{
+			[_scrollTimer invalidate];
+			_scrollTimer = nil;
+			CFRelease(_autoLastDragEvent);
+			}
+		if (newAutoScroller == kAutoScrollerNone)
+			{
+			}
+		else
+			{
+			NSLog(@"Starting Timer");
+			CFRetain(theEvent);
+			_autoLastDragEvent = theEvent;
+			_scrollTimer = [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector:@selector(handleScrollTimer:) userInfo:nil repeats:YES];
+			}
+		}
+}
 
 - (void)mouseDragged:(GSEventRef)theEvent
 {
@@ -308,8 +424,7 @@
 
 		if (abs(fHowFar) > (_viewOnly || _bZooming ? 3 : 20))
 		{
-			VNCView *vncView = _vncView;
-			float fNewScale = [vncView getScalePercent]+(.0025 * fHowFar);
+			float fNewScale = [_vncView getScalePercent]+(.0025 * fHowFar);
 			
 			_bZooming = true;
 			
@@ -318,7 +433,7 @@
 				[_windowPopupScalePercent setTextPercent: fNewScale];
 				[_windowPopupScalePercent setCenterLocation: ptCenter]; 
 				
-				[self pinnedPTViewChange:ptCenter fScale:fNewScale wOrientationState:[vncView getOrientationState] bForce:true];
+				[self pinnedPTViewChange:ptCenter fScale:fNewScale wOrientationState:[_vncView getOrientationState] bForce:true];
 				}
 			_fDistancePrev = fDistance;
 			return;
@@ -340,9 +455,10 @@
 	}
 
 	if (_inRemoteAction)
-	{
+		{
+		[self checkForAutoscrollEvents: theEvent];
 		[_eventFilter mouseDragged:theEvent];
-	}
+		}
 	else
 	{
 		[super mouseDragged:theEvent];

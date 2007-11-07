@@ -8,7 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import "EventFilter.h"
-#import "VNCPopupWindow.h"
+
+@class VNCMouseTracks;
+@class VNCPopupWindow;
+@class VNCView;
+
+// Types of Auto Scrollers when draging mouse and reaching edges
+// of screen
+typedef enum {
+	kAutoScrollerNone = 0,
+	kAutoScrollerLeft = 1,
+	kAutoScrollerRight = 2,
+	kAutoScrollerUp = 4,
+	kAutoScrollerDown = 8,
+	} AutoScrollerTypes;
+
+#define LEFTRIGHT_AUTOSCROLL_BORDER 30
+#define TOPBOTTOM_AUTOSCROLL_BORDER 30
 
 /*!
  * @brief Subclass of UIScroller that modifies its behaviour.
@@ -24,31 +40,40 @@
 {
 	EventFilter * _eventFilter;		//!< Event generation and queue object.
 	bool _inRemoteAction;			//!< Are we currently controlling the remote mouse?
-	NSTimer * _tapTimer;	//!< Timer used to delay first mouse down.
+	NSTimer * _tapTimer, *_scrollTimer;	//!< Timer used to delay first mouse down.
 	bool _viewOnly;			//!< Are we only watching the remote computer?
 	float _fDistancePrev;
 	float _fDistanceStart;
-	id _vncView;
+	VNCView *_vncView;
 	bool _useRightMouse;	//!< Whether to send a right mouse event.
 	bool _inRightMouse;		//!< True if the last mouse down was for the right button.
 	bool _bZooming;
-	VNCPopupWindow *_windowPopupScalePercent, *_windowPopupMouseDown, *_windowPopupMouseUp;
+	VNCPopupWindow *_windowPopupScalePercent;
+	VNCMouseTracks *_windowPopupMouseDown, *_windowPopupMouseUp;
+	AutoScrollerTypes _currentAutoScrollerType;
+	GSEventRef _autoLastDragEvent;
 }
 
 - (void)setEventFilter:(EventFilter *)filter;
+- (void)cleanUpMouseTracks;
 
 - (void)setViewOnly:(bool)isViewOnly;
 - (BOOL)canHandleGestures;
 - (void)gestureStarted:(GSEvent *)event;
 - (void)gestureChanged:(GSEvent *)event;
 - (void)gestureEnded:(GSEvent *)event;
-- (void)setVNCView:(id)view;
+- (void)setVNCView:(VNCView *)view;
 - (void)pinnedPTViewChange:(CGPoint)ptPinned fScale:(float)fScale wOrientationState:(UIHardwareOrientation)wOrientationState bForce:(BOOL)bForce;
+- (CGPoint)getIPodScreenPoint:(CGRect)r bounds:(CGRect)bounds;
+- (void)checkForAutoscrollEvents:(GSEventRef) theEvent;
 
 - (bool)useRightMouse;
 - (void)setUseRightMouse:(bool)useRight;
 
 - (void)sendMouseDown:(GSEventRef)theEvent;
 - (void)sendMouseUp:(GSEventRef)theEvent;
+
+// function called when mouse is dragging near any edge
+- (void)handleScrollTimer:(NSTimer *)timer;
 
 @end
