@@ -85,6 +85,8 @@
 - (void)finishedPrefs:(NSDictionary *)prefInfo;
 - (void)displayPrefs;
 - (BOOL)showMouseTracks;
+// Gets called when first update from VNC protocol
+- (void)gotFirstFullScreenTransitionNow;
 
 - (void)_endedEditing;
 - (BOOL)_shouldEndEditing;

@@ -29,6 +29,8 @@
 #define kRevertButtonHeight (32.0f)
 
 #define SERVER_SCALE @"SCALE"
+#define SERVER_SCROLL_X @"SCROLLX"
+#define SERVER_SCROLL_Y @"SCROLLY"
 
 //! @brief Signal handler for SIGINT.
 //!
@@ -77,7 +79,7 @@ void handle_interrupt_signal(int sig)
 	// vncsea view
 	CGRect rcNewFrame = frame;
 	
-	rcNewFrame.size.height += [self statusBarRect].size.height;
+//	rcNewFrame.size.height += [self statusBarRect].size.height;
 	_vncView = [[VNCView alloc] initWithFrame: rcNewFrame];
 	[_vncView setDelegate:self];
 
@@ -272,6 +274,21 @@ int compareServers(id obj1, id obj2, void *reverse)
 	return true;
 }
 
+- (void)gotFirstFullScreenTransitionNow
+{
+	int randTrans = (int)(((float)rand() / (float)RAND_MAX) * 2.8);
+		
+	[self setStatusBarShowsProgress:NO];
+	[_transView transition: randTrans fromView:_serversView toView:_vncView];
+	
+	NSMutableArray * servers = [[self loadServers] mutableCopy];
+	NSMutableDictionary * serverInfo = [[servers objectAtIndex:_serverConnectingIndex] mutableCopy];
+		
+	[serverInfo setObject:[NSNumber numberWithDouble: [[NSDate init] timeIntervalSinceReferenceDate]] forKey:@"LastConnectTime"];
+	[servers replaceObjectAtIndex:_serverConnectingIndex withObject:serverInfo];
+	[self saveServers: servers];
+}
+
 - (void)serverSelected:(int)serverIndex
 {
 	// Disable the server list view.
@@ -320,6 +337,9 @@ int compareServers(id obj1, id obj2, void *reverse)
 		NSLog(@"Setting remembered scale to %f", [nsScale floatValue]);
 		[_vncView setScalePercent: [nsScale floatValue]];
 		}
+	// Get last scroll point and setup for when VNC server screen is shown
+	CGPoint ptTopLeftVisible = CGPointMake([[serverInfo objectForKey:SERVER_SCROLL_X] intValue], [[serverInfo objectForKey:SERVER_SCROLL_Y] intValue]);
+	[_vncView setStartupTopLeftPt:ptTopLeftVisible];
 	
 	ServerFromPrefs * theServer = [[[ServerFromPrefs alloc] initWithPreferenceDictionary:serverInfo] autorelease];
 	
@@ -341,29 +361,26 @@ int compareServers(id obj1, id obj2, void *reverse)
 	// during this time.
 	[self setStatusBarShowsProgress:YES];
 	[self waitForConnection:_connection];
-	[self setStatusBarShowsProgress:NO];
 
 	// Either switch to the screen view or present an error alert depending on
 	// whether the connection succeeded.
 	if (_didOpenConnection)
 	{
 		NSLog(@"connection=%@", _connection);
-		[self statusBarWillAnimateToHeight:0 duration:.2 fence:0];
-		[self setStatusBarMode:kUIStatusBarBlack duration:0];
-		CGRect rcFrame = [_window frame];
-		rcFrame.origin.y = 0;
-		[_window setFrame: rcFrame];
+//		[self statusBarWillAnimateToHeight:0 duration:.2 fence:0];
+		[self setStatusBarMode:kUIStatusBarWhite duration:0];
 
 		[_vncView setConnection:_connection];
 		[_vncView showControls:YES];
 		[_connection setDelegate:self];
 		[_connection startTalking];
-		[_connection manuallyUpdateFrameBuffer:self];
-		
-		[_transView transition:1 fromView:_serversView toView:_vncView];
+// Moved Transition to when the first update event comes from VNC protocol
+//		[_connection manuallyUpdateFrameBuffer:self];		
+//		[_transView transition:1 fromView:_serversView toView:_vncView];
 	}
 	else if (!_closingConnection)
 	{
+		[self setStatusBarShowsProgress:NO];
 		NSLog(@"connection failed");
 		[_connection release];
 		_connection = nil;
@@ -446,6 +463,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 
 - (void)connection:(RFBConnection *)connection hasTerminatedWithReason:(NSString *)reason
 {
+	[self setStatusBarShowsProgress:NO];
 	// Don't need to display an alert if we intentionally closed the connection.
 	if (!_closingConnection)
 	{
@@ -481,8 +499,9 @@ int compareServers(id obj1, id obj2, void *reverse)
 	[_window setFrame: rcFrame];
 	[self setStatusBarMode:kUIStatusBarWhite duration:1];
 	
-	// Switch back to the list view
-	[_transView transition:2 fromView:_vncView toView:_serversView];
+	// Switch back to the list view only if we got to the VNC Server View
+	if ([_vncView bFirstDisplay])
+		[_transView transition:2 fromView:_vncView toView:_serversView];
 }
 
 //! This method is used to force the connection closed. It is used by the VNCView
@@ -499,6 +518,14 @@ int compareServers(id obj1, id obj2, void *reverse)
 		
 		NSLog(@"Saved Scale %f", [_vncView getScalePercent]);
 		[serverInfo setObject:[NSNumber numberWithFloat:[_vncView getScalePercent]] forKey:SERVER_SCALE];
+		
+		// Saving the last scroll point in VNC Server screen
+		CGPoint pt = [_vncView topLeftVisiblePt];
+		
+		NSLog(@"Saved Scroll %f, %f",pt.x, pt.y);
+		[serverInfo setObject:[NSNumber numberWithInt:pt.x] forKey:SERVER_SCROLL_X];
+		[serverInfo setObject:[NSNumber numberWithInt:pt.y] forKey:SERVER_SCROLL_Y];		
+		
 		[servers replaceObjectAtIndex:_serverConnectingIndex withObject:serverInfo];
 		[self saveServers: servers];
 		
@@ -506,6 +533,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 		[_connection terminateConnection:nil];
 		[_vncView setConnection: nil];
 		_connection = nil;
+		[_serversView setServerList:servers];
 	}
 }
 
@@ -703,7 +731,11 @@ int compareServers(id obj1, id obj2, void *reverse)
 }
 - (void)deviceOrientationChanged:(GSEvent *)event
 {
-	[_vncView pinnedPTViewChange:CGPointMake(160,240) fScale:[_vncView getScalePercent] wOrientationState:[UIHardware deviceOrientation:YES] bForce:false];		
+	// Get the real device center point to rotate around
+	CGRect frame = [_vncView scrollerFrame];
+	CGPoint ptCenter = CGPointMake(frame.origin.x+(frame.size.width / 2), frame.origin.y+(frame.size.height/2));
+	
+	[_vncView pinnedPTViewChange:ptCenter fScale:[_vncView getScalePercent] wOrientationState:[UIHardware deviceOrientation:YES] bForce:false];		
 }
 
 - (void)acceleratedInX:(float)x Y:(float)y Z:(float)z

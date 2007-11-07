@@ -33,6 +33,7 @@ enum _server_list_navbar_buttons
 	id _navBar;
 	id _serverTable;
 	id _serverColumn;
+	id _serverLastConnectColumn;
 	id _buttonBar;
 	id _addButton;
 	NSArray * _servers;

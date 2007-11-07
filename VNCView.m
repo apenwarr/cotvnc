@@ -79,7 +79,7 @@
 		[_scroller setVNCView: self];
 		[_scroller setScrollingEnabled:YES];
 		[_scroller setShowScrollerIndicators:YES];
-		[_scroller setAdjustForContentSizeChange:YES];
+		[_scroller setAdjustForContentSizeChange:NO];
 		[_scroller setAllowsRubberBanding:YES];
 		[_scroller setAllowsFourWayRubberBanding:YES];
 		[_scroller setRubberBand: 50 forEdges:0];
@@ -91,6 +91,7 @@
 		
 		// Create screen view.
 		_screenView = [[VNCContentView alloc] initWithFrame:subframe];
+		[_screenView setDelegate: [self delegate]];
 		
 		// Create control bar.
 		subframe = CGRectMake(0, frame.size.height /*- kControlsBarHeight*/, frame.size.width, kControlsBarHeight);
@@ -154,7 +155,7 @@
 
 		// Right mouse button.
 		subframe = CGRectMake(frame.size.width - kExitButtonWidth - 5 - kRightMouseButtonWidth - 6, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kRightMouseButtonWidth, kControlsBarButtonHeight);
-		_rightMouseButton = [[UINavBarButton alloc] initWithTitle:@"W" autosizesToFit:NO];
+		_rightMouseButton = [[UINavBarButton alloc] initWithTitle:@"R" autosizesToFit:NO];
 		[_rightMouseButton setFrame:subframe];
 		[_rightMouseButton setNavBarButtonStyle:0];
 		[_rightMouseButton addTarget:self action:@selector(toggleRightMouse:) forEvents:kUIControlEventMouseUpInside];
@@ -235,7 +236,6 @@
 			[_scroller setFrame:frame];
 			_ipodScreenSize.height += kControlsBarHeight;
 			
-			
 			// Hide the keyboard if it was in view.
 			if (_isKeyboardVisible)
 			{
@@ -272,10 +272,20 @@
 	[self showControls:!_areControlsVisible];
 }
 
+
+-(CGPoint)topLeftVisiblePt
+{
+	return [_scroller bounds].origin;
+}
+
 - (void)pinnedPTViewChange:(CGPoint)ptPinned fScale:(float)fScale wOrientationState:(UIHardwareOrientation)wOrientationState bForce:(BOOL)bForce
 {
-
 	[_scroller pinnedPTViewChange: ptPinned fScale:fScale wOrientationState:wOrientationState bForce:bForce];
+}
+
+-(void)setStartupTopLeftPt:(CGPoint)pt
+{
+	_ptStartupTopLeft = pt;
 }
 
 - (void)toggleFitWidthHeight:(id)sender
@@ -300,6 +310,11 @@
 	[self setOrientation: [self getOrientationState] bForce:true];
 	[pButton setFrame: rc];
 	NSLog(@"Got Event or Scale Change");
+}
+
+- (CGRect)scrollerFrame
+{
+	return [_scroller frame];
 }
 
 //! The toggle keyboard button has been pressed. This method assumes
@@ -412,6 +427,11 @@
 	[_filter flagsChanged:newModifiers];
 }
 
+- (bool) bFirstDisplay
+{
+	return _bFirstDisplay;
+}
+
 - (id)delegate
 {
 	return _delegate;
@@ -443,6 +463,7 @@
     _connection = connection;
 	if (_connection)
 	{
+		_bFirstDisplay = false;
 		NSLog(@"Statusbar Transparent");
 
 		_filter = [_connection eventFilter];
@@ -450,11 +471,13 @@
 		[_scroller setEventFilter:_filter];
 		[_scroller setViewOnly:[_connection viewOnly]];
 		[_scroller scrollPointVisibleAtTopLeft:CGPointMake(0, 0)];
+		[_screenView setNeedsDisplay];
 	}
 	else
 	{		
 		_filter = nil;
 		[_scroller setEventFilter:nil];
+		[_scroller cleanUpMouseTracks];
 		[_screenView setFrameBuffer:nil];
 		[_screenView setOrientationState:0];
 		// Get the screen view to redraw itself in black.
@@ -481,8 +504,8 @@
 
 - (void)setScalePercent:(float)wScale
 {
-        if (_scaleState != kScaleFitNone)
-                {
+	if (_scaleState != kScaleFitNone)
+		{
 		float dx,dy, wScaleX, wScaleY;
 
 		switch ([self getOrientationState])
@@ -499,24 +522,24 @@
 				dy = _ipodScreenSize.width;
 				break;
 			}
-                wScaleX = dx / _vncScreenSize.width;
-                wScaleY = dy / _vncScreenSize.height;
-                switch (_scaleState)
-                        {
-                        case kScaleFitWhole:  // fit Whole Screen on IPod
-                                wScale = wScaleX < wScaleY ? wScaleX : wScaleY;
-                        break;
+		wScaleX = dx / _vncScreenSize.width;
+        wScaleY = dy / _vncScreenSize.height;
+        switch (_scaleState)
+           {
+			case kScaleFitWhole:  // fit Whole Screen on IPod
+				wScale = wScaleX < wScaleY ? wScaleX : wScaleY;
+                break;
 
-                        case kScaleFitWidth:  // fit Width
+			case kScaleFitWidth:  // fit Width
 				wScale = wScaleX;
-                        break;
+				break;
 
-                        case kScaleFitHeight: // fit Height
+			case kScaleFitHeight: // fit Height
 				wScale = wScaleY;
-                        break;
-                        }
-                }
-	NSLog(@"New Scale = %f", wScale);
+                break;
+			}
+		}
+//	NSLog(@"New Scale = %f", wScale);
 	[_screenView setScalePercent: wScale];
 }
 
@@ -540,27 +563,25 @@
 	CGSize vncScreenSize = _vncScreenSize;
 	CGSize newRemoteSize;
 
-	NSLog(@"VNC Screen Size  = %f %f", vncScreenSize.width, vncScreenSize.height);
+//	NSLog(@"VNC Screen Size  = %f %f", vncScreenSize.width, vncScreenSize.height);
 	if (bForce || ((wOrientation == kOrientationVertical || wOrientation == kOrientationVerticalUpsideDown 
 		|| wOrientation == kOrientationHorizontalLeft || wOrientation == kOrientationHorizontalRight)
 	 	&& _connection && wOrientation != [_screenView getOrientationState]))
 	{
-		NSLog(@"Orientation Change %d", wOrientation);
+//		NSLog(@"Orientation Change %d", wOrientation);
 
 		[_screenView setOrientationState:wOrientation];
 	
 		if (wOrientation == kOrientationVertical || wOrientation == kOrientationVerticalUpsideDown)
 		{
 			newRemoteSize = vncScreenSize;
-			[self showControls:1];
-			[[self delegate] setStatusBarMode:kUIStatusBarBlack duration:0];
+//			[self showControls:1];
 		}
 		else
 		{
 			newRemoteSize.width = vncScreenSize.height;
 			newRemoteSize.height = vncScreenSize.width;
-			[self showControls:0];
-			[[self delegate] setStatusBarMode:kUIStatusBarNone duration:0];
+//			[self showControls:0];
 		}
 
 		if ([self getScaleState] != kScaleFitNone)
@@ -568,19 +589,19 @@
 			[self setScalePercent: 0];
 		}
 		float fUnscale = [_screenView getScalePercent];
-
+		
 		CGRect bounds = CGRectMake(0,0,vncScreenSize.width, vncScreenSize.height);
 		[_screenView setBounds: bounds];
 
-	        CGAffineTransform matrix = CGAffineTransformRotate(CGAffineTransformMakeScale(0-fUnscale, fUnscale), 
-				([_screenView getOrientationDeg])  * M_PI / 180.0f);
+		CGAffineTransform matrix = CGAffineTransformRotate(CGAffineTransformMakeScale(0-fUnscale, fUnscale), 
+			([_screenView getOrientationDeg])  * M_PI / 180.0f);
 		[_filter setBackToVNCTransform: CGAffineTransformInvert(matrix)];
 		[_filter setOrientation: wOrientation];
 
 		newRemoteSize.width = newRemoteSize.width * [_screenView getScalePercent];
 		newRemoteSize.height = newRemoteSize.height  * [_screenView getScalePercent];
 
-		NSLog(@"New Screen View = %f %f", newRemoteSize.width, newRemoteSize.height);
+//		NSLog(@"New Screen View = %f %f", newRemoteSize.width, newRemoteSize.height);
 		[_screenView setRemoteDisplaySize:newRemoteSize animate:!bForce];
 	
 		// Reset our scroller's content size.
@@ -590,7 +611,7 @@
 
 - (void)setRemoteDisplaySize:(CGSize)remoteSize
 {
-	NSLog(@"Setting VNC screen size %f %f", remoteSize.width, remoteSize.height);
+//	NSLog(@"Setting VNC screen size %f %f", remoteSize.width, remoteSize.height);
 	_vncScreenSize = remoteSize;
 	[self setScaleState: kScaleFitNone];
 	[self setOrientation: kOrientationVertical bForce:false];
@@ -599,8 +620,16 @@
 //! The connection object is telling us that a region of the framebuffer
 //! needs to be redrawn.
 - (void)displayFromBuffer:(CGRect)aRect
-{
+{	
 	[_screenView displayFromBuffer:aRect];
+	
+	// If this is our first display update then Transition to the VNC server screen
+	if (!_bFirstDisplay)
+		{
+		_bFirstDisplay = true;
+		[_scroller scrollPointVisibleAtTopLeft:_ptStartupTopLeft];
+		[_delegate gotFirstFullScreenTransitionNow];
+		}
 }
 
 //! This method is supposed to draw a list of rectangles. Unfortunately, the UIKit

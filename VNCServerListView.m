@@ -9,6 +9,7 @@
 #import "VNCServerListView.h"
 #import <UIKit/UITable.h>
 #import <UIKit/UITableCell.h>
+#import <UIKit/UISimpleTableCell.h>
 #import <UIKit/UITableColumn.h>
 #import <UIKit/UIImageAndTextTableCell.h>
 #import <UIKit/UINavBarButton.h>
@@ -34,13 +35,24 @@
 		
 		// Setup navbar
 		_navBar = [[UINavigationBar alloc] initWithFrame: subframe];
-		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"New", nil) rightTitle:NSLocalizedString(@"Preferences", nil) leftBack: NO];
+		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"+", nil) rightTitle:NSLocalizedString(@"Preferences", nil) leftBack: NO];
 		[_navBar setBarStyle: 3];
 		[_navBar setDelegate: self];
+		[_navBar enableAnimation];	
 		
+/*			
+		UINavBarButton *_fitWidthButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"FitWidth.png"]];
+		[_fitWidthButton setFrame:CGRectMake(0,0,30,30)];
+		[_fitWidthButton setShowPressFeedback:YES];
+		[_fitWidthButton setDrawsShadow:NO];
+		[_fitWidthButton setNavBarButtonStyle: 5];
+//		[_fitWidthButton addTarget:self action:@selector(toggleFitWidthHeight:) forEvents:kUIControlEventMouseUpInside];
+		
+		[_navBar addSubview:_fitWidthButton];
+*/		
 		[self addSubview: _navBar];
 		
-		UINavigationItem * item = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"VNC Servers", nil)];
+		UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"VNC Servers", nil)];
 		[_navBar pushNavigationItem:item];
 		
 		// Setup button bar at bottom
@@ -78,9 +90,11 @@
 */
 		// Setup server table
 		subframe = CGRectMake(0, navBarSize.height, frame.size.width, frame.size.height - navBarSize.height - kButtonBarHeight);
-		_serverColumn = [[UITableColumn alloc] initWithTitle:@"Servers" identifier:@"servers" width:frame.size.width];
+		_serverColumn = [[UITableColumn alloc] initWithTitle:@"Servers" identifier:@"servers" width:frame.size.width - (150)];
+		_serverLastConnectColumn = [[UITableColumn alloc] initWithTitle:@"Last Connect" identifier:@"lastConnect" width:150];
 		_serverTable = [[UITable alloc] initWithFrame:subframe];
 		[_serverTable addTableColumn:_serverColumn];
+		[_serverTable addTableColumn:_serverLastConnectColumn];
 		[_serverTable setDelegate:self];
 		[_serverTable setDataSource:self];
 		[_serverTable setReusesTableCells:NO];
@@ -184,14 +198,37 @@
 	return [_servers count];
 }
 
-- (id)table:(id)theTable cellForRow:(int)rowIndex column:(int)columnIndex
-{
-	UIImageAndTextTableCell * cell = [[[UIImageAndTextTableCell alloc] init] autorelease];
-	[cell setTitle:[[_servers objectAtIndex:rowIndex] objectForKey:@"Name"]];
-	[cell setShowDisclosure:YES];
-	[cell setDisclosureClickable:YES];
-	[cell setDisclosureStyle:1];
-	return cell;
+- (id)table:(id)theTable cellForRow:(int)rowIndex column:(id)columnIndex
+{	
+	if (columnIndex == _serverLastConnectColumn )	
+		{
+		UIImageAndTextTableCell * cell = [[[UIImageAndTextTableCell alloc] init] autorelease];
+		NSNumber *nb = [[_servers objectAtIndex:rowIndex] objectForKey:@"LastConnectTime"];
+		if (nb == nil)
+			[cell setTitle:@"--- -- --:-- --"];
+		else
+			{
+			NSDate *dtLastConnect = [NSDate dateWithTimeIntervalSinceReferenceDate: [nb doubleValue]];
+			[cell setTitle:[dtLastConnect descriptionWithCalendarFormat:@"%b %d %I:%M %p" timeZone:nil locale:nil]];
+			}
+		GSFontRef font = GSFontCreateWithName("Helvetica", 0, 12.0f);
+		[[cell titleTextLabel] setFont:font];
+		CFRelease(font);
+		[cell setShowDisclosure:YES];
+		[cell setDisclosureClickable:YES];
+		[cell setDisclosureStyle:1];
+		return cell;
+		}
+	else
+		{	
+		UISimpleTableCell * cell = [[[UISimpleTableCell alloc] init] autorelease];
+		[cell setTitle:[[_servers objectAtIndex:rowIndex] objectForKey:@"Name"]];
+		[cell setShowDisclosure:NO];
+		[cell setDisclosureClickable:YES];
+		[cell setDisclosureStyle:1];
+		return cell;
+		}
+	return nil;
 }
 
 - (BOOL)table:(id)theTable canSelectRow:(int)rowIndex;
