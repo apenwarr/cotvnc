@@ -20,7 +20,13 @@
     UIHardwareOrientation _orientationState;
     CGAffineTransform _matrixPreviousTransform;
     CGRect _frame;
+    // keep track of the first display from VNC protocol
+	BOOL _bFirstDisplay;
+	id _delegate;
 }
+- (void)setDelegate:(id)newDelegate;
+
+- (id)delegate;
 
 - (void)setFrameBuffer:(FrameBuffer *)buffer;
 

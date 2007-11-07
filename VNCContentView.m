@@ -7,13 +7,23 @@
 //  Modified by: Glenn Kreisel
 
 #import "VNCContentView.h"
-
+#import "VnseaApp.h"
 
 @implementation VNCContentView
 
 - (UIHardwareOrientation)getOrientationState
 {
 	return _orientationState;
+}
+
+- (void)setDelegate:(id)newDelegate
+{
+	_delegate = newDelegate;
+}
+
+- (id)delegate
+{
+	return _delegate;
 }
 
 - (void)setOrientationState:(UIHardwareOrientation)wState
@@ -69,6 +79,7 @@
 		[self setAlpha:1.0f];
 	}
 	_scalePercent = 0.50f;
+	_bFirstDisplay = false;
 	return self;
 }
 
@@ -128,9 +139,9 @@
 	CGRect bounds = [self bounds];
 	CGRect frame = CGRectMake(0,0, remoteSize.width, remoteSize.height);
 
-	NSLog(@"Frame = %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width,frame.size.height);
-	NSLog(@"Bounds = %f %f %f %f ", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
-	NSLog(@"RemoteSize = %f %f", remoteSize.width, remoteSize.height);
+//	NSLog(@"Frame = %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width,frame.size.height);
+//	NSLog(@"Bounds = %f %f %f %f ", bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
+//	NSLog(@"RemoteSize = %f %f", remoteSize.width, remoteSize.height);
 
 	_frame = frame;
 	[self setFrame:frame];
@@ -161,7 +172,6 @@
 		CGRect b = [self bounds];
 		CGRect r = destRect;
 		
-		NSLog(@"Drawing frame buffer");
 		CGContextRef context = UICurrentContext();
 		CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
 		r.origin.y = b.size.height - CGRectGetMaxY(r);
@@ -169,10 +179,30 @@
 	}
 	else
 	{
-		// If there is no framebuffer, we just draw a black background.
+		// When not in connection put some text on the screen
+		// instead of just BLACK
+		CGRect b = [self bounds];
+		char _szBubbleText[100] = "Processing...";
 		CGContextRef context = UICurrentContext();
+		
+		CGContextSaveGState(context);
+		
+		NSLog(@"Drawing Text");
+
 		CGContextSetRGBFillColor(context, 0, 0, 0, 1);
 		CGContextFillRect(context, destRect);
+		CGContextSetRGBFillColor(context, 1, 1, 1, 1);
+		CGContextSetRGBStrokeColor(context, 1, 1, 1, .7);
+		CGContextSelectFont(context, "MarkerFeltThin", 35.0, kCGEncodingMacRoman);
+		CGContextSetTextPosition(context, 0, 0);
+		CGPoint ptBefore = CGContextGetTextPosition(context);
+		CGContextSetTextDrawingMode(context, kCGTextInvisible);
+		CGContextShowText(context, _szBubbleText, strlen(_szBubbleText));
+		CGPoint ptAfter = CGContextGetTextPosition(context);
+		float dxText = ptAfter.x - ptBefore.x;
+		CGContextSetTextDrawingMode(context, kCGTextFill);
+		CGContextShowTextAtPoint(context, (b.size.width/2)-(dxText / 2), (b.size.height/2) - 6, _szBubbleText, strlen(_szBubbleText));
+		CGContextRestoreGState(context);
 	}
 }
 
