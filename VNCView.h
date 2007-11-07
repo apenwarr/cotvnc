@@ -77,6 +77,10 @@ typedef enum
 	bool _isKeyboardVisible;
 	CGSize _vncScreenSize, _ipodScreenSize;
 	scaleSpecialTypes _scaleState;
+	// Did we have our first display from VNC protocol
+	bool _bFirstDisplay;
+	// when we get our first display scroll to this point
+	CGPoint _ptStartupTopLeft;
 }
 
 //! @name Delegate
@@ -85,6 +89,7 @@ typedef enum
 - (void)setDelegate:(id)theDelegate;
 //@}
 
+- (bool) bFirstDisplay;
 
 //! @name Controls and keyboard
 //@{
@@ -121,7 +126,11 @@ typedef enum
 - (void)setScaleState: (scaleSpecialTypes)wState;
 - (scaleSpecialTypes)getScaleState;
 
+-(CGPoint)topLeftVisiblePt;
+
 - (BOOL)showMouseTracks;
+- (CGRect)scrollerFrame;
+-(void)setStartupTopLeftPt:(CGPoint)pt;
 
 @end
 
