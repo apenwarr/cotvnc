@@ -12,7 +12,7 @@
 #import <UIKit/UIPreferencesDeleteTableCell.h>
 #import <UIKit/UISegmentedControl.h>
 
-#define MOUSE_VISIBLE @"MOUSE_VISIBLE"
+#define MOUSE_VISIBLE @"MouseVisible"
 
 //! @brief Array indices for the preferences table cells.
 enum _server_info_cell_indices

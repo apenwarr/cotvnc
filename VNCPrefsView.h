@@ -12,6 +12,8 @@
 #import <UIKit/UIPreferencesDeleteTableCell.h>
 #import <UIKit/UISegmentedControl.h>
 
+#import "VNCScrollerView.h"
+
 //! @brief Array indices for the preferences table cells.
 enum _prefs_cell_indices
 {
@@ -19,7 +21,7 @@ enum _prefs_cell_indices
 };
 
 #define MOUSE_TRACKS @"MouseTracks"
-#define MOUSE_VISBLE @"MouseVisible"
+
 
 /*!
  * @brief View were user can enter info about a server.
@@ -34,7 +36,7 @@ enum _prefs_cell_indices
 	UISwitchControl * _mouseTracksSwitch;
 }
 
-- (id)initWithFrame:(CGRect)frame;
+- (id)initWithFrame:(CGRect)frame ;
 
 - (void)setDelegate:(id)newDelegate;
 - (id)delegate;

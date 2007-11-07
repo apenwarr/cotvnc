@@ -14,6 +14,7 @@
 #import <UIKit/UINavigationItem.h>
 #import "ServerFromPrefs.h"
 
+
 @implementation VNCServerInfoView
 
 - (id)initWithFrame:(CGRect)frame
