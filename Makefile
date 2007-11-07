@@ -20,6 +20,7 @@ APP_OBJS=\
 	VNCContentView.o \
 	VNCPopupView.o \
 	VNCPopupWindow.o \
+	VNCMouseTracks.o \
 	VNCScrollerView.o \
 	VNCPrefsView.o \
 	Shimmer.o
