@@ -56,6 +56,7 @@
 	_vncView = view;
 	_windowPopupScalePercent = nil;
 	_windowPopupMouseDown = nil;
+	_scrollTimer = nil;
 }
 
 - (void)gestureEnded:(GSEvent *)event
@@ -190,7 +191,12 @@
 		return;
 	}
 	// if mousedown then we must not be in a drag event so reset Autoscroll during drag
-	_scrollTimer = nil;
+	if (_scrollTimer != nil)
+		{
+		[_scrollTimer invalidate];
+		_scrollTimer = nil;
+		CFRelease(_autoLastDragEvent);
+		}
 	_currentAutoScrollerType = kAutoScrollerNone;
 	
 	bool isChording = GSEventIsChordingHandEvent(theEvent);	
@@ -400,7 +406,7 @@
 			NSLog(@"Starting Timer");
 			CFRetain(theEvent);
 			_autoLastDragEvent = theEvent;
-			_scrollTimer = [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector:@selector(handleScrollTimer:) userInfo:nil repeats:YES];
+			_scrollTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(handleScrollTimer:) userInfo:nil repeats:YES];
 			}
 		}
 }
