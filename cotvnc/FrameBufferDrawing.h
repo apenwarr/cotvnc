@@ -335,7 +335,6 @@ NSLog(@"put x=%f y=%f w=%f h=%f\n", aRect.origin.x, aRect.origin.y, aRect.size.w
     lines = (unsigned)aRect.size.height;
     stride = (unsigned)size.width - (unsigned)aRect.size.width;
 
-	NSLog(@"PutRect 888");
 
 	switch(pixelFormat.bitsPerPixel / 8) {
 		case 1:
