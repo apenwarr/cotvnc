@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "FrameBuffer.h"
+#import "VNCScrollerView.h"
 
 typedef enum 
 {
         kPopupStyleScalePercent = 0,
-        kPopupStyleMouseDown = 1,
-		kPopupStyleMouseUp = 2,
 } popupWindowStyles;
 
 

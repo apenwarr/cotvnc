@@ -10,6 +10,7 @@
 #import "FrameBuffer.h"
 #import "VNCPopupView.h"
 
+
 /*!
  * @brief Subview of VNCView that draws the screen.
  */

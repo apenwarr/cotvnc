@@ -34,7 +34,7 @@
 
 - (void)setText:(NSString *)text
 {
-	NSLog(@"Got text: ");
+//	NSLog(@"Got text: ");
 	if (text != nil)
 		{
 		_szBubbleText = (char *)malloc([text length]+1);
@@ -49,19 +49,7 @@
 		CGRect rcElipse = [self bounds];
 		
 		CGContextSaveGState(context);
-		if (_styleWindow == kPopupStyleMouseDown)
-			{
-			rcElipse = CGRectInset(rcElipse, 1, 1);
-			CGContextSetRGBFillColor(context, 1, 0, 0, .7);
-			CGContextFillEllipseInRect(context, rcElipse);
-			}
-		else if (_styleWindow == kPopupStyleMouseUp)
-			{
-			rcElipse = CGRectInset(rcElipse, 1, 1);
-			CGContextSetRGBFillColor(context, 0, 1, 0, .7);
-			CGContextFillEllipseInRect(context, rcElipse);
-			}
-		else if (_styleWindow == kPopupStyleScalePercent)
+		if (_styleWindow == kPopupStyleScalePercent)
 			{
 		CGContextSetRGBFillColor(context, 0, 0, 1, .3);
 		rcElipse = CGRectInset(rcElipse, 4,4);
