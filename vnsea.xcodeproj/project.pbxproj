@@ -132,6 +132,8 @@
 		8ED342590CD6C9CF004B17CE /* VNCContentView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VNCContentView.m; sourceTree = "<group>"; };
 		8ED343F40CD77F6D004B17CE /* VNCPopupWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = VNCPopupWindow.h; sourceTree = "<group>"; };
 		8ED343F50CD77F6D004B17CE /* VNCPopupWindow.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VNCPopupWindow.m; sourceTree = "<group>"; };
+		8ED89E910CE010C7004CD035 /* VNCMouseTracks.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = VNCMouseTracks.h; sourceTree = "<group>"; };
+		8ED89E920CE010C7004CD035 /* VNCMouseTracks.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VNCMouseTracks.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -326,6 +328,8 @@
 		02F53B4C0C8CF00200C99AC1 /* vnsea */ = {
 			isa = PBXGroup;
 			children = (
+				8ED89E910CE010C7004CD035 /* VNCMouseTracks.h */,
+				8ED89E920CE010C7004CD035 /* VNCMouseTracks.m */,
 				8ED2B7250CDD5DF900F0C19E /* VNCPrefsView.h */,
 				8ED2B7260CDD5DF900F0C19E /* VNCPrefsView.m */,
 				8ED342580CD6C9CF004B17CE /* VNCContentView.h */,
