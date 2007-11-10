@@ -231,6 +231,11 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	_view = view;
 }
 
+- (CGAffineTransform) backToVNCTransform;
+{
+	return _matrixBackToVNCTransform;
+}
+
 - (void)setBackToVNCTransform: (CGAffineTransform)matrix
 {
 	_matrixBackToVNCTransform = matrix;

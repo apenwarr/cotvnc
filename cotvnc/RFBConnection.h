@@ -108,6 +108,7 @@
 - (void)setDisplaySize:(CGSize)aSize andPixelFormat:(rfbPixelFormat*)pixf;
 - (CGSize)displaySize;
 - (void)ringBell;
+- (void)sendCtrlAltDel:(id)sender;
 
 - (void)drawRectFromBuffer:(CGRect)aRect;
 - (void)drawRectList:(id)aList;
