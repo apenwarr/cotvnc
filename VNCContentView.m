@@ -111,25 +111,28 @@
 	CGPoint ptIPod = CGPointApplyAffineTransform(r.origin, _matrixPreviousTransform);
 	CGRect rcFrame = _frame;
 
-        switch (_orientationState)
-               {
-				case kOrientationVerticalUpsideDown:
-					ptIPod.x = (rcFrame.size.width + ptIPod.x) - bounds.origin.x;
-					ptIPod.y = (rcFrame.size.height - ptIPod.y) - bounds.origin.y;
-				break;
-				case kOrientationVertical:                                        
-					ptIPod.x = ptIPod.x - bounds.origin.x;
-					ptIPod.y = 0 - (ptIPod.y + bounds.origin.y);
-				break;
-				case kOrientationHorizontalRight:
-					ptIPod.x = 0 - (ptIPod.x + bounds.origin.x);
-					ptIPod.y = (rcFrame.size.height + ptIPod.y) - bounds.origin.y ;
-				break;
-				case kOrientationHorizontalLeft:
-					ptIPod.x = (rcFrame.size.width - ptIPod.x) - bounds.origin.x;
-					ptIPod.y = (ptIPod.y - bounds.origin.y);
-				break;
-               }
+	switch (_orientationState)
+	{
+		case kOrientationVerticalUpsideDown:
+			ptIPod.x = (rcFrame.size.width + ptIPod.x) - bounds.origin.x;
+			ptIPod.y = (rcFrame.size.height - ptIPod.y) - bounds.origin.y;
+			break;
+			
+		case kOrientationVertical:                                        
+			ptIPod.x = ptIPod.x - bounds.origin.x;
+			ptIPod.y = 0 - (ptIPod.y + bounds.origin.y);
+			break;
+			
+		case kOrientationHorizontalRight:
+			ptIPod.x = 0 - (ptIPod.x + bounds.origin.x);
+			ptIPod.y = (rcFrame.size.height + ptIPod.y) - bounds.origin.y ;
+			break;
+			
+		case kOrientationHorizontalLeft:
+			ptIPod.x = (rcFrame.size.width - ptIPod.x) - bounds.origin.x;
+			ptIPod.y = (ptIPod.y - bounds.origin.y);
+			break;
+	}
 
 	return ptIPod;
 }
@@ -154,13 +157,13 @@
 	//! @todo This should be fixed by rendering the bitmap correctly.
 	CGAffineTransform matrix = CGAffineTransformRotate(CGAffineTransformMakeScale(0-_scalePercent, _scalePercent), _orientationDeg  * M_PI / 180.0f);
 	if (bAnimate)
-		{
+	{
 		UITransformAnimation *scaleAnim = [[UITransformAnimation alloc] initWithTarget: self];
 		[scaleAnim setStartTransform: _matrixPreviousTransform];
 		[scaleAnim setEndTransform: matrix];
 		UIAnimator *anim = [[UIAnimator alloc] init];
 		[anim addAnimation:scaleAnim withDuration:0.30f start:YES]; 
-		}
+	}
 	[self setTransform:matrix];
 	_matrixPreviousTransform = matrix;
 }

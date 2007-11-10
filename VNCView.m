@@ -163,7 +163,7 @@
 
 		// Right mouse button.
 		subframe = CGRectMake(frame.size.width - kExitButtonWidth - 5 - kRightMouseButtonWidth - 6, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kRightMouseButtonWidth, kControlsBarButtonHeight);
-		_rightMouseButton = [[UINavBarButton alloc] initWithTitle:@"R" autosizesToFit:NO];
+		_rightMouseButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"right_mouse.png"]]; //WithTitle:@"W" autosizesToFit:NO];
 		[_rightMouseButton setFrame:subframe];
 		[_rightMouseButton setNavBarButtonStyle:0];
 		[_rightMouseButton addTarget:self action:@selector(toggleRightMouse:) forEvents:kUIControlEventMouseUpInside];
@@ -193,7 +193,6 @@
 		[_controlsView addSubview:_rightMouseButton];
 		[self addSubview:_controlsView];
 
-
 		[_scroller addSubview:_screenView];
 		[self addSubview:_scroller];
 		
@@ -218,7 +217,6 @@
 {
 	return _areControlsVisible;
 }
-
 
 //! Either hides or shows the controls bar at the bottom of the screen
 //! (in portrait orientation). The hiding or showing is animated.
@@ -291,9 +289,9 @@
 	return [_scroller bounds].origin;
 }
 
-- (void)pinnedPTViewChange:(CGPoint)ptPinned fScale:(float)fScale wOrientationState:(UIHardwareOrientation)wOrientationState bForce:(BOOL)bForce
+- (void)changeViewPinnedToPoint:(CGPoint)ptPinned scale:(float)fScale orientation:(UIHardwareOrientation)wOrientationState force:(BOOL)bForce
 {
-	[_scroller pinnedPTViewChange: ptPinned fScale:fScale wOrientationState:wOrientationState bForce:bForce];
+	[_scroller changeViewPinnedToPoint:ptPinned scale:fScale orientation:wOrientationState force:bForce];
 }
 
 -(void)setStartupTopLeftPt:(CGPoint)pt
@@ -578,7 +576,8 @@
 		[_screenView setNeedsDisplay];
 	}
 	else
-	{		
+	{
+		// The connection was closed.
 		_filter = nil;
 		[_scroller setEventFilter:nil];
 		[_scroller cleanUpMouseTracks];
@@ -586,7 +585,6 @@
 		[_screenView setOrientationState:0];
 		// Get the screen view to redraw itself in black.
 		[_screenView setNeedsDisplay];
-		
 	}
 }
 
@@ -609,30 +607,32 @@
 - (void)setScalePercent:(float)wScale
 {
 	if (_scaleState != kScaleFitNone)
-		{
+    {
 		float dx,dy, wScaleX, wScaleY;
 
 		switch ([self getOrientationState])
-			{
+		{
 			case kOrientationVerticalUpsideDown:
 			case kOrientationVertical:
 				dx = _ipodScreenSize.width;
 				dy = _ipodScreenSize.height;
 				break;
+				
 			default:
 			case kOrientationHorizontalLeft:
 			case kOrientationHorizontalRight:
 				dx = _ipodScreenSize.height;
 				dy = _ipodScreenSize.width;
 				break;
-			}
+		}
+		
 		wScaleX = dx / _vncScreenSize.width;
-        wScaleY = dy / _vncScreenSize.height;
-        switch (_scaleState)
-           {
+		wScaleY = dy / _vncScreenSize.height;
+		switch (_scaleState)
+		{
 			case kScaleFitWhole:  // fit Whole Screen on IPod
 				wScale = wScaleX < wScaleY ? wScaleX : wScaleY;
-                break;
+				break;
 
 			case kScaleFitWidth:  // fit Width
 				wScale = wScaleX;
@@ -641,8 +641,8 @@
 			case kScaleFitHeight: // fit Height
 				wScale = wScaleY;
                 break;
-			}
 		}
+	}
 //	NSLog(@"New Scale = %f", wScale);
 	[_screenView setScalePercent: wScale];
 }
@@ -667,10 +667,14 @@
 	CGSize vncScreenSize = _vncScreenSize;
 	CGSize newRemoteSize;
 
-//	NSLog(@"VNC Screen Size  = %f %f", vncScreenSize.width, vncScreenSize.height);
-	if (bForce || ((wOrientation == kOrientationVertical || wOrientation == kOrientationVerticalUpsideDown 
-		|| wOrientation == kOrientationHorizontalLeft || wOrientation == kOrientationHorizontalRight)
-	 	&& _connection && wOrientation != [_screenView getOrientationState]))
+	if(!(wOrientation == kOrientationVertical || wOrientation == kOrientationVerticalUpsideDown 
+		|| wOrientation == kOrientationHorizontalLeft || wOrientation == kOrientationHorizontalRight))
+	{
+		return;
+	}
+		
+	NSLog(@"VNC Screen Size  = %f %f", vncScreenSize.width, vncScreenSize.height);
+	if (bForce || (_connection && wOrientation != [_screenView getOrientationState]))
 	{
 		UIHardwareOrientation oldOrientation = [_screenView getOrientationState];
 //		NSLog(@"Orientation Change %d", wOrientation);
@@ -702,12 +706,12 @@
 			[self setScalePercent: 0];
 		}
 		float fUnscale = [_screenView getScalePercent];
-		
-		CGRect bounds = CGRectMake(0,0,vncScreenSize.width, vncScreenSize.height);
+
+		CGRect bounds = CGRectMake(0, 0, vncScreenSize.width, vncScreenSize.height);
 		[_screenView setBounds: bounds];
 
-		CGAffineTransform matrix = CGAffineTransformRotate(CGAffineTransformMakeScale(0-fUnscale, fUnscale), 
-			([_screenView getOrientationDeg])  * M_PI / 180.0f);
+		CGAffineTransform matrix = CGAffineTransformRotate(CGAffineTransformMakeScale(0 - fUnscale, fUnscale), 
+				([_screenView getOrientationDeg])  * M_PI / 180.0f);
 		[_filter setBackToVNCTransform: CGAffineTransformInvert(matrix)];
 		[_filter setOrientation: wOrientation];
 

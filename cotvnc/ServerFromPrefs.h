@@ -36,6 +36,9 @@
 #define RFB_LAST_PROFILE  @"Profile"
 #define RFB_PIXEL_DEPTH   @"PixelDepth"
 #define RFB_PORT		  5900
+#define SERVER_SCALE @"SCALE"
+#define SERVER_SCROLL_X @"SCROLLX"
+#define SERVER_SCROLL_Y @"SCROLLY"
 
 @interface ServerFromPrefs : ServerBase
 

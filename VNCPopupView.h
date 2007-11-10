@@ -10,25 +10,29 @@
 #import "FrameBuffer.h"
 #import "VNCScrollerView.h"
 
-typedef enum 
+//! The different drawing styles available for the popup view.
+typedef enum _popup_style
 {
-        kPopupStyleScalePercent = 0,
-		kPopupStyleViewOnly = 1,
-} popupWindowStyles;
-
+	kPopupStyleScalePercent = 0,
+	kPopupStyleViewOnly = 1,
+} popup_style_t;
 
 /*!
- * @brief Subview of VNCView that draws the screen.
+ * @brief View class that draws a message bubble.
  */
 @interface VNCPopupView : UIView
 {
-	char *_szBubbleText;
-	popupWindowStyles _styleWindow;
+	NSString * _bubbleText;			//!< Text to draw inside the popup bubble.
+	popup_style_t _styleWindow;	//!< Selected drawing style.
 }
 
-- (id)initWithFrame:(CGRect)frame style:(popupWindowStyles)wStyle;
-- (void)setStyleWindow:(popupWindowStyles)wStyle;
+- (id)initWithFrame:(CGRect)frame style:(popup_style_t)theStyle;
+
+- (void)setStyleWindow:(popup_style_t)theStyle;
+
+//! @brief Change the view's text.
+- (void)setText:(NSString *)theText;
+
 - (void)drawRect:(CGRect)destRect;
-- (void)setText:(NSString *)szText;
 
 @end

@@ -10,11 +10,23 @@ vnsea todo list
 
 - rework EventFilter to be more UIKit specific
 
-- modified keys don't work on windows with free RealVNC
+x modified keys don't work on windows with free RealVNC
 
 - separate EventFilter into a filter and a queue, thus allowing the filter to be changed more easily
 
 - get rid of emulation buttons and multitap emulation stuff
 
 - text cursor sometimes appears on top of screen view after keyboard is made visible
+
+- rotation:
+	- always revert to portrait mode in the list view
+	- rotate the scroller so the scroll bars always appear on the right and bottom sides
+
+- zooming:
+	- make use of gestures and the built-in functionality in UIKit
+	- too slow response time now, may need to have special draw mode
+
+- clean up method names
+
+- get rid of type prefixes on variable names (i.e., b and w)
 

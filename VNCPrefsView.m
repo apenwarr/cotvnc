@@ -6,7 +6,7 @@
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
-#import "VNseaApp.h"
+#import "VnseaApp.h"
 #import "VNCPrefsView.h"
 #import <UIKit/UIPreferencesTextTableCell.h>
 #import <UIKit/UIPreferencesControlTableCell.h>
@@ -85,16 +85,16 @@
 - (void)setPrefsInfo:(NSDictionary *)info
 {
 	if (info == nil)
-		{
+	{
 		_prefsInfo =  [NSMutableDictionary dictionary];
 		// Setup Defaults Here
 		[_prefsInfo setObject:[NSNumber numberWithBool:YES] forKey:MOUSE_TRACKS];
-		}
+	}
 	else
-		{
+	{
 		[_prefsInfo release];
 		_prefsInfo = [[info mutableCopy] retain];
-		}
+	}
 	
 	// Update cell values from the prefs info
 	[_mouseTracksSwitch setValue:[[_prefsInfo objectForKey:MOUSE_TRACKS] boolValue] ? 1.0f : 0.0f];

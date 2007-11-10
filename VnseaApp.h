@@ -42,6 +42,14 @@
 //! a connection to be made.
 #define kConnectWaitRunLoopTime (0.1f)
 
+//! Status bar animation modes.
+enum
+{
+	kUIStatusBarFadeAnimation = 0,
+	kUIStatusBarBottomToTopAnimation = 1,
+	kUIStatusBarTopToBottomAnimation = 2
+};
+
 /*!
  * @brief Main application class for the VNC viewer program.
  *
@@ -109,6 +117,8 @@
 - (void)checkForUpdate:(id)unused;
 //@}
 
+//! @brief Show the about alert.
+//- (void)displayAbout;
 
 //! @name Connection methods
 //@{

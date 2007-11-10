@@ -10,11 +10,11 @@
 #import "VNCView.h"
 #import "VNCMouseTracks.h"
 
-
 //! Number of seconds to wait before sending a mouse down, during which we
 //! check to see if the user is really wanting to scroll.
 #define kSendMouseDownDelay (0.185)
-#define kMinScale (.10f)
+
+#define kMinScale (0.10f)
 #define kMaxScale (3.0f)
 
 @implementation VNCScrollerView
@@ -42,16 +42,15 @@
 - (void)gestureChanged:(GSEvent *)event
 {
 	CGRect r = GSEventGetLocationInWindow(event);
-        CGRect cr = [self convertRect:r fromView:nil];
+	CGRect cr = [self convertRect:r fromView:nil];
 	NSLog(@"Gesture Changed %f %f,  %f %f", cr.origin.x, cr.origin.y, cr.size.width, cr.size.height);
 
 	CGPoint pt1 = GSEventGetInnerMostPathPosition(event);
 	CGPoint pt2 = GSEventGetOuterMostPathPosition(event);
 	NSLog(@"PT1 %f %f, PT2 %f %f", pt1.x, pt1.y, pt2.x, pt2.y);
-	
 }
 
-- (void) setVNCView:(VNCView *)view
+- (void)setVNCView:(VNCView *)view
 {
 	_vncView = view;
 	_windowPopupScalePercent = nil;
@@ -117,15 +116,15 @@
 - (void)cleanUpMouseTracks
 {
 	if (_windowPopupMouseDown != nil)
-		{
+	{
 		[_windowPopupMouseDown hide];
 		_windowPopupMouseDown = nil;
-		}
+	}
 	if (_windowPopupMouseUp != nil)
-		{
+	{
 		[_windowPopupMouseUp hide];
 		_windowPopupMouseUp = nil;
-		}
+	}
 }
 
 
@@ -138,14 +137,22 @@
 	CGPoint ptLeftTop = [self bounds].origin;
 	
 	if (_currentAutoScrollerType & kAutoScrollerRight)
+	{
 		ptLeftTop.x += dxAutoScroll;
+	}
 	else if (_currentAutoScrollerType & kAutoScrollerLeft)
+	{
 		ptLeftTop.x -= dxAutoScroll;
+	}
 					
 	if (_currentAutoScrollerType & kAutoScrollerUp)
+	{
 		ptLeftTop.y -= dyAutoScroll;
+	}
 	else if (_currentAutoScrollerType & kAutoScrollerDown)
+	{
 		ptLeftTop.y += dyAutoScroll;
+	}
 				
 	[self scrollPointVisibleAtTopLeft: ptLeftTop];	
 	[_eventFilter mouseDragged:_autoLastDragEvent];
@@ -164,17 +171,17 @@
 	
 	// Do mouse tracks
 	if ([_vncView showMouseTracks])
-		{
+	{
 		if (_windowPopupMouseDown != nil)
-			{
+		{
 			[_windowPopupMouseDown hide];
 			_windowPopupMouseDown = nil;
-			}
+		}
 		CGPoint ptVNC = [_eventFilter getVNCScreenPoint: GSEventGetLocationInWindow(theEvent)];
 	
-		_windowPopupMouseDown = [[VNCMouseTracks alloc] initWithFrame: CGRectMake(ptVNC.x,ptVNC.y,10,10) style:kPopupStyleMouseDown scroller:self];	
+		_windowPopupMouseDown = [[VNCMouseTracks alloc] initWithFrame: CGRectMake(ptVNC.x, ptVNC.y, 10, 10) style:kPopupStyleMouseDown scroller:self];	
 		[_windowPopupMouseDown setTimer: 1.5f info:nil]; 
-		}
+	}
 	
 	// The event is no longer needed.
 	CFRelease(theEvent);
@@ -192,12 +199,12 @@
 	}
 	// if mousedown then we must not be in a drag event so reset Autoscroll during drag
 	if (_scrollTimer != nil)
-		{
+	{
 		[_scrollTimer invalidate];
 		[_scrollTimer release];
 		_scrollTimer = nil;
 		CFRelease(_autoLastDragEvent);
-		}
+	}
 	_currentAutoScrollerType = kAutoScrollerNone;
 	
 	bool isChording = GSEventIsChordingHandEvent(theEvent);	
@@ -212,15 +219,14 @@
 		_fDistanceStart = sqrt((pt2.x-pt1.x)*(pt2.x-pt1.x) + (pt2.y - pt1.y) * (pt2.y - pt2.y));
 		_fDistancePrev = _fDistanceStart;
 		if (_windowPopupScalePercent == nil)
-			{
+		{
 			CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
 			
-			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,60,60) bCenter:true bShow:true fOrientation:[_vncView orientationDegree] style:kPopupStyleScalePercent];			
+			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,60,60) centered:true show:true orientation:[_vncView orientationDegree] style:kPopupStyleScalePercent];			
 			[_windowPopupScalePercent setCenterLocation: ptCenter]; 
 			[_windowPopupScalePercent setTextPercent: [_vncView getScalePercent]];
 			_bZooming = false;
-			}
-
+		}
 	}
 
 	
@@ -271,12 +277,12 @@
 {
 	// Do nothing if there is no connection.
 	if (_windowPopupScalePercent != nil)
-		{
+	{
 		_bZooming = false;
 		[_windowPopupScalePercent setHidden:true];
 		[_windowPopupScalePercent release];
 		_windowPopupScalePercent = nil;
-		}
+	}
 	
 	if (!_eventFilter)
 	{
@@ -285,11 +291,11 @@
 	
 	// Autoscroll during drag must be over
 	if (_scrollTimer != nil)
-		{
+	{
 		[_scrollTimer invalidate];
 		_scrollTimer = nil;
 		CFRelease(_autoLastDragEvent);
-		}
+	}
 	
 	if (_tapTimer)
 	{
@@ -298,18 +304,18 @@
 
 	if (_inRemoteAction)
 	{
-	if ([_vncView showMouseTracks])
+		if ([_vncView showMouseTracks])
 		{
-		if (_windowPopupMouseUp != nil)
+			if (_windowPopupMouseUp != nil)
 			{
-			[_windowPopupMouseUp hide];
-			_windowPopupMouseUp = nil;
+				[_windowPopupMouseUp hide];
+				_windowPopupMouseUp = nil;
 			}
-		CGPoint ptVNC = [_eventFilter getVNCScreenPoint: GSEventGetLocationInWindow(theEvent)];
+			CGPoint ptVNC = [_eventFilter getVNCScreenPoint: GSEventGetLocationInWindow(theEvent)];
 
-		_windowPopupMouseUp = [[VNCMouseTracks alloc] initWithFrame: CGRectMake(ptVNC.x,ptVNC.y,10,10) style:kPopupStyleMouseUp scroller:self];			
-//		NSLog(@"Setting Timer on Popup");
-		[_windowPopupMouseUp setTimer: 1.5f info:nil]; 
+			_windowPopupMouseUp = [[VNCMouseTracks alloc] initWithFrame: CGRectMake(ptVNC.x,ptVNC.y,10,10) style:kPopupStyleMouseUp scroller:self];			
+	//		NSLog(@"Setting Timer on Popup");
+			[_windowPopupMouseUp setTimer: 1.5f info:nil]; 
 		}
 
 		[self sendMouseUp:theEvent];
@@ -321,7 +327,7 @@
 	}
 }
 
-- (void)pinnedPTViewChange:(CGPoint)ptPinned fScale:(float)fScale wOrientationState:(UIHardwareOrientation)wOrientationState bForce:(BOOL)bForce
+- (void)changeViewPinnedToPoint:(CGPoint)ptPinned scale:(float)fScale orientation:(UIHardwareOrientation)wOrientationState force:(BOOL)bForce
 {
 	CGRect r = CGRectMake(ptPinned.x, ptPinned.y, 1,1);
 	CGPoint ptVNCBefore = [_eventFilter getVNCScreenPoint: r];
@@ -345,22 +351,26 @@
 	
 //  Try to prevent orientation change from making the screen scroll too far
 	if (bOrientationChange)
-		{
+	{
 		ptLeftTop.x = MAX(0, ptLeftTop.x);
 		ptLeftTop.y = MAX(0, ptLeftTop.y);
 //		if (ptLeftTop.x + [_scroller frame].size.width > [_scroller bounds].size.width)
 //			{
 //			NSLog(@"Scroller set too far");
 //			}
-		}
+	}
 //	NSLog(@"topleft %f,%f", ptLeftTop.x, ptLeftTop.y);
 	[self scrollPointVisibleAtTopLeft: ptLeftTop];
 	
 // Make sure the MouseTracks get updated to the new Scale / Orientation
 	if (_windowPopupMouseDown != nil)
+	{
 		[_windowPopupMouseDown zoomOrientationChange];
+	}
 	if (_windowPopupMouseUp != nil)
+	{
 		[_windowPopupMouseUp zoomOrientationChange];
+	}
 }
 
 
@@ -373,45 +383,45 @@
 	AutoScrollerTypes newAutoScroller = kAutoScrollerNone;
 	
 	if (ptDrag.x > (rcFrame.origin.x+rcFrame.size.width) - LEFTRIGHT_AUTOSCROLL_BORDER && ptDrag.x < (rcFrame.origin.x+rcFrame.size.width))
-		{
+	{
 		newAutoScroller = kAutoScrollerRight;
-		}
+	}
 	else if (ptDrag.x < LEFTRIGHT_AUTOSCROLL_BORDER && ptDrag.x >= 0)
-		{
+	{
 		newAutoScroller = kAutoScrollerLeft;
-		}
+	}
 		
 	if (ptDrag.y < TOPBOTTOM_AUTOSCROLL_BORDER && ptDrag.y >= 0)
-		{
+	{
 		newAutoScroller |= kAutoScrollerUp;
-		}
+	}
 	else if (ptDrag.y > rcFrame.size.height - TOPBOTTOM_AUTOSCROLL_BORDER && ptDrag.y < rcFrame.size.height)
-		{
+	{
 		newAutoScroller |= kAutoScrollerDown;
-		}
+	}
 	
 	if (newAutoScroller != _currentAutoScrollerType)
-		{
+	{
 		_currentAutoScrollerType = newAutoScroller;
+		
 		NSLog(@"In border Area %d", newAutoScroller);
+		
 		if (_scrollTimer != nil)
-			{
+		{
 			[_scrollTimer invalidate];
 			[_scrollTimer release];
 			_scrollTimer = nil;
 			CFRelease(_autoLastDragEvent);
-			}
-		if (newAutoScroller == kAutoScrollerNone)
-			{
-			}
-		else
-			{
+		}
+		
+		if (newAutoScroller != kAutoScrollerNone)
+		{
 			NSLog(@"Starting Timer");
 			CFRetain(theEvent);
 			_autoLastDragEvent = theEvent;
 			_scrollTimer = [[NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(handleScrollTimer:) userInfo:nil repeats:YES] retain];
-			}
 		}
+	}
 }
 
 - (void)mouseDragged:(GSEventRef)theEvent
@@ -433,28 +443,31 @@
 
 		if (abs(fHowFar) > (_viewOnly || _bZooming ? 3 : 20))
 		{
-			float fNewScale = [_vncView getScalePercent]+(.0025 * fHowFar);
+			float fNewScale = [_vncView getScalePercent] + (0.0025 * fHowFar);
 			
 			_bZooming = true;
 			
 			if (fNewScale > kMinScale && fNewScale < kMaxScale)
-				{
+			{
 				[_windowPopupScalePercent setTextPercent: fNewScale];
 				[_windowPopupScalePercent setCenterLocation: ptCenter]; 
 				
-				[self pinnedPTViewChange:ptCenter fScale:fNewScale wOrientationState:[_vncView getOrientationState] bForce:true];
-				}
+				[self changeViewPinnedToPoint:ptCenter scale:fNewScale orientation:[_vncView getOrientationState] force:true];
+			}
+			
 			_fDistancePrev = fDistance;
 			return;
 		}
 		else
-			{
+		{
 			[_windowPopupScalePercent setCenterLocation: ptCenter];
-			}
+		}
 
 			
 		if (_viewOnly || _bZooming)
+		{
 			return;
+		}
 	}
 
 	
@@ -464,10 +477,10 @@
 	}
 
 	if (_inRemoteAction)
-		{
+	{
 		[self checkForAutoscrollEvents: theEvent];
 		[_eventFilter mouseDragged:theEvent];
-		}
+	}
 	else
 	{
 		[super mouseDragged:theEvent];

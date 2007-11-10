@@ -117,11 +117,9 @@ typedef enum
 
 - (id)scroller;
 
-- (void)mouseUp:(struct __GSEvent *)fp8;
-
 - (float)orientationDegree;
 - (void)setOrientation:(UIHardwareOrientation)wOrientation bForce:(int)bForce;
-- (void)pinnedPTViewChange:(CGPoint)ptPinned fScale:(float)fScale wOrientationState:(UIHardwareOrientation)wOrientationState bForce:(BOOL)bForce;
+- (void)changeViewPinnedToPoint:(CGPoint)ptPinned scale:(float)fScale orientation:(UIHardwareOrientation)wOrientationState force:(BOOL)bForce;
 - (void)setScalePercent:(float)x;
 - (float)getScalePercent;
 - (CGRect)getFrame;

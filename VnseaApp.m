@@ -28,9 +28,8 @@
 #define kRevertButtonWidth (100.0f)
 #define kRevertButtonHeight (32.0f)
 
-#define SERVER_SCALE @"SCALE"
-#define SERVER_SCROLL_X @"SCROLLX"
-#define SERVER_SCROLL_Y @"SCROLLY"
+extern NSString * UIApplicationOrientationDidChangeNotification;
+extern NSString * UIApplicationOrientationUserInfoKey;
 
 //! @brief Signal handler for SIGINT.
 //!
@@ -42,18 +41,14 @@ void handle_interrupt_signal(int sig)
 	[UIApp terminate];
 }
 
-/*
-@implementation NSDictionary (CategorySort)
-
-- (NSComparisonResult)compareServers:(NSDictionary *)dict
+//! @brief Compare function to sort servers.
+int compareServers(id obj1, id obj2, void *reverse)
 {
-  NSLog(@"Sorting");
-  return 0;
+	NSDictionary *serverInfo = (NSDictionary *)obj1;
+	NSDictionary *serverInfo1 = (NSDictionary *)obj2;
+	
+	return [[serverInfo objectForKey:RFB_NAME] compare: [serverInfo1 objectForKey:RFB_NAME]];
 }
-
-@end
-*/
-
 
 @implementation VnseaApp
 
@@ -123,7 +118,7 @@ void handle_interrupt_signal(int sig)
 - (void)applicationSuspend:(GSEvent *)event
 {
 	[self applicationWillTerminate];
-	exit(0);
+	[self terminate];
 	NSLog(@"Process Suspend");
 }
 
@@ -174,14 +169,6 @@ void handle_interrupt_signal(int sig)
 	}
 	
 	[pool release];
-}
-
-int compareServers(id obj1, id obj2, void *reverse)
-{
-	NSDictionary *serverInfo = (NSDictionary *)obj1;
-	NSDictionary *serverInfo1 = (NSDictionary *)obj2;
-	
-	return [[serverInfo objectForKey:RFB_NAME] compare: [serverInfo1 objectForKey:RFB_NAME]];
 }
 
 - (NSArray *)loadServers
@@ -733,13 +720,14 @@ int compareServers(id obj1, id obj2, void *reverse)
 	[info setObject:[NSNumber numberWithBool:NO] forKey:RFB_VIEWONLY];
 	return info;
 }
+
 - (void)deviceOrientationChanged:(GSEvent *)event
 {
 	// Get the real device center point to rotate around
 	CGRect frame = [_vncView scrollerFrame];
 	CGPoint ptCenter = CGPointMake(frame.origin.x+(frame.size.width / 2), frame.origin.y+(frame.size.height/2));
 	
-	[_vncView pinnedPTViewChange:ptCenter fScale:[_vncView getScalePercent] wOrientationState:[UIHardware deviceOrientation:YES] bForce:false];		
+	[_vncView changeViewPinnedToPoint:ptCenter scale:[_vncView getScalePercent] orientation:[UIHardware deviceOrientation:YES] force:false];		
 }
 
 - (void)acceleratedInX:(float)x Y:(float)y Z:(float)z
@@ -747,17 +735,17 @@ int compareServers(id obj1, id obj2, void *reverse)
 	NSLog(@"accel: x=%f, y=%f, z=%f", x, y, z);
 }
 
-- (void)statusBarMouseDown:(GSEvent *)event
+- (void)statusBarMouseDown:(GSEventRef)event
 {
 //	NSLog(@"statusBarMouseDown:%@", event);
 }
 
-- (void)statusBarMouseDragged:(GSEvent *)event
+- (void)statusBarMouseDragged:(GSEventRef)event
 {
 //	NSLog(@"statusBarMouseDragged:%@", event);
 }
 
-- (void)statusBarMouseUp:(GSEvent *)event
+- (void)statusBarMouseUp:(GSEventRef)event
 {
 	if (_connection)
 	{

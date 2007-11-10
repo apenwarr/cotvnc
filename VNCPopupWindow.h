@@ -10,10 +10,10 @@
 #import "FrameBuffer.h"
 #import "VNCPopupView.h"
 
-
 @class VNCScrollerView;
+
 /*!
- * @brief Subview of VNCView that draws the screen.
+ * @brief Window that hosts a popup message bubble.
  */
 @interface VNCPopupWindow : UIWindow
 {
@@ -23,13 +23,14 @@
 	VNCScrollerView *_scroller;
 }
 
-- (id)initWithFrame:(CGRect)frame bCenter:(BOOL)bCenter bShow:(BOOL)bShow fOrientation:(float)fOrientaion style:(popupWindowStyles)wStyle;
-- (void)setHidden:(BOOL)bHide;
+- (id)initWithFrame:(CGRect)frame centered:(BOOL)bCenter show:(BOOL)bShow orientation:(float)fOrientaion style:(popup_style_t)wStyle;
 
+- (void)setHidden:(BOOL)bHide;
 - (void)setTextPercent:(float)fScale;
-- (void)setText:(NSString *)szText;
+- (void)setText:(NSString *)theText;
 - (void)setCenterLocation:(CGPoint)ptCenter;
-- (void)setStyleWindow:(popupWindowStyles)wStyle;
+- (void)setStyleWindow:(popup_style_t)wStyle;
+
 - (void)setTimer:(float)fSeconds info:(VNCPopupWindow **)info;
 
 @end

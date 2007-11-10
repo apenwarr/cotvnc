@@ -6,7 +6,7 @@
 //  Copyright 2004 Geekspiff. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 
 @interface NSObject (Chicken)

@@ -7,13 +7,12 @@
 //
 
 #include <d3des.h>
-#import "VNseaApp.h"
+#import "VnseaApp.h"
 #import "VNCServerInfoView.h"
 #import <UIKit/UIPreferencesTextTableCell.h>
 #import <UIKit/UIPreferencesControlTableCell.h>
 #import <UIKit/UINavigationItem.h>
 #import "ServerFromPrefs.h"
-
 
 @implementation VNCServerInfoView
 
@@ -208,14 +207,14 @@ NSString *vncDecryptPasswd(NSString *pnsEncrypted)
 {
 	[[_deleteCell button] setEnabled: (info == nil ? NO : YES)];
 	if (info == nil)
-		{
+	{
 		_serverInfo =  [NSMutableDictionary dictionary];
-		}	
+	}	
 	else
-		{
+	{
 		[_serverInfo release];
 		_serverInfo = [[info mutableCopy] retain];
-		}
+	}
 	
 	// Update cell values from the server info
 	
