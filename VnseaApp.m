@@ -191,6 +191,22 @@ int compareServers(id obj1, id obj2, void *reverse)
 	[prefs writeToFile:kServersFilePath atomically:YES];
 }
 
+- (void)displayAbout
+{
+	UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
+		initWithTitle:NSLocalizedString(@"AboutVersion", nil)
+		buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
+		defaultButtonIndex:0
+		delegate:self
+		context:self];
+
+	[hotSheet setBodyText:NSLocalizedString(@"AboutMessage", nil)];
+	[hotSheet setDimsBackground:YES];
+	[hotSheet setRunsModal:YES];
+	[hotSheet setShowsOverSpringBoardAlerts:NO];
+	[hotSheet popupAlertAnimated:YES];	
+}
+
 - (void)waitForConnection:(RFBConnection *)connection
 {
 	// Create a condition lock used to synchronise this thread with the
@@ -273,7 +289,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 	
 //	[self setStatusBarMode: [self statusBarMode] orientation:90 duration:2];
 			
-	[serverInfo setObject:[NSNumber numberWithDouble: [[NSDate init] timeIntervalSinceReferenceDate]] forKey:@"LastConnectTime"];
+	[serverInfo setObject:[NSNumber numberWithDouble: [[NSDate init] timeIntervalSinceReferenceDate]] forKey:SERVER_LAST_CONNECT];
 	[servers replaceObjectAtIndex:_serverConnectingIndex withObject:serverInfo];
 	[self saveServers: servers];
 }
@@ -490,8 +506,10 @@ int compareServers(id obj1, id obj2, void *reverse)
 	[self setStatusBarMode:kUIStatusBarWhite duration:1];
 	
 	// Switch back to the list view only if we got to the VNC Server View
-	if ([_vncView bFirstDisplay])
+	if ([_vncView isFirstDisplay])
+	{
 		[_transView transition:2 fromView:_vncView toView:_serversView];
+	}
 }
 
 //! This method is used to force the connection closed. It is used by the VNCView

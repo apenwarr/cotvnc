@@ -39,6 +39,7 @@
 #define SERVER_SCALE @"SCALE"
 #define SERVER_SCROLL_X @"SCROLLX"
 #define SERVER_SCROLL_Y @"SCROLLY"
+#define SERVER_LAST_CONNECT @"LastConnectTime"
 
 @interface ServerFromPrefs : ServerBase
 

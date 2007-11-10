@@ -29,12 +29,14 @@
 #define kControlsBarButtonHeight (32.0f)
 
 #define kKeyboardButtonWidth (40.0f)
-#define kExitButtonWidth (22.0f)
-#define kRightMouseButtonWidth (22.0f)
-#define kModifierKeyButtonWidth (32.0f)
+#define kExitButtonWidth (28.0f)
+#define kRightMouseButtonWidth (28.0f)
+#define kModifierKeyButtonWidth (28.0f)
 
 #define kModifierKeyImageWidth (21.0f)
 #define kModifierKeyImageHeight (21.0f)
+
+#define kButtonSpacing (5.0f)
 
 // There's got to be a better way to do this, but for now this is just fine.
 // Thanks to the MobileTerminal team for this trick.
@@ -54,12 +56,6 @@
 
 @implementation VNCView
 
-- (void)mouseUp:(struct __GSEvent *)fp8
-{
-	NSLog(@"Got mouse Up");
-}
-
-
 - (void)sendFunctionKeys:(id)sender
 {
 }
@@ -74,7 +70,6 @@
 	[_connection manuallyUpdateFrameBuffer:nil];
 }
 
-
 // I can never remember this relationship for some reason:
 // The frame rectangle defines the view's location and size in the superview using the superview’s coordinate system. The bounds rectangle defines the interior coordinate system that is used when drawing the contents of the view, including the origin and scaling.
 - (id)initWithFrame:(CGRect)frame
@@ -87,6 +82,7 @@
 		_scaleState = kScaleFitNone;
 		
 		_ipodScreenSize = CGSizeMake(frame.size.width, frame.size.height);
+		
 		// Create scroller view.
 		_scroller = [[VNCScrollerView alloc] initWithFrame:subframe];
 
@@ -122,39 +118,39 @@
 		CGColorSpaceRelease(rgbSpace);
 		
 		// Create keyboard button.
-		subframe = CGRectMake(10, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kKeyboardButtonWidth, kControlsBarButtonHeight);
-		_keyboardButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"keyboard.png"]];// Title:@"Keyboard" autosizesToFit:NO];
+		subframe = CGRectMake(5, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kKeyboardButtonWidth, kControlsBarButtonHeight);
+		_keyboardButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"keyboard.png"]];
 		[_keyboardButton setFrame:subframe];
 		[_keyboardButton setNavBarButtonStyle:0];
 		[_keyboardButton addTarget:self action:@selector(toggleKeyboard:) forEvents:kUIControlEventMouseUpInside];
 		
 		// Modifier key buttons.
-		subframe = CGRectMake(CGRectGetMaxX(subframe) + 6, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kModifierKeyButtonWidth, kControlsBarButtonHeight);
+		subframe = CGRectMake(CGRectGetMaxX(subframe) + kButtonSpacing, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kModifierKeyButtonWidth, kControlsBarButtonHeight);
 		_shiftButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"shift_key.png"]];
 		[_shiftButton setFrame:subframe];
 		[_shiftButton setNavBarButtonStyle:0];
 		[_shiftButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
 		
-		subframe.origin.x = CGRectGetMaxX(subframe) + 6.0f;
+		subframe.origin.x = CGRectGetMaxX(subframe) + kButtonSpacing;
 		_commandButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"cmd_key.png"]];
 		[_commandButton setFrame:subframe];
 		[_commandButton setNavBarButtonStyle:0];
 		[_commandButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
 		
-		subframe.origin.x = CGRectGetMaxX(subframe) + 6.0f;
+		subframe.origin.x = CGRectGetMaxX(subframe) + kButtonSpacing;
 		_optionButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"opt_key.png"]];
 		[_optionButton setFrame:subframe];
 		[_optionButton setNavBarButtonStyle:0];
 		[_optionButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
 		
-		subframe.origin.x = CGRectGetMaxX(subframe) + 6.0f;
+		subframe.origin.x = CGRectGetMaxX(subframe) + kButtonSpacing;
 		_controlButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"ctrl_key.png"]];
 		[_controlButton setFrame:subframe];
 		[_controlButton setNavBarButtonStyle:0];
 		[_controlButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
 		
 		// Helper Functions "more" button on the status bar
-		subframe = CGRectMake(subframe.origin.x+kModifierKeyButtonWidth+5 , (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, 53, kControlsBarButtonHeight);
+		subframe = CGRectMake(subframe.origin.x + kModifierKeyButtonWidth + 5 , (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, 53, kControlsBarButtonHeight);
 
 		_helperFunctionButton = [[UINavBarButton alloc] initWithTitle:@"More"];
 		[_helperFunctionButton setFrame:subframe];
@@ -282,7 +278,6 @@
 {
 	[self showControls:!_areControlsVisible];
 }
-
 
 -(CGPoint)topLeftVisiblePt
 {
@@ -513,6 +508,7 @@
 	else
 	{
 		// Unexpected sender.
+		NSLog(@"Unexpected sender = %@", sender);
 		return;
 	}
 	
@@ -522,6 +518,8 @@
 	unsigned int newModifiers = currentModifiers ^ modifier;
 	bool isPressed = newModifiers & modifier;
 	
+	NSLog(@"current=%x, new=%x, is=%d", currentModifiers, newModifiers, (int)isPressed);
+	
 	// Change the button color.
 	[sender setNavBarButtonStyle:isPressed ? 3 : 0];
 	
@@ -529,9 +527,9 @@
 	[_filter flagsChanged:newModifiers];
 }
 
-- (bool) bFirstDisplay
+- (bool)isFirstDisplay
 {
-	return _bFirstDisplay;
+	return _isFirstDisplay;
 }
 
 - (id)delegate
@@ -547,6 +545,17 @@
 - (RFBConnection *)connection;
 {
 	return _connection;
+}
+
+- (void)enableControlsForViewOnly:(bool)isViewOnly
+{
+	bool notViewOnly = !isViewOnly;
+	[_keyboardButton setEnabled:notViewOnly];
+	[_shiftButton setEnabled:notViewOnly];
+	[_commandButton setEnabled:notViewOnly];
+	[_optionButton setEnabled:notViewOnly];
+	[_controlButton setEnabled:notViewOnly];
+	[_rightMouseButton setEnabled:notViewOnly];
 }
 
 //! The frame buffer has been created by the connection object and is
@@ -565,8 +574,7 @@
     _connection = connection;
 	if (_connection)
 	{
-		_bFirstDisplay = false;
-		NSLog(@"Statusbar Transparent");
+		_isFirstDisplay = false;
 
 		_filter = [_connection eventFilter];
 		[_filter setView:_scroller];
@@ -574,6 +582,9 @@
 		[_scroller setViewOnly:[_connection viewOnly]];
 		[_scroller scrollPointVisibleAtTopLeft:CGPointMake(0, 0)];
 		[_screenView setNeedsDisplay];
+		
+		// Enable or disable controls depending on view only mode.
+		[self enableControlsForViewOnly:[_connection viewOnly]];
 	}
 	else
 	{
@@ -745,12 +756,12 @@
 	[_screenView displayFromBuffer:aRect];
 	
 	// If this is our first display update then Transition to the VNC server screen
-	if (!_bFirstDisplay)
-		{
-		_bFirstDisplay = true;
+	if (!_isFirstDisplay)
+	{
+		_isFirstDisplay = true;
 		[_scroller scrollPointVisibleAtTopLeft:_ptStartupTopLeft];
 		[_delegate gotFirstFullScreenTransitionNow];
-		}
+	}
 }
 
 //! This method is supposed to draw a list of rectangles. Unfortunately, the UIKit

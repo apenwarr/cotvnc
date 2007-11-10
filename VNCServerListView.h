@@ -21,7 +21,7 @@ enum _disclosure_style
 enum _server_list_navbar_buttons
 {
 	kNavBarEditButton = 1,
-	kNavBarPrefsButton = 0
+	kNavBarAboutButton = 0
 };
 
 /*!
@@ -36,8 +36,11 @@ enum _server_list_navbar_buttons
 	id _serverLastConnectColumn;
 	id _buttonBar;
 	id _addButton;
+	id _preferencesButton;
+	id _aboutButton;
 	CGColorRef _textColorDateTime;
 	NSArray * _servers;
+	GSFontRef _lastConnectFont;
 }
 
 - (void)setDelegate:(id)newDelegate;
@@ -46,6 +49,8 @@ enum _server_list_navbar_buttons
 - (void)setServerList:(NSArray *)list;
 
 - (void)addNewServer:(id)sender;
+- (void)showPreferences:(id)sender;
+- (void)showAbout:(id)sender;
 
 @end
 
@@ -58,5 +63,7 @@ enum _server_list_navbar_buttons
 - (void)addNewServer;
 
 - (void)displayPrefs;
+
+- (void)displayAbout;
 
 @end

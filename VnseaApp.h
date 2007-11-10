@@ -118,7 +118,7 @@ enum
 //@}
 
 //! @brief Show the about alert.
-//- (void)displayAbout;
+- (void)displayAbout;
 
 //! @name Connection methods
 //@{

@@ -15,11 +15,18 @@
 #import <UIKit/UINavBarButton.h>
 #import <UIKit/UINavigationItem.h>
 #import "ServerStandAlone.h"
+#import "ServerFromPrefs.h"
 
 #define kNavBarHeight (48)
 #define kButtonBarHeight (48)
-#define kAddButtonHeight (48)
-#define kAddButtonWidth (120)
+
+#define kAddButtonWidth (40)
+
+#define kAboutButtonHeight (32)
+#define kAboutButtonWidth (80)
+
+#define kPreferencesButtonHeight (32)
+#define kPreferencesButtonWidth (120)
 
 @implementation VNCServerListView
 
@@ -28,44 +35,43 @@
 	if ([super initWithFrame:frame])
 	{
 		CGRect subframe;
-		CGSize navBarSize;// = [UINavigationBar defaultSize];
-		navBarSize.height = kNavBarHeight;
+		CGSize navBarSize = [UINavigationBar defaultSize];
 		
-		subframe = CGRectMake(0.0f, 0.0f, frame.size.width, kNavBarHeight);
+		subframe = CGRectMake(0.0f, 0.0f, frame.size.width, navBarSize.height);
 		
 		// Setup navbar
 		_navBar = [[UINavigationBar alloc] initWithFrame: subframe];
-		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"+", nil) rightTitle:NSLocalizedString(@"Preferences", nil) leftBack: NO];
+//		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"+", nil) rightTitle:NSLocalizedString(@"About", nil) leftBack: NO];
 		[_navBar setBarStyle: 3];
 		[_navBar setDelegate: self];
 		[_navBar enableAnimation];	
 		
-/*			
-		UINavBarButton *_fitWidthButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"FitWidth.png"]];
-		[_fitWidthButton setFrame:CGRectMake(0,0,30,30)];
-		[_fitWidthButton setShowPressFeedback:YES];
-		[_fitWidthButton setDrawsShadow:NO];
-		[_fitWidthButton setNavBarButtonStyle: 5];
-//		[_fitWidthButton addTarget:self action:@selector(toggleFitWidthHeight:) forEvents:kUIControlEventMouseUpInside];
-		
-		[_navBar addSubview:_fitWidthButton];
-*/		
-		[self addSubview: _navBar];
-		
 		UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"VNC Servers", nil)];
 		[_navBar pushNavigationItem:item];
 		
+		// Add add button to navbar
+		subframe = CGRectMake(10.0f, (kButtonBarHeight - kAboutButtonHeight) / 2.0, kAddButtonWidth, kAboutButtonHeight);
+		_addButton = [[UINavBarButton alloc] initWithFrame:subframe];
+		[_addButton setAutosizesToFit:NO];
+		[_addButton addTarget:self action:@selector(addNewServer:) forEvents:kGSEventTypeButtonSelected];
+		[_addButton setNavBarButtonStyle:0];
+//		[_addButton setImage:[UIImage imageNamed:@"add.png"]];
+		[_addButton setTitle:@"+"];
+		[_addButton setEnabled:YES];
+		
+		GSFontRef addFont = GSFontCreateWithName("ArialBold", 0, 24.0f);
+		[_addButton setTitleFont:addFont];
+
 		// Setup button bar at bottom
 		subframe = CGRectMake(0, frame.size.height - kButtonBarHeight, frame.size.width, kButtonBarHeight);
 		_buttonBar = [[UIGradientBar alloc] initWithFrame:subframe];
-		[self addSubview:_buttonBar];
 		
-		subframe = CGRectMake(0, 2, frame.size.width-4, kButtonBarHeight-4);
-		UITextLabel *_copyText = [[UITextLabel alloc] initWithFrame: subframe];
+//		subframe = CGRectMake(0, 2, frame.size.width-4, kButtonBarHeight-4);
+//		UITextLabel *_copyText = [[UITextLabel alloc] initWithFrame: subframe];
 
         const float kTextComponents[] = { .94, .94, .94, .7 };
         const float kTransparentComponents[] = { 0, 0, 1, 0 };
-        const float kTextComponentsDateTime[] = { 0, 0, 1, .8 };
+        const float kTextComponentsDateTime[] = { 0.4, 0.4, 0.4, 1 };
 		
         CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
         CGColorRef textColorStatus = CGColorCreate(rgbSpace, kTextComponents);
@@ -74,25 +80,36 @@
         _textColorDateTime = CGColorCreate(rgbSpace, kTextComponentsDateTime);
 		CGColorSpaceRelease(rgbSpace);
 		
-		GSFontRef font = GSFontCreateWithName("Helvetica", 0, 16.0f);
-		[_copyText setFont:font];
-		CFRelease(font);
-		[_copyText setBackgroundColor: rgbTransparent];
-		[_copyText setText:@"Copyright 2007 Chris Reed, Glenn Kreisel"];
-		[_copyText setColor:textColorStatus];
-		[_copyText setCentersHorizontally: true];
-		[_buttonBar addSubview: _copyText];
+//		GSFontRef font = GSFontCreateWithName("Helvetica", 0, 16.0f);
+//		[_copyText setFont:font];
+//		CFRelease(font);
+//		[_copyText setBackgroundColor: rgbTransparent];
+//		[_copyText setText:@"Copyright 2007 Chris Reed, Glenn Kreisel"];
+//		[_copyText setColor:textColorStatus];
+//		[_copyText setCentersHorizontally: true];
+//		[_buttonBar addSubview: _copyText];
 		
+		// Go ahead and create font for drawing the last connect column
+		_lastConnectFont = GSFontCreateWithName("Helvetica", 0, 12.0f);
+		
+		// Add about button
+		subframe = CGRectMake(10.0f, (kButtonBarHeight - kAboutButtonHeight) / 2.0 + 1, kAboutButtonWidth, kAboutButtonHeight);
+		_aboutButton = [[UINavBarButton alloc] initWithFrame:subframe];
+		[_aboutButton setAutosizesToFit: NO];
+		[_aboutButton addTarget:self action: @selector(showAbout:) forEvents:kGSEventTypeButtonSelected];
+		[_aboutButton setNavBarButtonStyle: 0];
+		[_aboutButton setTitle: NSLocalizedString(@"About", nil)];
+		[_aboutButton setEnabled: YES];
+
 		// Add server button
-/*		subframe = CGRectMake(frame.size.width - 10.0f - kAddButtonWidth, (kButtonBarHeight - kAddButtonHeight) / 2.0, kAddButtonWidth, kAddButtonHeight);
-		_addButton = [[UINavBarButton alloc] initWithFrame:subframe];
-		[_addButton setAutosizesToFit: NO];
-		[_addButton addTarget:self action: @selector(addNewServer:) forEvents:kGSEventTypeButtonSelected];
-		[_addButton setNavBarButtonStyle: 0];
-		[_addButton setTitle: kAddButtonName];
-		[_addButton setEnabled: YES];
-		[_buttonBar addSubview: _addButton];
-*/
+		subframe = CGRectMake(frame.size.width - 10.0f - kPreferencesButtonWidth, (kButtonBarHeight - kPreferencesButtonHeight) / 2.0 + 1, kPreferencesButtonWidth, kPreferencesButtonHeight);
+		_preferencesButton = [[UINavBarButton alloc] initWithFrame:subframe];
+		[_preferencesButton setAutosizesToFit: NO];
+		[_preferencesButton addTarget:self action: @selector(showPreferences:) forEvents:kGSEventTypeButtonSelected];
+		[_preferencesButton setNavBarButtonStyle: 0];
+		[_preferencesButton setTitle: NSLocalizedString(@"Preferences", nil)];
+		[_preferencesButton setEnabled: YES];
+
 		// Setup server table
 		subframe = CGRectMake(0, navBarSize.height, frame.size.width, frame.size.height - navBarSize.height - kButtonBarHeight);
 		_serverColumn = [[UITableColumn alloc] initWithTitle:@"Servers" identifier:@"servers" width:frame.size.width - (150)];
@@ -103,11 +120,14 @@
 		[_serverTable setDelegate:self];
 		[_serverTable setDataSource:self];
 		[_serverTable setReusesTableCells:NO];
-//		[_serverTable reloadData];
-//		[_serverTable updateDisclosures];
-		[self addSubview: _serverTable];
 		
-//		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:nil object:_serverTable];
+		// Construct view hierarchy
+		[_navBar addSubview:_addButton];
+		[_buttonBar addSubview:_aboutButton];
+		[_buttonBar addSubview:_preferencesButton];
+		[self addSubview:_buttonBar];
+		[self addSubview:_navBar];
+		[self addSubview:_serverTable];
 	}
 	
 	return self;
@@ -115,6 +135,8 @@
 
 - (void)dealloc
 {
+	CFRelease(_textColorDateTime);
+	CFRelease(_lastConnectFont);
 	[_servers release];
 	[super dealloc];
 }
@@ -151,6 +173,22 @@
 	}
 }
 
+- (void)showPreferences:(id)sender
+{
+	if (_delegate && [_delegate respondsToSelector:@selector(displayPrefs)])
+	{
+		[_delegate displayPrefs];
+	}
+}
+
+- (void)showAbout:(id)sender
+{
+	if (_delegate && [_delegate respondsToSelector:@selector(displayAbout)])
+	{
+		[_delegate displayAbout];
+	}
+}
+
 - (void)navigationBar:(id)navBar buttonClicked:(int)buttonIndex
 {
 	NSLog(@"navbar:%@ button:%d", navBar, buttonIndex);
@@ -160,10 +198,10 @@
 			[self addNewServer:nil];
 			break;
 			
-		case kNavBarPrefsButton:
-			if (_delegate && [_delegate respondsToSelector:@selector(displayPrefs)])
+		case kNavBarAboutButton:
+			if (_delegate && [_delegate respondsToSelector:@selector(displayAbout)])
 			{
-				[_delegate displayPrefs];
+				[_delegate displayAbout];
 			}
 			break;
 	}
@@ -207,34 +245,36 @@
 - (id)table:(id)theTable cellForRow:(int)rowIndex column:(id)columnIndex
 {	
 	if (columnIndex == _serverLastConnectColumn )	
-		{
+	{
 		UIImageAndTextTableCell * cell = [[[UIImageAndTextTableCell alloc] init] autorelease];
-		NSNumber *nb = [[_servers objectAtIndex:rowIndex] objectForKey:@"LastConnectTime"];
+		NSNumber *nb = [[_servers objectAtIndex:rowIndex] objectForKey:SERVER_LAST_CONNECT];
 		if (nb == nil)
+		{
 			[cell setTitle:@"--- -- --:-- --"];
+		}
 		else
-			{
+		{
 			NSDate *dtLastConnect = [NSDate dateWithTimeIntervalSinceReferenceDate: [nb doubleValue]];
 			[cell setTitle:[dtLastConnect descriptionWithCalendarFormat:@"%b %d %I:%M %p" timeZone:nil locale:nil]];
-			}
-		GSFontRef font = GSFontCreateWithName("Helvetica", 0, 12.0f);
-		[[cell titleTextLabel] setFont:font];
+		}
+		
+		[[cell titleTextLabel] setFont:_lastConnectFont];
 		[[cell titleTextLabel] setColor:_textColorDateTime];
-		CFRelease(font);
+
 		[cell setShowDisclosure:YES];
 		[cell setDisclosureClickable:YES];
 		[cell setDisclosureStyle:1];
 		return cell;
-		}
+	}
 	else
-		{	
+	{	
 		UISimpleTableCell * cell = [[[UISimpleTableCell alloc] init] autorelease];
 		[cell setTitle:[[_servers objectAtIndex:rowIndex] objectForKey:@"Name"]];
 		[cell setShowDisclosure:NO];
 		[cell setDisclosureClickable:YES];
 		[cell setDisclosureStyle:1];
 		return cell;
-		}
+	}
 	return nil;
 }
 

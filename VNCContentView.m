@@ -11,6 +11,23 @@
 
 @implementation VNCContentView
 
+- (id)initWithFrame:(CGRect)frame
+{
+	if ([super initWithFrame:frame])
+	{
+		[self setOpaque:YES];
+		[self setAlpha:1.0f];
+	}
+	_scalePercent = 0.50f;
+	return self;
+}
+
+- (void)dealloc
+{
+	[_frameBuffer release];
+	[super dealloc];
+}
+
 - (UIHardwareOrientation)getOrientationState
 {
 	return _orientationState;
@@ -69,24 +86,6 @@
 - (void)setScalePercent:(float)wScale
 {
 	_scalePercent = wScale;
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-	if ([super initWithFrame:frame])
-	{
-		[self setOpaque:YES];
-		[self setAlpha:1.0f];
-	}
-	_scalePercent = 0.50f;
-	_bFirstDisplay = false;
-	return self;
-}
-
-- (void)dealloc
-{
-	[_frameBuffer release];
-	[super dealloc];
 }
 
 - (void)setFrameBuffer:(FrameBuffer *)buffer

@@ -275,7 +275,6 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	return pt;
 }
 
-#pragma mark -
 - (unsigned int)pressedModifiers
 {
 	return _pressedModifiers;

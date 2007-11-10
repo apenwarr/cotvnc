@@ -17,14 +17,14 @@
 //! @brief Array indices for the preferences table cells.
 enum _prefs_cell_indices
 {
-	kMouseDownUpTracksIndex,
+	kMouseDownUpTracksIndex
 };
 
+//! Key for the mouse tracks preference.
 #define MOUSE_TRACKS @"MouseTracks"
 
-
 /*!
- * @brief View were user can enter info about a server.
+ * @brief This view class allows users to edit global preferences.
  */
 @interface VNCPrefsView : UIView
 {
@@ -44,7 +44,7 @@ enum _prefs_cell_indices
 - (void)setPrefsInfo:(NSDictionary *)info;
 
 - (void)setKeyboardVisible:(BOOL)visible;
-- (void)displayAbout;
+
 - (BOOL)showMouseTracks;
 
 @end
@@ -53,6 +53,5 @@ enum _prefs_cell_indices
 
 //! Pass nil for serverInfo to cancel editing.
 - (void)finishedPrefs:(NSDictionary *)serverInfo;
-
 
 @end

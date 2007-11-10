@@ -28,6 +28,14 @@
 #import "VNCScrollerView.h"
 #import "VNCPopupWindow.h"
 
+typedef enum
+{
+	kScaleFitNone = 0,
+	kScaleFitWidth = 1,
+	kScaleFitHeight = 2, 
+	kScaleFitWhole = 3
+} scaleSpecialTypes;
+
 /*!
  * @brief Main view to display and control the remote computer.
  *
@@ -44,16 +52,6 @@
  *
  * 
  */
-
-typedef enum 
-{
-        kScaleFitNone = 0,
-        kScaleFitWidth = 1,
-        kScaleFitHeight = 2, 
-        kScaleFitWhole = 3
-} scaleSpecialTypes;
-
-
 @interface VNCView : UIView <RFBViewProtocol>
 {
 	id _delegate;
@@ -62,7 +60,6 @@ typedef enum
 	VNCScrollerView * _scroller;	//!< Scroller subview.
 	VNCContentView * _screenView;	//!< Child content view that draws the framebuffer.
 	UINavBarButton * _keyboardButton;	//
-	UINavBarButton * _keyboardButton1;	//
 	UINavBarButton * _shiftButton;
 	UINavBarButton * _commandButton;
 	UINavBarButton * _optionButton;
@@ -70,18 +67,21 @@ typedef enum
 	UINavBarButton * _rightMouseButton;
 	UINavBarButton * _exitButton;	//
 	UINavBarButton *_helperFunctionButton;
-	UIThreePartButton * _fitWidthButton, * _fitHeightButton, *_fitWholeButton, *_fitNoneButton;
+	UIThreePartButton * _fitWidthButton;
+	UIThreePartButton * _fitHeightButton;
+	UIThreePartButton *_fitWholeButton;
+	UIThreePartButton *_fitNoneButton;
 	UISegmentedControl * _widthHeightFullSegment;
 	id _keyboardView;
 	id _controlsView;
-	bool _areControlsVisible, _savedControlShowState;
+	bool _areControlsVisible;
+	bool _savedControlShowState;
 	bool _isKeyboardVisible;
-	CGSize _vncScreenSize, _ipodScreenSize;
+	CGSize _vncScreenSize;
+	CGSize _ipodScreenSize;
 	scaleSpecialTypes _scaleState;
-	// Did we have our first display from VNC protocol
-	bool _bFirstDisplay;
-	// when we get our first display scroll to this point
-	CGPoint _ptStartupTopLeft;
+	bool _isFirstDisplay;	//!< Did we have our first display from VNC protocol?
+	CGPoint _ptStartupTopLeft;	//!< When we get our first display scroll to this point.
 }
 
 //! @name Delegate
@@ -90,7 +90,7 @@ typedef enum
 - (void)setDelegate:(id)theDelegate;
 //@}
 
-- (bool) bFirstDisplay;
+- (bool)isFirstDisplay;
 
 //! @name Controls and keyboard
 //@{
@@ -103,6 +103,7 @@ typedef enum
 - (void)closeConnection:(id)sender;
 - (void)toggleRightMouse:(id)sender;
 - (void)toggleModifierKey:(id)sender;
+- (void)enableControlsForViewOnly:(bool)isViewOnly;
 //@}
 
 //! @name RFBViewProtocol
@@ -117,24 +118,31 @@ typedef enum
 
 - (id)scroller;
 
+//! @name Orientation
+//@{
 - (float)orientationDegree;
 - (void)setOrientation:(UIHardwareOrientation)wOrientation bForce:(int)bForce;
-- (void)changeViewPinnedToPoint:(CGPoint)ptPinned scale:(float)fScale orientation:(UIHardwareOrientation)wOrientationState force:(BOOL)bForce;
+- (UIHardwareOrientation)getOrientationState;
+//@}
+
+//! @name Scaling
+//@{
 - (void)setScalePercent:(float)x;
 - (float)getScalePercent;
-- (CGRect)getFrame;
-- (UIHardwareOrientation)getOrientationState;
-- (CGPoint)getIPodScreenPoint:(CGRect)r bounds:(CGRect)bounds;
 - (void)setScaleState: (scaleSpecialTypes)wState;
 - (scaleSpecialTypes)getScaleState;
+//@}
 
--(CGPoint)topLeftVisiblePt;
+- (void)changeViewPinnedToPoint:(CGPoint)ptPinned scale:(float)fScale orientation:(UIHardwareOrientation)wOrientationState force:(BOOL)bForce;
+- (CGRect)getFrame;
+- (CGPoint)getIPodScreenPoint:(CGRect)r bounds:(CGRect)bounds;
+
+- (CGPoint)topLeftVisiblePt;
 - (void)sendFunctionKeys:(id)sender;
-
 
 - (BOOL)showMouseTracks;
 - (CGRect)scrollerFrame;
--(void)setStartupTopLeftPt:(CGPoint)pt;
+- (void)setStartupTopLeftPt:(CGPoint)pt;
 
 @end
 

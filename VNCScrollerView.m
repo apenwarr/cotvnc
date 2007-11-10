@@ -12,7 +12,7 @@
 
 //! Number of seconds to wait before sending a mouse down, during which we
 //! check to see if the user is really wanting to scroll.
-#define kSendMouseDownDelay (0.185)
+#define kSendMouseDownDelay (0.285)
 
 #define kMinScale (0.10f)
 #define kMaxScale (3.0f)
@@ -197,6 +197,7 @@
 	{
 		return;
 	}
+	
 	// if mousedown then we must not be in a drag event so reset Autoscroll during drag
 	if (_scrollTimer != nil)
 	{
@@ -222,13 +223,12 @@
 		{
 			CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
 			
-			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0,0,60,60) centered:true show:true orientation:[_vncView orientationDegree] style:kPopupStyleScalePercent];			
+			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0, 0, 60, 60) centered:true show:true orientation:[_vncView orientationDegree] style:kPopupStyleScalePercent];			
 			[_windowPopupScalePercent setCenterLocation: ptCenter]; 
 			[_windowPopupScalePercent setTextPercent: [_vncView getScalePercent]];
 			_bZooming = false;
 		}
 	}
-
 	
 	if (isChording || _viewOnly)
 	{

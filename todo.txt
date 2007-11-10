@@ -24,7 +24,6 @@ x modified keys don't work on windows with free RealVNC
 
 - zooming:
 	- make use of gestures and the built-in functionality in UIKit
-	- too slow response time now, may need to have special draw mode
 
 - clean up method names
 

@@ -26,7 +26,7 @@
 		// Create nav bar
 		subviewFrame = CGRectMake(0.0f, 0.0f, frame.size.width, 48);
 		_navBar = [[UINavigationBar alloc] initWithFrame:subviewFrame];
-		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"Back", nil) rightTitle:NSLocalizedString(@"About", nil) leftBack: YES];
+		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"Back", nil) rightTitle:nil leftBack: YES];
 		[_navBar setBarStyle: 3];
 		[_navBar setDelegate: self];
 		[self addSubview: _navBar];
@@ -48,10 +48,8 @@
 		_mouseTracksSwitch = [[UISwitchControl alloc] init];
 		[_mouseTracksSwitch setOrigin:controlOrigin];
 		[mouseTracksCell setControl:_mouseTracksSwitch];
-
 		
 		_cells = [[NSArray arrayWithObjects:mouseTracksCell, nil] retain];
-		
 	}
 	
 	return self;
@@ -100,36 +98,15 @@
 	[_mouseTracksSwitch setValue:[[_prefsInfo objectForKey:MOUSE_TRACKS] boolValue] ? 1.0f : 0.0f];
 	
 	if (info == nil)
+	{
 		_prefsInfo = nil;
+	}
 	[_table reloadData];
-}
-
-- (void)displayAbout
-{
-	UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
-		initWithTitle:NSLocalizedString(@"AboutVersion", nil)
-		buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
-		defaultButtonIndex:0
-		delegate:self
-		context:self];
-
-	[hotSheet setBodyText:NSLocalizedString(@"AboutMessage", nil)];
-	[hotSheet setDimsBackground:YES];
-	[hotSheet setRunsModal:YES];
-	[hotSheet setShowsOverSpringBoardAlerts:NO];
-	[hotSheet popupAlertAnimated:YES];	
-}
-
-- (void)alertSheet:(id)sheet buttonClicked:(int)buttonIndex
-{
-		// Just close and release any other sheets.
-		[sheet dismissAnimated:YES];
-		[sheet release];
 }
 
 - (BOOL)showMouseTracks
 {
-		return [[_prefsInfo objectForKey:MOUSE_TRACKS] boolValue];
+	return [[_prefsInfo objectForKey:MOUSE_TRACKS] boolValue];
 }
 
 - (void)navigationBar:(id)navBar buttonClicked:(int)buttonIndex
@@ -141,7 +118,7 @@
 	{
 		// Save Prefs and go back
 		case kServerListButton:
-			{
+		{
 			if (_prefsInfo == nil)
 				_prefsInfo = [NSMutableDictionary dictionary];
 
@@ -149,19 +126,13 @@
 			
 			resultDict = _prefsInfo;			
 			break;
-			}
-		
-		// Display About
-		case kAboutButton:
-			[self displayAbout];
-			return;
-			break;
+		}
 	}
 	
 	if (_delegate && [_delegate respondsToSelector:@selector(finishedPrefs:)])
-		{
+	{
 		[_delegate finishedPrefs:resultDict];
-		}
+	}
 }
 
 - (int)numberOfGroupsInPreferencesTable:(id)fp8
@@ -194,17 +165,4 @@
 	return NO;
 }
 
-/*
-- (BOOL)respondsToSelector:(SEL)aSelector
-{
-	NSLog(@"Request for selector: %@", NSStringFromSelector(aSelector));
-	return [super respondsToSelector:aSelector];
-}
-
-- (void)forwardInvocation:(NSInvocation *)anInvocation
-{
-	NSLog(@"Called from UITextView %@", NSStringFromSelector([anInvocation selector]));
-	[super forwardInvocation:anInvocation];
-}
-*/
 @end
