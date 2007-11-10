@@ -69,11 +69,12 @@ typedef enum
 	UINavBarButton * _controlButton;
 	UINavBarButton * _rightMouseButton;
 	UINavBarButton * _exitButton;	//
-	UINavBarButton * _fitWidthButton, * _fitHeightButton;
+	UINavBarButton *_helperFunctionButton;
+	UIThreePartButton * _fitWidthButton, * _fitHeightButton, *_fitWholeButton, *_fitNoneButton;
 	UISegmentedControl * _widthHeightFullSegment;
 	id _keyboardView;
 	id _controlsView;
-	bool _areControlsVisible;
+	bool _areControlsVisible, _savedControlShowState;
 	bool _isKeyboardVisible;
 	CGSize _vncScreenSize, _ipodScreenSize;
 	scaleSpecialTypes _scaleState;
@@ -98,6 +99,7 @@ typedef enum
 - (void)toggleControls;
 - (void)toggleKeyboard:(id)sender;
 - (void)toggleFitWidthHeight:(id)sender;
+- (void)showHelperFunctions:(id)sender;
 - (void)closeConnection:(id)sender;
 - (void)toggleRightMouse:(id)sender;
 - (void)toggleModifierKey:(id)sender;
@@ -113,6 +115,8 @@ typedef enum
 - (void)drawRectList:(id)aList;
 //@}
 
+- (id)scroller;
+
 - (void)mouseUp:(struct __GSEvent *)fp8;
 
 - (float)orientationDegree;
@@ -127,6 +131,8 @@ typedef enum
 - (scaleSpecialTypes)getScaleState;
 
 -(CGPoint)topLeftVisiblePt;
+- (void)sendFunctionKeys:(id)sender;
+
 
 - (BOOL)showMouseTracks;
 - (CGRect)scrollerFrame;

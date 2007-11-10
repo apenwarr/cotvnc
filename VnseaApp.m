@@ -277,13 +277,15 @@ int compareServers(id obj1, id obj2, void *reverse)
 - (void)gotFirstFullScreenTransitionNow
 {
 	int randTrans = (int)(((float)rand() / (float)RAND_MAX) * 2.8);
-		
+
 	[self setStatusBarShowsProgress:NO];
 	[_transView transition: randTrans fromView:_serversView toView:_vncView];
-	
+			
 	NSMutableArray * servers = [[self loadServers] mutableCopy];
 	NSMutableDictionary * serverInfo = [[servers objectAtIndex:_serverConnectingIndex] mutableCopy];
-		
+	
+//	[self setStatusBarMode: [self statusBarMode] orientation:90 duration:2];
+			
 	[serverInfo setObject:[NSNumber numberWithDouble: [[NSDate init] timeIntervalSinceReferenceDate]] forKey:@"LastConnectTime"];
 	[servers replaceObjectAtIndex:_serverConnectingIndex withObject:serverInfo];
 	[self saveServers: servers];
@@ -433,6 +435,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 	// Just bail if the connection was canceled.
 	if ([connection didCancelConnect])
 	{
+		[self setStatusBarShowsProgress:NO];
 //		NSLog(@"connectToServer:connection canceled, releasing connection");
 		
 		// Get rid of the lock and connection. They were passed to our ownership
@@ -543,6 +546,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 	
 	if (sheet == _connectAlert)
 	{
+		[self setStatusBarShowsProgress:NO];
 		// The user hit the Cancel button on the "Connecting to server" alert.
 		_closingConnection = YES;
 		[_connection cancelConnect];

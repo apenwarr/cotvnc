@@ -59,6 +59,22 @@
 	NSLog(@"Got mouse Up");
 }
 
+
+- (void)sendFunctionKeys:(id)sender
+{
+}
+
+- (void)sendCtrlAltDel:(id)sender
+{
+	[_connection sendCtrlAltDel:nil];
+}
+
+- (void)sendFullRefresh:(id)sender
+{
+	[_connection manuallyUpdateFrameBuffer:nil];
+}
+
+
 // I can never remember this relationship for some reason:
 // The frame rectangle defines the view's location and size in the superview using the superview’s coordinate system. The bounds rectangle defines the interior coordinate system that is used when drawing the contents of the view, including the origin and scaling.
 - (id)initWithFrame:(CGRect)frame
@@ -92,16 +108,18 @@
 		// Create screen view.
 		_screenView = [[VNCContentView alloc] initWithFrame:subframe];
 		[_screenView setDelegate: [self delegate]];
-		
+	
 		// Create control bar.
 		subframe = CGRectMake(0, frame.size.height /*- kControlsBarHeight*/, frame.size.width, kControlsBarHeight);
 		_controlsView = [[UIGradientBar alloc] initWithFrame:subframe];
 		
 		const float kBlackComponents[] = { 0, 0, 0, 0 };
 		const float kRedComponents[] = { 1, 0, 0, 0 };
-		CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
-		CGColorRef black = CGColorCreate(rgb, kBlackComponents);
-		CGColorRef red = CGColorCreate(rgb, kRedComponents);
+		CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
+		CGColorRef black = CGColorCreate(rgbSpace, kBlackComponents);
+		CGColorRef red = CGColorCreate(rgbSpace, kRedComponents);
+				
+		CGColorSpaceRelease(rgbSpace);
 		
 		// Create keyboard button.
 		subframe = CGRectMake(10, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kKeyboardButtonWidth, kControlsBarButtonHeight);
@@ -135,23 +153,13 @@
 		[_controlButton setNavBarButtonStyle:0];
 		[_controlButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
 		
-		// Start of FitToWidth/FitToHeight/FitScreen
-		subframe = CGRectMake(subframe.origin.x+kModifierKeyButtonWidth+5 , (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, 24, kControlsBarButtonHeight);
+		// Helper Functions "more" button on the status bar
+		subframe = CGRectMake(subframe.origin.x+kModifierKeyButtonWidth+5 , (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, 53, kControlsBarButtonHeight);
 
-		_fitWidthButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"FitWidth.png"]];
-		[_fitWidthButton setFrame:subframe];
-		[_fitWidthButton setShowPressFeedback:YES];
-		[_fitWidthButton setDrawsShadow:NO];
-		[_fitWidthButton setNavBarButtonStyle:0];
-		[_fitWidthButton addTarget:self action:@selector(toggleFitWidthHeight:) forEvents:kUIControlEventMouseUpInside];
-
-		subframe = CGRectMake(subframe.origin.x+28, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, 24, kControlsBarButtonHeight);
-		_fitHeightButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"FitHeight.png"]];
-		[_fitHeightButton setFrame:subframe];
-		[_fitHeightButton setDrawsShadow:NO];
-		[_fitHeightButton setShowPressFeedback:YES];
-		[_fitHeightButton setNavBarButtonStyle:0];
-		[_fitHeightButton addTarget:self action:@selector(toggleFitWidthHeight:) forEvents:kUIControlEventMouseUpInside];
+		_helperFunctionButton = [[UINavBarButton alloc] initWithTitle:@"More"];
+		[_helperFunctionButton setFrame:subframe];
+		[_helperFunctionButton setNavBarButtonStyle:0];
+		[_helperFunctionButton addTarget:self action:@selector(showHelperFunctions:) forEvents:kUIControlEventMouseUpInside];
 
 		// Right mouse button.
 		subframe = CGRectMake(frame.size.width - kExitButtonWidth - 5 - kRightMouseButtonWidth - 6, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kRightMouseButtonWidth, kControlsBarButtonHeight);
@@ -181,10 +189,10 @@
 		[_controlsView addSubview:_commandButton];
 		[_controlsView addSubview:_optionButton];
 		[_controlsView addSubview:_controlButton];
-		[_controlsView addSubview:_fitWidthButton];
-		[_controlsView addSubview:_fitHeightButton];
+		[_controlsView addSubview:_helperFunctionButton];
 		[_controlsView addSubview:_rightMouseButton];
 		[self addSubview:_controlsView];
+
 
 		[_scroller addSubview:_screenView];
 		[self addSubview:_scroller];
@@ -194,6 +202,11 @@
 	}
 	
 	return self;
+}
+
+- (id)scroller
+{
+	return _scroller;
 }
 
 - (void)dealloc
@@ -288,28 +301,119 @@
 	_ptStartupTopLeft = pt;
 }
 
+// Bring up the Helper Functions Popup window using AlertSheet as the basis
+- (void)showHelperFunctions:(id)sender
+{
+	UIAlertSheet *downloader = [[UIAlertSheet alloc ] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 300.0f) ];	
+	UIPushButton *aButton = [[UIPushButton alloc] initWithTitle:@"Send Ctrl-Alt-Delete" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(10, 55, 130, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendCtrlAltDel:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"Full Screen Refresh" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(140, 55, 130, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFullRefresh:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	_fitWidthButton = [[UIPushButton alloc] initWithTitle:@"Fit Screen to Width" autosizesToFit:NO];
+	[_fitWidthButton setFrame:CGRectMake(10, 88, 130, 32)];
+	[_fitWidthButton setDrawsShadow:YES];
+	[_fitWidthButton setDrawContentsCentered:YES];
+	[_fitWidthButton setShowPressFeedback:YES];
+	[_fitWidthButton addTarget:self action:@selector(toggleFitWidthHeight:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:_fitWidthButton];
+
+	_fitHeightButton = [[UIPushButton alloc] initWithTitle:@"Fit Screen to Height" autosizesToFit:NO];
+	[_fitHeightButton setFrame:CGRectMake(140, 88, 130, 32)];
+	[_fitHeightButton setDrawsShadow:YES];
+	[_fitHeightButton setDrawContentsCentered:YES];
+	[_fitHeightButton setShowPressFeedback:YES];
+	[_fitHeightButton addTarget:self action:@selector(toggleFitWidthHeight:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:_fitHeightButton];
+
+	_fitWholeButton = [[UIPushButton alloc] initWithTitle:@"Fit Screen to Device" autosizesToFit:NO];
+	[_fitWholeButton setFrame:CGRectMake(10, 121, 130, 32)];
+	[_fitWholeButton setDrawsShadow:YES];
+	[_fitWholeButton setDrawContentsCentered:YES];
+	[_fitWholeButton setShowPressFeedback:YES];
+	[_fitWholeButton addTarget:self action:@selector(toggleFitWidthHeight:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:_fitWholeButton];
+
+	_fitNoneButton = [[UIPushButton alloc] initWithTitle:@"Allow Dynamic Scaling" autosizesToFit:NO];
+	[_fitNoneButton setFrame:CGRectMake(140, 121, 130, 32)];
+	[_fitNoneButton setDrawsShadow:YES];
+	[_fitNoneButton setDrawContentsCentered:YES];
+	[_fitNoneButton setShowPressFeedback:YES];
+	[_fitNoneButton addTarget:self action:@selector(toggleFitWidthHeight:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:_fitNoneButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F1" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(15, 154, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F2" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(45, 154, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+			
+	[downloader setTitle:@"Helper Functions"];
+	[downloader setDelegate:self];
+	[downloader setContext:self];
+	[downloader setAlpha:0.6];
+	[downloader setDimsBackground:YES];
+	UIPushButton *uibutton = [downloader addButtonWithTitle:@"Close"];
+	[uibutton setAlpha:1.0];
+
+	[downloader setTableShouldShowMinimumContent:NO];
+	[downloader setBlocksInteraction:YES];
+
+	[downloader _slideSheetOut:YES];
+	[downloader layoutAnimated:YES];
+	[downloader popupAlertAnimated:YES atOffset:0.0];
+	[downloader setFrame:CGRectMake(0,60,330,300)];
+	CGRect rcFrame = [uibutton frame];
+	CGRect rcFrameTop = [downloader frame];	
+	[uibutton setFrame:CGRectMake(rcFrame.origin.x, rcFrameTop.size.height - rcFrame.size.height-rcFrame.size.height,rcFrame.size.width,rcFrame.size.height)];
+}
+
 - (void)toggleFitWidthHeight:(id)sender
 {
 	UIPushButton *pButton = (UIPushButton *)sender;	
-	CGRect rc = [pButton frame];
-	scaleSpecialTypes wScaleState = [self getScaleState], 
-		wScaleThisButton = pButton == _fitWidthButton ? kScaleFitWidth : kScaleFitHeight;
-	id sImage = pButton == _fitWidthButton ? @"FitWidth.png" : @"FitHeight.png";
-	id sImageOn = pButton == _fitWidthButton ? @"FitWidthOn.png" : @"FitHeightOn.png";
+	scaleSpecialTypes wScaleState = [self getScaleState], wScaleThisButton;
 
-	if (wScaleState & wScaleThisButton)
-	{
-		[self setScaleState: wScaleState  & (0xff ^ wScaleThisButton)];
-		[pButton setImage: [UIImage imageNamed:sImage] forState:0];
-	}
-	else
-	{
-		[self setScaleState: wScaleState  | (wScaleThisButton)];
-		[pButton setImage: [UIImage imageNamed:sImageOn] forState:0];
-	}
+	if (sender == _fitWidthButton)
+		wScaleThisButton = kScaleFitWidth;
+	else if (sender == _fitHeightButton)
+		wScaleThisButton = kScaleFitHeight;
+	else if (sender == _fitWholeButton)
+		wScaleThisButton = kScaleFitWidth | kScaleFitHeight;
+	else if (sender == _fitNoneButton)
+		wScaleThisButton = 0;
+	[self setScaleState: wScaleThisButton];
 	[self setOrientation: [self getOrientationState] bForce:true];
-	[pButton setFrame: rc];
+	if (sender != _fitNoneButton)
+		[_scroller scrollPointVisibleAtTopLeft: CGPointMake(0,0)];
 	NSLog(@"Got Event or Scale Change");
+}
+
+- (void)alertSheet:(id)sheet buttonClicked:(int)buttonIndex
+{
+	NSLog(@"Got alert click");
+	[sheet dismissAnimated:YES];
+	[sheet release];
 }
 
 - (CGRect)scrollerFrame
@@ -568,6 +672,7 @@
 		|| wOrientation == kOrientationHorizontalLeft || wOrientation == kOrientationHorizontalRight)
 	 	&& _connection && wOrientation != [_screenView getOrientationState]))
 	{
+		UIHardwareOrientation oldOrientation = [_screenView getOrientationState];
 //		NSLog(@"Orientation Change %d", wOrientation);
 
 		[_screenView setOrientationState:wOrientation];
@@ -575,13 +680,21 @@
 		if (wOrientation == kOrientationVertical || wOrientation == kOrientationVerticalUpsideDown)
 		{
 			newRemoteSize = vncScreenSize;
-//			[self showControls:1];
+			if (!bForce)
+				{
+				if (oldOrientation == kOrientationHorizontalLeft || oldOrientation == kOrientationHorizontalRight)
+					[self showControls: _savedControlShowState];
+				}
 		}
 		else
 		{
 			newRemoteSize.width = vncScreenSize.height;
 			newRemoteSize.height = vncScreenSize.width;
-//			[self showControls:0];
+			if (!bForce)
+				{
+				_savedControlShowState = _areControlsVisible;
+				[self showControls:0];
+				}
 		}
 
 		if ([self getScaleState] != kScaleFitNone)
@@ -611,8 +724,12 @@
 
 - (void)setRemoteDisplaySize:(CGSize)remoteSize
 {
-//	NSLog(@"Setting VNC screen size %f %f", remoteSize.width, remoteSize.height);
-	_vncScreenSize = remoteSize;
+	//	NSLog(@"Setting VNC screen size %f %f", remoteSize.width, remoteSize.height);
+
+	// ******************************************************************************
+	// BAD BAD BAD IPHONE BUG WITH DEVICE CONTEXT ONLY ABLE to reach 1024 then crash 
+	// ******************************************************************************
+	_vncScreenSize = CGSizeMake(remoteSize.width, MIN(((2*1024*1024) / remoteSize.width), remoteSize.height));
 	[self setScaleState: kScaleFitNone];
 	[self setOrientation: kOrientationVertical bForce:false];
 }
