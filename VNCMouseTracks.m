@@ -42,6 +42,7 @@
 		[timer invalidate];
 		_popupTimer = nil;
 		[self removeFromSuperview];
+		[timer release];
 		}
 }
 
@@ -55,6 +56,7 @@
 	if (_popupTimer != nil)
 		{
 		[_popupTimer invalidate];
+		[_popupTimer release];
 		_popupTimer = nil;
 		}
 	[self removeFromSuperview];
@@ -99,14 +101,16 @@
 {	
 //	NSLog(@"Timer going Away");
 //	VNCPopupWindow **pw = (VNCPopupWindow **)[timer userInfo];
-	_popupTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(animateHide:) userInfo:nil repeats:YES];
+	
+	_popupTimer = [[NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(animateHide:) userInfo:nil repeats:YES] retain];
+	[timer release];
 }
 
 - (void)setTimer:(float)fSeconds info:(id)info
 {
 	//NSLog(@"In Setting Timer on Popup");
 	_cyclesLeft = 10;
-	_popupTimer = [NSTimer scheduledTimerWithTimeInterval:fSeconds target:self selector:@selector(handlePopupTimer:) userInfo:nil repeats:NO];
+	_popupTimer = [[NSTimer scheduledTimerWithTimeInterval:fSeconds target:self selector:@selector(handlePopupTimer:) userInfo:nil repeats:NO] retain];
 //	NSLog(@"Set Timer on Popup");
 }
 

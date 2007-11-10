@@ -16,9 +16,11 @@
 		{
 		_styleWindow = wStyle;
 		_szBubbleText = nil;
+		[self setEnabled: NO];
 		}
 	return self;
 }
+
 
 - (void)dealloc
 {
@@ -51,21 +53,33 @@
 		CGContextSaveGState(context);
 		if (_styleWindow == kPopupStyleScalePercent)
 			{
-		CGContextSetRGBFillColor(context, 0, 0, 1, .3);
-		rcElipse = CGRectInset(rcElipse, 4,4);
+			CGContextSetRGBFillColor(context, 0, 0, 1, .3);
+			rcElipse = CGRectInset(rcElipse, 4,4);
 	
-		CGContextFillEllipseInRect(context, rcElipse);
-		CGContextSetRGBFillColor(context, 1, 1, 1, .7);
-		CGContextSetRGBStrokeColor(context, 1, 1, 1, .7);
-		CGContextSetLineWidth (context, 3);
-		CGContextStrokeEllipseInRect(context, rcElipse);
-		CGContextSetLineWidth (context, 1);
+			CGContextFillEllipseInRect(context, rcElipse);
+			CGContextSetRGBFillColor(context, 1, 1, 1, .7);
+			CGContextSetRGBStrokeColor(context, 1, 1, 1, .7);
+			CGContextSetLineWidth (context, 3);
+			CGContextStrokeEllipseInRect(context, rcElipse);
+			CGContextSetLineWidth (context, 1);
 		
-		CGContextTranslateCTM(context, [self bounds].size.width / 2, [self bounds].size.height/2);
-		CGContextSetRGBFillColor(context, 1, 1, 1, .7);		
+			CGContextTranslateCTM(context, [self bounds].size.width / 2, [self bounds].size.height/2);
+			CGContextSetRGBFillColor(context, 1, 1, 1, .7);
+			CGContextSelectFont(context, "MarkerFeltThin", 18.0, kCGEncodingMacRoman);
+			}
+		else if (_styleWindow == kPopupStyleViewOnly)
+			{
+			CGContextSetRGBFillColor(context, 0, 0, 1, .5);
+			rcElipse = CGRectInset(rcElipse, 1,1);
+			CGContextFillRect(context, rcElipse);
+			CGContextSetRGBFillColor(context, 1, 1, 1, .5);
+			CGContextSetLineWidth (context, 1);
+			CGContextTranslateCTM(context, [self bounds].size.width / 2, [self bounds].size.height/2);
+			CGContextSetRGBFillColor(context, 1, 1, 1, .5);
+			CGContextSelectFont(context, "Helvetica", 12.0, kCGEncodingMacRoman);
+			}
 		if (_szBubbleText != nil)
 			{			
-			CGContextSelectFont(context, "MarkerFeltThin", 18.0, kCGEncodingMacRoman);
 			CGContextSetTextPosition(context, 0, 0);
 			CGPoint ptBefore = CGContextGetTextPosition(context);
 			CGContextSetTextDrawingMode(context, kCGTextInvisible);
@@ -74,7 +88,6 @@
 			float dxText = ptAfter.x - ptBefore.x;
 			CGContextSetTextDrawingMode(context, kCGTextFill);
 			CGContextShowTextAtPoint(context, 0-(dxText / 2), -6, _szBubbleText, strlen(_szBubbleText));
-			}
 			}
 		CGContextRestoreGState(context);
 }

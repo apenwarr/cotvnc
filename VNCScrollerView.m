@@ -179,7 +179,7 @@
 	// The event is no longer needed.
 	CFRelease(theEvent);
 	
-	
+	[_tapTimer release];
 	_tapTimer = nil;
 }
 
@@ -194,6 +194,7 @@
 	if (_scrollTimer != nil)
 		{
 		[_scrollTimer invalidate];
+		[_scrollTimer release];
 		_scrollTimer = nil;
 		CFRelease(_autoLastDragEvent);
 		}
@@ -231,6 +232,7 @@
 		{
 //			NSLog(@"killed tap timer");
 			[_tapTimer invalidate];
+			[_tapTimer release];
 			_tapTimer = nil;
 		}
 		
@@ -256,7 +258,7 @@
 		// So create a timer that when it fires will send the original event.
 		// If a chording mouse down happens before the timer fires, it will be
 		// killed.
-		_tapTimer = [NSTimer scheduledTimerWithTimeInterval:kSendMouseDownDelay target:self selector:@selector(handleTapTimer:) userInfo:(id)theEvent repeats:NO];
+		_tapTimer = [[NSTimer scheduledTimerWithTimeInterval:kSendMouseDownDelay target:self selector:@selector(handleTapTimer:) userInfo:(id)theEvent repeats:NO] retain];
 	}
 }
 
@@ -272,7 +274,7 @@
 		{
 		_bZooming = false;
 		[_windowPopupScalePercent setHidden:true];
-		[_windowPopupScalePercent dealloc];
+		[_windowPopupScalePercent release];
 		_windowPopupScalePercent = nil;
 		}
 	
@@ -370,20 +372,20 @@
 	CGRect rcFrame = [self frame];
 	AutoScrollerTypes newAutoScroller = kAutoScrollerNone;
 	
-	if (ptDrag.x > (rcFrame.origin.x+rcFrame.size.width) - LEFTRIGHT_AUTOSCROLL_BORDER)
+	if (ptDrag.x > (rcFrame.origin.x+rcFrame.size.width) - LEFTRIGHT_AUTOSCROLL_BORDER && ptDrag.x < (rcFrame.origin.x+rcFrame.size.width))
 		{
 		newAutoScroller = kAutoScrollerRight;
 		}
-	else if (ptDrag.x < LEFTRIGHT_AUTOSCROLL_BORDER)
+	else if (ptDrag.x < LEFTRIGHT_AUTOSCROLL_BORDER && ptDrag.x >= 0)
 		{
 		newAutoScroller = kAutoScrollerLeft;
 		}
 		
-	if (ptDrag.y < TOPBOTTOM_AUTOSCROLL_BORDER)
+	if (ptDrag.y < TOPBOTTOM_AUTOSCROLL_BORDER && ptDrag.y >= 0)
 		{
 		newAutoScroller |= kAutoScrollerUp;
 		}
-	else if (ptDrag.y > rcFrame.size.height - TOPBOTTOM_AUTOSCROLL_BORDER)
+	else if (ptDrag.y > rcFrame.size.height - TOPBOTTOM_AUTOSCROLL_BORDER && ptDrag.y < rcFrame.size.height)
 		{
 		newAutoScroller |= kAutoScrollerDown;
 		}
@@ -395,6 +397,7 @@
 		if (_scrollTimer != nil)
 			{
 			[_scrollTimer invalidate];
+			[_scrollTimer release];
 			_scrollTimer = nil;
 			CFRelease(_autoLastDragEvent);
 			}
@@ -406,7 +409,7 @@
 			NSLog(@"Starting Timer");
 			CFRetain(theEvent);
 			_autoLastDragEvent = theEvent;
-			_scrollTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(handleScrollTimer:) userInfo:nil repeats:YES];
+			_scrollTimer = [[NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(handleScrollTimer:) userInfo:nil repeats:YES] retain];
 			}
 		}
 }
