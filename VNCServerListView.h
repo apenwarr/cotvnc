@@ -36,6 +36,7 @@ enum _server_list_navbar_buttons
 	id _serverLastConnectColumn;
 	id _buttonBar;
 	id _addButton;
+	CGColorRef _textColorDateTime;
 	NSArray * _servers;
 }
 

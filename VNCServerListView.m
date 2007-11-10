@@ -65,16 +65,21 @@
 
         const float kTextComponents[] = { .94, .94, .94, .7 };
         const float kTransparentComponents[] = { 0, 0, 1, 0 };
-        CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
-        CGColorRef textColor = CGColorCreate(rgb, kTextComponents);
-        CGColorRef rgbTransparent = CGColorCreate(rgb, kTransparentComponents);
+        const float kTextComponentsDateTime[] = { 0, 0, 1, .8 };
+		
+        CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
+        CGColorRef textColorStatus = CGColorCreate(rgbSpace, kTextComponents);
+        CGColorRef rgbTransparent = CGColorCreate(rgbSpace, kTransparentComponents);
+		
+        _textColorDateTime = CGColorCreate(rgbSpace, kTextComponentsDateTime);
+		CGColorSpaceRelease(rgbSpace);
 		
 		GSFontRef font = GSFontCreateWithName("Helvetica", 0, 16.0f);
 		[_copyText setFont:font];
 		CFRelease(font);
 		[_copyText setBackgroundColor: rgbTransparent];
 		[_copyText setText:@"Copyright 2007 Chris Reed, Glenn Kreisel"];
-		[_copyText setColor:textColor];
+		[_copyText setColor:textColorStatus];
 		[_copyText setCentersHorizontally: true];
 		[_buttonBar addSubview: _copyText];
 		
@@ -187,6 +192,7 @@
 
 - (void)table:(UITable *)theTable disclosureClickedForRow:(int)row
 {
+	[theTable _selectRow:row byExtendingSelection:NO withFade:NO scrollingToVisible:YES withSelectionNotifications:NO];
 	if (_delegate && [_delegate respondsToSelector:@selector(editServer:)])
 	{
 		[_delegate editServer:row];
@@ -213,6 +219,7 @@
 			}
 		GSFontRef font = GSFontCreateWithName("Helvetica", 0, 12.0f);
 		[[cell titleTextLabel] setFont:font];
+		[[cell titleTextLabel] setColor:_textColorDateTime];
 		CFRelease(font);
 		[cell setShowDisclosure:YES];
 		[cell setDisclosureClickable:YES];
