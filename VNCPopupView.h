@@ -13,6 +13,7 @@
 typedef enum 
 {
         kPopupStyleScalePercent = 0,
+		kPopupStyleViewOnly = 1,
 } popupWindowStyles;
 
 

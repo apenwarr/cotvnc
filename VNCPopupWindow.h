@@ -11,6 +11,7 @@
 #import "VNCPopupView.h"
 
 
+@class VNCScrollerView;
 /*!
  * @brief Subview of VNCView that draws the screen.
  */
@@ -19,6 +20,7 @@
 	VNCPopupView *_viewPopup;
 	CGPoint _ptCenterOld;
 	NSTimer *_popupTimer;
+	VNCScrollerView *_scroller;
 }
 
 - (id)initWithFrame:(CGRect)frame bCenter:(BOOL)bCenter bShow:(BOOL)bShow fOrientation:(float)fOrientaion style:(popupWindowStyles)wStyle;
