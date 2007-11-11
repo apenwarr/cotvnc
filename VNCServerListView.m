@@ -21,6 +21,7 @@
 #define kButtonBarHeight (48)
 
 #define kAddButtonWidth (40)
+#define kAddButtonHeight (45)
 
 #define kAboutButtonHeight (32)
 #define kAboutButtonWidth (80)
@@ -50,16 +51,20 @@
 		[_navBar pushNavigationItem:item];
 		
 		// Add add button to navbar
-		subframe = CGRectMake(10.0f, (kButtonBarHeight - kAboutButtonHeight) / 2.0, kAddButtonWidth, kAboutButtonHeight);
-		_addButton = [[UINavBarButton alloc] initWithFrame:subframe];
+		subframe = CGRectMake(15.0f, ((kButtonBarHeight - kAddButtonHeight) / 2.0) - 2, kAddButtonWidth, kAddButtonHeight);
+		_addButton = [[UIPushButton alloc] initWithFrame:subframe];
 		[_addButton setAutosizesToFit:NO];
+		[_addButton setDrawsShadow:YES];
+		[_addButton setDrawContentsCentered:YES];
+		[_addButton setShowPressFeedback:YES];
+	
 		[_addButton addTarget:self action:@selector(addNewServer:) forEvents:kGSEventTypeButtonSelected];
-		[_addButton setNavBarButtonStyle:0];
+//		[_addButton setNavBarButtonStyle:4];
 //		[_addButton setImage:[UIImage imageNamed:@"add.png"]];
 		[_addButton setTitle:@"+"];
 		[_addButton setEnabled:YES];
 		
-		GSFontRef addFont = GSFontCreateWithName("ArialBold", 0, 24.0f);
+		GSFontRef addFont = GSFontCreateWithName("ArialBold", 0, 33.0f);
 		[_addButton setTitleFont:addFont];
 
 		// Setup button bar at bottom
