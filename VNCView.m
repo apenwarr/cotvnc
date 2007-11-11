@@ -75,7 +75,7 @@
 
 - (void)sendFullRefresh:(id)sender
 {
-	[_connection manuallyUpdateFrameBuffer:nil];
+	[_connection sendFullScreenRefresh];
 }
 
 // I can never remember this relationship for some reason:
@@ -317,9 +317,8 @@
     CGColorRef rgbTransparent = CGColorCreate(rgbSpace, kTransparentComponents);		
 	CGColorSpaceRelease(rgbSpace);
 		
-	GSFontRef font = GSFontCreateWithName("Helvetica", 0, 12.0f);
+	GSFontRef font = GSFontCreateWithName("VerdanaBold", 0, 11.0f);
 	[txtLabel setFont:font];
-	CFRelease(font);
 	[txtLabel setBackgroundColor: rgbTransparent];
 	[txtLabel setColor:textColorStatus];
 	[txtLabel setCentersHorizontally: true];
@@ -470,8 +469,24 @@
 	[aButton setShowPressFeedback:YES];
 	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
 	[downloader addSubview:aButton];
+	
+	
+	aButton = [[UIPushButton alloc] initWithImage:[UIImage imageNamed:@"cmd_key.png"]];
+	[aButton setTitleFont:font];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setTitle:@"= Alt"];
+	[aButton setFrame:CGRectMake(10, 222, 70, 32)];
+	[downloader addSubview:aButton];
+				
+	aButton = [[UIPushButton alloc] initWithImage:[UIImage imageNamed:@"ctrl_key.png"]];
+	[aButton setTitleFont:font];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setTitle:@"= Ctrl"];
+	[aButton setFrame:CGRectMake(80, 222, 70, 32)];
+	[downloader addSubview:aButton];
+	
+	CFRelease(font);
 
-			
 	[downloader setTitle:@"Helper Functions"];
 	[downloader setDelegate:self];
 	[downloader setContext:self];

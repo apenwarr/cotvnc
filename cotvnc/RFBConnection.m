@@ -396,6 +396,11 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     }
 }
 
+- (void)sendFullScreenRefresh
+{
+	[rfbProtocol requestUpdate:[self visibleRect] incremental:NO];
+}
+
 - (void)setDisplayName:(NSString *)name
 {
 	[rfbView setRemoteComputerName: name];
