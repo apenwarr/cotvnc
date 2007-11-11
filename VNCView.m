@@ -58,6 +58,14 @@
 
 - (void)sendFunctionKeys:(id)sender
 {
+	UIPushButton *pb = (UIPushButton *)sender;
+	NSString *ns;
+	
+	ns = [[pb title] substringFromIndex:1];
+	NSLog(@"Numbers equal %@", ns);
+	NSLog(@"Numbers int equal %d", [ns intValue]);
+	
+	[_connection sendFunctionKey: (unsigned)[ns intValue]];
 }
 
 - (void)sendCtrlAltDel:(id)sender
@@ -297,7 +305,28 @@
 // Bring up the Helper Functions Popup window using AlertSheet as the basis
 - (void)showHelperFunctions:(id)sender
 {
-	UIAlertSheet *downloader = [[UIAlertSheet alloc ] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 300.0f) ];	
+	UIAlertSheet *downloader = [[UIAlertSheet alloc ] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 350.0f) ];	
+
+	UITextLabel *txtLabel = [[UITextLabel alloc] initWithFrame:CGRectMake(0, 32, 280, 32)];
+	
+   const float kTextComponents[] = { .94, .94, .94, 1 };
+   const float kTransparentComponents[] = { 0, 0, 1, 0 };
+		
+    CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
+    CGColorRef textColorStatus = CGColorCreate(rgbSpace, kTextComponents);
+    CGColorRef rgbTransparent = CGColorCreate(rgbSpace, kTransparentComponents);		
+	CGColorSpaceRelease(rgbSpace);
+		
+	GSFontRef font = GSFontCreateWithName("Helvetica", 0, 12.0f);
+	[txtLabel setFont:font];
+	CFRelease(font);
+	[txtLabel setBackgroundColor: rgbTransparent];
+	[txtLabel setColor:textColorStatus];
+	[txtLabel setCentersHorizontally: true];
+	
+	[txtLabel setText:[NSString stringWithFormat: @"Remote Name: %@", _remoteComputerName]];
+	[downloader addSubview:txtLabel];
+	
 	UIPushButton *aButton = [[UIPushButton alloc] initWithTitle:@"Send Ctrl-Alt-Delete" autosizesToFit:NO];
 	[aButton setFrame:CGRectMake(10, 55, 130, 32)];
 	[aButton setDrawsShadow:YES];
@@ -355,12 +384,93 @@
 	[downloader addSubview:aButton];
 
 	aButton = [[UIPushButton alloc] initWithTitle:@"F2" autosizesToFit:NO];
-	[aButton setFrame:CGRectMake(45, 154, 30, 32)];
+	[aButton setFrame:CGRectMake(50, 154, 30, 32)];
 	[aButton setDrawsShadow:YES];
 	[aButton setDrawContentsCentered:YES];
 	[aButton setShowPressFeedback:YES];
 	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
 	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F3" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(85, 154, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F4" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(120, 154, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F5" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(155, 154, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F6" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(190, 154, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F7" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(15, 187, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F8" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(50, 187, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F9" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(85, 187, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F10" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(120, 187, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F11" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(155, 187, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"F12" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(190, 187, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
 			
 	[downloader setTitle:@"Helper Functions"];
 	[downloader setDelegate:self];
@@ -376,7 +486,7 @@
 	[downloader _slideSheetOut:YES];
 	[downloader layoutAnimated:YES];
 	[downloader popupAlertAnimated:YES atOffset:0.0];
-	[downloader setFrame:CGRectMake(0,60,330,300)];
+	[downloader setFrame:CGRectMake(0,60,330,350)];
 	CGRect rcFrame = [uibutton frame];
 	CGRect rcFrameTop = [downloader frame];	
 	[uibutton setFrame:CGRectMake(rcFrame.origin.x, rcFrameTop.size.height - rcFrame.size.height-rcFrame.size.height,rcFrame.size.width,rcFrame.size.height)];
@@ -735,6 +845,11 @@
 		// Reset our scroller's content size.
 		[_scroller setContentSize:newRemoteSize];
 	}
+}
+
+- (void)setRemoteComputerName:(NSString *)name
+{
+	_remoteComputerName = name;
 }
 
 - (void)setRemoteDisplaySize:(CGSize)remoteSize

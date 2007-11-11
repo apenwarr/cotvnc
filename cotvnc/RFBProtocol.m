@@ -49,7 +49,7 @@
 		[self setPixelFormat:&myFormat];
 		[aTarget setDisplaySize:[info size] andPixelFormat:&myFormat];
 		NSLog(@"server name: %@", [info name]);
-//		[aTarget setDisplayName:[info name]];
+		[aTarget setDisplayName:[info name]];
 		
 		// Send the server our supported encodings.
 		[self setEncodings];
@@ -200,7 +200,8 @@
 
 - (void)serverCutText:(NSString*)aText
 {
-    [target setReader:self];
+	NSLog(@"Set Reader");
+       [target setReader:self];
 }
 
 - (void)resetReader

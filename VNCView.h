@@ -82,6 +82,7 @@ typedef enum
 	scaleSpecialTypes _scaleState;
 	bool _isFirstDisplay;	//!< Did we have our first display from VNC protocol?
 	CGPoint _ptStartupTopLeft;	//!< When we get our first display scroll to this point.
+	NSString *_remoteComputerName;
 }
 
 //! @name Delegate
@@ -108,6 +109,7 @@ typedef enum
 
 //! @name RFBViewProtocol
 //@{
+- (void)setRemoteComputerName:(NSString *)name;
 - (void)setRemoteDisplaySize:(CGSize)remoteSize;
 - (void)setFrameBuffer:(id)aBuffer;
 - (void)setConnection:(RFBConnection *)connection;

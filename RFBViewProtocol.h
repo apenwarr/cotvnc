@@ -4,6 +4,7 @@
 
 @protocol RFBViewProtocol
 
+- (void)setRemoteComputerName:(NSString *)name;
 - (void)setRemoteDisplaySize:(CGSize)remoteSize;
 - (void)setFrameBuffer:(id)aBuffer;
 - (void)setConnection:(RFBConnection *)connection;

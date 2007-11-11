@@ -106,9 +106,11 @@
 - (void)setServerVersion:(NSString*)aVersion;
 - (void)terminateConnection:(NSString*)aReason;
 - (void)setDisplaySize:(CGSize)aSize andPixelFormat:(rfbPixelFormat*)pixf;
+- (void)setDisplayName:(NSString *)name;
 - (CGSize)displaySize;
 - (void)ringBell;
 - (void)sendCtrlAltDel:(id)sender;
+- (void)sendFunctionKey: (unsigned)fkey;
 
 - (void)drawRectFromBuffer:(CGRect)aRect;
 - (void)drawRectList:(id)aList;

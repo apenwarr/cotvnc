@@ -34,6 +34,7 @@
 #include <unistd.h>
 #include <libc.h>
 
+#define	F0_KEYCODE		0xffbd
 #define	F1_KEYCODE		0xffbe
 #define F2_KEYCODE		0xffbf
 #define	F3_KEYCODE		0xffc0
@@ -45,6 +46,7 @@
 #define kInsertKeyCode	0xff63
 #define kDeleteKeyCode	0xffff
 #define kEscapeKeyCode	0xff1b
+
 
 NSString * kConnectionTerminatedException = @"ConnectionTerminatedException";
 
@@ -394,6 +396,11 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     }
 }
 
+- (void)setDisplayName:(NSString *)name
+{
+	[rfbView setRemoteComputerName: name];
+}
+
 - (void)setDisplaySize:(CGSize)aSize andPixelFormat:(rfbPixelFormat*)pixf
 {
 	NSLog(@"remote display size={%g,%g}", aSize.width, aSize.height);
@@ -670,9 +677,9 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 		kc = c;
     }
 
-//	unichar _kc = (unichar)kc;
-//	NSString *keyStr = [NSString stringWithCharacters: &_kc length: 1];
-//	NSLog(@"key '%@' [c:0x%04x] [kc:0x%04x] %s", keyStr, c, kc, pressed ? "pressed" : "released");
+	unichar _kc = (unichar)kc;
+	NSString *keyStr = [NSString stringWithCharacters: &_kc length: 1];
+	NSLog(@"key '%@' [c:0x%04x] [kc:0x%04x] %s", keyStr, c, kc, pressed ? "pressed" : "released");
 
 	msg.key = htonl(kc);
     [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
@@ -713,9 +720,16 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
 }
 
+- (void)sendFunctionKey: (unsigned)fkey
+{
+	[self sendKey: (unsigned)F0_KEYCODE+(unsigned)fkey pressed:YES];
+	[self sendKey: (unsigned)F0_KEYCODE+(unsigned)fkey pressed:NO];
+}
+
 - (void)sendCtrlAltDel: (id)sender
 {
     rfbKeyEventMsg msg;
+	NSLog(@"Send CtrlAltDel");
 	
     memset(&msg, 0, sizeof(msg));
     msg.type = rfbKeyEvent;
