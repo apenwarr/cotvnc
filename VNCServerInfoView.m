@@ -271,7 +271,7 @@ NSString *vncDecryptPasswd(NSString *pnsEncrypted)
 
 			if ([[_cells objectAtIndex:kServerNameCellIndex] value] == nil || [[[_cells objectAtIndex:kServerNameCellIndex] value] length] == 0)
 				strcat(szError, "Server Name Field is Empty\n");
-			if ([[_cells objectAtIndex:kServerNameCellIndex] value] == nil || [[[_cells objectAtIndex:kServerAddressCellIndex] value] length] == 0)
+			if ([[_cells objectAtIndex:kServerAddressCellIndex] value] == nil || [[[_cells objectAtIndex:kServerAddressCellIndex] value] length] == 0)
 				strcat(szError, "Server Address Field is Empty\n");
 
 			if (strlen(szError) > 0)
