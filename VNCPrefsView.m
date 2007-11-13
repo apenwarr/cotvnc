@@ -48,8 +48,16 @@
 		_mouseTracksSwitch = [[UISwitchControl alloc] init];
 		[_mouseTracksSwitch setOrigin:controlOrigin];
 		[mouseTracksCell setControl:_mouseTracksSwitch];
+
+		UIPreferencesControlTableCell * disconnectCell = [[UIPreferencesControlTableCell alloc] init];
+		[disconnectCell setTitle:NSLocalizedString(@"Exit App on Suspend", nil)];
 		
-		_cells = [[NSArray arrayWithObjects:mouseTracksCell, nil] retain];
+		controlOrigin = CGPointMake(200, 9);
+		_disconnectSwitch = [[UISwitchControl alloc] init];
+		[_disconnectSwitch setOrigin:controlOrigin];
+		[disconnectCell setControl:_disconnectSwitch];
+		
+		_cells = [[NSArray arrayWithObjects:mouseTracksCell, disconnectCell, nil] retain];
 	}
 	
 	return self;
@@ -87,6 +95,7 @@
 		_prefsInfo =  [NSMutableDictionary dictionary];
 		// Setup Defaults Here
 		[_prefsInfo setObject:[NSNumber numberWithBool:YES] forKey:MOUSE_TRACKS];
+		[_prefsInfo setObject:[NSNumber numberWithBool:YES] forKey:MENU_DISCONNECT];
 	}
 	else
 	{
@@ -96,12 +105,18 @@
 	
 	// Update cell values from the prefs info
 	[_mouseTracksSwitch setValue:[[_prefsInfo objectForKey:MOUSE_TRACKS] boolValue] ? 1.0f : 0.0f];
+	[_disconnectSwitch setValue:[[_prefsInfo objectForKey:MENU_DISCONNECT] boolValue] ? 1.0f : 0.0f];
 	
 	if (info == nil)
 	{
 		_prefsInfo = nil;
 	}
 	[_table reloadData];
+}
+
+- (BOOL)disconnectOnMenuButton
+{
+	return [[_prefsInfo objectForKey:MENU_DISCONNECT] boolValue];
 }
 
 - (BOOL)showMouseTracks
@@ -123,6 +138,7 @@
 				_prefsInfo = [NSMutableDictionary dictionary];
 
 			[_prefsInfo setObject:[NSNumber numberWithBool:([_mouseTracksSwitch value] > 0.1)] forKey:MOUSE_TRACKS];
+			[_prefsInfo setObject:[NSNumber numberWithBool:([_disconnectSwitch value] > 0.1)] forKey:MENU_DISCONNECT];
 			
 			resultDict = _prefsInfo;			
 			break;

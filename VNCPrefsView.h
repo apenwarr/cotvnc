@@ -22,6 +22,7 @@ enum _prefs_cell_indices
 
 //! Key for the mouse tracks preference.
 #define MOUSE_TRACKS @"MouseTracks"
+#define MENU_DISCONNECT @"Disconnect"
 
 /*!
  * @brief This view class allows users to edit global preferences.
@@ -33,7 +34,7 @@ enum _prefs_cell_indices
 	NSMutableDictionary * _prefsInfo;
 	id _delegate;
 	NSArray * _cells;
-	UISwitchControl * _mouseTracksSwitch;
+	UISwitchControl * _mouseTracksSwitch, *_disconnectSwitch;
 }
 
 - (id)initWithFrame:(CGRect)frame ;
@@ -46,6 +47,7 @@ enum _prefs_cell_indices
 - (void)setKeyboardVisible:(BOOL)visible;
 
 - (BOOL)showMouseTracks;
+- (BOOL)disconnectOnMenuButton;
 
 @end
 

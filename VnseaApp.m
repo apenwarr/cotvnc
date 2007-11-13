@@ -117,8 +117,11 @@ int compareServers(id obj1, id obj2, void *reverse)
 
 - (void)applicationSuspend:(GSEvent *)event
 {
-	[self applicationWillTerminate];
-	[self terminate];
+	if ([_prefsView disconnectOnMenuButton])
+		{
+		[self applicationWillTerminate];
+		[self terminate];
+		}
 	NSLog(@"Process Suspend");
 }
 
