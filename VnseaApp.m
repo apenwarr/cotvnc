@@ -122,11 +122,14 @@ int compareServers(id obj1, id obj2, void *reverse)
 		[self applicationWillTerminate];
 		[self terminate];
 		}
+	else
+		[self setApplicationBadge:@"On"];
 	NSLog(@"Process Suspend");
 }
 
 - (void)applicationResume:(GSEvent *)event
 {
+	[self removeApplicationBadge];
 	NSLog(@"Process Resume");
 }
 
