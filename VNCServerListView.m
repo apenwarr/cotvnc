@@ -20,14 +20,16 @@
 #define kNavBarHeight (48)
 #define kButtonBarHeight (48)
 
-#define kAddButtonWidth (40)
-#define kAddButtonHeight (45)
+#define kAddButtonWidth (34)
+#define kAddButtonHeight (40)
 
 #define kAboutButtonHeight (32)
 #define kAboutButtonWidth (80)
 
 #define kPreferencesButtonHeight (32)
 #define kPreferencesButtonWidth (120)
+
+extern id UIImageGetNavigationBarAddButton();
 
 @implementation VNCServerListView
 
@@ -42,38 +44,18 @@
 		
 		// Setup navbar
 		_navBar = [[UINavigationBar alloc] initWithFrame: subframe];
-//		[_navBar showButtonsWithLeftTitle:NSLocalizedString(@"+", nil) rightTitle:NSLocalizedString(@"About", nil) leftBack: NO];
+		[_navBar showLeftButton:nil withStyle:0 rightButton:UIImageGetNavigationBarAddButton() withStyle:0];
 		[_navBar setBarStyle: 3];
 		[_navBar setDelegate: self];
 		[_navBar enableAnimation];	
 		
 		UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"VNC Servers", nil)];
 		[_navBar pushNavigationItem:item];
-		
-		// Add add button to navbar
-		subframe = CGRectMake(15.0f, ((kButtonBarHeight - kAddButtonHeight) / 2.0) - 2, kAddButtonWidth, kAddButtonHeight);
-		_addButton = [[UIPushButton alloc] initWithFrame:subframe];
-		[_addButton setAutosizesToFit:NO];
-		[_addButton setDrawsShadow:YES];
-		[_addButton setDrawContentsCentered:YES];
-		[_addButton setShowPressFeedback:YES];
-	
-		[_addButton addTarget:self action:@selector(addNewServer:) forEvents:kGSEventTypeButtonSelected];
-//		[_addButton setNavBarButtonStyle:4];
-//		[_addButton setImage:[UIImage imageNamed:@"add.png"]];
-		[_addButton setTitle:@"+"];
-		[_addButton setEnabled:YES];
-		
-		GSFontRef addFont = GSFontCreateWithName("ArialBold", 0, 33.0f);
-		[_addButton setTitleFont:addFont];
 
 		// Setup button bar at bottom
 		subframe = CGRectMake(0, frame.size.height - kButtonBarHeight, frame.size.width, kButtonBarHeight);
 		_buttonBar = [[UIGradientBar alloc] initWithFrame:subframe];
 		
-//		subframe = CGRectMake(0, 2, frame.size.width-4, kButtonBarHeight-4);
-//		UITextLabel *_copyText = [[UITextLabel alloc] initWithFrame: subframe];
-
         const float kTextComponents[] = { .94, .94, .94, .7 };
         const float kTransparentComponents[] = { 0, 0, 1, 0 };
         const float kTextComponentsDateTime[] = { 0.4, 0.4, 0.4, 1 };
@@ -84,15 +66,6 @@
 		
         _textColorDateTime = CGColorCreate(rgbSpace, kTextComponentsDateTime);
 		CGColorSpaceRelease(rgbSpace);
-		
-//		GSFontRef font = GSFontCreateWithName("Helvetica", 0, 16.0f);
-//		[_copyText setFont:font];
-//		CFRelease(font);
-//		[_copyText setBackgroundColor: rgbTransparent];
-//		[_copyText setText:@"Copyright 2007 Chris Reed, Glenn Kreisel"];
-//		[_copyText setColor:textColorStatus];
-//		[_copyText setCentersHorizontally: true];
-//		[_buttonBar addSubview: _copyText];
 		
 		// Go ahead and create font for drawing the last connect column
 		_lastConnectFont = GSFontCreateWithName("Helvetica", 0, 12.0f);
@@ -199,15 +172,8 @@
 	NSLog(@"navbar:%@ button:%d", navBar, buttonIndex);
 	switch (buttonIndex)
 	{
-		case kNavBarEditButton:
+		case kNavBarAddServerButton:
 			[self addNewServer:nil];
-			break;
-			
-		case kNavBarAboutButton:
-			if (_delegate && [_delegate respondsToSelector:@selector(displayAbout)])
-			{
-				[_delegate displayAbout];
-			}
 			break;
 	}
 }

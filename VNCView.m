@@ -122,7 +122,7 @@
 		CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
 		CGColorRef black = CGColorCreate(rgbSpace, kBlackComponents);
 		CGColorRef red = CGColorCreate(rgbSpace, kRedComponents);
-				
+		
 		CGColorSpaceRelease(rgbSpace);
 		
 		// Create keyboard button.
@@ -202,7 +202,6 @@
 
 		[_scroller addSubview:_screenView];
 		[self addSubview:_scroller];
-		
 		
 		_areControlsVisible = NO;
 		_isKeyboardVisible = NO;
@@ -291,7 +290,7 @@
 	[self showControls:!_areControlsVisible];
 }
 
--(CGPoint)topLeftVisiblePt
+- (CGPoint)topLeftVisiblePt
 {
 	return [_scroller bounds].origin;
 }
@@ -301,7 +300,7 @@
 	[_scroller changeViewPinnedToPoint:ptPinned scale:fScale orientation:wOrientationState force:bForce];
 }
 
--(void)setStartupTopLeftPt:(CGPoint)pt
+- (void)setStartupTopLeftPt:(CGPoint)pt
 {
 	_ptStartupTopLeft = pt;
 }

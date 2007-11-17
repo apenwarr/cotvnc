@@ -115,25 +115,30 @@ int compareServers(id obj1, id obj2, void *reverse)
 	[NSThread detachNewThreadSelector:@selector(checkForUpdate:) toTarget:self withObject:nil];
 }
 
-- (void)applicationSuspend:(GSEvent *)event
+- (void)applicationSuspend:(GSEventRef)event
 {
-	if ([_prefsView disconnectOnMenuButton])
-		{
+	if ([_prefsView disconnectOnMenuButton] || !_connection)
+	{
 		[self applicationWillTerminate];
 		[self terminate];
-		}
+	}
 	else
-		[self setApplicationBadge:@"On"];
+	{
+		// We have an active connection and the user wants to keep it,
+		// so put up the badge that indicates a background connection.
+		[self setApplicationBadge:NSLocalizedString(@"ApplicationBadgeConnected", nil)];
+	}
+	
 	NSLog(@"Process Suspend");
 }
 
-- (void)applicationResume:(GSEvent *)event
+- (void)applicationResume:(GSEventRef)event
 {
 	[self removeApplicationBadge];
 	NSLog(@"Process Resume");
 }
 
-- (void)applicationExited:(GSEvent *)event
+- (void)applicationExited:(GSEventRef)event
 {
 	NSLog(@"Process exited");
 }
@@ -182,9 +187,9 @@ int compareServers(id obj1, id obj2, void *reverse)
 	NSDictionary * dict = [NSDictionary dictionaryWithContentsOfFile:kServersFilePath];
 	
 	if (dict == nil)
-		{
+	{
 		return [NSArray array];
-		}
+	}
 	
 	NSArray *nsArray = [dict objectForKey:kServerArrayKey];	
 	return [nsArray sortedArrayUsingFunction: compareServers context:nil];

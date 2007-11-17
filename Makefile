@@ -134,7 +134,7 @@ all:    output/vnsea
 output/vnsea:  $(OUTPUT_OBJS)
 	$(LD) $(LDFLAGS) -v -o $@ $^
 	cp output/vnsea $(APP_PACKAGE)
-	cp images/*key.png images/keyboard.png images/Fit*.png $(APP_PACKAGE)
+	cp images/*key.png images/keyboard.png images/right_mouse.png images/Fit*.png $(APP_PACKAGE)
 	if [ -f $(VCFILE) ]; then ./$(VCFILE) ; fi
 
 # There has to be a better way to do this, but I'm such a make newbie
