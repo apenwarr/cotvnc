@@ -68,6 +68,11 @@
 	[_connection sendFunctionKey: (unsigned)[ns intValue]];
 }
 
+- (void)sendESCKey:(id)sender
+{	
+	[_connection sendEscapeKey];
+}
+
 - (void)sendTabKey:(id)sender
 {	
 	[_connection sendTabKey];
@@ -428,6 +433,14 @@
 	[aButton setDrawContentsCentered:YES];
 	[aButton setShowPressFeedback:YES];
 	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+	
+	aButton = [[UIPushButton alloc] initWithTitle:@"ESC" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(235, 187, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendESCKey:) forEvents:kUIControlEventMouseUpInside];
 	[downloader addSubview:aButton];
 
 	aButton = [[UIPushButton alloc] initWithTitle:@"F7" autosizesToFit:NO];

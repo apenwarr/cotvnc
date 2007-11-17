@@ -726,6 +726,12 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
 }
 
+- (void)sendEscapeKey
+{
+	[self sendKey: kEscapeKeyCode  pressed:YES];
+	[self sendKey: kEscapeKeyCode  pressed:NO];
+}
+
 - (void)sendTabKey
 {
 	[self sendKey: kTabKeyCode  pressed:YES];
