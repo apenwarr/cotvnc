@@ -185,6 +185,9 @@
 		subframe.size = defaultKeyboardSize;
 		_keyboardView = [[UIKeyboard alloc] initWithFrame:subframe];
 		[_keyboardView setPreferredKeyboardType:kUIKeyboardLayoutAlphabetTransparent];
+
+		_backgroundView = [[VNCBackgroundView alloc] initWithFrame: frame];		
+		[self addSubview: _backgroundView];
 		
 		// Build view hierarchy.
 		[_controlsView addSubview:_keyboardButton];
@@ -199,6 +202,7 @@
 
 		[_scroller addSubview:_screenView];
 		[self addSubview:_scroller];
+		
 		
 		_areControlsVisible = NO;
 		_isKeyboardVisible = NO;
