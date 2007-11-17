@@ -143,6 +143,7 @@ typedef enum
 
 - (CGPoint)topLeftVisiblePt;
 - (void)sendFunctionKeys:(id)sender;
+- (void)sendTabKey:(id)sender;
 
 - (BOOL)showMouseTracks;
 - (CGRect)scrollerFrame;

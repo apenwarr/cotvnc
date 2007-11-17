@@ -111,6 +111,7 @@
 - (void)ringBell;
 - (void)sendCtrlAltDel:(id)sender;
 - (void)sendFunctionKey: (unsigned)fkey;
+- (void)sendTabKey;
 - (void)sendFullScreenRefresh;
 
 - (void)drawRectFromBuffer:(CGRect)aRect;

@@ -46,6 +46,7 @@
 #define kInsertKeyCode	0xff63
 #define kDeleteKeyCode	0xffff
 #define kEscapeKeyCode	0xff1b
+#define kTabKeyCode	0xff09
 
 
 NSString * kConnectionTerminatedException = @"ConnectionTerminatedException";
@@ -723,6 +724,12 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
     msg.down = NO;
 	msg.key = htonl(kAltKeyCode);
     [self writeBytes:(unsigned char*)&msg length:sizeof(msg)];
+}
+
+- (void)sendTabKey
+{
+	[self sendKey: kTabKeyCode  pressed:YES];
+	[self sendKey: kTabKeyCode  pressed:NO];
 }
 
 - (void)sendFunctionKey: (unsigned)fkey

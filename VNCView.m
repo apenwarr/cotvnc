@@ -68,6 +68,11 @@
 	[_connection sendFunctionKey: (unsigned)[ns intValue]];
 }
 
+- (void)sendTabKey:(id)sender
+{	
+	[_connection sendTabKey];
+}
+
 - (void)sendCtrlAltDel:(id)sender
 {
 	[_connection sendCtrlAltDel:nil];
@@ -471,6 +476,14 @@
 	[aButton setDrawContentsCentered:YES];
 	[aButton setShowPressFeedback:YES];
 	[aButton addTarget:self action:@selector(sendFunctionKeys:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"Tab" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(235, 187, 30, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendTabKey:) forEvents:kUIControlEventMouseUpInside];
 	[downloader addSubview:aButton];
 	
 	
