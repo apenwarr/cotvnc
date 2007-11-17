@@ -134,6 +134,8 @@
 		8ED343F50CD77F6D004B17CE /* VNCPopupWindow.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VNCPopupWindow.m; sourceTree = "<group>"; };
 		8ED89E910CE010C7004CD035 /* VNCMouseTracks.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = VNCMouseTracks.h; sourceTree = "<group>"; };
 		8ED89E920CE010C7004CD035 /* VNCMouseTracks.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VNCMouseTracks.m; sourceTree = "<group>"; };
+		8EE9F82F0CEE47C5007443E4 /* VNCBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = VNCBackgroundView.h; sourceTree = "<group>"; };
+		8EE9F8300CEE47C5007443E4 /* VNCBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VNCBackgroundView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -328,6 +330,8 @@
 		02F53B4C0C8CF00200C99AC1 /* vnsea */ = {
 			isa = PBXGroup;
 			children = (
+				8EE9F82F0CEE47C5007443E4 /* VNCBackgroundView.h */,
+				8EE9F8300CEE47C5007443E4 /* VNCBackgroundView.m */,
 				02F5393B0C8CDCEF00C99AC1 /* mainapp.m */,
 				0259B2660C931875005285B7 /* RFBViewProtocol.h */,
 				0259BE780C9B5E65005285B7 /* Shimmer.h */,
@@ -389,7 +393,6 @@
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 1DEB919308733D9F0010E9CD /* Build configuration list for PBXProject "vnsea" */;
-			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			mainGroup = 08FB7794FE84155DC02AAC07 /* scribble */;
 			projectDirPath = "";
