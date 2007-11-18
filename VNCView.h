@@ -27,8 +27,8 @@
 #import "VNCContentView.h"
 #import "VNCScrollerView.h"
 #import "VNCPopupWindow.h"
-#import "VNCBackgroundView.h"
 
+//! @brief Modes for screen scaling.
 typedef enum
 {
 	kScaleFitNone = 0,
@@ -60,7 +60,6 @@ typedef enum
 	EventFilter * _filter;			//!< Event filter for the current connection.
 	VNCScrollerView * _scroller;	//!< Scroller subview.
 	VNCContentView * _screenView;	//!< Child content view that draws the framebuffer.
-	VNCBackgroundView *_backgroundView;
 	UINavBarButton * _keyboardButton;	//
 	UINavBarButton * _shiftButton;
 	UINavBarButton * _commandButton;
@@ -97,6 +96,7 @@ typedef enum
 
 //! @name Controls and keyboard
 //@{
+- (void)layoutControlsBar;
 - (bool)areControlsVisible;
 - (void)showControls:(bool)show;
 - (void)toggleControls;

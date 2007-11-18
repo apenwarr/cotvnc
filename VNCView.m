@@ -97,15 +97,8 @@
 		CGRect subframe = frame;
 		subframe.origin = CGPointMake(0, 0);
 		
-		_scaleState = kScaleFitNone;
-		
-		_ipodScreenSize = CGSizeMake(frame.size.width, frame.size.height);
-		
 		// Create scroller view.
 		_scroller = [[VNCScrollerView alloc] initWithFrame:subframe];
-
-		NSLog(@"SubFrame = %f %f", subframe.size.width, subframe.size.height);
-		
 		[_scroller setVNCView: self];
 		[_scroller setScrollingEnabled:YES];
 		[_scroller setShowScrollerIndicators:YES];
@@ -116,79 +109,15 @@
 		[_scroller setRubberBand: 50 forEdges:1];
 		[_scroller setRubberBand: 50 forEdges:2];
 		[_scroller setRubberBand: 50 forEdges:3];
-		
 		[_scroller setDelegate:self];
+		
+		// Create controls bar.
+		[self layoutControlsBar];
 		
 		// Create screen view.
 		_screenView = [[VNCContentView alloc] initWithFrame:subframe];
 		[_screenView setDelegate: [self delegate]];
 	
-		// Create control bar.
-		subframe = CGRectMake(0, frame.size.height /*- kControlsBarHeight*/, frame.size.width, kControlsBarHeight);
-		_controlsView = [[UIGradientBar alloc] initWithFrame:subframe];
-		
-		const float kBlackComponents[] = { 0, 0, 0, 0 };
-		const float kRedComponents[] = { 1, 0, 0, 0 };
-		CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
-		CGColorRef black = CGColorCreate(rgbSpace, kBlackComponents);
-		CGColorRef red = CGColorCreate(rgbSpace, kRedComponents);
-		
-		CGColorSpaceRelease(rgbSpace);
-		
-		// Create keyboard button.
-		subframe = CGRectMake(5, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kKeyboardButtonWidth, kControlsBarButtonHeight);
-		_keyboardButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"keyboard.png"]];
-		[_keyboardButton setFrame:subframe];
-		[_keyboardButton setNavBarButtonStyle:0];
-		[_keyboardButton addTarget:self action:@selector(toggleKeyboard:) forEvents:kUIControlEventMouseUpInside];
-		
-		// Modifier key buttons.
-		subframe = CGRectMake(CGRectGetMaxX(subframe) + kButtonSpacing, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kModifierKeyButtonWidth, kControlsBarButtonHeight);
-		_shiftButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"shift_key.png"]];
-		[_shiftButton setFrame:subframe];
-		[_shiftButton setNavBarButtonStyle:0];
-		[_shiftButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
-		
-		subframe.origin.x = CGRectGetMaxX(subframe) + kButtonSpacing;
-		_commandButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"cmd_key.png"]];
-		[_commandButton setFrame:subframe];
-		[_commandButton setNavBarButtonStyle:0];
-		[_commandButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
-		
-		subframe.origin.x = CGRectGetMaxX(subframe) + kButtonSpacing;
-		_optionButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"opt_key.png"]];
-		[_optionButton setFrame:subframe];
-		[_optionButton setNavBarButtonStyle:0];
-		[_optionButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
-		
-		subframe.origin.x = CGRectGetMaxX(subframe) + kButtonSpacing;
-		_controlButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"ctrl_key.png"]];
-		[_controlButton setFrame:subframe];
-		[_controlButton setNavBarButtonStyle:0];
-		[_controlButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
-		
-		// Helper Functions "more" button on the status bar
-		subframe = CGRectMake(subframe.origin.x + kModifierKeyButtonWidth + 5 , (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, 53, kControlsBarButtonHeight);
-
-		_helperFunctionButton = [[UINavBarButton alloc] initWithTitle:@"More"];
-		[_helperFunctionButton setFrame:subframe];
-		[_helperFunctionButton setNavBarButtonStyle:0];
-		[_helperFunctionButton addTarget:self action:@selector(showHelperFunctions:) forEvents:kUIControlEventMouseUpInside];
-
-		// Right mouse button.
-		subframe = CGRectMake(frame.size.width - kExitButtonWidth - 5 - kRightMouseButtonWidth - 6, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kRightMouseButtonWidth, kControlsBarButtonHeight);
-		_rightMouseButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"right_mouse.png"]]; //WithTitle:@"W" autosizesToFit:NO];
-		[_rightMouseButton setFrame:subframe];
-		[_rightMouseButton setNavBarButtonStyle:0];
-		[_rightMouseButton addTarget:self action:@selector(toggleRightMouse:) forEvents:kUIControlEventMouseUpInside];
-		
-		// Terminate connection button.
-		subframe = CGRectMake(frame.size.width - kExitButtonWidth - 5, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kExitButtonWidth, kControlsBarButtonHeight);
-		_exitButton = [[UINavBarButton alloc] initWithTitle:@"X" autosizesToFit:NO];
-		[_exitButton setFrame:subframe];
-		[_exitButton setNavBarButtonStyle:0];
-		[_exitButton addTarget:self action:@selector(closeConnection:) forEvents:kUIControlEventMouseUpInside];
-		
 		// Create keyboard.
 		CGSize defaultKeyboardSize = [UIKeyboard defaultSize];
 		subframe.origin = CGPointMake(0, frame.size.height - kControlsBarHeight - defaultKeyboardSize.height);
@@ -196,38 +125,113 @@
 		_keyboardView = [[UIKeyboard alloc] initWithFrame:subframe];
 		[_keyboardView setPreferredKeyboardType:kUIKeyboardLayoutAlphabetTransparent];
 
-		_backgroundView = [[VNCBackgroundView alloc] initWithFrame: frame];		
-		[self addSubview: _backgroundView];
+		// Set our background color to black.
+		const float kBlackComponents[] = { 0, 0, 0, 1 };
+		CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
+		CGColorRef black = CGColorCreate(rgbSpace, kBlackComponents);
+		CGColorSpaceRelease(rgbSpace);
+		
+		[self setOpaque:YES];
+		[self setBackgroundColor:black];
 		
 		// Build view hierarchy.
-		[_controlsView addSubview:_keyboardButton];
-		[_controlsView addSubview:_exitButton];
-		[_controlsView addSubview:_shiftButton];
-		[_controlsView addSubview:_commandButton];
-		[_controlsView addSubview:_optionButton];
-		[_controlsView addSubview:_controlButton];
-		[_controlsView addSubview:_helperFunctionButton];
-		[_controlsView addSubview:_rightMouseButton];
 		[self addSubview:_controlsView];
-
 		[_scroller addSubview:_screenView];
 		[self addSubview:_scroller];
 		
+		// Init some instance variables.
 		_areControlsVisible = NO;
 		_isKeyboardVisible = NO;
+		_scaleState = kScaleFitNone;
+		_ipodScreenSize = CGSizeMake(frame.size.width, frame.size.height);
 	}
 	
 	return self;
 }
 
-- (id)scroller
+//! This method creates the controls bar that appears at the bottom of the display
+//! in portrait mode, as well as all of the buttons within it.
+- (void)layoutControlsBar
 {
-	return _scroller;
+	CGRect frame = [self frame];
+	
+	// Create control bar, initially just below the bottom of the screen.
+	CGRect subframe = CGRectMake(0, frame.size.height, frame.size.width, kControlsBarHeight);
+	_controlsView = [[UIGradientBar alloc] initWithFrame:subframe];
+	
+	// Create keyboard button.
+	subframe = CGRectMake(5, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kKeyboardButtonWidth, kControlsBarButtonHeight);
+	_keyboardButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"keyboard.png"]];
+	[_keyboardButton setFrame:subframe];
+	[_keyboardButton setNavBarButtonStyle:0];
+	[_keyboardButton addTarget:self action:@selector(toggleKeyboard:) forEvents:kUIControlEventMouseUpInside];
+	
+	// Modifier key buttons.
+	subframe = CGRectMake(CGRectGetMaxX(subframe) + kButtonSpacing, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kModifierKeyButtonWidth, kControlsBarButtonHeight);
+	_shiftButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"shift_key.png"]];
+	[_shiftButton setFrame:subframe];
+	[_shiftButton setNavBarButtonStyle:0];
+	[_shiftButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
+	
+	subframe.origin.x = CGRectGetMaxX(subframe) + kButtonSpacing;
+	_commandButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"cmd_key.png"]];
+	[_commandButton setFrame:subframe];
+	[_commandButton setNavBarButtonStyle:0];
+	[_commandButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
+	
+	subframe.origin.x = CGRectGetMaxX(subframe) + kButtonSpacing;
+	_optionButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"opt_key.png"]];
+	[_optionButton setFrame:subframe];
+	[_optionButton setNavBarButtonStyle:0];
+	[_optionButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
+	
+	subframe.origin.x = CGRectGetMaxX(subframe) + kButtonSpacing;
+	_controlButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"ctrl_key.png"]];
+	[_controlButton setFrame:subframe];
+	[_controlButton setNavBarButtonStyle:0];
+	[_controlButton addTarget:self action:@selector(toggleModifierKey:) forEvents:kUIControlEventMouseUpInside];
+	
+	// Helper Functions "more" button on the status bar
+	subframe = CGRectMake(subframe.origin.x + kModifierKeyButtonWidth + 5 , (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, 53, kControlsBarButtonHeight);
+
+	_helperFunctionButton = [[UINavBarButton alloc] initWithTitle:@"More"];
+	[_helperFunctionButton setFrame:subframe];
+	[_helperFunctionButton setNavBarButtonStyle:0];
+	[_helperFunctionButton addTarget:self action:@selector(showHelperFunctions:) forEvents:kUIControlEventMouseUpInside];
+
+	// Right mouse button.
+	subframe = CGRectMake(frame.size.width - kExitButtonWidth - 5 - kRightMouseButtonWidth - 6, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kRightMouseButtonWidth, kControlsBarButtonHeight);
+	_rightMouseButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"right_mouse.png"]]; //WithTitle:@"W" autosizesToFit:NO];
+	[_rightMouseButton setFrame:subframe];
+	[_rightMouseButton setNavBarButtonStyle:0];
+	[_rightMouseButton addTarget:self action:@selector(toggleRightMouse:) forEvents:kUIControlEventMouseUpInside];
+	
+	// Terminate connection button.
+	subframe = CGRectMake(frame.size.width - kExitButtonWidth - 5, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kExitButtonWidth, kControlsBarButtonHeight);
+	_exitButton = [[UINavBarButton alloc] initWithTitle:@"X" autosizesToFit:NO];
+	[_exitButton setFrame:subframe];
+	[_exitButton setNavBarButtonStyle:0];
+	[_exitButton addTarget:self action:@selector(closeConnection:) forEvents:kUIControlEventMouseUpInside];
+	
+	// Build controls bar view hierarchy.
+	[_controlsView addSubview:_keyboardButton];
+	[_controlsView addSubview:_exitButton];
+	[_controlsView addSubview:_shiftButton];
+	[_controlsView addSubview:_commandButton];
+	[_controlsView addSubview:_optionButton];
+	[_controlsView addSubview:_controlButton];
+	[_controlsView addSubview:_helperFunctionButton];
+	[_controlsView addSubview:_rightMouseButton];
 }
 
 - (void)dealloc
 {
     [super dealloc];
+}
+
+- (id)scroller
+{
+	return _scroller;
 }
 
 - (bool)areControlsVisible
@@ -322,8 +326,8 @@
 
 	UITextLabel *txtLabel = [[UITextLabel alloc] initWithFrame:CGRectMake(0, 32, 280, 32)];
 	
-   const float kTextComponents[] = { .94, .94, .94, 1 };
-   const float kTransparentComponents[] = { 0, 0, 1, 0 };
+	const float kTextComponents[] = { .94, .94, .94, 1 };
+	const float kTransparentComponents[] = { 0, 0, 1, 0 };
 		
     CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
     CGColorRef textColorStatus = CGColorCreate(rgbSpace, kTextComponents);
@@ -436,7 +440,7 @@
 	[downloader addSubview:aButton];
 	
 	aButton = [[UIPushButton alloc] initWithTitle:@"ESC" autosizesToFit:NO];
-	[aButton setFrame:CGRectMake(235, 187, 30, 32)];
+	[aButton setFrame:CGRectMake(235, 154, 30, 32)];
 	[aButton setDrawsShadow:YES];
 	[aButton setDrawContentsCentered:YES];
 	[aButton setShowPressFeedback:YES];
@@ -681,6 +685,8 @@
 	[_filter flagsChanged:newModifiers];
 }
 
+//! Returns whether the first frame update has been received from the server.
+//!
 - (bool)isFirstDisplay
 {
 	return _isFirstDisplay;
@@ -701,6 +707,11 @@
 	return _connection;
 }
 
+//! This method is invoked before the VNCView is displayed to the user, so
+//! that the controls on the controls bar can be properly enabled or disabled
+//! based on their relevance if view only mode is enabled. For instance,
+//! the keyboard and right mouse buttons should be disabled in view only mode
+//! because the user cannot type or click remotely.
 - (void)enableControlsForViewOnly:(bool)isViewOnly
 {
 	bool notViewOnly = !isViewOnly;
@@ -1197,294 +1208,6 @@
 	return NO;
 }
 
-
-#pragma ** UITextTraitsClient **
-
-//+ (int)defaultAutoCapsType
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//+ (int)defaultAutoCorrectionType
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//+ (BOOL)defaultAutoEnablesReturnKey
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return NO;
-//}
-//
-//+ (struct CGColor *)defaultCaretColor
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return nil;
-//}
-//
-//+ (unsigned int)defaultCaretWidth
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 1;
-//}
-//
-//+ (id)defaultEditingDelegate
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return nil;
-//}
-//
-//+ (int)defaultInitialSelectionBehavior
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//+ (int)defaultPreferredKeyboardType
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//+ (int)defaultReturnKeyType
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//+ (BOOL)defaultSecureTextEntryFlag
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return NO;
-//}
-//
-//+ (BOOL)defaultSingleCompletionEntryFlag
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return NO;
-//}
-//
-//+ (int)defaultTextDomain
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//+ (int)defaultTextLoupeVisibility
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//+ (id)defaultTextSuggestionDelegate
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return nil;
-//}
-//
-//+ (struct __CFCharacterSet *)defaultTextTrimmingSet
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return nil;
-//}
-//
-//+ (id)defaultTraits
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return nil;
-//}
-//
-//- (int)autoCapsType
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//- (int)autoCorrectionType
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//- (BOOL)autoEnablesReturnKey
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return NO;
-//}
-//
-//- (struct CGColor *)caretColor
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return nil;
-//}
-//
-//- (unsigned int)caretWidth
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 1;
-//}
-//
-////- (void)dealloc
-////{
-////	NSLog(@"%s", __PRETTY_FUNCTION__);
-////}
-//
-//- (id)editingDelegate
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return nil;
-//}
-//
-////- (id)init
-////{
-////	NSLog(@"%s", __PRETTY_FUNCTION__);
-////}
-//
-//- (int)initialSelectionBehavior
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//- (int)preferredKeyboardType
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//- (int)returnKeyType
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//- (BOOL)secureTextEntry
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return NO;
-//}
-//
-//- (void)setAutoCapsType:(int)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setAutoCorrectionType:(int)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setAutoEnablesReturnKey:(BOOL)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setCaretColor:(struct CGColor *)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setCaretWidth:(unsigned int)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setEditingDelegate:(id)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setInitialSelectionBehavior:(int)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setPreferredKeyboardType:(int)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setReturnKeyType:(int)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setSecureTextEntry:(BOOL)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setSingleCompletionEntry:(BOOL)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setTextDomain:(int)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setTextLoupeVisibility:(int)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setTextSuggestionDelegate:(id)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setTextTrimmingSet:(struct __CFCharacterSet *)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setToDefaultValues
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (void)setToSecureValues
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (BOOL)singleCompletionEntry
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return NO;
-//}
-//
-//- (void)takeTraitsFrom:(id)fp8
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//}
-//
-//- (int)textDomain
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//- (int)textLoupeVisibility
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return 0;
-//}
-//
-//- (id)textSuggestionDelegate
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return nil;
-//}
-//
-//- (struct __CFCharacterSet *)textTrimmingSet
-//{
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
-//	return nil;
-//}
 /*
 //These Methods track delegate calls made to the application
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)selector 
