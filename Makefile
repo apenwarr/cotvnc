@@ -5,7 +5,7 @@ LD=$(CC)
 
 LDFLAGS=-lobjc -lz -framework CoreFoundation -framework Foundation -framework UIKit -framework LayerKit -framework CoreGraphics -framework GraphicsServices
 
-CFLAGS=-O -I. -Icotvnc -Isrc
+CFLAGS=-Os -I. -Icotvnc -Isrc
 
 APP_PACKAGE=VNsea.app
 
@@ -132,21 +132,25 @@ VCFILE = vc_$(LOGNAME)
 all:    output/vnsea
 
 output/vnsea:  $(OUTPUT_OBJS)
-	$(LD) $(LDFLAGS) -v -o $@ $^
-	cp output/vnsea $(APP_PACKAGE)
-	cp images/*key.png images/keyboard.png images/right_mouse.png images/Fit*.png $(APP_PACKAGE)
-	if [ -f $(VCFILE) ]; then ./$(VCFILE) ; fi
+	@echo Linking $@
+	@$(LD) $(LDFLAGS) -o $@ $^
+	@echo Packaging $@
+	@cp output/vnsea $(APP_PACKAGE)
+	@cp images/*key.png images/keyboard.png images/right_mouse.png images/Fit*.png $(APP_PACKAGE)
+	@if [ -f $(VCFILE) ]; then ./$(VCFILE) ; fi
 
 # There has to be a better way to do this, but I'm such a make newbie
 # and I don't really care as long as it works (for now).
 
 output/%.o:    %.m
-		if [ ! -d $(@D) ] ; then mkdir -p $(@D) ; fi 
-		$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+		@echo Compiling $<
+		@if [ ! -d $(@D) ] ; then mkdir -p $(@D) ; fi 
+		@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
 output/%.o:    %.c
-		if [ ! -d $(@D) ] ; then mkdir -p $(@D) ; fi
-		$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+		@echo Compiling $<
+		@if [ ! -d $(@D) ] ; then mkdir -p $(@D) ; fi
+		@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
 clean:
 		rm -rf output vnsea
