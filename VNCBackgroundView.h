@@ -9,10 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "FrameBuffer.h"
 
-#import "VNCScrollerView.h"
-
 /*!
- * @brief Subview of VNCView that draws the screen.
+ * @brief Simple view that draws a background color or pattern.
  */
 @interface VNCBackgroundView : UIView
 {
@@ -20,6 +18,5 @@
 
 - (id)initWithFrame:(CGRect)frame;
 - (void)drawRect:(CGRect)destRect;
-
 
 @end

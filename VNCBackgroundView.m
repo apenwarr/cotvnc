@@ -8,16 +8,6 @@
 
 #import "VNCBackgroundView.h"
 
-@implementation VNCBackgroundView
-
-- (id)initWithFrame:(CGRect)frame;
-{
-	if ([super initWithFrame:frame])
-		{
-		}
-	return self;
-}
-
 #define H_PSIZE 10
 #define V_PSIZE 10
 #define H_PATTERN_SIZE 10
@@ -42,11 +32,20 @@ void MyDrawColoredPattern (void *info, CGContextRef myContext)
     CGContextFillRect (myContext, myRect4);
 }
 
+@implementation VNCBackgroundView
+
+- (id)initWithFrame:(CGRect)frame;
+{
+	if ([super initWithFrame:frame])
+	{
+	}
+	return self;
+}
 
 - (void)drawRect:(CGRect)destRect
 {
-		CGContextRef myContext = UICurrentContext();
-		CGRect rcElipse = [self bounds];
+	CGContextRef myContext = UICurrentContext();
+	CGRect rcElipse = [self bounds];
 		
     CGPatternRef    pattern;// 1
     CGColorSpaceRef patternSpace;// 2
