@@ -107,6 +107,8 @@ typedef enum
 - (void)toggleRightMouse:(id)sender;
 - (void)toggleModifierKey:(id)sender;
 - (void)enableControlsForViewOnly:(bool)isViewOnly;
+
+- (float)scaleFitCurrentScreen: (scaleSpecialTypes) wScaleState;
 //@}
 
 //! @name RFBViewProtocol

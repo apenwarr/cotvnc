@@ -44,21 +44,25 @@
 		UIPreferencesTextTableCell * nameCell = [[UIPreferencesTextTableCell alloc] init];
 		[nameCell setTitle:NSLocalizedString(@"Name", nil)];
 		[nameCell setPlaceHolderValue:NSLocalizedString(@"NamePlace", nil)];
+		[[nameCell textField] setReturnKeyType: 4];
 		
 		UIPreferencesTextTableCell * addressCell = [[UIPreferencesTextTableCell alloc] init];
 		[addressCell setTitle:NSLocalizedString(@"Address", nil)];
 //		[[addressCell textField] setPreferredKeyboardType: 3]; .com and /
 //		[[addressCell textField] setPreferredKeyboardType: 9]; .com and @
 		[[addressCell textField] setPreferredKeyboardType: 3];
+		[[addressCell textField] setReturnKeyType: 4];
 		[addressCell setPlaceHolderValue:NSLocalizedString(@"AddressPlace", nil)];
 		
 		UIPreferencesTextTableCell * passwordCell = [[UIPreferencesTextTableCell alloc] init];
 		[passwordCell setTitle:NSLocalizedString(@"Password", nil)];
 		[[passwordCell textField] setSecure:true];
 		[[passwordCell textField] setAutoCapsType: 0];
+		[[passwordCell textField] setReturnKeyType: 4];
 		[passwordCell setPlaceHolderValue:NSLocalizedString(@"PasswordPlace", nil)];
 		
 		UIPreferencesTextTableCell * displayCell = [[UIPreferencesTextTableCell alloc] init];
+		[[displayCell textField] setReturnKeyType: 4];
 		[displayCell setTitle:NSLocalizedString(@"Display", nil)];
 		
 		UIPreferencesControlTableCell * sharedCell = [[UIPreferencesControlTableCell alloc] init];
@@ -357,6 +361,11 @@ NSString *vncDecryptPasswd(NSString *pnsEncrypted)
 	{
 		return 1;
 	}
+}
+
+- (BOOL)table:(id)theTable canSelectRow:(int)rowIndex;
+{
+	return NO;
 }
 
 - (BOOL)table:(id)prefsTable showDisclosureForRow:(int)rowIndex

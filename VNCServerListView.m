@@ -201,7 +201,6 @@ extern id UIImageGetNavigationBarAddButton();
 
 - (void)table:(UITable *)theTable disclosureClickedForRow:(int)row
 {
-	[theTable _selectRow:row byExtendingSelection:NO withFade:NO scrollingToVisible:YES withSelectionNotifications:NO];
 	if (_delegate && [_delegate respondsToSelector:@selector(editServer:)])
 	{
 		[_delegate editServer:row];

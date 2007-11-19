@@ -115,6 +115,13 @@
 
 - (void)cleanUpMouseTracks
 {
+	if (_windowPopupScalePercent != nil)
+		{
+		_bZooming = false;
+		[_windowPopupScalePercent setHidden:true];
+		[_windowPopupScalePercent release];
+		_windowPopupScalePercent = nil;
+		}
 	if (_windowPopupMouseDown != nil)
 	{
 		[_windowPopupMouseDown hide];
@@ -223,7 +230,7 @@
 		{
 			CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
 			
-			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0, 0, 60, 60) centered:true show:true orientation:[_vncView orientationDegree] style:kPopupStyleScalePercent];			
+			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0, 0, 60, 60) centered:true show:true orientation:[_vncView orientationDegree] style:kPopupStyleDrag];
 			[_windowPopupScalePercent setCenterLocation: ptCenter]; 
 			[_windowPopupScalePercent setTextPercent: [_vncView getScalePercent]];
 			_bZooming = false;
@@ -443,11 +450,11 @@
 
 		if (abs(fHowFar) > (_viewOnly || _bZooming ? 3 : 20))
 		{
-			float fNewScale = [_vncView getScalePercent] + (0.0025 * fHowFar);
+			float fOldScale = [_vncView getScalePercent], fNewScale = fOldScale + (0.0025 * fHowFar);
 			
 			_bZooming = true;
-			
-			if (fNewScale > kMinScale && fNewScale < kMaxScale)
+			[_windowPopupScalePercent setStyleWindow: kPopupStyleScalePercent];
+			if ((fNewScale > [_vncView scaleFitCurrentScreen: kScaleFitWhole] || (fNewScale > fOldScale)) && fNewScale < kMaxScale)
 			{
 				[_windowPopupScalePercent setTextPercent: fNewScale];
 				[_windowPopupScalePercent setCenterLocation: ptCenter]; 

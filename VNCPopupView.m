@@ -16,12 +16,14 @@
 	{
 		_styleWindow = theStyle;
 		[self setEnabled: NO];
+		_imageDrag = [[UIImage imageNamed: @"drag.png"] retain];
 	}
 	return self;
 }
 
 - (void)dealloc
 {
+	[_imageDrag release];
 	[_bubbleText release];
 	[super dealloc];
 }
@@ -46,7 +48,7 @@
 		
 	CGContextSaveGState(context);
 	
-	if (_styleWindow == kPopupStyleScalePercent)
+	if (_styleWindow == kPopupStyleScalePercent || _styleWindow == kPopupStyleDrag)
 	{
 		CGContextSetRGBFillColor(context, 0, 0, 1, .3);
 		rcElipse = CGRectInset(rcElipse, 4,4);
@@ -63,20 +65,17 @@
 		
 		CGContextSelectFont(context, "MarkerFeltThin", 18.0, kCGEncodingMacRoman);
 	}
-	else if (_styleWindow == kPopupStyleViewOnly)
+	if (_styleWindow == kPopupStyleDrag)
 	{
-		CGContextSetRGBFillColor(context, 0, 0, 1, .5);
-		rcElipse = CGRectInset(rcElipse, 1,1);
-		CGContextFillRect(context, rcElipse);
-		CGContextSetRGBFillColor(context, 1, 1, 1, .5);
-		CGContextSetLineWidth (context, 1);
-		CGContextTranslateCTM(context, [self bounds].size.width / 2, [self bounds].size.height/2);
-		CGContextSetRGBFillColor(context, 1, 1, 1, .5);
+		CGImageRef Image = [_imageDrag imageRef]; 
+           
+		float w = (float) CGImageGetWidth(Image), h = (float) CGImageGetHeight(Image);
+		CGRect drawRect = CGRectMake (0-w/2, 0-h/2, w, h);
 		
-		CGContextSelectFont(context, "Helvetica", 12.0, kCGEncodingMacRoman);
+        CGContextDrawImage( context, drawRect, Image );
 	}
 	
-	if (_bubbleText != nil)
+	if (_bubbleText != nil && _styleWindow == kPopupStyleScalePercent)
 	{
 		// Get a C-style string from the NSString.
 		const char * utf8String = [_bubbleText UTF8String];

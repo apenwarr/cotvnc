@@ -780,12 +780,11 @@
 	_scaleState = wScaleState;
 }
 
-- (void)setScalePercent:(float)wScale
+- (float)scaleFitCurrentScreen: (scaleSpecialTypes) wScaleState
 {
-	if (_scaleState != kScaleFitNone)
-    {
-		float dx,dy, wScaleX, wScaleY;
-
+		float dx,dy, wScaleX, wScaleY, wScale = 10;
+		
+		NSLog(@"In scale fit");
 		switch ([self getOrientationState])
 		{
 			case kOrientationVerticalUpsideDown:
@@ -804,7 +803,7 @@
 		
 		wScaleX = dx / _vncScreenSize.width;
 		wScaleY = dy / _vncScreenSize.height;
-		switch (_scaleState)
+		switch (wScaleState)
 		{
 			case kScaleFitWhole:  // fit Whole Screen on IPod
 				wScale = wScaleX < wScaleY ? wScaleX : wScaleY;
@@ -818,6 +817,15 @@
 				wScale = wScaleY;
                 break;
 		}
+	NSLog(@"Out scale fit");
+	return wScale;
+}
+
+- (void)setScalePercent:(float)wScale
+{
+	if (_scaleState != kScaleFitNone)
+    {
+		wScale = [self scaleFitCurrentScreen: _scaleState];
 	}
 //	NSLog(@"New Scale = %f", wScale);
 	[_screenView setScalePercent: wScale];

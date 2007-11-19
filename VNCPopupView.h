@@ -15,6 +15,7 @@ typedef enum _popup_style
 {
 	kPopupStyleScalePercent = 0,
 	kPopupStyleViewOnly = 1,
+	kPopupStyleDrag = 2,
 } popup_style_t;
 
 /*!
@@ -24,6 +25,7 @@ typedef enum _popup_style
 {
 	NSString * _bubbleText;			//!< Text to draw inside the popup bubble.
 	popup_style_t _styleWindow;	//!< Selected drawing style.
+	UIImage *_imageDrag;
 }
 
 - (id)initWithFrame:(CGRect)frame style:(popup_style_t)theStyle;
