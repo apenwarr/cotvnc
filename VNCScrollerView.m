@@ -11,12 +11,12 @@
 #import "VNCMouseTracks.h"
 #import "VNCPreferences.h"
 
-//! Number of seconds to wait before sending a mouse down, during which we
-//! check to see if the user is really wanting to scroll.
-#define kSendMouseDownDelay (0.285)
-
 #define kMinScale (0.10f)
 #define kMaxScale (3.0f)
+
+// Some extra UIKit functions.
+extern float UIDistanceBetweenPoints(CGPoint a, CGPoint b);
+extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 
 @implementation VNCScrollerView
 
@@ -30,38 +30,12 @@
   return NO;
 }
 
-- (void)doubleTap
-{
-	NSLog(@"Double Tap");
-}
-
-- (void)gestureStarted:(GSEvent *)event
-{
-	NSLog(@"Gesture Started");
-}
-
-- (void)gestureChanged:(GSEvent *)event
-{
-	CGRect r = GSEventGetLocationInWindow(event);
-	CGRect cr = [self convertRect:r fromView:nil];
-	NSLog(@"Gesture Changed %f %f,  %f %f", cr.origin.x, cr.origin.y, cr.size.width, cr.size.height);
-
-	CGPoint pt1 = GSEventGetInnerMostPathPosition(event);
-	CGPoint pt2 = GSEventGetOuterMostPathPosition(event);
-	NSLog(@"PT1 %f %f, PT2 %f %f", pt1.x, pt1.y, pt2.x, pt2.y);
-}
-
 - (void)setVNCView:(VNCView *)view
 {
 	_vncView = view;
 	_windowPopupScalePercent = nil;
 	_windowPopupMouseDown = nil;
 	_scrollTimer = nil;
-}
-
-- (void)gestureEnded:(GSEvent *)event
-{
-	NSLog(@"Gesture Ended");
 }
 
 - (void)setViewOnly:(bool)isViewOnly
@@ -117,17 +91,19 @@
 - (void)cleanUpMouseTracks
 {
 	if (_windowPopupScalePercent != nil)
-		{
-		_bZooming = false;
+	{
+		_isZooming = false;
 		[_windowPopupScalePercent setHidden:true];
 		[_windowPopupScalePercent release];
 		_windowPopupScalePercent = nil;
-		}
+	}
+	
 	if (_windowPopupMouseDown != nil)
 	{
 		[_windowPopupMouseDown hide];
 		_windowPopupMouseDown = nil;
 	}
+	
 	if (_windowPopupMouseUp != nil)
 	{
 		[_windowPopupMouseUp hide];
@@ -188,7 +164,7 @@
 		CGPoint ptVNC = [_eventFilter getVNCScreenPoint: GSEventGetLocationInWindow(theEvent)];
 	
 		_windowPopupMouseDown = [[VNCMouseTracks alloc] initWithFrame: CGRectMake(ptVNC.x, ptVNC.y, 10, 10) style:kPopupStyleMouseDown scroller:self];	
-		[_windowPopupMouseDown setTimer: 1.5f info:nil]; 
+		[_windowPopupMouseDown setTimer:[[VNCPreferences sharedPreferences] mouseTracksFadeTime] info:nil]; 
 	}
 	
 	// The event is no longer needed.
@@ -220,21 +196,22 @@
 //	int count = GSEventGetClickCount(theEvent);
 //	NSLog(@"mouseDown:%c:%d", isChording ? 'y' : 'n', count);
 
+	// Prepare for zooming and/or panning when it's a chorded mouse down.
 	if (isChording)
 	{	
 		CGPoint pt1 = GSEventGetInnerMostPathPosition(theEvent);
 		CGPoint pt2 = GSEventGetOuterMostPathPosition(theEvent);
-
-		_fDistanceStart = sqrt((pt2.x-pt1.x)*(pt2.x-pt1.x) + (pt2.y - pt1.y) * (pt2.y - pt2.y));
+		
+		_fDistanceStart = UIDistanceBetweenPoints(pt1, pt2);
 		_fDistancePrev = _fDistanceStart;
 		if (_windowPopupScalePercent == nil)
 		{
-			CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
+			CGPoint ptCenter = UIMidPointBetweenPoints(pt1, pt2);
 			
 			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0, 0, 60, 60) centered:true show:true orientation:[_vncView orientationDegree] style:kPopupStyleDrag];
 			[_windowPopupScalePercent setCenterLocation: ptCenter]; 
 			[_windowPopupScalePercent setTextPercent: [_vncView getScalePercent]];
-			_bZooming = false;
+			_isZooming = false;
 		}
 	}
 	
@@ -272,7 +249,7 @@
 		// So create a timer that when it fires will send the original event.
 		// If a chording mouse down happens before the timer fires, it will be
 		// killed.
-		_tapTimer = [[NSTimer scheduledTimerWithTimeInterval:kSendMouseDownDelay target:self selector:@selector(handleTapTimer:) userInfo:(id)theEvent repeats:NO] retain];
+		_tapTimer = [[NSTimer scheduledTimerWithTimeInterval:[[VNCPreferences sharedPreferences] mouseDownDelay] target:self selector:@selector(handleTapTimer:) userInfo:(id)theEvent repeats:NO] retain];
 	}
 }
 
@@ -286,7 +263,7 @@
 	// Do nothing if there is no connection.
 	if (_windowPopupScalePercent != nil)
 	{
-		_bZooming = false;
+		_isZooming = false;
 		[_windowPopupScalePercent setHidden:true];
 		[_windowPopupScalePercent release];
 		_windowPopupScalePercent = nil;
@@ -320,10 +297,11 @@
 				_windowPopupMouseUp = nil;
 			}
 			CGPoint ptVNC = [_eventFilter getVNCScreenPoint: GSEventGetLocationInWindow(theEvent)];
-
-			_windowPopupMouseUp = [[VNCMouseTracks alloc] initWithFrame: CGRectMake(ptVNC.x,ptVNC.y,10,10) style:kPopupStyleMouseUp scroller:self];			
-	//		NSLog(@"Setting Timer on Popup");
-			[_windowPopupMouseUp setTimer: 1.5f info:nil]; 
+			
+			// Show mouse track for up event.
+			CGRect popupFrame = CGRectMake(ptVNC.x, ptVNC.y, 10, 10);
+			_windowPopupMouseUp = [[VNCMouseTracks alloc] initWithFrame:popupFrame style:kPopupStyleMouseUp scroller:self];			
+			[_windowPopupMouseUp setTimer:[[VNCPreferences sharedPreferences] mouseTracksFadeTime] info:nil]; 
 		}
 
 		[self sendMouseUp:theEvent];
@@ -382,8 +360,8 @@
 }
 
 
-// Determines if we need to autoscroll while drag or not
-// starts timer if ready to autoscroll
+//! Determines if we need to autoscroll while dragging. If so, then it
+//! sets up the autoscroll timer.
 - (void)checkForAutoscrollEvents:(GSEventRef) theEvent
 {
 	CGPoint ptDrag = GSEventGetLocationInWindow(theEvent).origin;
@@ -414,6 +392,7 @@
 		
 		NSLog(@"In border Area %d", newAutoScroller);
 		
+		// Get rid of any old autoscroll timer.
 		if (_scrollTimer != nil)
 		{
 			[_scrollTimer invalidate];
@@ -422,6 +401,7 @@
 			CFRelease(_autoLastDragEvent);
 		}
 		
+		// Setup autoscroll timer if we're scrolling.
 		if (newAutoScroller != kAutoScrollerNone)
 		{
 			NSLog(@"Starting Timer");
@@ -444,22 +424,33 @@
 
 	if (isChording)
 	{	
-		CGPoint pt1 = GSEventGetInnerMostPathPosition(theEvent), pt2 = GSEventGetOuterMostPathPosition(theEvent);
-		float fDistance = sqrt((pt2.x-pt1.x)*(pt2.x-pt1.x) + (pt2.y - pt1.y) * (pt2.y - pt2.y));
+		CGPoint pt1 = GSEventGetInnerMostPathPosition(theEvent);
+		CGPoint pt2 = GSEventGetOuterMostPathPosition(theEvent);
+		
+		float fDistance = UIDistanceBetweenPoints(pt1, pt2);
 		float fHowFar = fDistance - _fDistancePrev;
-		CGPoint ptCenter = CGPointMake((pt1.x+pt2.x) / 2, (pt1.y+pt2.y) / 2);
+		CGPoint ptCenter = UIMidPointBetweenPoints(pt1, pt2);
 
-		if (abs(fHowFar) > (_viewOnly || _bZooming ? 3 : 20))
+		if (abs(fHowFar) > (_viewOnly || _isZooming ? 3 : 20))
 		{
-			float fOldScale = [_vncView getScalePercent], fNewScale = fOldScale + (0.0025 * fHowFar);
+			float fOldScale = [_vncView getScalePercent];
+			float fNewScale = fOldScale + (0.0025 * fHowFar);
 			
-			_bZooming = true;
+			// Snap to 100%.
+			if (fabsf(1.0 - fNewScale) < 0.005)
+			{
+				fNewScale = 1.0;
+			}
+			
+			_isZooming = true;
 			[_windowPopupScalePercent setStyleWindow: kPopupStyleScalePercent];
 			if ((fNewScale > [_vncView scaleFitCurrentScreen: kScaleFitWhole] || (fNewScale > fOldScale)) && fNewScale < kMaxScale)
 			{
+				// Update the popup window showing the current scale percentage.
 				[_windowPopupScalePercent setTextPercent: fNewScale];
 				[_windowPopupScalePercent setCenterLocation: ptCenter]; 
 				
+				// Zoom the view.
 				[self changeViewPinnedToPoint:ptCenter scale:fNewScale orientation:[_vncView getOrientationState] force:true];
 			}
 			
@@ -472,7 +463,7 @@
 		}
 
 			
-		if (_viewOnly || _bZooming)
+		if (_viewOnly || _isZooming)
 		{
 			return;
 		}

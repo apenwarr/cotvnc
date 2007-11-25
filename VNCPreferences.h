@@ -8,14 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
+//! @name Preference Keys
+//@{
+
 //! Key for the mouse tracks preference.
 extern NSString * kShowMouseTracksPrefKey;
 
 //! Key for the disconnect on suspend preference.
 extern NSString * kDisconnectOnSuspendPrefKey;
 
-//! Key for the chording interval preference.
-extern NSString * kChordingIntervalPrefKey;
+//! Key for the mouse down delay preference.
+extern NSString * kMouseDownDelayPrefKey;
+
+//! Length of time that mouse tracks are visible.
+extern NSString * kMouseTracksFadeTimePrefKey;
+
+//@}
 
 /*!
  * @brief Shared preferences class.
@@ -31,6 +39,8 @@ extern NSString * kChordingIntervalPrefKey;
 //@{
 - (BOOL)showMouseTracks;
 - (BOOL)disconnectOnSuspend;
+- (float)mouseDownDelay;
+- (float)mouseTracksFadeTime;
 //@}
 
 //! @name Setters

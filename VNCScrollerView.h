@@ -48,7 +48,7 @@ typedef enum {
 	VNCView *_vncView;
 	bool _useRightMouse;	//!< Whether to send a right mouse event.
 	bool _inRightMouse;		//!< True if the last mouse down was for the right button.
-	bool _bZooming;
+	bool _isZooming;			//!< True when we're in zooming mode versus panning mode.
 	VNCPopupWindow * _windowPopupScalePercent;
 	VNCMouseTracks * _windowPopupMouseDown;
 	VNCMouseTracks * _windowPopupMouseUp;
@@ -62,9 +62,6 @@ typedef enum {
 - (void)setViewOnly:(bool)isViewOnly;
 
 - (BOOL)canHandleGestures;
-- (void)gestureStarted:(GSEvent *)event;
-- (void)gestureChanged:(GSEvent *)event;
-- (void)gestureEnded:(GSEvent *)event;
 
 - (void)setVNCView:(VNCView *)view;
 

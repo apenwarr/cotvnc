@@ -10,7 +10,8 @@
 
 NSString * kShowMouseTracksPrefKey = @"MouseTracks";
 NSString * kDisconnectOnSuspendPrefKey = @"Disconnect";
-NSString * kChordingIntervalPrefKey = @"ChordingInterval";
+NSString * kMouseDownDelayPrefKey = @"MouseDownDelay";
+NSString * kMouseTracksFadeTimePrefKey = @"MouseTracksFadeTime";
 
 //! Singleton object.
 static id s_sharedPreferences = nil;
@@ -35,6 +36,8 @@ static id s_sharedPreferences = nil;
 		NSMutableDictionary * defaultsDict = [NSMutableDictionary dictionary];
 		[defaultsDict setObject:[NSNumber numberWithBool:YES] forKey:kShowMouseTracksPrefKey];
 		[defaultsDict setObject:[NSNumber numberWithBool:NO] forKey:kDisconnectOnSuspendPrefKey];
+		[defaultsDict setObject:[NSNumber numberWithFloat:0.285] forKey:kMouseDownDelayPrefKey];
+		[defaultsDict setObject:[NSNumber numberWithFloat:1.5] forKey:kMouseTracksFadeTimePrefKey];
 		
 		[[NSUserDefaults standardUserDefaults] registerDefaults:defaultsDict];
 	}
@@ -42,6 +45,8 @@ static id s_sharedPreferences = nil;
 	return self;
 }
 
+//! Whether the mouse tracks should be shown on mouse down and mouse up events.
+//!
 - (BOOL)showMouseTracks
 {
 	return [[NSUserDefaults standardUserDefaults] boolForKey:kShowMouseTracksPrefKey];
@@ -50,6 +55,18 @@ static id s_sharedPreferences = nil;
 - (BOOL)disconnectOnSuspend
 {
 	return [[NSUserDefaults standardUserDefaults] boolForKey:kDisconnectOnSuspendPrefKey];
+}
+
+//! Number of seconds to wait before sending a mouse down, during which we
+//! check to see if the user is really wanting to scroll.
+- (float)mouseDownDelay
+{
+	return [[NSUserDefaults standardUserDefaults] floatForKey:kMouseDownDelayPrefKey];
+}
+
+- (float)mouseTracksFadeTime
+{
+	return [[NSUserDefaults standardUserDefaults] floatForKey:kShowMouseTracksPrefKey];
 }
 
 - (void)setShowMouseTracks:(BOOL)showTracks
