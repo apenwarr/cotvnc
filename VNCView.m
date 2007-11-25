@@ -609,14 +609,6 @@
 	_isKeyboardVisible = !_isKeyboardVisible;
 }
 
-- (BOOL)showMouseTracks
-{
-	if (_delegate && [_delegate respondsToSelector:@selector(showMouseTracks)])
-	{
-		[_delegate showMouseTracks];
-	}
-}
-
 //! This message is received when the user has pressed the close connection
 //! button.
 - (void)closeConnection:(id)sender

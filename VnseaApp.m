@@ -11,6 +11,7 @@
 #import "ServerFromPrefs.h"
 #import "Shimmer.h"
 #import "VNCServerInfoView.h"
+#import "VNCPreferences.h"
 #import <stdlib.h>
 #import <signal.h>
 
@@ -87,13 +88,9 @@ int compareServers(id obj1, id obj2, void *reverse)
 	_serverEditorView = [[VNCServerInfoView alloc] initWithFrame:frame];
 	[_serverEditorView setDelegate:self];
 
+	// Preferences editing view
 	_prefsView = [[VNCPrefsView alloc] initWithFrame:frame];
 	[_prefsView setDelegate:self];
-	
-	NSArray * prefs = [self loadPrefs];
-	[_prefsView setPrefsInfo:([prefs count] > 0 ? [prefs objectAtIndex:0] : nil)];
-	
-	NSLog(@" Mouse Tracks = %d", (int)[self showMouseTracks]);
 	
 	// Profile
 	_defaultProfile = [[Profile defaultProfile] retain];
@@ -117,7 +114,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 
 - (void)applicationSuspend:(GSEventRef)event
 {
-	if ([_prefsView disconnectOnMenuButton] || !_connection)
+	if ([[VNCPreferences sharedPreferences] disconnectOnSuspend] || !_connection)
 	{
 		[self applicationWillTerminate];
 		[self terminate];
@@ -156,11 +153,6 @@ int compareServers(id obj1, id obj2, void *reverse)
 	[super dealloc];
 }
 
-- (BOOL)showMouseTracks
-{
-	return [_prefsView showMouseTracks];
-}
-		
 //! Use Shimmer to check for an available update, ask the user if it should be
 //! installed, and then download and install it. This method is executed on a
 //! separate thread, so attempting the connection will not freeze the UI.
@@ -290,10 +282,8 @@ int compareServers(id obj1, id obj2, void *reverse)
 
 - (void)gotFirstFullScreenTransitionNow
 {
-	int randTrans = (int)(((float)rand() / (float)RAND_MAX) * 2.8);
-
 	[self setStatusBarShowsProgress:NO];
-	[_transView transition: randTrans fromView:_serversView toView:_vncView];
+	[_transView transition:1 fromView:_serversView toView:_vncView];
 			
 	NSMutableArray * servers = [[self loadServers] mutableCopy];
 	NSMutableDictionary * serverInfo = [[servers objectAtIndex:_serverConnectingIndex] mutableCopy];
@@ -317,7 +307,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 	// Decrypt password before passing to VNC
 	NSString *nsPassword = [_serverEditorView decryptPassword:[serverInfo objectForKey:RFB_PASSWORD]];
 	if (nsPassword == nil || [nsPassword length] == 0)
-		{
+	{
 		UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
 		initWithTitle:NSLocalizedString(@"PasswordRequestTitle", nil)
 		buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
@@ -337,22 +327,23 @@ int compareServers(id obj1, id obj2, void *reverse)
 		[hotSheet popupAlertAnimated:YES];
 				
 		if (_lastAlertButtonIndexClicked == 2)
-			{
+		{
 			// Re-enable the server list view.
 			[_serversView setEnabled:YES];
 			return;
-			}
+		}
 		nsPassword = [tf text];
 		NSLog(@"Input Password = %s", [nsPassword cString]);
-		}
+	}
 	
 	[serverInfo setObject:nsPassword forKey:RFB_PASSWORD];
 	NSNumber *nsScale = [serverInfo objectForKey:SERVER_SCALE];
 	if (nsScale != nil)
-		{
+	{
 		NSLog(@"Setting remembered scale to %f", [nsScale floatValue]);
 		[_vncView setScalePercent: [nsScale floatValue]];
-		}
+	}
+	
 	// Get last scroll point and setup for when VNC server screen is shown
 	CGPoint ptTopLeftVisible = CGPointMake([[serverInfo objectForKey:SERVER_SCROLL_X] intValue], [[serverInfo objectForKey:SERVER_SCROLL_Y] intValue]);
 	[_vncView setStartupTopLeftPt:ptTopLeftVisible];
@@ -384,15 +375,12 @@ int compareServers(id obj1, id obj2, void *reverse)
 	{
 		NSLog(@"connection=%@", _connection);
 //		[self statusBarWillAnimateToHeight:0 duration:.2 fence:0];
-		[self setStatusBarMode:kUIStatusBarWhite duration:0];
+//		[self setStatusBarMode:kUIStatusBarWhite duration:0];
 
 		[_vncView setConnection:_connection];
 		[_vncView showControls:YES];
 		[_connection setDelegate:self];
 		[_connection startTalking];
-// Moved Transition to when the first update event comes from VNC protocol
-//		[_connection manuallyUpdateFrameBuffer:self];		
-//		[_transView transition:1 fromView:_serversView toView:_vncView];
 	}
 	else if (!_closingConnection)
 	{
@@ -615,58 +603,23 @@ int compareServers(id obj1, id obj2, void *reverse)
 	[hotSheet popupAlertAnimated:YES];
 }
 
-- (NSArray *)loadPrefs
-{
-	NSDictionary * dict = [NSDictionary dictionaryWithContentsOfFile:kPrefsFilePath];
-	
-	if (dict == nil)
-		{
-		NSArray *ns = [NSArray array];
-		return ns;
-		}
-		
-	NSArray *nsArray = [dict objectForKey:kPrefsArrayKey];	
-	return nsArray;
-}
-
-- (void)savePrefs:(NSArray *)thePrefs
-{
-	NSLog(@"save prefs");
-	NSDictionary * prefs = [NSDictionary dictionaryWithObject:thePrefs forKey:kPrefsArrayKey];
-	[prefs writeToFile:kPrefsFilePath atomically:YES];
-}
-
 - (void)displayPrefs
 {
-	NSDictionary *prefsInfo = nil;
 	NSLog(@"Display Prefs");
 	
-	NSArray * prefs = [self loadPrefs];
-	if ([prefs count] > 0)
-		prefsInfo = [prefs objectAtIndex:0];
-	[_prefsView setPrefsInfo:prefsInfo];
+	[_prefsView updateViewFromPreferences];
 	
 	// Hide keyboard before switching in case it was visible.
-	[_prefsView setKeyboardVisible:NO];	
+	[_prefsView setKeyboardVisible:NO];
+	
 	// Switch to the editor view
 	[_transView transition:1 fromView:_serversView toView:_prefsView];
 }
 
-- (void)finishedPrefs:(NSDictionary *)prefsInfo
+- (void)finishedEditingPreferences
 {
-	NSLog(@"finished prefs:%@", prefsInfo);
-	
-	[_prefsView setKeyboardVisible:NO];	
-
-	NSMutableArray * prefs = [[self loadPrefs] mutableCopy];
-	if (prefsInfo)
-		{
-		if ([prefs count] <= 0)
-			[prefs addObject:prefsInfo];
-		else
-			[prefs replaceObjectAtIndex:0 withObject:prefsInfo];
-		[self savePrefs: prefs];
-		}
+	// Hide keyboard before switching in case it was visible.
+	[_prefsView setKeyboardVisible:NO];
 	
 	// Switch back to the list view
 	[_transView transition:2 fromView:_prefsView toView:_serversView];
@@ -682,9 +635,14 @@ int compareServers(id obj1, id obj2, void *reverse)
 	if (serverInfo)
 	{
 		if (_editingIndex == -1)
+		{
 			[servers addObject:serverInfo];
+		}
 		else
+		{
 			[servers replaceObjectAtIndex:_editingIndex withObject:serverInfo];
+		}
+		
 		[self saveServers: servers];
 		servers = [[self loadServers] mutableCopy];
 	}

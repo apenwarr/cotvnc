@@ -24,6 +24,7 @@ APP_OBJS=\
 	VNCScrollerView.o \
 	VNCPrefsView.o \
 	VNCBackgroundView.o \
+	VNCPreferences.o \
 	Shimmer.o
 
 VNC_OBJS=\

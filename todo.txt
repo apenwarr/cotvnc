@@ -6,7 +6,7 @@ vnsea todo list
 
 - clean out the remaining original commented out cotvnc code
 
-- improve makefile
+x improve makefile
 
 - rework EventFilter to be more UIKit specific
 
@@ -28,4 +28,8 @@ x modified keys don't work on windows with free RealVNC
 - clean up method names
 
 - get rid of type prefixes on variable names (i.e., b and w)
+
+- use the navigation bar correctly (i.e., one navbar instance)
+
+- create a model class to manage server list
 

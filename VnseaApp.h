@@ -88,12 +88,13 @@ enum
 - (void)saveServers:(NSArray *)theServers;
 //@}
 
-- (NSArray *)loadPrefs;
-- (void)savePrefs:(NSArray *)thePrefs;
-- (void)finishedPrefs:(NSDictionary *)prefInfo;
+//! @name Preferences
+//@{
+- (void)finishedEditingPreferences;
 - (void)displayPrefs;
-- (BOOL)showMouseTracks;
-// Gets called when first update from VNC protocol
+//@}
+
+//! @brief Called when the first frame from RFB protocol arrives.
 - (void)gotFirstFullScreenTransitionNow;
 
 - (void)_endedEditing;

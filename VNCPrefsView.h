@@ -20,10 +20,6 @@ enum _prefs_cell_indices
 	kMouseDownUpTracksIndex
 };
 
-//! Key for the mouse tracks preference.
-#define MOUSE_TRACKS @"MouseTracks"
-#define MENU_DISCONNECT @"Disconnect"
-
 /*!
  * @brief This view class allows users to edit global preferences.
  */
@@ -31,29 +27,27 @@ enum _prefs_cell_indices
 {
 	UINavigationBar * _navBar;
 	UIPreferencesTable * _table;
-	NSMutableDictionary * _prefsInfo;
 	id _delegate;
 	NSArray * _cells;
-	UISwitchControl * _mouseTracksSwitch, *_disconnectSwitch;
+	UISwitchControl * _mouseTracksSwitch;
+	UISwitchControl * _disconnectSwitch;
 }
 
-- (id)initWithFrame:(CGRect)frame ;
+- (id)initWithFrame:(CGRect)frame;
 
 - (void)setDelegate:(id)newDelegate;
 - (id)delegate;
 
-- (void)setPrefsInfo:(NSDictionary *)info;
+//! @brief Tells the receiver to update view controls based on current preference settings.
+- (void)updateViewFromPreferences;
 
 - (void)setKeyboardVisible:(BOOL)visible;
-
-- (BOOL)showMouseTracks;
-- (BOOL)disconnectOnMenuButton;
 
 @end
 
 @interface VNCPrefsView (DelegateMethods)
 
-//! Pass nil for serverInfo to cancel editing.
-- (void)finishedPrefs:(NSDictionary *)serverInfo;
+//! @brief Sent to the delegate when editing of preferences is finished.
+- (void)finishedEditingPreferences;
 
 @end

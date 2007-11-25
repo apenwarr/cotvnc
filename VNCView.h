@@ -147,7 +147,6 @@ typedef enum
 - (void)sendFunctionKeys:(id)sender;
 - (void)sendTabKey:(id)sender;
 
-- (BOOL)showMouseTracks;
 - (CGRect)scrollerFrame;
 - (void)setStartupTopLeftPt:(CGPoint)pt;
 
@@ -156,7 +155,6 @@ typedef enum
 @interface VNCView (DelegateMethods)
 
 - (void)closeConnection;
-- (BOOL)showMouseTracks;
 
 @end
 

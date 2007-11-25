@@ -11,9 +11,10 @@
 #import <UIKit/UIPreferencesTextTableCell.h>
 #import <UIKit/UIPreferencesControlTableCell.h>
 #import <UIKit/UINavigationItem.h>
+#import "VNCPreferences.h"
 
+//! @brief Navigation bar button index for the Back button.
 #define kServerListButton 1
-#define kAboutButton 0
 
 @implementation VNCPrefsView
 
@@ -67,7 +68,6 @@
 {
 	[_table release];
 	[_navBar release];
-	[_prefsInfo release];
 	[_cells release];
 	
 	[super dealloc];
@@ -88,66 +88,32 @@
 	[_table setKeyboardVisible:visible animated:NO];
 }
 
-- (void)setPrefsInfo:(NSDictionary *)info
+- (void)updateViewFromPreferences
 {
-	if (info == nil)
-	{
-		_prefsInfo =  [NSMutableDictionary dictionary];
-		// Setup Defaults Here
-		[_prefsInfo setObject:[NSNumber numberWithBool:YES] forKey:MOUSE_TRACKS];
-		[_prefsInfo setObject:[NSNumber numberWithBool:YES] forKey:MENU_DISCONNECT];
-	}
-	else
-	{
-		[_prefsInfo release];
-		_prefsInfo = [[info mutableCopy] retain];
-	}
-	
 	// Update cell values from the prefs info
-	[_mouseTracksSwitch setValue:[[_prefsInfo objectForKey:MOUSE_TRACKS] boolValue] ? 1.0f : 0.0f];
-	[_disconnectSwitch setValue:[[_prefsInfo objectForKey:MENU_DISCONNECT] boolValue] ? 1.0f : 0.0f];
+	[_mouseTracksSwitch setValue:[[VNCPreferences sharedPreferences] showMouseTracks] ? 1.0f : 0.0f];
+	[_disconnectSwitch setValue:[[VNCPreferences sharedPreferences] disconnectOnSuspend] ? 1.0f : 0.0f];
 	
-	if (info == nil)
-	{
-		_prefsInfo = nil;
-	}
 	[_table reloadData];
-}
-
-- (BOOL)disconnectOnMenuButton
-{
-	return [[_prefsInfo objectForKey:MENU_DISCONNECT] boolValue];
-}
-
-- (BOOL)showMouseTracks
-{
-	return [[_prefsInfo objectForKey:MOUSE_TRACKS] boolValue];
 }
 
 - (void)navigationBar:(id)navBar buttonClicked:(int)buttonIndex
 {
-	NSDictionary * resultDict;
-	
-	NSLog(@"Button Index %d", buttonIndex);
 	switch (buttonIndex)
 	{
 		// Save Prefs and go back
 		case kServerListButton:
 		{
-			if (_prefsInfo == nil)
-				_prefsInfo = [NSMutableDictionary dictionary];
-
-			[_prefsInfo setObject:[NSNumber numberWithBool:([_mouseTracksSwitch value] > 0.1)] forKey:MOUSE_TRACKS];
-			[_prefsInfo setObject:[NSNumber numberWithBool:([_disconnectSwitch value] > 0.1)] forKey:MENU_DISCONNECT];
-			
-			resultDict = _prefsInfo;			
+			// We use a greater than comparison here because floats are not always exact.
+			[[VNCPreferences sharedPreferences] setShowMouseTracks:([_mouseTracksSwitch value] > 0.1)];
+			[[VNCPreferences sharedPreferences] setDisconnectOnSuspend:([_disconnectSwitch value] > 0.1)];
 			break;
 		}
 	}
 	
-	if (_delegate && [_delegate respondsToSelector:@selector(finishedPrefs:)])
+	if (_delegate && [_delegate respondsToSelector:@selector(finishedEditingPreferences)])
 	{
-		[_delegate finishedPrefs:resultDict];
+		[_delegate finishedEditingPreferences];
 	}
 }
 

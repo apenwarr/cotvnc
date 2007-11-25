@@ -9,6 +9,7 @@
 #import "VNCScrollerView.h"
 #import "VNCView.h"
 #import "VNCMouseTracks.h"
+#import "VNCPreferences.h"
 
 //! Number of seconds to wait before sending a mouse down, during which we
 //! check to see if the user is really wanting to scroll.
@@ -177,7 +178,7 @@
 	[self sendMouseDown:theEvent];
 	
 	// Do mouse tracks
-	if ([_vncView showMouseTracks])
+	if ([[VNCPreferences sharedPreferences] showMouseTracks])
 	{
 		if (_windowPopupMouseDown != nil)
 		{
@@ -311,7 +312,7 @@
 
 	if (_inRemoteAction)
 	{
-		if ([_vncView showMouseTracks])
+		if ([[VNCPreferences sharedPreferences] showMouseTracks])
 		{
 			if (_windowPopupMouseUp != nil)
 			{
