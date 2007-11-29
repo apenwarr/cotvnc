@@ -22,6 +22,8 @@
 	{
 		CGRect subviewFrame;
 		
+		_nGroups = 2;
+
 		// Create nav bar
 		subviewFrame = CGRectMake(0.0f, 0.0f, frame.size.width, 48);
 		_navBar = [[UINavigationBar alloc] initWithFrame:subviewFrame];
@@ -99,15 +101,13 @@
 		[_pixelDepthControl selectSegment:1];
 		[pixelDepthCell addSubview:_pixelDepthControl];
 		
-		
 		_cells = [[NSArray arrayWithObjects:nameCell, addressCell, passwordCell, displayCell, sharedCell, viewOnlyCell, /*keepRemoteMouseVisibleCell,*/ pixelDepthCell,  nil] retain];
 		
 		// Create Delete Server button
 		subviewFrame = [_table frameOfPreferencesCellAtRow:0 inGroup:1];
 		_deleteCell = [[UIPreferencesDeleteTableCell alloc] initWithFrame:subviewFrame];
 		[[_deleteCell button] setTitle:NSLocalizedString(@"Delete Server", nil)];
-		[[_deleteCell button] addTarget:self action:@selector(deleteButtonPressed:) forEvents:kGSEventTypeButtonSelected];		
-
+		[[_deleteCell button] addTarget:self action:@selector(deleteButtonPressed:) forEvents:kGSEventTypeButtonSelected];
 	}
 	
 	return self;
@@ -207,15 +207,23 @@ NSString *vncDecryptPasswd(NSString *pnsEncrypted)
 	return vncDecryptPasswd(pns);
 }
 
+- (void) scrollTableToTop
+{
+	[_table scrollPointVisibleAtTopLeft: CGPointMake(0,0)];	
+}
+
 - (void)setServerInfo:(NSDictionary *)info
 {
-	[[_deleteCell button] setEnabled: (info == nil ? NO : YES)];
+	[self scrollTableToTop];
+	
 	if (info == nil)
 	{
+		_nGroups = 1;
 		_serverInfo =  [NSMutableDictionary dictionary];
 	}	
 	else
 	{
+		_nGroups = 2;
 		[_serverInfo release];
 		_serverInfo = [[info mutableCopy] retain];
 	}
@@ -335,7 +343,8 @@ NSString *vncDecryptPasswd(NSString *pnsEncrypted)
 
 - (int)numberOfGroupsInPreferencesTable:(id)fp8
 {
-	return 2;
+	NSLog(@"Number groups in table %@", _serverInfo);
+	return _nGroups;
 }
 
 - (id)preferencesTable:(id)prefsTable cellForRow:(int)rowIndex inGroup:(int)groupIndex
@@ -352,7 +361,6 @@ NSString *vncDecryptPasswd(NSString *pnsEncrypted)
 
 - (int)preferencesTable:(id)prefsTable numberOfRowsInGroup:(int)groupIndex
 {
-	NSLog(@"in pref rows %x", _serverInfo);
 	if (groupIndex == 0)
 	{
 		return [_cells count];

@@ -40,9 +40,11 @@ enum _server_info_cell_indices
 	UISwitchControl * _viewOnlySwitch, *_keepRemoteMouseVisibleSwitch;
 	UISegmentedControl * _pixelDepthControl;
 	UIPreferencesDeleteTableCell * _deleteCell;
+	int _nGroups;
 }
 
 - (id)initWithFrame:(CGRect)frame;
+- (void) scrollTableToTop;
 
 - (void)setDelegate:(id)newDelegate;
 - (id)delegate;

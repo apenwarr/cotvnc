@@ -114,6 +114,17 @@ int compareServers(id obj1, id obj2, void *reverse)
 
 - (void)applicationSuspend:(GSEventRef)event
 {
+	CGImageRef defaultPNG;
+	
+	defaultPNG = [self createApplicationDefaultPNG];
+  
+	NSString *pathToDefault = [NSString stringWithFormat:@"%@/Default.png", [[NSBundle mainBundle] bundlePath]];
+	NSURL *urlToDefault = [NSURL fileURLWithPath:pathToDefault];
+	CGImageDestinationRef dest = CGImageDestinationCreateWithURL((CFURLRef)urlToDefault, CFSTR("public.png")/*kUTTypePNG*/, 1, NULL);
+	CGImageDestinationAddImage(dest, defaultPNG, NULL);
+	CGImageDestinationFinalize(dest);
+	CFRelease(defaultPNG);
+
 	if ([[VNCPreferences sharedPreferences] disconnectOnSuspend] || !_connection)
 	{
 		[self applicationWillTerminate];
