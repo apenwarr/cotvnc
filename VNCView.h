@@ -92,6 +92,8 @@ typedef enum
 - (void)setDelegate:(id)theDelegate;
 //@}
 
+-(void)toggleViewOnly;
+
 - (bool)isFirstDisplay;
 
 //! @name Controls and keyboard

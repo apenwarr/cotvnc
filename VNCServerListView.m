@@ -225,7 +225,7 @@ extern id UIImageGetNavigationBarAddButton();
 		else
 		{
 			NSDate *dtLastConnect = [NSDate dateWithTimeIntervalSinceReferenceDate: [nb doubleValue]];
-			[cell setTitle:[dtLastConnect descriptionWithCalendarFormat:@"%b %d %I:%M %p" timeZone:nil locale:nil]];
+			[cell setTitle:[dtLastConnect descriptionWithCalendarFormat:@"%b %1d %I:%M %p" timeZone:nil locale:nil]];
 		}
 		
 		[[cell titleTextLabel] setFont:_lastConnectFont];

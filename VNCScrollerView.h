@@ -56,6 +56,8 @@ typedef enum {
 	GSEventRef _autoLastDragEvent;
 }
 
+-(void)toggleViewOnly;
+
 - (void)setEventFilter:(EventFilter *)filter;
 - (void)cleanUpMouseTracks;
 

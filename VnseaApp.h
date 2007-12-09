@@ -80,6 +80,7 @@ enum
 	BOOL _closingConnection;	//!< True if the connection is intentionally being closed.
 	UIAlertSheet * _connectAlert;	//!< Sheet saying we're connecting to a server.
 	int _lastAlertButtonIndexClicked;
+	NSTimer *_statusDoubleTapTimer;
 }
 
 //! @name Server list I/O

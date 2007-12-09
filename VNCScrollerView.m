@@ -38,6 +38,12 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 	_scrollTimer = nil;
 }
 
+-(void)toggleViewOnly
+{
+	_viewOnly = !_viewOnly;
+	[_vncView enableControlsForViewOnly: _viewOnly];
+}
+
 - (void)setViewOnly:(bool)isViewOnly
 {
 	_viewOnly = isViewOnly;

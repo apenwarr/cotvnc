@@ -322,7 +322,7 @@
 // Bring up the Helper Functions Popup window using AlertSheet as the basis
 - (void)showHelperFunctions:(id)sender
 {
-	UIAlertSheet *downloader = [[UIAlertSheet alloc ] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 350.0f) ];	
+	UIAlertSheet *downloader = [[UIAlertSheet alloc ] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 370.0f) ];	
 
 	UITextLabel *txtLabel = [[UITextLabel alloc] initWithFrame:CGRectMake(0, 32, 280, 32)];
 	
@@ -517,6 +517,14 @@
 	[aButton setTitle:@"= Ctrl"];
 	[aButton setFrame:CGRectMake(80, 222, 70, 32)];
 	[downloader addSubview:aButton];
+
+	aButton = [[UIPushButton alloc] initWithTitle:@"Toggle View Only - Double Tap top statusbar" autosizesToFit:NO];
+	[aButton setFrame:CGRectMake(0, 245, 280, 32)];
+	[aButton setDrawsShadow:YES];
+	[aButton setDrawContentsCentered:YES];
+	[aButton setShowPressFeedback:YES];
+	[aButton addTarget:self action:@selector(sendTabKey:) forEvents:kUIControlEventMouseUpInside];
+	[downloader addSubview:aButton];
 	
 	CFRelease(font);
 
@@ -534,10 +542,10 @@
 	[downloader _slideSheetOut:YES];
 	[downloader layoutAnimated:YES];
 	[downloader popupAlertAnimated:YES atOffset:0.0];
-	[downloader setFrame:CGRectMake(0,60,330,350)];
+	[downloader setFrame:CGRectMake(0,60,330,370)];
 	CGRect rcFrame = [uibutton frame];
 	CGRect rcFrameTop = [downloader frame];	
-	[uibutton setFrame:CGRectMake(rcFrame.origin.x, rcFrameTop.size.height - rcFrame.size.height-rcFrame.size.height,rcFrame.size.width,rcFrame.size.height)];
+	[uibutton setFrame:CGRectMake(rcFrame.origin.x, rcFrameTop.size.height - rcFrame.size.height-rcFrame.size.height-3,rcFrame.size.width,rcFrame.size.height)];
 }
 
 - (void)toggleFitWidthHeight:(id)sender
@@ -699,6 +707,10 @@
 	return _connection;
 }
 
+-(void)toggleViewOnly
+{
+	[_scroller toggleViewOnly];
+}
 //! This method is invoked before the VNCView is displayed to the user, so
 //! that the controls on the controls bar can be properly enabled or disabled
 //! based on their relevance if view only mode is enabled. For instance,
@@ -707,12 +719,34 @@
 - (void)enableControlsForViewOnly:(bool)isViewOnly
 {
 	bool notViewOnly = !isViewOnly;
+
+	if (isViewOnly)
+		{
+		[_keyboardButton removeFromSuperview];
+		[_shiftButton removeFromSuperview];
+		[_commandButton removeFromSuperview];
+		[_optionButton removeFromSuperview];
+		[_controlButton removeFromSuperview];
+		[_rightMouseButton removeFromSuperview];
+		}
+	else
+		{
+		[_controlsView addSubview: _keyboardButton];
+		[_controlsView addSubview: _shiftButton];
+		[_controlsView addSubview: _commandButton];
+		[_controlsView addSubview: _optionButton];
+		[_controlsView addSubview: _controlButton];
+		[_controlsView addSubview: _rightMouseButton];
+		}
+/*	
 	[_keyboardButton setEnabled:notViewOnly];
 	[_shiftButton setEnabled:notViewOnly];
 	[_commandButton setEnabled:notViewOnly];
 	[_optionButton setEnabled:notViewOnly];
 	[_controlButton setEnabled:notViewOnly];
 	[_rightMouseButton setEnabled:notViewOnly];
+*/
+	
 }
 
 //! The frame buffer has been created by the connection object and is

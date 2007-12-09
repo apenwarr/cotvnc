@@ -733,8 +733,31 @@ int compareServers(id obj1, id obj2, void *reverse)
 	NSLog(@"accel: x=%f, y=%f, z=%f", x, y, z);
 }
 
+-(void)statusDoubleTap:(id)timer
+{
+	if (_connection)
+		{
+		[_vncView toggleControls];
+		[_statusDoubleTapTimer release];
+		_statusDoubleTapTimer = nil;
+		}
+}
+
 - (void)statusBarMouseDown:(GSEventRef)event
 {
+	if (_connection)
+		{
+		if (_statusDoubleTapTimer != nil)
+			{
+			[_statusDoubleTapTimer invalidate];
+			[_statusDoubleTapTimer release];
+			_statusDoubleTapTimer = nil;
+			[_vncView toggleViewOnly];
+			}
+		else
+			_statusDoubleTapTimer = [[NSTimer scheduledTimerWithTimeInterval:.4 target:self selector:@selector(statusDoubleTap:) userInfo:nil repeats:NO] retain];
+		}
+
 //	NSLog(@"statusBarMouseDown:%@", event);
 }
 
@@ -745,10 +768,6 @@ int compareServers(id obj1, id obj2, void *reverse)
 
 - (void)statusBarMouseUp:(GSEventRef)event
 {
-	if (_connection)
-	{
-		[_vncView toggleControls];
-	}
 }
 /*
 - (void)volumeChanged:(GSEvent *)event
