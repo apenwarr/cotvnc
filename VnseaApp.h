@@ -81,8 +81,10 @@ enum
 	UIAlertSheet * _connectAlert;	//!< Sheet saying we're connecting to a server.
 	int _lastAlertButtonIndexClicked;
 	NSTimer *_statusDoubleTapTimer;
+	NSString *_autoConnectHost;
 }
-
+-(void)autoConnect:(NSTimer *)timer;
+-(id)_initWithArgc:(int)cArgs argv:(const char **)argv;
 //! @name Server list I/O
 //@{
 - (NSArray *)loadServers;
@@ -103,6 +105,7 @@ enum
 
 //! @name List and editor delegate messages
 //@{
+- (int)findServerIndex:(NSString *)serverName;
 - (void)serverSelected:(int)serverIndex;
 - (void)editServer:(int)serverIndex;
 - (void)addNewServer;

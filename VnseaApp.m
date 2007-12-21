@@ -53,6 +53,20 @@ int compareServers(id obj1, id obj2, void *reverse)
 
 @implementation VnseaApp
 
+-(id)_initWithArgc:(int)cArgs argv:(const char **)argv
+{
+	NSLog(@"CmdLine args count = %d, %s", cArgs, argv[0]);
+	_autoConnectHost = nil;
+	if (cArgs == 3)
+		{
+		if (strcmp(argv[1], "-s") == 0)
+			{
+			_autoConnectHost = [[NSString stringWithFormat:@"%s", argv[2]] retain];
+			}
+		}
+	return [super _initWithArgc:cArgs argv:argv];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)unused
 {
 	// We ignore SIGPIPE instead of having the default handler terminate us when
@@ -110,6 +124,26 @@ int compareServers(id obj1, id obj2, void *reverse)
 	
 	// Kick off a thread to check for a new version.
 	[NSThread detachNewThreadSelector:@selector(checkForUpdate:) toTarget:self withObject:nil];
+
+	int iServer;
+	
+	NSLog(@"Auto connect host = %@", _autoConnectHost);
+	if (_autoConnectHost != nil && (iServer = [self findServerIndex: _autoConnectHost]) >= 0)
+		{
+		NSLog(@"Lauching connection %d", iServer);
+		[[NSTimer scheduledTimerWithTimeInterval:.2 target:self selector:@selector(autoConnect:) userInfo:[NSNumber numberWithInt:iServer] repeats:NO] retain];
+		}
+	else
+		_autoConnectHost = nil;
+}
+
+-(void)autoConnect:(NSTimer *)timer
+{
+	NSLog(@"In autoconnect");
+	int iServer = [[timer userInfo] intValue];
+	
+	[timer release];
+	[self serverSelected: iServer];
 }
 
 - (void)applicationSuspend:(GSEventRef)event
@@ -306,8 +340,28 @@ int compareServers(id obj1, id obj2, void *reverse)
 	[self saveServers: servers];
 }
 
+- (int)findServerIndex:(NSString *)serverName
+{
+	int i;
+	
+	NSArray * servers = [self loadServers];
+	
+	for(i=0;i<[servers count];i++)
+		{
+		NSDictionary *serverInfo = [servers objectAtIndex: i];
+		NSString *name = [serverInfo objectForKey:RFB_NAME];
+		
+		if ([name compare: serverName] == NSOrderedSame)
+			{
+			return i;
+			}
+		}
+	return -1;
+}
+
 - (void)serverSelected:(int)serverIndex
 {
+	NSLog(@"In server Selected");
 	// Disable the server list view.
 	[_serversView setEnabled:NO];
 	
@@ -557,7 +611,12 @@ int compareServers(id obj1, id obj2, void *reverse)
 		[_vncView setConnection: nil];
 		_connection = nil;
 		[_serversView setServerList:servers];
+		if (_autoConnectHost != nil)
+		{
+		exit(1);
+		}
 	}
+	
 }
 
 - (void)alertSheet:(id)sheet buttonClicked:(int)buttonIndex
