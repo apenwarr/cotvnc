@@ -40,7 +40,7 @@ typedef enum {
 {
 	EventFilter * _eventFilter;		//!< Event generation and queue object.
 	bool _inRemoteAction;			//!< Are we currently controlling the remote mouse?
-	NSTimer * _tapTimer;	//!< Timer used to delay first mouse down.
+	NSTimer * _tapTimer, *_doubleTapTimer;	//!< Timer used to delay first mouse down.
 	NSTimer *_scrollTimer;	//!<
 	bool _viewOnly;			//!< Are we only watching the remote computer?
 	float _fDistancePrev;
@@ -54,8 +54,9 @@ typedef enum {
 	VNCMouseTracks * _windowPopupMouseUp;
 	AutoScrollerTypes _currentAutoScrollerType;
 	GSEventRef _autoLastDragEvent;
+	bool _bZoomedIn;
+	float _preDoubleClickZoom;
 }
-
 -(void)toggleViewOnly;
 
 - (void)setEventFilter:(EventFilter *)filter;

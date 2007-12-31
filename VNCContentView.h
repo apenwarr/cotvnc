@@ -22,7 +22,6 @@
     CGRect _frame;
 	id _delegate;
 }
-
 - (void)setDelegate:(id)newDelegate;
 - (id)delegate;
 

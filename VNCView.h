@@ -85,7 +85,6 @@ typedef enum
 	CGPoint _ptStartupTopLeft;	//!< When we get our first display scroll to this point.
 	NSString *_remoteComputerName;
 }
-
 //! @name Delegate
 //@{
 - (id)delegate;

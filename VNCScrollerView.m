@@ -36,6 +36,8 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 	_windowPopupScalePercent = nil;
 	_windowPopupMouseDown = nil;
 	_scrollTimer = nil;
+	_doubleTapTimer = nil;
+	_bZoomedIn = false;
 }
 
 -(void)toggleViewOnly
@@ -149,6 +151,13 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 }
 
 
+- (void)handleDoubleTapTimer:(NSTimer *)timer
+{
+	NSLog(@"Double click expired");
+	[_doubleTapTimer release];
+	_doubleTapTimer = nil;
+}
+
 - (void)handleTapTimer:(NSTimer *)timer
 {
 	_inRemoteAction = true;
@@ -160,7 +169,7 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 	[self sendMouseDown:theEvent];
 	
 	// Do mouse tracks
-	if ([[VNCPreferences sharedPreferences] showMouseTracks])
+	if ([[VNCPreferences sharedPreferences] showMouseTracks] && !_viewOnly)
 	{
 		if (_windowPopupMouseDown != nil)
 		{
@@ -222,7 +231,7 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 	}
 	
 	if (isChording || _viewOnly)
-	{
+	{		
 		// If the timer exists, it means we haven't yet sent the single finger mouse
 		// down. Kill the timer so that the event is never sent.
 		if (_tapTimer)
@@ -232,6 +241,34 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 			[_tapTimer release];
 			_tapTimer = nil;
 		}
+		if (_viewOnly && !isChording)
+			{
+			if (!_doubleTapTimer)
+				_doubleTapTimer = [[NSTimer scheduledTimerWithTimeInterval:.2 target:self selector:@selector(handleDoubleTapTimer:) userInfo:nil repeats:NO] retain];
+			else
+				{
+				float newScale;
+				
+				NSLog(@"Double clicked it");
+				[_doubleTapTimer invalidate];
+				[_doubleTapTimer release];
+				_doubleTapTimer = nil;
+				CGPoint ptCenter = GSEventGetInnerMostPathPosition(theEvent);
+				
+				if (_bZoomedIn)
+					{
+					newScale = _preDoubleClickZoom;
+					_bZoomedIn = false;
+					}
+				else
+					{
+					_preDoubleClickZoom = [_vncView getScalePercent];
+					newScale = 1.0;
+					_bZoomedIn = true;
+					}
+				[self changeViewPinnedToPoint:ptCenter scale:newScale orientation:[_vncView getOrientationState] force:true];
+				}
+			}
 		
 		// Need to send a mouse up when switching from remote mouse to scrolling.
 		// This assumes that _inRemoteAction will only ever be true after a mouse
@@ -248,8 +285,8 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 	else
 	{
 		// Keep this event around for a bit.
-		CFRetain(theEvent);
 		
+		CFRetain(theEvent);
 		// We don't want to send the mouse down event quite yet, because we
 		// need to wait to see if this is really a chording event for scrolling.
 		// So create a timer that when it fires will send the original event.
@@ -295,7 +332,7 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 
 	if (_inRemoteAction)
 	{
-		if ([[VNCPreferences sharedPreferences] showMouseTracks])
+		if ([[VNCPreferences sharedPreferences] showMouseTracks] && !_viewOnly)
 		{
 			if (_windowPopupMouseUp != nil)
 			{
@@ -455,7 +492,8 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 				// Update the popup window showing the current scale percentage.
 				[_windowPopupScalePercent setTextPercent: fNewScale];
 				[_windowPopupScalePercent setCenterLocation: ptCenter]; 
-				
+			
+				_bZoomedIn = false;
 				// Zoom the view.
 				[self changeViewPinnedToPoint:ptCenter scale:fNewScale orientation:[_vncView getOrientationState] force:true];
 			}
@@ -475,7 +513,14 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 		}
 	}
 
-	
+	if (_doubleTapTimer)
+		{
+		NSLog(@"Double clicked cancelled");
+		[_doubleTapTimer invalidate];
+		[_doubleTapTimer release];
+		_doubleTapTimer = nil;
+		}
+
 	if (_tapTimer)
 	{
 		[_tapTimer fire];

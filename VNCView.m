@@ -518,7 +518,7 @@
 	[aButton setFrame:CGRectMake(80, 222, 70, 32)];
 	[downloader addSubview:aButton];
 
-	aButton = [[UIPushButton alloc] initWithTitle:@"Toggle View Only - Double Tap top statusbar" autosizesToFit:NO];
+	aButton = [[UIPushButton alloc] initWithTitle:@"Toggle View Only - Single Tap top statusbar" autosizesToFit:NO];
 	[aButton setFrame:CGRectMake(0, 245, 280, 32)];
 	[aButton setDrawsShadow:YES];
 	[aButton setDrawContentsCentered:YES];
@@ -728,6 +728,7 @@
 		[_optionButton removeFromSuperview];
 		[_controlButton removeFromSuperview];
 		[_rightMouseButton removeFromSuperview];
+		[_delegate setStatusBarMode: kUIStatusBarBlack duration:0];
 		}
 	else
 		{
@@ -737,6 +738,7 @@
 		[_controlsView addSubview: _optionButton];
 		[_controlsView addSubview: _controlButton];
 		[_controlsView addSubview: _rightMouseButton];
+		[_delegate setStatusBarMode: kUIStatusBarWhite duration:0];
 		}
 /*	
 	[_keyboardButton setEnabled:notViewOnly];
@@ -929,7 +931,8 @@
 		newRemoteSize.height = newRemoteSize.height  * [_screenView getScalePercent];
 
 //		NSLog(@"New Screen View = %f %f", newRemoteSize.width, newRemoteSize.height);
-		[_screenView setRemoteDisplaySize:newRemoteSize animate:!bForce];
+//		Animate if special double click zoom
+		[_screenView setRemoteDisplaySize:newRemoteSize animate:bForce == 2 ? YES : !bForce];
 	
 		// Reset our scroller's content size.
 		[_scroller setContentSize:newRemoteSize];

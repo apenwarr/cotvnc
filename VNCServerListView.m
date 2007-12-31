@@ -89,7 +89,7 @@ extern id UIImageGetNavigationBarAddButton();
 		[_preferencesButton setEnabled: YES];
 
 		// Setup server table
-		subframe = CGRectMake(0, navBarSize.height, frame.size.width, frame.size.height - navBarSize.height - kButtonBarHeight);
+		subframe = CGRectMake(0, navBarSize.height, frame.size.width, frame.size.height - navBarSize.height - kButtonBarHeight-1);
 		_serverColumn = [[UITableColumn alloc] initWithTitle:@"Servers" identifier:@"servers" width:frame.size.width - (150)];
 		_serverLastConnectColumn = [[UITableColumn alloc] initWithTitle:@"Last Connect" identifier:@"lastConnect" width:150];
 		_serverTable = [[UITable alloc] initWithFrame:subframe];

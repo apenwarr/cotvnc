@@ -81,6 +81,9 @@ int compareServers(id obj1, id obj2, void *reverse)
 	
 	// Setup main view
     _mainView = [[UIView alloc] initWithFrame: frame];
+	[_mainView setOpaque:YES];
+	[_mainView setBackgroundColor:GSColorCreateColorWithDeviceRGBA(0,0,0, 1)];
+
 	
 	// Transition view
 	_transView = [[UITransitionView alloc] initWithFrame:frame];
@@ -148,17 +151,18 @@ int compareServers(id obj1, id obj2, void *reverse)
 
 - (void)applicationSuspend:(GSEventRef)event
 {
+/*
 	CGImageRef defaultPNG;
 	
 	defaultPNG = [self createApplicationDefaultPNG];
   
 	NSString *pathToDefault = [NSString stringWithFormat:@"%@/Default.png", [[NSBundle mainBundle] bundlePath]];
 	NSURL *urlToDefault = [NSURL fileURLWithPath:pathToDefault];
-	CGImageDestinationRef dest = CGImageDestinationCreateWithURL((CFURLRef)urlToDefault, CFSTR("public.png")/*kUTTypePNG*/, 1, NULL);
+	CGImageDestinationRef dest = CGImageDestinationCreateWithURL((CFURLRef)urlToDefault, CFSTR("public.png"), 1, NULL);
 	CGImageDestinationAddImage(dest, defaultPNG, NULL);
 	CGImageDestinationFinalize(dest);
 	CFRelease(defaultPNG);
-
+*/
 	if ([[VNCPreferences sharedPreferences] disconnectOnSuspend] || !_connection)
 	{
 		[self applicationWillTerminate];
@@ -801,9 +805,9 @@ int compareServers(id obj1, id obj2, void *reverse)
 {
 	if (_connection)
 		{
-		[_vncView toggleControls];
 		[_statusDoubleTapTimer release];
 		_statusDoubleTapTimer = nil;
+		[_vncView toggleViewOnly];
 		}
 }
 
@@ -816,7 +820,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 			[_statusDoubleTapTimer invalidate];
 			[_statusDoubleTapTimer release];
 			_statusDoubleTapTimer = nil;
-			[_vncView toggleViewOnly];
+			[_vncView toggleControls];
 			}
 		else
 			_statusDoubleTapTimer = [[NSTimer scheduledTimerWithTimeInterval:.4 target:self selector:@selector(statusDoubleTap:) userInfo:nil repeats:NO] retain];
