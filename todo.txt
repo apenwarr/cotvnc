@@ -14,22 +14,22 @@ x modified keys don't work on windows with free RealVNC
 
 - separate EventFilter into a filter and a queue, thus allowing the filter to be changed more easily
 
-- get rid of emulation buttons and multitap emulation stuff
+- get rid of emulation buttons and multitap emulation stuff in EventFilter
 
-- text cursor sometimes appears on top of screen view after keyboard is made visible
+- text insertion cursor sometimes appears on top of screen view after keyboard is made visible
 
 - rotation:
 	- always revert to portrait mode in the list view
 	- rotate the scroller so the scroll bars always appear on the right and bottom sides
 
-- zooming:
-	- make use of gestures and the built-in functionality in UIKit
+- clean up method names to match Objective-C standard
 
-- clean up method names
-
-- get rid of type prefixes on variable names (i.e., b and w)
+- get rid of type prefixes on variable names (i.e., b, f, and w)
 
 - use the navigation bar correctly (i.e., one navbar instance)
 
 - create a model class to manage server list
 
+- clean up bools; pick one or the other of BOOl/bool and stick with it
+
+- refactor the VNCView hierarchy to make better/proper use of delegation and code modularity

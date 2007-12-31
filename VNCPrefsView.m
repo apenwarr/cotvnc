@@ -16,6 +16,14 @@
 //! @brief Navigation bar button index for the Back button.
 #define kServerListButton 1
 
+//! Converts a boolean value to the floating point on or off value for a UISwitchControl.
+#define BOOL_TO_SWITCH_VALUE(b) ((b) ? 1.0f : 0.0f)
+
+//! Takes a UISwitchControl and returns a boolean from its value.
+//!
+//! We use a greater than comparison here because floats are not always exact.
+#define SWITCH_VALUE_TO_BOOL(s) ([(s) value] > 0.1)
+
 @implementation VNCPrefsView
 
 - (id)initWithFrame:(CGRect)frame
@@ -42,6 +50,7 @@
 		[_table setDelegate:self];
 		[self addSubview:_table];
 		
+		// Show mouse tracks cell.
 		UIPreferencesControlTableCell * mouseTracksCell = [[UIPreferencesControlTableCell alloc] init];
 		[mouseTracksCell setTitle:NSLocalizedString(@"Show Mouse Tracks", nil)];
 		
@@ -50,15 +59,35 @@
 		[_mouseTracksSwitch setOrigin:controlOrigin];
 		[mouseTracksCell setControl:_mouseTracksSwitch];
 
+		// Disconnect on suspend cell.
 		UIPreferencesControlTableCell * disconnectCell = [[UIPreferencesControlTableCell alloc] init];
 		[disconnectCell setTitle:NSLocalizedString(@"Exit App on Suspend", nil)];
 		
-		controlOrigin = CGPointMake(200, 9);
+//		controlOrigin = CGPointMake(200, 9);
 		_disconnectSwitch = [[UISwitchControl alloc] init];
 		[_disconnectSwitch setOrigin:controlOrigin];
 		[disconnectCell setControl:_disconnectSwitch];
+
+		// Show scroll icon cell.
+		UIPreferencesControlTableCell * showScrollIconCell = [[UIPreferencesControlTableCell alloc] init];
+		[showScrollIconCell setTitle:NSLocalizedString(@"Show scrolling icon", nil)];
 		
-		_cells = [[NSArray arrayWithObjects:mouseTracksCell, disconnectCell, nil] retain];
+//		controlOrigin = CGPointMake(200, 9);
+		_showScrollIconSwitch = [[UISwitchControl alloc] init];
+		[_showScrollIconSwitch setOrigin:controlOrigin];
+		[showScrollIconCell setControl:_showScrollIconSwitch];
+
+		// Show zoom percent cell.
+		UIPreferencesControlTableCell * showZoomPercentCell = [[UIPreferencesControlTableCell alloc] init];
+		[showZoomPercentCell setTitle:NSLocalizedString(@"Show zoom scale", nil)];
+		
+//		controlOrigin = CGPointMake(200, 9);
+		_showZoomPercentSwitch = [[UISwitchControl alloc] init];
+		[_showZoomPercentSwitch setOrigin:controlOrigin];
+		[showZoomPercentCell setControl:_showZoomPercentSwitch];
+		
+		// Create array of cells.
+		_cells = [[NSArray arrayWithObjects:mouseTracksCell, disconnectCell, showScrollIconCell, showZoomPercentCell, nil] retain];
 	}
 	
 	return self;
@@ -91,8 +120,10 @@
 - (void)updateViewFromPreferences
 {
 	// Update cell values from the prefs info
-	[_mouseTracksSwitch setValue:[[VNCPreferences sharedPreferences] showMouseTracks] ? 1.0f : 0.0f];
-	[_disconnectSwitch setValue:[[VNCPreferences sharedPreferences] disconnectOnSuspend] ? 1.0f : 0.0f];
+	[_mouseTracksSwitch setValue:BOOL_TO_SWITCH_VALUE([[VNCPreferences sharedPreferences] showMouseTracks])];
+	[_disconnectSwitch setValue:BOOL_TO_SWITCH_VALUE([[VNCPreferences sharedPreferences] disconnectOnSuspend])];
+	[_showScrollIconSwitch setValue:BOOL_TO_SWITCH_VALUE([[VNCPreferences sharedPreferences] showScrollingIcon])];
+	[_showZoomPercentSwitch setValue:BOOL_TO_SWITCH_VALUE([[VNCPreferences sharedPreferences] showZoomPercent])];
 	
 	[_table reloadData];
 }
@@ -104,9 +135,10 @@
 		// Save Prefs and go back
 		case kServerListButton:
 		{
-			// We use a greater than comparison here because floats are not always exact.
-			[[VNCPreferences sharedPreferences] setShowMouseTracks:([_mouseTracksSwitch value] > 0.1)];
-			[[VNCPreferences sharedPreferences] setDisconnectOnSuspend:([_disconnectSwitch value] > 0.1)];
+			[[VNCPreferences sharedPreferences] setShowMouseTracks:SWITCH_VALUE_TO_BOOL(_mouseTracksSwitch)];
+			[[VNCPreferences sharedPreferences] setDisconnectOnSuspend:SWITCH_VALUE_TO_BOOL(_disconnectSwitch)];
+			[[VNCPreferences sharedPreferences] setShowScrollingIcon:SWITCH_VALUE_TO_BOOL(_showScrollIconSwitch)];
+			[[VNCPreferences sharedPreferences] setShowZoomPercent:SWITCH_VALUE_TO_BOOL(_showZoomPercentSwitch)];
 			break;
 		}
 	}

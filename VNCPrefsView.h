@@ -31,6 +31,8 @@ enum _prefs_cell_indices
 	NSArray * _cells;
 	UISwitchControl * _mouseTracksSwitch;
 	UISwitchControl * _disconnectSwitch;
+	UISwitchControl * _showScrollIconSwitch;
+	UISwitchControl * _showZoomPercentSwitch;
 }
 
 - (id)initWithFrame:(CGRect)frame;

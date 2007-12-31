@@ -541,10 +541,11 @@ int compareServers(id obj1, id obj2, void *reverse)
 	// Don't need to display an alert if we intentionally closed the connection.
 	if (!_closingConnection)
 	{
+		//! @todo Fix this hack! Totally non-localisable.
 		if ([reason rangeOfString:@"security type"].location != NSNotFound)
-			{
+		{
 			reason = [reason stringByAppendingString:@"\nPlease turn off authentication encryption on your VNC server"];
-			}
+		}
 			
 		UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
 					initWithTitle:NSLocalizedString(@"Connection terminated", nil)
@@ -573,10 +574,10 @@ int compareServers(id obj1, id obj2, void *reverse)
 	
 	_closingConnection = NO;
 	
-	CGRect rcFrame = [_window frame];
-	rcFrame.origin.y = 20;
-	[_window setFrame: rcFrame];
-	[self setStatusBarMode:kUIStatusBarWhite duration:1];
+//	CGRect rcFrame = [_window frame];
+//	rcFrame.origin.y = 20;
+//	[_window setFrame: rcFrame];
+//	[self setStatusBarMode:kUIStatusBarWhite duration:1];
 	
 	// Switch back to the list view only if we got to the VNC Server View
 	if ([_vncView isFirstDisplay])

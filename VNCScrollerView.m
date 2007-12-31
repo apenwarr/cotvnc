@@ -222,16 +222,18 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 		if (_windowPopupScalePercent == nil)
 		{
 			CGPoint ptCenter = UIMidPointBetweenPoints(pt1, pt2);
+			bool showPopup = [[VNCPreferences sharedPreferences] showScrollingIcon];
 			
-			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0, 0, 60, 60) centered:true show:true orientation:[_vncView orientationDegree] style:kPopupStyleDrag];
+			_windowPopupScalePercent = [[VNCPopupWindow alloc] initWithFrame: CGRectMake(0, 0, POPUP_WINDOW_WIDTH, POPUP_WINDOW_HEIGHT) centered:true show:showPopup orientation:[_vncView orientationDegree] style:kPopupStyleDrag];
 			[_windowPopupScalePercent setCenterLocation: ptCenter]; 
 			[_windowPopupScalePercent setTextPercent: [_vncView getScalePercent]];
+			
 			_isZooming = false;
 		}
 	}
 	
 	if (isChording || _viewOnly)
-	{		
+	{
 		// If the timer exists, it means we haven't yet sent the single finger mouse
 		// down. Kill the timer so that the event is never sent.
 		if (_tapTimer)
@@ -285,8 +287,8 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 	else
 	{
 		// Keep this event around for a bit.
-		
 		CFRetain(theEvent);
+		
 		// We don't want to send the mouse down event quite yet, because we
 		// need to wait to see if this is really a chording event for scrolling.
 		// So create a timer that when it fires will send the original event.
@@ -474,19 +476,24 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 		float fHowFar = fDistance - _fDistancePrev;
 		CGPoint ptCenter = UIMidPointBetweenPoints(pt1, pt2);
 
+		// Check if the distance between fingers has crossed a threshold. The threshold value
+		// depends on if we're in view-only mode, or are already zooming.
 		if (abs(fHowFar) > (_viewOnly || _isZooming ? 3 : 20))
 		{
 			float fOldScale = [_vncView getScalePercent];
 			float fNewScale = fOldScale + (0.0025 * fHowFar);
 			
 			// Snap to 100%.
-			if (fabsf(1.0 - fNewScale) < 0.005)
+			if (fabsf(1.0 - fNewScale) < 0.007)
 			{
 				fNewScale = 1.0;
 			}
 			
 			_isZooming = true;
 			[_windowPopupScalePercent setStyleWindow: kPopupStyleScalePercent];
+			[_windowPopupScalePercent setHidden:![[VNCPreferences sharedPreferences] showZoomPercent]];
+			
+			// If the scale is within bounds, update zoom.
 			if ((fNewScale > [_vncView scaleFitCurrentScreen: kScaleFitWhole] || (fNewScale > fOldScale)) && fNewScale < kMaxScale)
 			{
 				// Update the popup window showing the current scale percentage.
@@ -503,10 +510,16 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 		}
 		else
 		{
+			// Either we're only scrolling, or the distance between fingers hasn't changed enough
+			// to warrant updating the zoom amount. In both cases, all we have to do here is
+			// update the popup window location. For chorded scrolling, we'll let the superview
+			// handle the actual scrolling down below.
 			[_windowPopupScalePercent setCenterLocation: ptCenter];
 		}
 
-			
+		// Chorded events are never passed to the remote server or handled by the
+		// UIScroller superclass (the code below) if we're in view-only mode or are
+		// zooming.
 		if (_viewOnly || _isZooming)
 		{
 			return;
@@ -521,6 +534,8 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 		_doubleTapTimer = nil;
 		}
 
+	// If the user starts dragging her finger before the tap timer expires, then we need
+	// to send the mouse down before any mouse moved events are sent to the server.
 	if (_tapTimer)
 	{
 		[_tapTimer fire];

@@ -12,6 +12,8 @@ NSString * kShowMouseTracksPrefKey = @"MouseTracks";
 NSString * kDisconnectOnSuspendPrefKey = @"Disconnect";
 NSString * kMouseDownDelayPrefKey = @"MouseDownDelay";
 NSString * kMouseTracksFadeTimePrefKey = @"MouseTracksFadeTime";
+NSString * kShowScrollingIconPrefKey = @"ShowScrollingIcon";
+NSString * kShowZoomPercentPrefKey = @"ShowZoomPercent";
 
 //! Singleton object.
 static id s_sharedPreferences = nil;
@@ -38,12 +40,16 @@ static id s_sharedPreferences = nil;
 		[defaultsDict setObject:[NSNumber numberWithBool:NO] forKey:kDisconnectOnSuspendPrefKey];
 		[defaultsDict setObject:[NSNumber numberWithFloat:0.285] forKey:kMouseDownDelayPrefKey];
 		[defaultsDict setObject:[NSNumber numberWithFloat:1.5] forKey:kMouseTracksFadeTimePrefKey];
+		[defaultsDict setObject:[NSNumber numberWithBool:NO] forKey:kShowScrollingIconPrefKey];
+		[defaultsDict setObject:[NSNumber numberWithBool:YES] forKey:kShowZoomPercentPrefKey];
 		
 		[[NSUserDefaults standardUserDefaults] registerDefaults:defaultsDict];
 	}
 	
 	return self;
 }
+
+#pragma mark *Getters*
 
 //! Whether the mouse tracks should be shown on mouse down and mouse up events.
 //!
@@ -69,6 +75,22 @@ static id s_sharedPreferences = nil;
 	return [[NSUserDefaults standardUserDefaults] floatForKey:kShowMouseTracksPrefKey];
 }
 
+//! This preference controls whether any icon is displayed between the fingers
+//! while scrolling in active mode. No icon is ever displayed in view-only mode.
+- (BOOL)showScrollingIcon
+{
+	return [[NSUserDefaults standardUserDefaults] boolForKey:kShowScrollingIconPrefKey];
+}
+
+//! This preference controls whether the popup window that shows the current zoom
+//! scale percentage is displayed while the user is zooming.
+- (BOOL)showZoomPercent
+{
+	return [[NSUserDefaults standardUserDefaults] boolForKey:kShowZoomPercentPrefKey];
+}
+
+#pragma mark *Setters*
+
 - (void)setShowMouseTracks:(BOOL)showTracks
 {
 	[[NSUserDefaults standardUserDefaults] setBool:showTracks forKey:kShowMouseTracksPrefKey];
@@ -77,6 +99,26 @@ static id s_sharedPreferences = nil;
 - (void)setDisconnectOnSuspend:(BOOL)disconnect
 {
 	[[NSUserDefaults standardUserDefaults] setBool:disconnect forKey:kDisconnectOnSuspendPrefKey];
+}
+
+- (void)setMouseDownDelay:(float)delay
+{
+	[[NSUserDefaults standardUserDefaults] setFloat:delay forKey:kMouseDownDelayPrefKey];
+}
+
+- (void)setMouseTracksFadeTime:(float)fadeTime
+{
+	[[NSUserDefaults standardUserDefaults] setFloat:fadeTime forKey:kShowMouseTracksPrefKey];
+}
+
+- (BOOL)setShowScrollingIcon:(BOOL)showIcon
+{
+	[[NSUserDefaults standardUserDefaults] setBool:showIcon forKey:kShowScrollingIconPrefKey];
+}
+
+- (BOOL)setShowZoomPercent:(BOOL)showPercent
+{
+	[[NSUserDefaults standardUserDefaults] setBool:showPercent forKey:kShowZoomPercentPrefKey];
 }
 
 @end

@@ -23,8 +23,17 @@ typedef enum {
 	kAutoScrollerDown = 8,
 } AutoScrollerTypes;
 
+//! @name Autoscroll Constants
+//@{
 #define LEFTRIGHT_AUTOSCROLL_BORDER 30
 #define TOPBOTTOM_AUTOSCROLL_BORDER 30
+//@}
+
+//! @name Popup Constants
+//@{
+#define POPUP_WINDOW_WIDTH (60)
+#define POPUP_WINDOW_HEIGHT (60)
+//@}
 
 /*!
  * @brief Subclass of UIScroller that modifies its behaviour.
@@ -32,9 +41,7 @@ typedef enum {
  * An instance of this class sits between the VNCView and the VNCContentView
  * that draws the screen content. Its job, aside from the obvious scrolling,
  * is to intercept finger events and either pass them to the EventFilter
- * or let the UIScroller superclass handle them. All single finger events
- * are passed to the superclass, while all chorded events are converted
- * to remote mouse events.
+ * or let the UIScroller superclass handle them.
  */
 @interface VNCScrollerView : UIScroller
 {
@@ -57,6 +64,7 @@ typedef enum {
 	bool _bZoomedIn;
 	float _preDoubleClickZoom;
 }
+
 -(void)toggleViewOnly;
 
 - (void)setEventFilter:(EventFilter *)filter;

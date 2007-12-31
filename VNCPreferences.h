@@ -23,6 +23,12 @@ extern NSString * kMouseDownDelayPrefKey;
 //! Length of time that mouse tracks are visible.
 extern NSString * kMouseTracksFadeTimePrefKey;
 
+//! Whether to display the scrolling icon.
+extern NSString * kShowScrollingIconPrefKey;
+
+//! Whether to display the scale percent while zooming.
+extern NSString * kShowZoomPercentPrefKey;
+
 //@}
 
 /*!
@@ -41,12 +47,18 @@ extern NSString * kMouseTracksFadeTimePrefKey;
 - (BOOL)disconnectOnSuspend;
 - (float)mouseDownDelay;
 - (float)mouseTracksFadeTime;
+- (BOOL)showScrollingIcon;
+- (BOOL)showZoomPercent;
 //@}
 
 //! @name Setters
 //@{
 - (void)setShowMouseTracks:(BOOL)showTracks;
 - (void)setDisconnectOnSuspend:(BOOL)disconnect;
+- (void)setMouseDownDelay:(float)delay;
+- (void)setMouseTracksFadeTime:(float)fadeTime;
+- (BOOL)setShowScrollingIcon:(BOOL)showIcon;
+- (BOOL)setShowZoomPercent:(BOOL)showPercent;
 //@}
 
 @end
