@@ -6,13 +6,13 @@
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
-#include <d3des.h>
 #import "VnseaApp.h"
 #import "VNCServerInfoView.h"
 #import <UIKit/UIPreferencesTextTableCell.h>
 #import <UIKit/UIPreferencesControlTableCell.h>
 #import <UIKit/UINavigationItem.h>
 #import "ServerFromPrefs.h"
+#import "NSString_VNCPasswordCrypto.h"
 
 @implementation VNCServerInfoView
 
@@ -138,75 +138,6 @@
 	[_table setKeyboardVisible:visible animated:NO];
 }
 
-static unsigned char s_fixedkey[8] = {23,82,107,6,35,78,88,7};
-
-NSString *vncEncryptPasswd(NSString *pnsPassword)
-{
-	int i, wNewSize;
-	char *szTemp, *szPassword, szNew[400];
-	
-	if (pnsPassword == nil)
-		return nil;
-	else
-		{
-		szPassword = (char *)malloc([pnsPassword length]+2);
-		strcpy(szPassword, [pnsPassword cString]);
-		}
-	wNewSize = ((strlen(szPassword)+7) / 8) * 8;
-	szTemp = (char *)calloc(wNewSize+1, 1);
-	*szNew = 0;
-    deskey(s_fixedkey, EN0);
-	for(i=0;i<wNewSize / 8;i++)
-		{
-		des((unsigned char *)(szPassword+(i*8)), (unsigned char *)(szPassword+(i*8)));
-		}
-	strcpy(szNew, "^");
-	for(i=0;i<wNewSize;i++)
-		{
-		sprintf(szNew+strlen(szNew), "%x ", szPassword[i]);
-		}
-	szNew[strlen(szNew)-1] = 0;
-	return [NSString stringWithFormat: @"%s",szNew];
-}
-
-
-NSString *vncDecryptPasswd(NSString *pnsEncrypted)
-{
-	unsigned char szBinary[200];
-	char szEncrypted[400];
-	char *pch = szEncrypted;
-	int i, ii = 0;
-	
-	if (pnsEncrypted == nil)
-		return nil;
-	else
-		strcpy(szEncrypted, [pnsEncrypted cString]);
-	if (*szEncrypted == '^')
-		strcpy(szEncrypted, szEncrypted+1);
-	else
-		return [NSString stringWithFormat:@"%s", szEncrypted];
-
-	NSLog(@"%s", szEncrypted);
-	
-    deskey(s_fixedkey, DE1);
-	for(i=0;*pch != 0;i++)
-		{
-		unsigned char ch = (unsigned char)strtol(pch, &pch, 16);
-		szBinary[ii++] = ch;
-		}
-	szBinary[ii] = 0;
-	for(i=0;i<ii/8;i++)
-		{
-		des(szBinary + (i*8), szBinary + (i*8));
-		}
-	return [NSString stringWithFormat:@"%s", (char *)szBinary];
-}
-
-- (NSString *)decryptPassword:(NSString *)pns
-{
-	return vncDecryptPasswd(pns);
-}
-
 - (void) scrollTableToTop
 {
 	[_table scrollPointVisibleAtTopLeft: CGPointMake(0,0)];	
@@ -232,11 +163,11 @@ NSString *vncDecryptPasswd(NSString *pnsEncrypted)
 	
 	[(UIPreferencesTextTableCell *)[_cells objectAtIndex:kServerNameCellIndex] setValue:[_serverInfo objectForKey:RFB_NAME]];
 	[(UIPreferencesTextTableCell *)[_cells objectAtIndex:kServerAddressCellIndex] setValue:[_serverInfo objectForKey:RFB_HOSTANDPORT]];
-	[(UIPreferencesTextTableCell *)[_cells objectAtIndex:kServerPasswordCellIndex] setValue:vncDecryptPasswd([_serverInfo objectForKey:RFB_PASSWORD])];
+	[(UIPreferencesTextTableCell *)[_cells objectAtIndex:kServerPasswordCellIndex] setValue:[[_serverInfo objectForKey:RFB_PASSWORD] decryptPassword]];
 	[(UIPreferencesTextTableCell *)[_cells objectAtIndex:kServerDisplayCellIndex] setValue:[NSString stringWithFormat:@"%d", [[_serverInfo objectForKey:RFB_DISPLAY] intValue]]];
 	[_sharedSwitch setValue:[[_serverInfo objectForKey:RFB_SHARED] boolValue] ? 1.0f : 0.0f];
 	[_viewOnlySwitch setValue:[[_serverInfo objectForKey:RFB_VIEWONLY] boolValue] ? 1.0f : 0.0f];
-	[_keepRemoteMouseVisibleSwitch setValue:[[_serverInfo objectForKey:MOUSE_VISIBLE] boolValue] ? 1.0f : 0.0f];
+	[_keepRemoteMouseVisibleSwitch setValue:[[_serverInfo objectForKey:SERVER_MOUSE_VISIBLE] boolValue] ? 1.0f : 0.0f];
 
 	
 	int depth = [[_serverInfo objectForKey:RFB_PIXEL_DEPTH] intValue];
@@ -296,7 +227,7 @@ NSString *vncDecryptPasswd(NSString *pnsEncrypted)
 			if (_serverInfo == nil)
 				_serverInfo = [NSMutableDictionary dictionary];
 
-			NSString *nsEncrypted = vncEncryptPasswd([[_cells objectAtIndex:kServerPasswordCellIndex] value]);
+			NSString *nsEncrypted = [[[_cells objectAtIndex:kServerPasswordCellIndex] value] encryptPassword];
 
 			// Update server info dict from the cell values
 			[_serverInfo setObject:[[_cells objectAtIndex:kServerNameCellIndex] value] forKey:RFB_NAME];
@@ -306,7 +237,7 @@ NSString *vncDecryptPasswd(NSString *pnsEncrypted)
 			[_serverInfo setObject:[NSNumber numberWithInt:[[[_cells objectAtIndex:kServerDisplayCellIndex] value] intValue]] forKey:RFB_DISPLAY];
 			[_serverInfo setObject:[NSNumber numberWithBool:([_sharedSwitch value] > 0.1)] forKey:RFB_SHARED];
 			[_serverInfo setObject:[NSNumber numberWithBool:([_viewOnlySwitch value] > 0.1)] forKey:RFB_VIEWONLY];
-			[_serverInfo setObject:[NSNumber numberWithBool:([_keepRemoteMouseVisibleSwitch value] > 0.1)] forKey:MOUSE_VISIBLE];
+			[_serverInfo setObject:[NSNumber numberWithBool:([_keepRemoteMouseVisibleSwitch value] > 0.1)] forKey:SERVER_MOUSE_VISIBLE];
 			
 			int depth = 32;
 			

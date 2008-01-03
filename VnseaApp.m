@@ -12,6 +12,7 @@
 #import "Shimmer.h"
 #import "VNCServerInfoView.h"
 #import "VNCPreferences.h"
+#import "NSString_VNCPasswordCrypto.h"
 #import <stdlib.h>
 #import <signal.h>
 
@@ -351,38 +352,32 @@ int compareServers(id obj1, id obj2, void *reverse)
 	NSArray * servers = [self loadServers];
 	
 	for(i=0;i<[servers count];i++)
-		{
+	{
 		NSDictionary *serverInfo = [servers objectAtIndex: i];
 		NSString *name = [serverInfo objectForKey:RFB_NAME];
 		
 		if ([name compare: serverName] == NSOrderedSame)
-			{
+		{
 			return i;
-			}
 		}
+	}
 	return -1;
 }
 
-- (void)serverSelected:(int)serverIndex
+//! Returns the plaintext password string for the server described by \a
+//! serverInfo. If the server description has an empty password, then a
+//! modal alert sheet is used to ask the user to enter the password.
+- (NSString *)decryptedPasswordForServer:(NSMutableDictionary *)serverInfo
 {
-	NSLog(@"In server Selected");
-	// Disable the server list view.
-	[_serversView setEnabled:NO];
-	
-	// Without the retain on serverInfo, we get a crash when theServer is released. Not sure why...
-	NSArray * servers = [self loadServers];
-	NSMutableDictionary * serverInfo = [[[servers objectAtIndex:serverIndex] mutableCopy] retain];
-	
-	// Decrypt password before passing to VNC
-	NSString *nsPassword = [_serverEditorView decryptPassword:[serverInfo objectForKey:RFB_PASSWORD]];
+	NSString *nsPassword = [[serverInfo objectForKey:RFB_PASSWORD] decryptPassword];
 	if (nsPassword == nil || [nsPassword length] == 0)
 	{
 		UIAlertSheet * hotSheet = [[UIAlertSheet alloc]
-		initWithTitle:NSLocalizedString(@"PasswordRequestTitle", nil)
-		buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
-		defaultButtonIndex:1
-		delegate:self
-		context:self];
+			initWithTitle:NSLocalizedString(@"PasswordRequestTitle", nil)
+			buttons:[NSArray arrayWithObject:NSLocalizedString(@"OK", nil)]
+			defaultButtonIndex:1
+			delegate:self
+			context:self];
 		
 		[hotSheet setBodyText:NSLocalizedString(@"PasswordRequestText", nil)];
 		[hotSheet addTextFieldWithValue: @"" label: @"password"];
@@ -390,6 +385,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 		[tf setSecure:true];
 		[tf setAutoCapsType: 0];
 		[tf setAutoEnablesReturnKey:true];
+		
 		[hotSheet setDimsBackground:YES];
 		[hotSheet setRunsModal:YES];
 		[hotSheet setShowsOverSpringBoardAlerts:NO];
@@ -402,14 +398,27 @@ int compareServers(id obj1, id obj2, void *reverse)
 			return;
 		}
 		nsPassword = [tf text];
-		NSLog(@"Input Password = %s", [nsPassword cString]);
 	}
 	
-	[serverInfo setObject:nsPassword forKey:RFB_PASSWORD];
+	return nsPassword;
+}
+
+- (void)serverSelected:(int)serverIndex
+{
+	// Disable the server list view.
+	[_serversView setEnabled:NO];
+	
+	// Without the retain on serverInfo, we get a crash when theServer is released. Not sure why...
+	NSArray * servers = [self loadServers];
+	NSMutableDictionary * serverInfo = [[[servers objectAtIndex:serverIndex] mutableCopy] retain];
+	
+	// Decrypt password before passing to VNC.
+	[serverInfo setObject:[self decryptedPasswordForServer:serverInfo] forKey:RFB_PASSWORD];
+	
+	// Restore last scale.
 	NSNumber *nsScale = [serverInfo objectForKey:SERVER_SCALE];
 	if (nsScale != nil)
 	{
-		NSLog(@"Setting remembered scale to %f", [nsScale floatValue]);
 		[_vncView setScalePercent: [nsScale floatValue]];
 	}
 	
@@ -574,11 +583,6 @@ int compareServers(id obj1, id obj2, void *reverse)
 	
 	_closingConnection = NO;
 	
-//	CGRect rcFrame = [_window frame];
-//	rcFrame.origin.y = 20;
-//	[_window setFrame: rcFrame];
-//	[self setStatusBarMode:kUIStatusBarWhite duration:1];
-	
 	// Switch back to the list view only if we got to the VNC Server View
 	if ([_vncView isFirstDisplay])
 	{
@@ -591,8 +595,6 @@ int compareServers(id obj1, id obj2, void *reverse)
 //! termination time.
 - (void)closeConnection
 {
-	NSLog(@"Set statusbar white");
-		
 	if (_connection)
 	{
 		NSMutableArray * servers = [[self loadServers] mutableCopy];
@@ -616,12 +618,12 @@ int compareServers(id obj1, id obj2, void *reverse)
 		[_vncView setConnection: nil];
 		_connection = nil;
 		[_serversView setServerList:servers];
+		
 		if (_autoConnectHost != nil)
 		{
-		exit(1);
+			[self terminate];
 		}
 	}
-	
 }
 
 - (void)alertSheet:(id)sheet buttonClicked:(int)buttonIndex

@@ -199,7 +199,7 @@
 	};
 	021133D20CC51DF00059CA0E /* VNCScrollerView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {710, 7224}}";
+			sepNavIntBoundsRect = "{{0, 0}, {710, 7266}}";
 			sepNavSelRange = "{12209, 0}";
 			sepNavVisRange = "{11127, 2053}";
 			sepNavVisRect = "{{0, 2605}, {724, 782}}";
@@ -210,8 +210,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AD590C90AEED005285B7 /* VNCServerInfoView.h */;
 		name = _pixelDepthControl;
-		rLen = 18;
-		rLoc = 921;
+		rLen = 35;
+		rLoc = 883;
 		rType = 0;
 		vrLen = 1261;
 		vrLoc = 0;
@@ -1131,9 +1131,9 @@
 	};
 	025881290CEF5CB000681C7E /* VNCPreferences.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {732, 1764}}";
+			sepNavIntBoundsRect = "{{0, 0}, {732, 1778}}";
 			sepNavSelRange = "{3486, 0}";
-			sepNavVisRange = "{2540, 569}";
+			sepNavVisRange = "{2540, 567}";
 		};
 	};
 	0258813D0CF0BBC400681C7E /* PBXTextBookmark */ = {
@@ -1201,7 +1201,7 @@
 		fRef = 02F5393C0C8CDCEF00C99AC1 /* Makefile */;
 		name = "Makefile: 137";
 		rLen = 0;
-		rLoc = 3226;
+		rLoc = 3379;
 		rType = 0;
 		vrLen = 1374;
 		vrLoc = 2285;
@@ -3631,9 +3631,9 @@
 	};
 	0259AC160C909383005285B7 /* VnseaApp.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {710, 11004}}";
-			sepNavSelRange = "{18445, 0}";
-			sepNavVisRange = "{1564, 1796}";
+			sepNavIntBoundsRect = "{{0, 0}, {710, 12362}}";
+			sepNavSelRange = "{11412, 0}";
+			sepNavVisRange = "{10374, 1724}";
 			sepNavVisRect = "{{0, 7378}, {724, 782}}";
 			sepNavWindowFrame = "{{15, -5}, {777, 878}}";
 		};
@@ -4136,8 +4136,8 @@
 	0259AD1E0C9093BD005285B7 /* ServerFromPrefs.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {710, 780}}";
-			sepNavSelRange = "{1513, 0}";
-			sepNavVisRange = "{0, 1665}";
+			sepNavSelRange = "{1301, 0}";
+			sepNavVisRange = "{0, 1710}";
 			sepNavVisRect = "{{0, 126}, {727, 782}}";
 		};
 	};
@@ -4297,16 +4297,17 @@
 	};
 	0259AD590C90AEED005285B7 /* VNCServerInfoView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {727, 896}}";
-			sepNavSelRange = "{921, 18}";
+			sepNavIntBoundsRect = "{{0, 0}, {710, 910}}";
+			sepNavSelRange = "{319, 0}";
+			sepNavVisRange = "{77, 1325}";
 			sepNavVisRect = "{{0, 0}, {727, 782}}";
 		};
 	};
 	0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {710, 5180}}";
-			sepNavSelRange = "{474, 0}";
-			sepNavVisRange = "{0, 2046}";
+			sepNavIntBoundsRect = "{{0, 0}, {732, 4760}}";
+			sepNavSelRange = "{6089, 0}";
+			sepNavVisRange = "{5600, 982}";
 			sepNavVisRect = "{{0, 0}, {727, 782}}";
 		};
 	};
@@ -6314,8 +6315,8 @@
 		isa = PBXTextBookmark;
 		fRef = 0259AD590C90AEED005285B7 /* VNCServerInfoView.h */;
 		name = _pixelDepthControl;
-		rLen = 18;
-		rLoc = 921;
+		rLen = 35;
+		rLoc = 883;
 		rType = 0;
 		vrLen = 1261;
 		vrLoc = 0;
@@ -6538,7 +6539,7 @@
 		fRef = 0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */;
 		name = "VNCServerInfoView.m: 22";
 		rLen = 0;
-		rLoc = 474;
+		rLoc = 494;
 		rType = 0;
 		vrLen = 2046;
 		vrLoc = 0;
@@ -6548,7 +6549,7 @@
 		fRef = 0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */;
 		name = "VNCServerInfoView.m: 22";
 		rLen = 0;
-		rLoc = 474;
+		rLoc = 494;
 		rType = 0;
 		vrLen = 2046;
 		vrLoc = 0;
@@ -6638,7 +6639,7 @@
 		fRef = 0259AD1E0C9093BD005285B7 /* ServerFromPrefs.h */;
 		name = "ServerFromPrefs.h: 42";
 		rLen = 0;
-		rLoc = 1513;
+		rLoc = 1558;
 		rType = 0;
 		vrLen = 1665;
 		vrLoc = 0;
@@ -6961,6 +6962,118 @@
 		vrLen = 569;
 		vrLoc = 2540;
 	};
+	02BABAB40D2D6B250060DD02 /* NSString_VNCPasswordCrypto.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {710, 1288}}";
+			sepNavSelRange = "{1768, 0}";
+			sepNavVisRange = "{844, 1035}";
+		};
+	};
+	02BABAB50D2D6B250060DD02 /* NSString_VNCPasswordCrypto.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {710, 780}}";
+			sepNavSelRange = "{526, 0}";
+			sepNavVisRange = "{0, 575}";
+		};
+	};
+	02BABAB60D2D6CF30060DD02 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 025881290CEF5CB000681C7E /* VNCPreferences.m */;
+		name = "VNCPreferences.m: 116";
+		rLen = 0;
+		rLoc = 3486;
+		rType = 0;
+		vrLen = 567;
+		vrLoc = 2540;
+	};
+	02BABABF0D2D6FD70060DD02 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 025881290CEF5CB000681C7E /* VNCPreferences.m */;
+		name = "VNCPreferences.m: 116";
+		rLen = 0;
+		rLoc = 3486;
+		rType = 0;
+		vrLen = 567;
+		vrLoc = 2540;
+	};
+	02BABAC00D2D6FD70060DD02 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "warning: passing argument 1 of 'setValue:' makes pointer from integer without a cast";
+		fRef = 0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */;
+		rLen = 1;
+		rLoc = 165;
+		rType = 1;
+	};
+	02BABAC10D2D6FD70060DD02 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 025881290CEF5CB000681C7E /* VNCPreferences.m */;
+		name = "VNCPreferences.m: 116";
+		rLen = 0;
+		rLoc = 3486;
+		rType = 0;
+		vrLen = 567;
+		vrLoc = 2540;
+	};
+	02BABAC20D2D6FD70060DD02 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */;
+		name = "VNCServerInfoView.m: 166";
+		rLen = 0;
+		rLoc = 6089;
+		rType = 0;
+		vrLen = 982;
+		vrLoc = 5600;
+	};
+	02BABAC30D2D6FD70060DD02 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */;
+		name = "VNCServerInfoView.m: 166";
+		rLen = 0;
+		rLoc = 6089;
+		rType = 0;
+		vrLen = 982;
+		vrLoc = 5600;
+	};
+	02BABAC40D2D6FD70060DD02 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */;
+		name = "VNCServerInfoView.m: 166";
+		rLen = 0;
+		rLoc = 6089;
+		rType = 0;
+		vrLen = 982;
+		vrLoc = 5600;
+	};
+	02BABAC60D2D71750060DD02 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */;
+		name = "VNCServerInfoView.m: 166";
+		rLen = 0;
+		rLoc = 6089;
+		rType = 0;
+		vrLen = 982;
+		vrLoc = 5600;
+	};
+	02BABAC70D2D71750060DD02 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */;
+		name = "VNCServerInfoView.m: 166";
+		rLen = 0;
+		rLoc = 6089;
+		rType = 0;
+		vrLen = 982;
+		vrLoc = 5600;
+	};
+	02BABAC80D2D71750060DD02 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 0259AD5A0C90AEED005285B7 /* VNCServerInfoView.m */;
+		name = "VNCServerInfoView.m: 166";
+		rLen = 0;
+		rLoc = 6089;
+		rType = 0;
+		vrLen = 982;
+		vrLoc = 5600;
+	};
 	02C632AB0CFA096000A99D93 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 8ED2B7250CDD5DF900F0C19E /* VNCPrefsView.h */;
@@ -7046,7 +7159,7 @@
 		fRef = 02F5393C0C8CDCEF00C99AC1 /* Makefile */;
 		name = "Makefile: 27";
 		rLen = 0;
-		rLoc = 534;
+		rLoc = 566;
 		rType = 0;
 		vrLen = 1244;
 		vrLoc = 0;
@@ -7056,7 +7169,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 624";
 		rLen = 0;
-		rLoc = 18445;
+		rLoc = 18562;
 		rType = 0;
 		vrLen = 1482;
 		vrLoc = 17536;
@@ -7066,7 +7179,7 @@
 		fRef = 02F5393C0C8CDCEF00C99AC1 /* Makefile */;
 		name = "Makefile: 27";
 		rLen = 0;
-		rLoc = 534;
+		rLoc = 566;
 		rType = 0;
 		vrLen = 1244;
 		vrLoc = 0;
@@ -7096,7 +7209,7 @@
 		fRef = 0259AC160C909383005285B7 /* VnseaApp.m */;
 		name = "VnseaApp.m: 624";
 		rLen = 0;
-		rLoc = 18445;
+		rLoc = 18562;
 		rType = 0;
 		vrLen = 1796;
 		vrLoc = 1564;
@@ -7490,9 +7603,9 @@
 	};
 	02F5393C0C8CDCEF00C99AC1 /* Makefile */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {710, 2226}}";
-			sepNavSelRange = "{534, 0}";
-			sepNavVisRange = "{0, 1244}";
+			sepNavIntBoundsRect = "{{0, 0}, {710, 2352}}";
+			sepNavSelRange = "{3385, 0}";
+			sepNavVisRange = "{0, 1236}";
 			sepNavVisRect = "{{0, 1246}, {724, 782}}";
 		};
 	};
@@ -7501,6 +7614,7 @@
 		activeBuildConfigurationName = Debug;
 		activeTarget = D28A88AD04BDD90700651E21 /* vnsea */;
 		addToTargets = (
+			D28A88AD04BDD90700651E21 /* vnsea */,
 		);
 		breakpoints = (
 		);
@@ -8028,6 +8142,16 @@
 			02BABAAD0D2839760060DD02 /* PBXTextBookmark */ = 02BABAAD0D2839760060DD02 /* PBXTextBookmark */;
 			02BABAAE0D2839760060DD02 /* PBXTextBookmark */ = 02BABAAE0D2839760060DD02 /* PBXTextBookmark */;
 			02BABAAF0D2839770060DD02 /* PBXTextBookmark */ = 02BABAAF0D2839770060DD02 /* PBXTextBookmark */;
+			02BABAB60D2D6CF30060DD02 /* PBXTextBookmark */ = 02BABAB60D2D6CF30060DD02 /* PBXTextBookmark */;
+			02BABABF0D2D6FD70060DD02 /* PBXTextBookmark */ = 02BABABF0D2D6FD70060DD02 /* PBXTextBookmark */;
+			02BABAC00D2D6FD70060DD02 /* PBXTextBookmark */ = 02BABAC00D2D6FD70060DD02 /* PBXTextBookmark */;
+			02BABAC10D2D6FD70060DD02 /* PBXTextBookmark */ = 02BABAC10D2D6FD70060DD02 /* PBXTextBookmark */;
+			02BABAC20D2D6FD70060DD02 /* PBXTextBookmark */ = 02BABAC20D2D6FD70060DD02 /* PBXTextBookmark */;
+			02BABAC30D2D6FD70060DD02 /* PBXTextBookmark */ = 02BABAC30D2D6FD70060DD02 /* PBXTextBookmark */;
+			02BABAC40D2D6FD70060DD02 /* PBXTextBookmark */ = 02BABAC40D2D6FD70060DD02 /* PBXTextBookmark */;
+			02BABAC60D2D71750060DD02 /* PBXTextBookmark */ = 02BABAC60D2D71750060DD02 /* PBXTextBookmark */;
+			02BABAC70D2D71750060DD02 /* PBXTextBookmark */ = 02BABAC70D2D71750060DD02 /* PBXTextBookmark */;
+			02BABAC80D2D71750060DD02 /* PBXTextBookmark */ = 02BABAC80D2D71750060DD02 /* PBXTextBookmark */;
 			02C632AB0CFA096000A99D93 = 02C632AB0CFA096000A99D93 /* PBXTextBookmark */;
 			02C632AD0CFA096000A99D93 = 02C632AD0CFA096000A99D93 /* PBXTextBookmark */;
 			02C632AE0CFA096000A99D93 = 02C632AE0CFA096000A99D93 /* PBXTextBookmark */;
@@ -8087,9 +8211,9 @@
 	};
 	8ED2B7260CDD5DF900F0C19E /* VNCPrefsView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {710, 2436}}";
-			sepNavSelRange = "{4303, 0}";
-			sepNavVisRange = "{3587, 1586}";
+			sepNavIntBoundsRect = "{{0, 0}, {710, 2576}}";
+			sepNavSelRange = "{4853, 0}";
+			sepNavVisRange = "{3587, 1647}";
 		};
 	};
 	8ED342580CD6C9CF004B17CE /* VNCContentView.h */ = {

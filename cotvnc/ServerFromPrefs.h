@@ -40,6 +40,7 @@
 #define SERVER_SCROLL_X @"SCROLLX"
 #define SERVER_SCROLL_Y @"SCROLLY"
 #define SERVER_LAST_CONNECT @"LastConnectTime"
+#define SERVER_MOUSE_VISIBLE @"MouseVisible"
 
 @interface ServerFromPrefs : ServerBase
 

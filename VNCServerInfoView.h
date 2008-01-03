@@ -12,8 +12,6 @@
 #import <UIKit/UIPreferencesDeleteTableCell.h>
 #import <UIKit/UISegmentedControl.h>
 
-#define MOUSE_VISIBLE @"MouseVisible"
-
 //! @brief Array indices for the preferences table cells.
 enum _server_info_cell_indices
 {
@@ -27,7 +25,7 @@ enum _server_info_cell_indices
 };
 
 /*!
- * @brief View were user can enter info about a server.
+ * @brief View where user can enter info about a server.
  */
 @interface VNCServerInfoView : UIView
 {
@@ -37,7 +35,8 @@ enum _server_info_cell_indices
 	id _delegate;
 	NSArray * _cells;
 	UISwitchControl * _sharedSwitch;
-	UISwitchControl * _viewOnlySwitch, *_keepRemoteMouseVisibleSwitch;
+	UISwitchControl * _viewOnlySwitch;
+	UISwitchControl * _keepRemoteMouseVisibleSwitch;
 	UISegmentedControl * _pixelDepthControl;
 	UIPreferencesDeleteTableCell * _deleteCell;
 	int _nGroups;
@@ -54,10 +53,6 @@ enum _server_info_cell_indices
 - (void)setKeyboardVisible:(BOOL)visible;
 
 - (void)deleteButtonPressed:(id)sender;
-
-- (NSString *)decryptPassword:(NSString *)pns;
-
-NSString *vncDecryptPasswd(NSString *pnsEncrypted);
 
 @end
 
