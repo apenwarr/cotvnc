@@ -18,7 +18,7 @@
 		</dict>
 	</array>
 	<key>RDPxlPackageDesc</key>
-	<string>VNC client for the iPhone</string>
+	<string>VNC client for the iPhone / iPod touch</string>
 	<key>RDPxlPackageURL</key>
 	<string>http://code.google.com/p/vnsea</string>
 	<key>RDPxlPackageFormat</key>
@@ -28,7 +28,7 @@
 	<key>RDPxlPackageName</key>
 	<string>VNsea</string>
 	<key>RDPxlPackageVersion</key>
-	<string>0.8</string>
+	<string>0.81</string>
 	<key>RDPxlPackagerName</key>
 	<string>creed</string>
 	<key>RDPxlPackagerContact</key>
