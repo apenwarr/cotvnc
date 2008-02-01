@@ -21,9 +21,9 @@
 @class RFBConnection;
 
 //! Path to the file that server settings are stored in.
-#define kServersFilePath @"/var/root/Library/Preferences/vnsea_servers.plist"
+#define kServersFilePath @"vnsea_servers.plist"
 
-#define kPrefsFilePath @"/var/root/Library/Preferences/vnsea_prefs.plist"
+#define kPrefsFilePath @"vnsea_prefs.plist"
 
 //! The top level dictionary key containing the array of server dictionaries in the
 //! server settings file.

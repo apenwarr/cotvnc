@@ -33,6 +33,8 @@
 extern NSString * UIApplicationOrientationDidChangeNotification;
 extern NSString * UIApplicationOrientationUserInfoKey;
 
+NSString *nsUserPreferencesDiretory;
+
 //! @brief Signal handler for SIGINT.
 //!
 //! Simply terminates the application, which will cause any open connection
@@ -76,10 +78,16 @@ int compareServers(id obj1, id obj2, void *reverse)
 	
 	// Handle signal sent by ^C, mostly for development.
 	signal(SIGINT, handle_interrupt_signal);
-	
+
+
 	CGRect screenRect = [UIHardware fullScreenApplicationContentRect];
 	CGRect frame = CGRectMake(0.0f, 0.0f, screenRect.size.width, screenRect.size.height);
+
+	nsUserPreferencesDiretory = [[NSString stringWithFormat:@"%@/Preferences/vnsea/", [self userLibraryDirectory]] retain];	
+	[[NSFileManager defaultManager] createDirectoryAtPath: nsUserPreferencesDiretory attributes: nil];
 	
+	NSLog(@"Got user pref dir %@", nsUserPreferencesDiretory);
+		
 	// Setup main view
     _mainView = [[UIView alloc] initWithFrame: frame];
 	[_mainView setOpaque:YES];
@@ -226,7 +234,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 
 - (NSArray *)loadServers
 {
-	NSDictionary * dict = [NSDictionary dictionaryWithContentsOfFile:kServersFilePath];
+	NSDictionary * dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@%@", nsUserPreferencesDiretory, kServersFilePath]];
 	
 	if (dict == nil)
 	{
@@ -241,7 +249,7 @@ int compareServers(id obj1, id obj2, void *reverse)
 {
 //	NSLog(@"save");
 	NSDictionary * prefs = [NSDictionary dictionaryWithObject:theServers forKey:kServerArrayKey];
-	[prefs writeToFile:kServersFilePath atomically:YES];
+	[prefs writeToFile:[NSString stringWithFormat:@"%@%@", nsUserPreferencesDiretory, kServersFilePath] atomically:YES];
 }
 
 - (void)displayAbout
