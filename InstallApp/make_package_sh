@@ -1,7 +1,0 @@
-rm VNsea.app.zip
-cd ..
-zip -r InstallApp/VNsea.app.zip VNsea.app
-zip -d InstallApp/VNsea.app.zip VNsea.app/.svn/\* VNsea.app/English.lproj/.svn/\*
-
-cd InstallApp
-

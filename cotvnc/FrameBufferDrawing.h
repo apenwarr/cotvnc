@@ -202,7 +202,7 @@ NSLog(@"fill x=%f y=%f w=%f h=%f -> %d\n", aRect.origin.x, aRect.origin.y, aRect
 }
 
 /* --------------------------------------------------------------------------------- */
-- (void)copyRect:(CGRect)aRect to:(NSPoint)aPoint
+- (void)copyRect:(CGRect)aRect to:(CGPoint)aPoint
 {
         int line_step, src_start_x, dst_start_x;
         int stride, src_start_y, dst_start_y;
@@ -468,7 +468,7 @@ NSLog(@"draw x=%f y=%f w=%f h=%f at x=%f y=%f\n", aRect.origin.x, aRect.origin.y
 
 	
 	// Finally, draw the bitmap we just created.
-	CGContextRef context = UICurrentContext();
+	CGContextRef context = UIGraphicsGetCurrentContext();
 	CGImageRef snapshot = CGBitmapContextCreateImage(bitmapContext);
 	CGContextSetAlpha(context, 1.0f);
 	CGContextDrawImage(context, r, snapshot);

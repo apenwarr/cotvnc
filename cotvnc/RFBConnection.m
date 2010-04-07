@@ -32,7 +32,7 @@
 #import "RFBServerInitReader.h"
 #import "TightEncodingReader.h"
 #include <unistd.h>
-#include <libc.h>
+//#include <libc.h>
 
 #define	F0_KEYCODE		0xffbd
 #define	F1_KEYCODE		0xffbe

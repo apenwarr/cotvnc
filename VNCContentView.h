@@ -17,7 +17,7 @@
     FrameBuffer * _frameBuffer;
     float _orientationDeg;
     float _scalePercent;
-    UIHardwareOrientation _orientationState;
+    //UIHardwareOrientation _orientationState;
     CGAffineTransform _matrixPreviousTransform;
     CGRect _frame;
 	id _delegate;
@@ -33,8 +33,8 @@
 
 - (float)getScalePercent;
 - (void)setScalePercent:(float)fPercent;
-- (UIHardwareOrientation)getOrientationState;
-- (void)setOrientationState:(UIHardwareOrientation)wState;
+//- (UIHardwareOrientation)getOrientationState;
+//- (void)setOrientationState:(UIHardwareOrientation)wState;
 - (void)setOrientationDeg:(float)fDeg;
 - (float)getOrientationDeg;
 - (CGRect)getFrame;

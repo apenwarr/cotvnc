@@ -246,15 +246,18 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	return _pressedButtons;
 }
 
+#if 0
 - (void)setOrientation:(UIHardwareOrientation)wOrientation
 {
 	_orientation = wOrientation;
 }
+#endif
 
 - (CGPoint)getVNCScreenPoint: (CGRect)r
 {
 	CGRect cr = [_view convertRect:r fromView:nil];
 	CGPoint pt = CGPointApplyAffineTransform(cr.origin, _matrixBackToVNCTransform);
+#if 0
 	switch (_orientation)
 	{
 		case kOrientationVertical:
@@ -269,9 +272,12 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 			pt.x = pt.x+[_connection displaySize].width;
 			break;
 		case kOrientationHorizontalLeft:
+#endif
 			pt.y = [_connection displaySize].height - pt.y;
+#if 0
 			break;
 	}
+#endif	
 	return pt;
 }
 
@@ -282,45 +288,45 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 
 #pragma mark Local Mouse Events
 
-- (void)mouseDown: (GSEventRef)theEvent
+- (void)mouseDown: (id)theEvent
 {
 	[self queueMouseDownEventFromEvent: theEvent buttonNumber: 1];
 }
 
 
-- (void)mouseUp: (GSEventRef)theEvent
+- (void)mouseUp: (id)theEvent
 {
 	[self queueMouseUpEventFromEvent: theEvent buttonNumber: 1];
 }
 
 
-- (void)rightMouseDown: (GSEventRef)theEvent
+- (void)rightMouseDown: (id)theEvent
 {
 	[self queueMouseDownEventFromEvent: theEvent buttonNumber: 3];
 }
 
 
-- (void)rightMouseUp: (GSEventRef)theEvent
+- (void)rightMouseUp: (id)theEvent
 {
 	[self queueMouseUpEventFromEvent: theEvent buttonNumber: 3];
 }
 
 
-- (void)otherMouseDown: (GSEventRef)theEvent
+- (void)otherMouseDown: (id)theEvent
 {
 //	if ( 2 == [theEvent buttonNumber] )
 //		[self queueMouseDownEventFromEvent: theEvent buttonNumber: 2];
 }
 
 
-- (void)otherMouseUp: (GSEventRef)theEvent
+- (void)otherMouseUp: (id)theEvent
 {
 //	if ( 2 == [theEvent buttonNumber] )
 //		[self queueMouseUpEventFromEvent: theEvent buttonNumber: 2];
 }
 
 
-- (void)scrollWheel: (GSEventRef)theEvent
+- (void)scrollWheel: (id)theEvent
 {
 //	if ( _viewOnly )
 //		return;
@@ -338,7 +344,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 //    [_connection mouseAt: p buttons: _pressedButtons];			// 'Mouse button up'
 }
 
-- (void)mouseMoved:(GSEventRef)theEvent
+- (void)mouseMoved:(id)theEvent
 {
 	if ( _viewOnly )
 		return;
@@ -349,7 +355,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 		[_mouseTimer release];
         _mouseTimer = nil;
     }
-
+#if 0
 	CGRect r = GSEventGetLocationInWindow(theEvent);
     CGPoint	currentPoint = [self getVNCScreenPoint: r];
 	
@@ -389,6 +395,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
                                                       repeats: NO];
 		[_mouseTimer retain];
     }
+#endif
 }
 
 - (void)handleMouseTimer: (NSTimer *) timer
@@ -416,17 +423,17 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
     }
 }
 
-- (void)mouseDragged:(GSEventRef)theEvent
+- (void)mouseDragged:(id)theEvent
 {
 	[self mouseMoved:theEvent];
 }
 
-- (void)rightMouseDragged:(GSEventRef)theEvent
+- (void)rightMouseDragged:(id)theEvent
 {
 	[self mouseMoved:theEvent];
 }
 
-- (void)otherMouseDragged:(GSEventRef)theEvent
+- (void)otherMouseDragged:(id)theEvent
 {
 	[self mouseMoved:theEvent];
 }
@@ -617,14 +624,14 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 	[_pendingEvents addObject: mousedown];
 }
 
-- (void)queueMouseDownEventFromEvent: (GSEventRef)theEvent buttonNumber: (unsigned int)button
+- (void)queueMouseDownEventFromEvent: (id)theEvent buttonNumber: (unsigned int)button
 {
 //	NSLog(@"queueMouseDownEventFromEvent:%@ n:%d", theEvent, button);
 	if ( 1 != _emulationButton )
 	{
 		[self queueMouseUpEventFromEvent: theEvent buttonNumber: _emulationButton];
 	}
-	
+#if 0	
 	CGRect r = GSEventGetLocationInWindow(theEvent);
 //	NSLog(@"r.o={%f,%f}", r.origin.x, r.origin.y);
 
@@ -652,9 +659,10 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 //	NSLog(@"q'd event=%@", event);
 	[_pendingEvents addObject: event];
 	[self sendAnyValidEventsToServerNow];
+#endif
 }
 
-- (void)queueMouseUpEventFromEvent: (GSEventRef)theEvent buttonNumber: (unsigned int)button
+- (void)queueMouseUpEventFromEvent: (id)theEvent buttonNumber: (unsigned int)button
 {
 //	NSLog(@"queueMouseUpEventFromEvent:%@ n:%d", theEvent, button);
 	if ( 1 != _emulationButton )
@@ -662,7 +670,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 		button = _emulationButton;
 		_emulationButton = 1;
 	}
-	
+#if 0	
 	CGRect r = GSEventGetLocationInWindow(theEvent);
     CGPoint	p  = [self getVNCScreenPoint: r];
 //	NSLog(@"up:p={%f,%f}", p.x, p.y);
@@ -690,6 +698,7 @@ ButtonNumberToRFBButtomMask( unsigned int buttonNumber )
 //	NSLog(@"q'd event=%@", event);
 	[_pendingEvents addObject: event];
 	[self sendAnyValidEventsToServerNow];
+#endif
 }
 
 - (void)queueModifierPressed: (unsigned int)modifier timestamp: (NSTimeInterval)timestamp

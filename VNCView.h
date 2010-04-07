@@ -8,16 +8,9 @@
 
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
-#import <UIKit/CDStructures.h>
 #import <UIKit/UIWindow.h>
-#import <UIKit/UIView-Hierarchy.h>
-#import <UIKit/UIHardware.h>
 #import <UIKit/UIKit.h>
 #import <UIKit/UIApplication.h>
-#import <UIKit/UINavBarButton.h>
-#import <UIKit/UIPushButton.h>
-#import <UIKit/UIKeyboard.h>
-#import <UIKit/UIKeyboardInput.h>
 #import <UIKit/UISegmentedControl.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import "RFBConnection.h"
@@ -26,7 +19,6 @@
 #import "RFBViewProtocol.h"
 #import "VNCContentView.h"
 #import "VNCScrollerView.h"
-#import "VNCPopupWindow.h"
 
 //! @brief Modes for screen scaling.
 typedef enum
@@ -60,6 +52,7 @@ typedef enum
 	EventFilter * _filter;			//!< Event filter for the current connection.
 	VNCScrollerView * _scroller;	//!< Scroller subview.
 	VNCContentView * _screenView;	//!< Child content view that draws the framebuffer.
+#if 0
 	UINavBarButton * _keyboardButton;	//
 	UINavBarButton * _shiftButton;
 	UINavBarButton * _commandButton;
@@ -72,6 +65,7 @@ typedef enum
 	UIThreePartButton * _fitHeightButton;
 	UIThreePartButton *_fitWholeButton;
 	UIThreePartButton *_fitNoneButton;
+#endif
 	UISegmentedControl * _widthHeightFullSegment;
 	id _keyboardView;
 	id _controlsView;
@@ -125,12 +119,14 @@ typedef enum
 
 - (id)scroller;
 
+#if 0
 //! @name Orientation
 //@{
 - (float)orientationDegree;
 - (void)setOrientation:(UIHardwareOrientation)wOrientation bForce:(int)bForce;
 - (UIHardwareOrientation)getOrientationState;
 //@}
+#endif
 
 //! @name Scaling
 //@{
@@ -140,7 +136,7 @@ typedef enum
 - (scaleSpecialTypes)getScaleState;
 //@}
 
-- (void)changeViewPinnedToPoint:(CGPoint)ptPinned scale:(float)fScale orientation:(UIHardwareOrientation)wOrientationState force:(BOOL)bForce;
+//- (void)changeViewPinnedToPoint:(CGPoint)ptPinned scale:(float)fScale orientation:(UIHardwareOrientation)wOrientationState force:(BOOL)bForce;
 - (CGRect)getFrame;
 - (CGPoint)getIPodScreenPoint:(CGRect)r bounds:(CGRect)bounds;
 

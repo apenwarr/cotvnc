@@ -7,7 +7,7 @@
 //  Modified by: Glenn Kreisel
 
 #import "VNCContentView.h"
-#import "VnseaApp.h"
+//#import "VnseaApp.h"
 
 @implementation VNCContentView
 
@@ -19,6 +19,7 @@
 		[self setAlpha:1.0f];
 	}
 	_scalePercent = 0.50f;
+	[self setBackgroundColor:[UIColor blueColor]];
 	return self;
 }
 
@@ -28,10 +29,12 @@
 	[super dealloc];
 }
 
+#if 0
 - (UIHardwareOrientation)getOrientationState
 {
 	return _orientationState;
 }
+#endif
 
 - (void)setDelegate:(id)newDelegate
 {
@@ -43,6 +46,7 @@
 	return _delegate;
 }
 
+#if 0
 - (void)setOrientationState:(UIHardwareOrientation)wState
 {
 	_orientationState = wState;
@@ -62,6 +66,7 @@
 			break;
 		}
 }
+#endif
 
 - (void)setOrientationDeg:(float)wDeg
 {
@@ -110,6 +115,7 @@
 	CGPoint ptIPod = CGPointApplyAffineTransform(r.origin, _matrixPreviousTransform);
 	CGRect rcFrame = _frame;
 
+#if 0
 	switch (_orientationState)
 	{
 		case kOrientationVerticalUpsideDown:
@@ -128,11 +134,13 @@
 			break;
 			
 		case kOrientationHorizontalLeft:
+#endif
 			ptIPod.x = (rcFrame.size.width - ptIPod.x) - bounds.origin.x;
 			ptIPod.y = (ptIPod.y - bounds.origin.y);
+#if 0
 			break;
 	}
-
+#endif
 	return ptIPod;
 }
 
@@ -155,6 +163,7 @@
 	// to scale.
 	//! @todo This should be fixed by rendering the bitmap correctly.
 	CGAffineTransform matrix = CGAffineTransformRotate(CGAffineTransformMakeScale(0-_scalePercent, _scalePercent), _orientationDeg  * M_PI / 180.0f);
+#if 0
 	if (bAnimate)
 	{
 		UITransformAnimation *scaleAnim = [[UITransformAnimation alloc] initWithTarget: self];
@@ -163,6 +172,7 @@
 		UIAnimator *anim = [[UIAnimator alloc] init];
 		[anim addAnimation:scaleAnim withDuration:0.30f start:YES]; 
 	}
+#endif
 	[self setTransform:matrix];
 	_matrixPreviousTransform = matrix;
 }
@@ -174,7 +184,7 @@
 		CGRect b = [self bounds];
 		CGRect r = destRect;
 		
-		CGContextRef context = UICurrentContext();
+		CGContextRef context = UIGraphicsGetCurrentContext();
 		CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
 		r.origin.y = b.size.height - CGRectGetMaxY(r);
 		[_frameBuffer drawRect:r at:destRect.origin];
@@ -185,7 +195,7 @@
 		// instead of just BLACK
 		CGRect b = [self bounds];
 		char _szBubbleText[100] = "Processing...";
-		CGContextRef context = UICurrentContext();
+		CGContextRef context = UIGraphicsGetCurrentContext();
 		
 		CGContextSaveGState(context);
 		

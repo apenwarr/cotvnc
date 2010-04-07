@@ -66,6 +66,7 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 	return YES;
 }
 
+#if 0
 - (void)sendMouseDown:(GSEventRef)theEvent
 {
 	if (_useRightMouse)
@@ -95,6 +96,7 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 		[_eventFilter mouseUp:theEvent];
 	}
 }
+#endif
 
 - (void)cleanUpMouseTracks
 {
@@ -146,8 +148,8 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 		ptLeftTop.y += dyAutoScroll;
 	}
 				
-	[self scrollPointVisibleAtTopLeft: ptLeftTop];	
-	[_eventFilter mouseDragged:_autoLastDragEvent];
+//	[self scrollPointVisibleAtTopLeft: ptLeftTop];	
+//	[_eventFilter mouseDragged:_autoLastDragEvent];
 }
 
 
@@ -158,6 +160,7 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 	_doubleTapTimer = nil;
 }
 
+#if 0
 - (void)handleTapTimer:(NSTimer *)timer
 {
 	_inRemoteAction = true;
@@ -404,7 +407,6 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 	}
 }
 
-
 //! Determines if we need to autoscroll while dragging. If so, then it
 //! sets up the autoscroll timer.
 - (void)checkForAutoscrollEvents:(GSEventRef) theEvent
@@ -551,5 +553,6 @@ extern CGPoint UIMidPointBetweenPoints(CGPoint a, CGPoint b);
 		[super mouseDragged:theEvent];
 	}
 }
+#endif
 
 @end

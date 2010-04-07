@@ -7,23 +7,14 @@
 // Modified by: Glenn Kreisel
 
 #import "VNCView.h"
-#import "VNCPopupView.h"
-#import "VnseaApp.h"
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 #import <UIKit/UITextView.h>
-#import <UIKit/UITouchDiagnosticsLayer.h>
-#import <UIKit/UINavBarButton.h>
-#import <UIKit/UIView-Gestures.h>
-#import <UIKit/UIKeyboardImpl.h>
-#import <UIKit/UITextView.h>
-#import <UIKit/UITextTraits.h>
-#import <GraphicsServices/GraphicsServices.h>
 #import "RectangleList.h"
 #import "QueuedEvent.h"
 
 //! Height of the controls bar view.
-#define kControlsBarHeight (48.0f)
+#define kControlsBarHeight (24.0f)
 
 //! Height of buttons in the controls bar.
 #define kControlsBarButtonHeight (32.0f)
@@ -38,26 +29,11 @@
 
 #define kButtonSpacing (5.0f)
 
-// There's got to be a better way to do this, but for now this is just fine.
-// Thanks to the MobileTerminal team for this trick.
-@implementation UIKeyboardImpl (DisableFeatures)
-
-- (BOOL)autoCapitalizationPreference
-{
-	return NO;
-}
-
-- (BOOL)autoCorrectionPreference
-{
-	return NO;
-}
-
-@end
-
 @implementation VNCView
 
 - (void)sendFunctionKeys:(id)sender
 {
+#if 0
 	UIPushButton *pb = (UIPushButton *)sender;
 	NSString *ns;
 	
@@ -66,6 +42,7 @@
 	NSLog(@"Numbers int equal %d", [ns intValue]);
 	
 	[_connection sendFunctionKey: (unsigned)[ns intValue]];
+#endif
 }
 
 - (void)sendESCKey:(id)sender
@@ -88,8 +65,12 @@
 	[_connection sendFullScreenRefresh];
 }
 
-// I can never remember this relationship for some reason:
-// The frame rectangle defines the view's location and size in the superview using the superview’s coordinate system. The bounds rectangle defines the interior coordinate system that is used when drawing the contents of the view, including the origin and scaling.
+// I can never remember this relationship for some reason: The frame
+// rectangle defines the view's location and size in the superview
+// using the superview's coordinate system. The bounds
+// rectangle defines the interior coordinate system that is used when
+// drawing the contents of the view, including the origin and
+// scaling.
 - (id)initWithFrame:(CGRect)frame
 {
 	if ([super initWithFrame:frame])
@@ -100,6 +81,8 @@
 		// Create scroller view.
 		_scroller = [[VNCScrollerView alloc] initWithFrame:subframe];
 		[_scroller setVNCView: self];
+		[_scroller setBackgroundColor:[UIColor purpleColor]];
+#if 0
 		[_scroller setScrollingEnabled:YES];
 		[_scroller setShowScrollerIndicators:YES];
 		[_scroller setAdjustForContentSizeChange:NO];
@@ -110,6 +93,7 @@
 		[_scroller setRubberBand: 50 forEdges:2];
 		[_scroller setRubberBand: 50 forEdges:3];
 		[_scroller setDelegate:self];
+#endif
 		
 		// Create controls bar.
 		[self layoutControlsBar];
@@ -117,25 +101,25 @@
 		// Create screen view.
 		_screenView = [[VNCContentView alloc] initWithFrame:subframe];
 		[_screenView setDelegate: [self delegate]];
-	
+#if 0	
 		// Create keyboard.
 		CGSize defaultKeyboardSize = [UIKeyboard defaultSize];
 		subframe.origin = CGPointMake(0, frame.size.height - kControlsBarHeight - defaultKeyboardSize.height);
 		subframe.size = defaultKeyboardSize;
 		_keyboardView = [[UIKeyboard alloc] initWithFrame:subframe];
 		[_keyboardView setPreferredKeyboardType:kUIKeyboardLayoutAlphabetTransparent];
-
+#endif
 		// Set our background color to black.
-		const float kBlackComponents[] = { 0, 0, 0, 1 };
+//		const float kBlackComponents[] = { 0, 0, 0, 1 };
 		CGColorSpaceRef rgbSpace = CGColorSpaceCreateDeviceRGB();
-		CGColorRef black = CGColorCreate(rgbSpace, kBlackComponents);
+	    //CGColorRef black = CGColorCreate(rgbSpace, kBlackComponents);
 		CGColorSpaceRelease(rgbSpace);
 		
 		[self setOpaque:YES];
-		[self setBackgroundColor:black];
+//		[self setBackgroundColor:black];
 		
 		// Build view hierarchy.
-		[self addSubview:_controlsView];
+		//[self addSubview:_controlsView];
 		[_scroller addSubview:_screenView];
 		[self addSubview:_scroller];
 		
@@ -153,15 +137,16 @@
 //! in portrait mode, as well as all of the buttons within it.
 - (void)layoutControlsBar
 {
+#if 0
 	CGRect frame = [self frame];
 	
 	// Create control bar, initially just below the bottom of the screen.
-	CGRect subframe = CGRectMake(0, frame.size.height, frame.size.width, kControlsBarHeight);
-	_controlsView = [[UIGradientBar alloc] initWithFrame:subframe];
+//	CGRect subframe = CGRectMake(0, frame.size.height, frame.size.width, kControlsBarHeight);
+//	_controlsView = [[UIGradientBar alloc] initWithFrame:subframe];
 	
 	// Create keyboard button.
 	subframe = CGRectMake(5, (kControlsBarHeight - kControlsBarButtonHeight) / 2.0f + 1.0f, kKeyboardButtonWidth, kControlsBarButtonHeight);
-	_keyboardButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"keyboard.png"]];
+        _keyboardButton = [[UINavBarButton alloc] initWithImage:[UIImage imageNamed:@"keyboard.png"]];
 	[_keyboardButton setFrame:subframe];
 	[_keyboardButton setNavBarButtonStyle:0];
 	[_keyboardButton addTarget:self action:@selector(toggleKeyboard:) forEvents:kUIControlEventMouseUpInside];
@@ -212,7 +197,7 @@
 	[_exitButton setFrame:subframe];
 	[_exitButton setNavBarButtonStyle:0];
 	[_exitButton addTarget:self action:@selector(closeConnection:) forEvents:kUIControlEventMouseUpInside];
-	
+    
 	// Build controls bar view hierarchy.
 	[_controlsView addSubview:_keyboardButton];
 	[_controlsView addSubview:_exitButton];
@@ -222,6 +207,7 @@
 	[_controlsView addSubview:_controlButton];
 	[_controlsView addSubview:_helperFunctionButton];
 	[_controlsView addSubview:_rightMouseButton];
+#endif
 }
 
 - (void)dealloc
@@ -247,7 +233,7 @@
 	{
 		CGRect frame;
 		
-		[UIView beginAnimations:nil];
+//		[UIView beginAnimations:nil];
 		[UIView setAnimationDuration:0.15f];
 
 		if (_areControlsVisible)
@@ -288,7 +274,7 @@
 		}
 		
 		// This will start the animation.
-		[UIView endAnimations];
+//		[UIView endAnimations];
 		
 		_areControlsVisible = show;
 	}
@@ -309,10 +295,12 @@
 	return [_scroller bounds].origin;
 }
 
+#if 0
 - (void)changeViewPinnedToPoint:(CGPoint)ptPinned scale:(float)fScale orientation:(UIHardwareOrientation)wOrientationState force:(BOOL)bForce
 {
 	[_scroller changeViewPinnedToPoint:ptPinned scale:fScale orientation:wOrientationState force:bForce];
 }
+#endif
 
 - (void)setStartupTopLeftPt:(CGPoint)pt
 {
@@ -322,6 +310,7 @@
 // Bring up the Helper Functions Popup window using AlertSheet as the basis
 - (void)showHelperFunctions:(id)sender
 {
+#if 0
 	UIAlertSheet *downloader = [[UIAlertSheet alloc ] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 370.0f) ];	
 
 	UITextLabel *txtLabel = [[UITextLabel alloc] initWithFrame:CGRectMake(0, 32, 280, 32)];
@@ -339,7 +328,6 @@
 	[txtLabel setBackgroundColor: rgbTransparent];
 	[txtLabel setColor:textColorStatus];
 	[txtLabel setCentersHorizontally: true];
-	
 	[txtLabel setText:[NSString stringWithFormat: @"Remote Name: %@", _remoteComputerName]];
 	[downloader addSubview:txtLabel];
 	
@@ -546,10 +534,12 @@
 	CGRect rcFrame = [uibutton frame];
 	CGRect rcFrameTop = [downloader frame];	
 	[uibutton setFrame:CGRectMake(rcFrame.origin.x, rcFrameTop.size.height - rcFrame.size.height-rcFrame.size.height-3,rcFrame.size.width,rcFrame.size.height)];
+#endif
 }
 
 - (void)toggleFitWidthHeight:(id)sender
 {
+#if 0
 	UIPushButton *pButton = (UIPushButton *)sender;	
 	scaleSpecialTypes wScaleState = [self getScaleState], wScaleThisButton;
 
@@ -566,12 +556,13 @@
 	if (sender != _fitNoneButton)
 		[_scroller scrollPointVisibleAtTopLeft: CGPointMake(0,0)];
 	NSLog(@"Got Event or Scale Change");
+#endif
 }
 
 - (void)alertSheet:(id)sheet buttonClicked:(int)buttonIndex
 {
 	NSLog(@"Got alert click");
-	[sheet dismissAnimated:YES];
+//	[sheet dismissAnimated:YES];
 	[sheet release];
 }
 
@@ -585,7 +576,7 @@
 - (void)toggleKeyboard:(id)sender
 {
 //	NSLog(@"toggling keyboard: old=%d", (int)_isKeyboardVisible);
-	
+#if 0	
 	CGRect frame;
 	
 	if (_isKeyboardVisible)
@@ -607,13 +598,13 @@
 		[_scroller setFrame:frame];
 		
 		// Add in the keyboard view.
-		[self addSubview:_keyboardView];
-		[_keyboardView activate];
+//		[self addSubview:_keyboardView];
+//		[_keyboardView activate];
 		
 		// Set the delegate now that we have an active keyboard.
 		[[UIKeyboardImpl activeInstance] setDelegate:self];
 	}
-	
+#endif	
 	_isKeyboardVisible = !_isKeyboardVisible;
 }
 
@@ -637,15 +628,18 @@
 //!
 - (void)toggleRightMouse:(id)sender
 {
+#if 0
 	bool useRight = ![_scroller useRightMouse];
 	[_rightMouseButton setNavBarButtonStyle:useRight ? 3 : 0];
 	[_scroller setUseRightMouse:useRight];
+#endif
 }
 
 //! Handle one of the modifier key buttons being pressed.
 //!
 - (void)toggleModifierKey:(id)sender
 {
+#if 0
 	unsigned int modifier;
 	if (sender == _shiftButton)
 	{
@@ -683,6 +677,7 @@
 	
 	// Queue the modifier changed event.
 	[_filter flagsChanged:newModifiers];
+#endif
 }
 
 //! Returns whether the first frame update has been received from the server.
@@ -718,8 +713,8 @@
 //! because the user cannot type or click remotely.
 - (void)enableControlsForViewOnly:(bool)isViewOnly
 {
+#if 0
 	bool notViewOnly = !isViewOnly;
-
 	if (isViewOnly)
 		{
 		[_keyboardButton removeFromSuperview];
@@ -740,6 +735,7 @@
 		[_controlsView addSubview: _rightMouseButton];
 		[_delegate setStatusBarMode: kUIStatusBarWhite duration:0];
 		}
+#endif
 /*	
 	[_keyboardButton setEnabled:notViewOnly];
 	[_shiftButton setEnabled:notViewOnly];
@@ -773,7 +769,7 @@
 		[_filter setView:_scroller];
 		[_scroller setEventFilter:_filter];
 		[_scroller setViewOnly:[_connection viewOnly]];
-		[_scroller scrollPointVisibleAtTopLeft:CGPointMake(0, 0)];
+//		[_scroller scrollPointVisibleAtTopLeft:CGPointMake(0, 0)];
 		[_screenView setNeedsDisplay];
 		
 		// Enable or disable controls depending on view only mode.
@@ -786,16 +782,18 @@
 		[_scroller setEventFilter:nil];
 		[_scroller cleanUpMouseTracks];
 		[_screenView setFrameBuffer:nil];
-		[_screenView setOrientationState:0];
+//		[_screenView setOrientationState:0];
 		// Get the screen view to redraw itself in black.
 		[_screenView setNeedsDisplay];
 	}
 }
 
+#if 0
 - (UIHardwareOrientation)getOrientationState;
 {
 	return [_screenView getOrientationState];
 }
+#endif
 
 
 - (scaleSpecialTypes)getScaleState
@@ -810,6 +808,8 @@
 
 - (float)scaleFitCurrentScreen: (scaleSpecialTypes) wScaleState
 {
+    return 1.0;
+#if 0
 		float dx,dy, wScaleX, wScaleY, wScale = 10;
 		
 		NSLog(@"In scale fit");
@@ -847,6 +847,7 @@
 		}
 	NSLog(@"Out scale fit");
 	return wScale;
+#endif
 }
 
 - (void)setScalePercent:(float)wScale
@@ -874,8 +875,10 @@
 	return [_screenView getIPodScreenPoint: r bounds:bounds];
 }
 
+#if 0
 - (void)setOrientation:(UIHardwareOrientation)wOrientation bForce:(int)bForce
 {
+#if 0
 	CGSize vncScreenSize = _vncScreenSize;
 	CGSize newRemoteSize;
 
@@ -937,7 +940,9 @@
 		// Reset our scroller's content size.
 		[_scroller setContentSize:newRemoteSize];
 	}
+#endif
 }
+#endif
 
 - (void)setRemoteComputerName:(NSString *)name
 {
@@ -953,7 +958,7 @@
 	// ******************************************************************************
 	_vncScreenSize = CGSizeMake(remoteSize.width, MIN(((2*1024*1024) / remoteSize.width), remoteSize.height));
 	[self setScaleState: kScaleFitNone];
-	[self setOrientation: kOrientationVertical bForce:false];
+//	[self setOrientation: kOrientationVertical bForce:false];
 }
 
 //! The connection object is telling us that a region of the framebuffer
@@ -966,8 +971,8 @@
 	if (!_isFirstDisplay)
 	{
 		_isFirstDisplay = true;
-		[_scroller scrollPointVisibleAtTopLeft:_ptStartupTopLeft];
-		[_delegate gotFirstFullScreenTransitionNow];
+//		[_scroller scrollPointVisibleAtTopLeft:_ptStartupTopLeft];
+//		[_delegate gotFirstFullScreenTransitionNow];
 	}
 }
 
@@ -1040,17 +1045,19 @@
 	return 0; //L' ';
 }
 
+#if 0
 - (struct __GSFont *)fontForCaretSelection
 {
 //	NSLog(@"%s", __PRETTY_FUNCTION__);
-	return [UIPushButton defaultFont];
+//	return [UIPushButton defaultFont];
 }
 
 - (struct CGColor *)textColorForCaretSelection
 {
 //	NSLog(@"%s", __PRETTY_FUNCTION__);
-	return [UITextTraits defaultCaretColor];
+//	return [UITextTraits defaultCaretColor];
 }
+#endif
 
 - (struct CGRect)rectContainingCaretSelection
 {
@@ -1194,6 +1201,7 @@
 	return self;
 }
 
+#if 0
 - (id)textTraits
 {
 	UITextTraits * traits = [UITextTraits defaultTraits];
@@ -1202,6 +1210,7 @@
 	[traits setAutoEnablesReturnKey:NO];
 	return traits;
 }
+#endif
 
 - (BOOL)isShowingPlaceholder
 {
@@ -1220,6 +1229,7 @@
 	return NO;
 }
 
+#if 0
 - (BOOL)interceptKeyEvent:(GSEventRef)theEvent
 {
 //	NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -1244,6 +1254,7 @@
 	
 	return NO;
 }
+#endif
 
 /*
 //These Methods track delegate calls made to the application

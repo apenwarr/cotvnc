@@ -43,7 +43,7 @@ typedef enum {
  * is to intercept finger events and either pass them to the EventFilter
  * or let the UIScroller superclass handle them.
  */
-@interface VNCScrollerView : UIScroller
+@interface VNCScrollerView : UIView
 {
 	EventFilter * _eventFilter;		//!< Event generation and queue object.
 	bool _inRemoteAction;			//!< Are we currently controlling the remote mouse?
@@ -60,7 +60,7 @@ typedef enum {
 	VNCMouseTracks * _windowPopupMouseDown;
 	VNCMouseTracks * _windowPopupMouseUp;
 	AutoScrollerTypes _currentAutoScrollerType;
-	GSEventRef _autoLastDragEvent;
+	//GSEventRef _autoLastDragEvent;
 	bool _bZoomedIn;
 	float _preDoubleClickZoom;
 }
@@ -76,15 +76,15 @@ typedef enum {
 
 - (void)setVNCView:(VNCView *)view;
 
-- (void)changeViewPinnedToPoint:(CGPoint)ptPinned scale:(float)fScale orientation:(UIHardwareOrientation)wOrientationState force:(BOOL)bForce;
-- (CGPoint)getIPodScreenPoint:(CGRect)r bounds:(CGRect)bounds;
-- (void)checkForAutoscrollEvents:(GSEventRef) theEvent;
+//- (void)changeViewPinnedToPoint:(CGPoint)ptPinned scale:(float)fScale orientation:(UIHardwareOrientation)wOrientationState force:(BOOL)bForce;
+//- (CGPoint)getIPodScreenPoint:(CGRect)r bounds:(CGRect)bounds;
+//- (void)checkForAutoscrollEvents:(GSEventRef) theEvent;
 
 - (bool)useRightMouse;
 - (void)setUseRightMouse:(bool)useRight;
 
-- (void)sendMouseDown:(GSEventRef)theEvent;
-- (void)sendMouseUp:(GSEventRef)theEvent;
+//- (void)sendMouseDown:(GSEventRef)theEvent;
+//- (void)sendMouseUp:(GSEventRef)theEvent;
 
 // function called when mouse is dragging near any edge
 - (void)handleScrollTimer:(NSTimer *)timer;

@@ -78,6 +78,7 @@
 	[super dealloc];
 }
 
+#if 0
 - (void)zoomOrientationChange
 {
 	CGRect frame = [self frame];
@@ -89,6 +90,7 @@
 	frame.origin.y -= [self bounds].size.height / 2;
 	[self setFrame: frame];
 }
+#endif
 
 - (void)setCenterLocation:(CGPoint)ptCenter
 {
@@ -122,7 +124,7 @@
 
 - (void)drawRect:(CGRect)destRect
 {
-		CGContextRef context = UICurrentContext();
+		CGContextRef context = UIGraphicsGetCurrentContext();
 		CGRect rcElipse = [self bounds];
 			
 		CGContextClearRect(context, rcElipse);

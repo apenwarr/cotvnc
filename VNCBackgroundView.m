@@ -44,7 +44,7 @@ void MyDrawColoredPattern (void *info, CGContextRef myContext)
 
 - (void)drawRect:(CGRect)destRect
 {
-	CGContextRef myContext = UICurrentContext();
+	CGContextRef myContext = UIGraphicsGetCurrentContext();
 	CGRect rcElipse = [self bounds];
 		
     CGPatternRef    pattern;// 1

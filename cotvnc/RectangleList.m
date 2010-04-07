@@ -78,7 +78,7 @@
     int i;
     CGRect* rp = (CGRect *)rectList;
     float* fp = rgbList;
-	CGContextRef context = UICurrentContext();
+	CGContextRef context = UIGraphicsGetCurrentContext();
 
     for(i=0; i<used; i++) {
         rp->origin.y = frame.size.height - rp->origin.y - rp->size.height;

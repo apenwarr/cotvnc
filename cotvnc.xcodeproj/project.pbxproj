@@ -1,0 +1,837 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		DA7C290E1165E93700B42727 /* cotvnc-iphone.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C290A1165E93700B42727 /* cotvnc-iphone.m */; };
+		DA7C290F1165E93700B42727 /* viewtestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C290B1165E93700B42727 /* viewtestAppDelegate.m */; };
+		DA7C29101165E93700B42727 /* viewtestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C290C1165E93700B42727 /* viewtestViewController.m */; };
+		DA7C29111165E93700B42727 /* viewtestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA7C290D1165E93700B42727 /* viewtestViewController.xib */; };
+		DA7C2A991165EB2900B42727 /* ByteBlockReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A371165EB2900B42727 /* ByteBlockReader.m */; };
+		DA7C2A9A1165EB2900B42727 /* ByteReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A391165EB2900B42727 /* ByteReader.m */; };
+		DA7C2A9B1165EB2900B42727 /* CARD8Reader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A3B1165EB2900B42727 /* CARD8Reader.m */; };
+		DA7C2A9C1165EB2900B42727 /* CARD16Reader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A3D1165EB2900B42727 /* CARD16Reader.m */; };
+		DA7C2A9D1165EB2900B42727 /* CARD32Reader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A3F1165EB2900B42727 /* CARD32Reader.m */; };
+		DA7C2A9E1165EB2900B42727 /* CopyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A411165EB2900B42727 /* CopyFilter.m */; };
+		DA7C2A9F1165EB2900B42727 /* CopyRectangleEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A431165EB2900B42727 /* CopyRectangleEncodingReader.m */; };
+		DA7C2AA01165EB2900B42727 /* CoRREEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A451165EB2900B42727 /* CoRREEncodingReader.m */; };
+		DA7C2AA11165EB2900B42727 /* d3des.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A461165EB2900B42727 /* d3des.c */; };
+		DA7C2AA21165EB2900B42727 /* debug.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A491165EB2900B42727 /* debug.m */; };
+		DA7C2AA31165EB2900B42727 /* EncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A4B1165EB2900B42727 /* EncodingReader.m */; };
+		DA7C2AA41165EB2900B42727 /* EventFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A4D1165EB2900B42727 /* EventFilter.m */; };
+		DA7C2AA51165EB2900B42727 /* FilterReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A4F1165EB2900B42727 /* FilterReader.m */; };
+		DA7C2AA61165EB2900B42727 /* FrameBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A511165EB2900B42727 /* FrameBuffer.m */; };
+		DA7C2AA71165EB2900B42727 /* FrameBufferUpdateReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A541165EB2900B42727 /* FrameBufferUpdateReader.m */; };
+		DA7C2AA81165EB2900B42727 /* GradientFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A561165EB2900B42727 /* GradientFilter.m */; };
+		DA7C2AA91165EB2900B42727 /* GrayScaleFrameBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A581165EB2900B42727 /* GrayScaleFrameBuffer.m */; };
+		DA7C2AAA1165EB2900B42727 /* HextileEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A5A1165EB2900B42727 /* HextileEncodingReader.m */; };
+		DA7C2AAB1165EB2900B42727 /* HighColorFrameBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A5C1165EB2900B42727 /* HighColorFrameBuffer.m */; };
+		DA7C2AAC1165EB2900B42727 /* KeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A5F1165EB2900B42727 /* KeyChain.m */; };
+		DA7C2AAD1165EB2900B42727 /* LowColorFrameBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A611165EB2900B42727 /* LowColorFrameBuffer.m */; };
+		DA7C2AAE1165EB2900B42727 /* NLTStringReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A631165EB2900B42727 /* NLTStringReader.m */; };
+		DA7C2AAF1165EB2900B42727 /* NSObject_Chicken.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A651165EB2900B42727 /* NSObject_Chicken.m */; };
+		DA7C2AB01165EB2900B42727 /* PaletteFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A671165EB2900B42727 /* PaletteFilter.m */; };
+		DA7C2AB11165EB2900B42727 /* PrefController_private.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A691165EB2900B42727 /* PrefController_private.m */; };
+		DA7C2AB21165EB2900B42727 /* PrefController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A6B1165EB2900B42727 /* PrefController.m */; };
+		DA7C2AB31165EB2900B42727 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A6D1165EB2900B42727 /* Profile.m */; };
+		DA7C2AB41165EB2900B42727 /* QueuedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A6F1165EB2900B42727 /* QueuedEvent.m */; };
+		DA7C2AB51165EB2900B42727 /* RawEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A711165EB2900B42727 /* RawEncodingReader.m */; };
+		DA7C2AB61165EB2900B42727 /* RectangleList.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A731165EB2900B42727 /* RectangleList.m */; };
+		DA7C2AB71165EB2900B42727 /* RFBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A751165EB2900B42727 /* RFBConnection.m */; };
+		DA7C2AB81165EB2900B42727 /* RFBHandshaker.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A771165EB2900B42727 /* RFBHandshaker.m */; };
+		DA7C2AB91165EB2900B42727 /* RFBProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A7A1165EB2900B42727 /* RFBProtocol.m */; };
+		DA7C2ABA1165EB2900B42727 /* RFBServerInitReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A7C1165EB2900B42727 /* RFBServerInitReader.m */; };
+		DA7C2ABB1165EB2900B42727 /* RFBStringReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A7E1165EB2900B42727 /* RFBStringReader.m */; };
+		DA7C2ABC1165EB2900B42727 /* RREEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A801165EB2900B42727 /* RREEncodingReader.m */; };
+		DA7C2ABD1165EB2900B42727 /* ServerBase.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A821165EB2900B42727 /* ServerBase.m */; };
+		DA7C2ABE1165EB2900B42727 /* ServerCutTextReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A841165EB2900B42727 /* ServerCutTextReader.m */; };
+		DA7C2ABF1165EB2900B42727 /* ServerFromPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A861165EB2900B42727 /* ServerFromPrefs.m */; };
+		DA7C2AC01165EB2900B42727 /* ServerStandAlone.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A881165EB2900B42727 /* ServerStandAlone.m */; };
+		DA7C2AC11165EB2900B42727 /* SetColorMapEntriesReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A8A1165EB2900B42727 /* SetColorMapEntriesReader.m */; };
+		DA7C2AC21165EB2900B42727 /* TightEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A8C1165EB2900B42727 /* TightEncodingReader.m */; };
+		DA7C2AC31165EB2900B42727 /* TrueColorFrameBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A8E1165EB2900B42727 /* TrueColorFrameBuffer.m */; };
+		DA7C2AC41165EB2900B42727 /* vncauth.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A8F1165EB2900B42727 /* vncauth.c */; };
+		DA7C2AC51165EB2900B42727 /* ZipLengthReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A921165EB2900B42727 /* ZipLengthReader.m */; };
+		DA7C2AC61165EB2900B42727 /* ZlibEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A941165EB2900B42727 /* ZlibEncodingReader.m */; };
+		DA7C2AC71165EB2900B42727 /* ZlibHexEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A961165EB2900B42727 /* ZlibHexEncodingReader.m */; };
+		DA7C2AC81165EB2900B42727 /* ZRLEEncodingReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2A981165EB2900B42727 /* ZRLEEncodingReader.m */; };
+		DA7C2B241165EB8B00B42727 /* jcapimin.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2ADA1165EB8B00B42727 /* jcapimin.c */; };
+		DA7C2B251165EB8B00B42727 /* jcapistd.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2ADB1165EB8B00B42727 /* jcapistd.c */; };
+		DA7C2B261165EB8B00B42727 /* jccoefct.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2ADC1165EB8B00B42727 /* jccoefct.c */; };
+		DA7C2B271165EB8B00B42727 /* jccolor.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2ADD1165EB8B00B42727 /* jccolor.c */; };
+		DA7C2B281165EB8B00B42727 /* jcdctmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2ADE1165EB8B00B42727 /* jcdctmgr.c */; };
+		DA7C2B291165EB8B00B42727 /* jchuff.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2ADF1165EB8B00B42727 /* jchuff.c */; };
+		DA7C2B2A1165EB8B00B42727 /* jcinit.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AE01165EB8B00B42727 /* jcinit.c */; };
+		DA7C2B2B1165EB8B00B42727 /* jcmainct.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AE11165EB8B00B42727 /* jcmainct.c */; };
+		DA7C2B2C1165EB8B00B42727 /* jcmarker.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AE21165EB8B00B42727 /* jcmarker.c */; };
+		DA7C2B2D1165EB8B00B42727 /* jcmaster.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AE31165EB8B00B42727 /* jcmaster.c */; };
+		DA7C2B2E1165EB8B00B42727 /* jcomapi.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AE41165EB8B00B42727 /* jcomapi.c */; };
+		DA7C2B2F1165EB8B00B42727 /* jconfig.cfg in Resources */ = {isa = PBXBuildFile; fileRef = DA7C2AE51165EB8B00B42727 /* jconfig.cfg */; };
+		DA7C2B301165EB8B00B42727 /* jcparam.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AE61165EB8B00B42727 /* jcparam.c */; };
+		DA7C2B311165EB8B00B42727 /* jcphuff.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AE71165EB8B00B42727 /* jcphuff.c */; };
+		DA7C2B321165EB8B00B42727 /* jcprepct.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AE81165EB8B00B42727 /* jcprepct.c */; };
+		DA7C2B331165EB8B00B42727 /* jcsample.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AE91165EB8B00B42727 /* jcsample.c */; };
+		DA7C2B341165EB8B00B42727 /* jctrans.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AEA1165EB8B00B42727 /* jctrans.c */; };
+		DA7C2B351165EB8B00B42727 /* jdapimin.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AEB1165EB8B00B42727 /* jdapimin.c */; };
+		DA7C2B361165EB8B00B42727 /* jdapistd.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AEC1165EB8B00B42727 /* jdapistd.c */; };
+		DA7C2B371165EB8B00B42727 /* jdatadst.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AED1165EB8B00B42727 /* jdatadst.c */; };
+		DA7C2B381165EB8B00B42727 /* jdatasrc.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AEE1165EB8B00B42727 /* jdatasrc.c */; };
+		DA7C2B391165EB8B00B42727 /* jdcoefct.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AEF1165EB8B00B42727 /* jdcoefct.c */; };
+		DA7C2B3A1165EB8B00B42727 /* jdcolor.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AF01165EB8B00B42727 /* jdcolor.c */; };
+		DA7C2B3B1165EB8B00B42727 /* jddctmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AF11165EB8B00B42727 /* jddctmgr.c */; };
+		DA7C2B3C1165EB8B00B42727 /* jdhuff.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AF21165EB8B00B42727 /* jdhuff.c */; };
+		DA7C2B3D1165EB8B00B42727 /* jdinput.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AF31165EB8B00B42727 /* jdinput.c */; };
+		DA7C2B3E1165EB8B00B42727 /* jdmainct.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AF41165EB8B00B42727 /* jdmainct.c */; };
+		DA7C2B3F1165EB8B00B42727 /* jdmarker.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AF51165EB8B00B42727 /* jdmarker.c */; };
+		DA7C2B401165EB8B00B42727 /* jdmaster.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AF61165EB8B00B42727 /* jdmaster.c */; };
+		DA7C2B411165EB8B00B42727 /* jdmerge.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AF71165EB8B00B42727 /* jdmerge.c */; };
+		DA7C2B421165EB8B00B42727 /* jdphuff.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AF81165EB8B00B42727 /* jdphuff.c */; };
+		DA7C2B431165EB8B00B42727 /* jdpostct.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AF91165EB8B00B42727 /* jdpostct.c */; };
+		DA7C2B441165EB8B00B42727 /* jdsample.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AFA1165EB8B00B42727 /* jdsample.c */; };
+		DA7C2B451165EB8B00B42727 /* jdtrans.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AFB1165EB8B00B42727 /* jdtrans.c */; };
+		DA7C2B461165EB8B00B42727 /* jerror.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AFC1165EB8B00B42727 /* jerror.c */; };
+		DA7C2B471165EB8B00B42727 /* jfdctflt.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AFD1165EB8B00B42727 /* jfdctflt.c */; };
+		DA7C2B481165EB8B00B42727 /* jfdctfst.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AFE1165EB8B00B42727 /* jfdctfst.c */; };
+		DA7C2B491165EB8B00B42727 /* jfdctint.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2AFF1165EB8B00B42727 /* jfdctint.c */; };
+		DA7C2B4A1165EB8B00B42727 /* jidctflt.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B001165EB8B00B42727 /* jidctflt.c */; };
+		DA7C2B4B1165EB8B00B42727 /* jidctfst.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B011165EB8B00B42727 /* jidctfst.c */; };
+		DA7C2B4C1165EB8B00B42727 /* jidctint.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B021165EB8B00B42727 /* jidctint.c */; };
+		DA7C2B4D1165EB8B00B42727 /* jidctred.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B031165EB8B00B42727 /* jidctred.c */; };
+		DA7C2B511165EB8B00B42727 /* jmemmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B071165EB8B00B42727 /* jmemmgr.c */; };
+		DA7C2B531165EB8B00B42727 /* jmemnobs.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B091165EB8B00B42727 /* jmemnobs.c */; };
+		DA7C2B551165EB8B00B42727 /* jquant1.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B0B1165EB8B00B42727 /* jquant1.c */; };
+		DA7C2B561165EB8B00B42727 /* jquant2.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B0C1165EB8B00B42727 /* jquant2.c */; };
+		DA7C2B571165EB8B00B42727 /* jutils.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B0D1165EB8B00B42727 /* jutils.c */; };
+		DA7C2B581165EB8B00B42727 /* makefile.cfg in Resources */ = {isa = PBXBuildFile; fileRef = DA7C2B0E1165EB8B00B42727 /* makefile.cfg */; };
+		DA7C2B591165EB8B00B42727 /* rdbmp.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B0F1165EB8B00B42727 /* rdbmp.c */; };
+		DA7C2B5A1165EB8B00B42727 /* rdcolmap.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B101165EB8B00B42727 /* rdcolmap.c */; };
+		DA7C2B5B1165EB8B00B42727 /* rdgif.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B111165EB8B00B42727 /* rdgif.c */; };
+		DA7C2B5D1165EB8B00B42727 /* rdppm.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B131165EB8B00B42727 /* rdppm.c */; };
+		DA7C2B5E1165EB8B00B42727 /* rdrle.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B141165EB8B00B42727 /* rdrle.c */; };
+		DA7C2B5F1165EB8B00B42727 /* rdswitch.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B151165EB8B00B42727 /* rdswitch.c */; };
+		DA7C2B601165EB8B00B42727 /* rdtarga.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B161165EB8B00B42727 /* rdtarga.c */; };
+		DA7C2B611165EB8B00B42727 /* transupp.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B171165EB8B00B42727 /* transupp.c */; };
+		DA7C2B621165EB8B00B42727 /* wrbmp.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B181165EB8B00B42727 /* wrbmp.c */; };
+		DA7C2B631165EB8B00B42727 /* wrgif.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B191165EB8B00B42727 /* wrgif.c */; };
+		DA7C2B651165EB8B00B42727 /* wrppm.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B1B1165EB8B00B42727 /* wrppm.c */; };
+		DA7C2B661165EB8B00B42727 /* wrrle.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B1C1165EB8B00B42727 /* wrrle.c */; };
+		DA7C2B671165EB8B00B42727 /* wrtarga.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B1D1165EB8B00B42727 /* wrtarga.c */; };
+		DA7C2B821165EC8700B42727 /* NSString_VNCPasswordCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B7B1165EC8700B42727 /* NSString_VNCPasswordCrypto.m */; };
+		DA7C2B831165EC8700B42727 /* VNCBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B7C1165EC8700B42727 /* VNCBackgroundView.m */; };
+		DA7C2B841165EC8700B42727 /* VNCContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B7D1165EC8700B42727 /* VNCContentView.m */; };
+		DA7C2B851165EC8700B42727 /* VNCMouseTracks.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B7E1165EC8700B42727 /* VNCMouseTracks.m */; };
+		DA7C2B861165EC8700B42727 /* VNCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B7F1165EC8700B42727 /* VNCPreferences.m */; };
+		DA7C2B871165EC8700B42727 /* VNCScrollerView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B801165EC8700B42727 /* VNCScrollerView.m */; };
+		DA7C2B881165EC8700B42727 /* VNCView.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2B811165EC8700B42727 /* VNCView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		DA7C29081165E91000B42727 /* cotvnc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cotvnc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA7C290A1165E93700B42727 /* cotvnc-iphone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "cotvnc-iphone.m"; sourceTree = "<group>"; };
+		DA7C290B1165E93700B42727 /* viewtestAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = viewtestAppDelegate.m; sourceTree = "<group>"; };
+		DA7C290C1165E93700B42727 /* viewtestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = viewtestViewController.m; sourceTree = "<group>"; };
+		DA7C290D1165E93700B42727 /* viewtestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = viewtestViewController.xib; sourceTree = "<group>"; };
+		DA7C2A361165EB2900B42727 /* ByteBlockReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ByteBlockReader.h; path = cotvnc/ByteBlockReader.h; sourceTree = "<group>"; };
+		DA7C2A371165EB2900B42727 /* ByteBlockReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ByteBlockReader.m; path = cotvnc/ByteBlockReader.m; sourceTree = "<group>"; };
+		DA7C2A381165EB2900B42727 /* ByteReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ByteReader.h; path = cotvnc/ByteReader.h; sourceTree = "<group>"; };
+		DA7C2A391165EB2900B42727 /* ByteReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ByteReader.m; path = cotvnc/ByteReader.m; sourceTree = "<group>"; };
+		DA7C2A3A1165EB2900B42727 /* CARD8Reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CARD8Reader.h; path = cotvnc/CARD8Reader.h; sourceTree = "<group>"; };
+		DA7C2A3B1165EB2900B42727 /* CARD8Reader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CARD8Reader.m; path = cotvnc/CARD8Reader.m; sourceTree = "<group>"; };
+		DA7C2A3C1165EB2900B42727 /* CARD16Reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CARD16Reader.h; path = cotvnc/CARD16Reader.h; sourceTree = "<group>"; };
+		DA7C2A3D1165EB2900B42727 /* CARD16Reader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CARD16Reader.m; path = cotvnc/CARD16Reader.m; sourceTree = "<group>"; };
+		DA7C2A3E1165EB2900B42727 /* CARD32Reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CARD32Reader.h; path = cotvnc/CARD32Reader.h; sourceTree = "<group>"; };
+		DA7C2A3F1165EB2900B42727 /* CARD32Reader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CARD32Reader.m; path = cotvnc/CARD32Reader.m; sourceTree = "<group>"; };
+		DA7C2A401165EB2900B42727 /* CopyFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CopyFilter.h; path = cotvnc/CopyFilter.h; sourceTree = "<group>"; };
+		DA7C2A411165EB2900B42727 /* CopyFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CopyFilter.m; path = cotvnc/CopyFilter.m; sourceTree = "<group>"; };
+		DA7C2A421165EB2900B42727 /* CopyRectangleEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CopyRectangleEncodingReader.h; path = cotvnc/CopyRectangleEncodingReader.h; sourceTree = "<group>"; };
+		DA7C2A431165EB2900B42727 /* CopyRectangleEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CopyRectangleEncodingReader.m; path = cotvnc/CopyRectangleEncodingReader.m; sourceTree = "<group>"; };
+		DA7C2A441165EB2900B42727 /* CoRREEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoRREEncodingReader.h; path = cotvnc/CoRREEncodingReader.h; sourceTree = "<group>"; };
+		DA7C2A451165EB2900B42727 /* CoRREEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoRREEncodingReader.m; path = cotvnc/CoRREEncodingReader.m; sourceTree = "<group>"; };
+		DA7C2A461165EB2900B42727 /* d3des.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d3des.c; path = cotvnc/d3des.c; sourceTree = "<group>"; };
+		DA7C2A471165EB2900B42727 /* d3des.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = d3des.h; path = cotvnc/d3des.h; sourceTree = "<group>"; };
+		DA7C2A481165EB2900B42727 /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = debug.h; path = cotvnc/debug.h; sourceTree = "<group>"; };
+		DA7C2A491165EB2900B42727 /* debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = debug.m; path = cotvnc/debug.m; sourceTree = "<group>"; };
+		DA7C2A4A1165EB2900B42727 /* EncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EncodingReader.h; path = cotvnc/EncodingReader.h; sourceTree = "<group>"; };
+		DA7C2A4B1165EB2900B42727 /* EncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EncodingReader.m; path = cotvnc/EncodingReader.m; sourceTree = "<group>"; };
+		DA7C2A4C1165EB2900B42727 /* EventFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventFilter.h; path = cotvnc/EventFilter.h; sourceTree = "<group>"; };
+		DA7C2A4D1165EB2900B42727 /* EventFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventFilter.m; path = cotvnc/EventFilter.m; sourceTree = "<group>"; };
+		DA7C2A4E1165EB2900B42727 /* FilterReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterReader.h; path = cotvnc/FilterReader.h; sourceTree = "<group>"; };
+		DA7C2A4F1165EB2900B42727 /* FilterReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterReader.m; path = cotvnc/FilterReader.m; sourceTree = "<group>"; };
+		DA7C2A501165EB2900B42727 /* FrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameBuffer.h; path = cotvnc/FrameBuffer.h; sourceTree = "<group>"; };
+		DA7C2A511165EB2900B42727 /* FrameBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FrameBuffer.m; path = cotvnc/FrameBuffer.m; sourceTree = "<group>"; };
+		DA7C2A521165EB2900B42727 /* FrameBufferDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameBufferDrawing.h; path = cotvnc/FrameBufferDrawing.h; sourceTree = "<group>"; };
+		DA7C2A531165EB2900B42727 /* FrameBufferUpdateReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameBufferUpdateReader.h; path = cotvnc/FrameBufferUpdateReader.h; sourceTree = "<group>"; };
+		DA7C2A541165EB2900B42727 /* FrameBufferUpdateReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FrameBufferUpdateReader.m; path = cotvnc/FrameBufferUpdateReader.m; sourceTree = "<group>"; };
+		DA7C2A551165EB2900B42727 /* GradientFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GradientFilter.h; path = cotvnc/GradientFilter.h; sourceTree = "<group>"; };
+		DA7C2A561165EB2900B42727 /* GradientFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GradientFilter.m; path = cotvnc/GradientFilter.m; sourceTree = "<group>"; };
+		DA7C2A571165EB2900B42727 /* GrayScaleFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GrayScaleFrameBuffer.h; path = cotvnc/GrayScaleFrameBuffer.h; sourceTree = "<group>"; };
+		DA7C2A581165EB2900B42727 /* GrayScaleFrameBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GrayScaleFrameBuffer.m; path = cotvnc/GrayScaleFrameBuffer.m; sourceTree = "<group>"; };
+		DA7C2A591165EB2900B42727 /* HextileEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HextileEncodingReader.h; path = cotvnc/HextileEncodingReader.h; sourceTree = "<group>"; };
+		DA7C2A5A1165EB2900B42727 /* HextileEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HextileEncodingReader.m; path = cotvnc/HextileEncodingReader.m; sourceTree = "<group>"; };
+		DA7C2A5B1165EB2900B42727 /* HighColorFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HighColorFrameBuffer.h; path = cotvnc/HighColorFrameBuffer.h; sourceTree = "<group>"; };
+		DA7C2A5C1165EB2900B42727 /* HighColorFrameBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HighColorFrameBuffer.m; path = cotvnc/HighColorFrameBuffer.m; sourceTree = "<group>"; };
+		DA7C2A5D1165EB2900B42727 /* IServerData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IServerData.h; path = cotvnc/IServerData.h; sourceTree = "<group>"; };
+		DA7C2A5E1165EB2900B42727 /* KeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyChain.h; path = cotvnc/KeyChain.h; sourceTree = "<group>"; };
+		DA7C2A5F1165EB2900B42727 /* KeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChain.m; path = cotvnc/KeyChain.m; sourceTree = "<group>"; };
+		DA7C2A601165EB2900B42727 /* LowColorFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LowColorFrameBuffer.h; path = cotvnc/LowColorFrameBuffer.h; sourceTree = "<group>"; };
+		DA7C2A611165EB2900B42727 /* LowColorFrameBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LowColorFrameBuffer.m; path = cotvnc/LowColorFrameBuffer.m; sourceTree = "<group>"; };
+		DA7C2A621165EB2900B42727 /* NLTStringReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NLTStringReader.h; path = cotvnc/NLTStringReader.h; sourceTree = "<group>"; };
+		DA7C2A631165EB2900B42727 /* NLTStringReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NLTStringReader.m; path = cotvnc/NLTStringReader.m; sourceTree = "<group>"; };
+		DA7C2A641165EB2900B42727 /* NSObject_Chicken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSObject_Chicken.h; path = cotvnc/NSObject_Chicken.h; sourceTree = "<group>"; };
+		DA7C2A651165EB2900B42727 /* NSObject_Chicken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSObject_Chicken.m; path = cotvnc/NSObject_Chicken.m; sourceTree = "<group>"; };
+		DA7C2A661165EB2900B42727 /* PaletteFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaletteFilter.h; path = cotvnc/PaletteFilter.h; sourceTree = "<group>"; };
+		DA7C2A671165EB2900B42727 /* PaletteFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaletteFilter.m; path = cotvnc/PaletteFilter.m; sourceTree = "<group>"; };
+		DA7C2A681165EB2900B42727 /* PrefController_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefController_private.h; path = cotvnc/PrefController_private.h; sourceTree = "<group>"; };
+		DA7C2A691165EB2900B42727 /* PrefController_private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrefController_private.m; path = cotvnc/PrefController_private.m; sourceTree = "<group>"; };
+		DA7C2A6A1165EB2900B42727 /* PrefController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefController.h; path = cotvnc/PrefController.h; sourceTree = "<group>"; };
+		DA7C2A6B1165EB2900B42727 /* PrefController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrefController.m; path = cotvnc/PrefController.m; sourceTree = "<group>"; };
+		DA7C2A6C1165EB2900B42727 /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Profile.h; path = cotvnc/Profile.h; sourceTree = "<group>"; };
+		DA7C2A6D1165EB2900B42727 /* Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Profile.m; path = cotvnc/Profile.m; sourceTree = "<group>"; };
+		DA7C2A6E1165EB2900B42727 /* QueuedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QueuedEvent.h; path = cotvnc/QueuedEvent.h; sourceTree = "<group>"; };
+		DA7C2A6F1165EB2900B42727 /* QueuedEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QueuedEvent.m; path = cotvnc/QueuedEvent.m; sourceTree = "<group>"; };
+		DA7C2A701165EB2900B42727 /* RawEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RawEncodingReader.h; path = cotvnc/RawEncodingReader.h; sourceTree = "<group>"; };
+		DA7C2A711165EB2900B42727 /* RawEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RawEncodingReader.m; path = cotvnc/RawEncodingReader.m; sourceTree = "<group>"; };
+		DA7C2A721165EB2900B42727 /* RectangleList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RectangleList.h; path = cotvnc/RectangleList.h; sourceTree = "<group>"; };
+		DA7C2A731165EB2900B42727 /* RectangleList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RectangleList.m; path = cotvnc/RectangleList.m; sourceTree = "<group>"; };
+		DA7C2A741165EB2900B42727 /* RFBConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RFBConnection.h; path = cotvnc/RFBConnection.h; sourceTree = "<group>"; };
+		DA7C2A751165EB2900B42727 /* RFBConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RFBConnection.m; path = cotvnc/RFBConnection.m; sourceTree = "<group>"; };
+		DA7C2A761165EB2900B42727 /* RFBHandshaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RFBHandshaker.h; path = cotvnc/RFBHandshaker.h; sourceTree = "<group>"; };
+		DA7C2A771165EB2900B42727 /* RFBHandshaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RFBHandshaker.m; path = cotvnc/RFBHandshaker.m; sourceTree = "<group>"; };
+		DA7C2A781165EB2900B42727 /* rfbproto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rfbproto.h; path = cotvnc/rfbproto.h; sourceTree = "<group>"; };
+		DA7C2A791165EB2900B42727 /* RFBProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RFBProtocol.h; path = cotvnc/RFBProtocol.h; sourceTree = "<group>"; };
+		DA7C2A7A1165EB2900B42727 /* RFBProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RFBProtocol.m; path = cotvnc/RFBProtocol.m; sourceTree = "<group>"; };
+		DA7C2A7B1165EB2900B42727 /* RFBServerInitReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RFBServerInitReader.h; path = cotvnc/RFBServerInitReader.h; sourceTree = "<group>"; };
+		DA7C2A7C1165EB2900B42727 /* RFBServerInitReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RFBServerInitReader.m; path = cotvnc/RFBServerInitReader.m; sourceTree = "<group>"; };
+		DA7C2A7D1165EB2900B42727 /* RFBStringReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RFBStringReader.h; path = cotvnc/RFBStringReader.h; sourceTree = "<group>"; };
+		DA7C2A7E1165EB2900B42727 /* RFBStringReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RFBStringReader.m; path = cotvnc/RFBStringReader.m; sourceTree = "<group>"; };
+		DA7C2A7F1165EB2900B42727 /* RREEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RREEncodingReader.h; path = cotvnc/RREEncodingReader.h; sourceTree = "<group>"; };
+		DA7C2A801165EB2900B42727 /* RREEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RREEncodingReader.m; path = cotvnc/RREEncodingReader.m; sourceTree = "<group>"; };
+		DA7C2A811165EB2900B42727 /* ServerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerBase.h; path = cotvnc/ServerBase.h; sourceTree = "<group>"; };
+		DA7C2A821165EB2900B42727 /* ServerBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerBase.m; path = cotvnc/ServerBase.m; sourceTree = "<group>"; };
+		DA7C2A831165EB2900B42727 /* ServerCutTextReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerCutTextReader.h; path = cotvnc/ServerCutTextReader.h; sourceTree = "<group>"; };
+		DA7C2A841165EB2900B42727 /* ServerCutTextReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerCutTextReader.m; path = cotvnc/ServerCutTextReader.m; sourceTree = "<group>"; };
+		DA7C2A851165EB2900B42727 /* ServerFromPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerFromPrefs.h; path = cotvnc/ServerFromPrefs.h; sourceTree = "<group>"; };
+		DA7C2A861165EB2900B42727 /* ServerFromPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerFromPrefs.m; path = cotvnc/ServerFromPrefs.m; sourceTree = "<group>"; };
+		DA7C2A871165EB2900B42727 /* ServerStandAlone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerStandAlone.h; path = cotvnc/ServerStandAlone.h; sourceTree = "<group>"; };
+		DA7C2A881165EB2900B42727 /* ServerStandAlone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerStandAlone.m; path = cotvnc/ServerStandAlone.m; sourceTree = "<group>"; };
+		DA7C2A891165EB2900B42727 /* SetColorMapEntriesReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetColorMapEntriesReader.h; path = cotvnc/SetColorMapEntriesReader.h; sourceTree = "<group>"; };
+		DA7C2A8A1165EB2900B42727 /* SetColorMapEntriesReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetColorMapEntriesReader.m; path = cotvnc/SetColorMapEntriesReader.m; sourceTree = "<group>"; };
+		DA7C2A8B1165EB2900B42727 /* TightEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TightEncodingReader.h; path = cotvnc/TightEncodingReader.h; sourceTree = "<group>"; };
+		DA7C2A8C1165EB2900B42727 /* TightEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TightEncodingReader.m; path = cotvnc/TightEncodingReader.m; sourceTree = "<group>"; };
+		DA7C2A8D1165EB2900B42727 /* TrueColorFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrueColorFrameBuffer.h; path = cotvnc/TrueColorFrameBuffer.h; sourceTree = "<group>"; };
+		DA7C2A8E1165EB2900B42727 /* TrueColorFrameBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrueColorFrameBuffer.m; path = cotvnc/TrueColorFrameBuffer.m; sourceTree = "<group>"; };
+		DA7C2A8F1165EB2900B42727 /* vncauth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vncauth.c; path = cotvnc/vncauth.c; sourceTree = "<group>"; };
+		DA7C2A901165EB2900B42727 /* vncauth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vncauth.h; path = cotvnc/vncauth.h; sourceTree = "<group>"; };
+		DA7C2A911165EB2900B42727 /* ZipLengthReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipLengthReader.h; path = cotvnc/ZipLengthReader.h; sourceTree = "<group>"; };
+		DA7C2A921165EB2900B42727 /* ZipLengthReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZipLengthReader.m; path = cotvnc/ZipLengthReader.m; sourceTree = "<group>"; };
+		DA7C2A931165EB2900B42727 /* ZlibEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZlibEncodingReader.h; path = cotvnc/ZlibEncodingReader.h; sourceTree = "<group>"; };
+		DA7C2A941165EB2900B42727 /* ZlibEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZlibEncodingReader.m; path = cotvnc/ZlibEncodingReader.m; sourceTree = "<group>"; };
+		DA7C2A951165EB2900B42727 /* ZlibHexEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZlibHexEncodingReader.h; path = cotvnc/ZlibHexEncodingReader.h; sourceTree = "<group>"; };
+		DA7C2A961165EB2900B42727 /* ZlibHexEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZlibHexEncodingReader.m; path = cotvnc/ZlibHexEncodingReader.m; sourceTree = "<group>"; };
+		DA7C2A971165EB2900B42727 /* ZRLEEncodingReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZRLEEncodingReader.h; path = cotvnc/ZRLEEncodingReader.h; sourceTree = "<group>"; };
+		DA7C2A981165EB2900B42727 /* ZRLEEncodingReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZRLEEncodingReader.m; path = cotvnc/ZRLEEncodingReader.m; sourceTree = "<group>"; };
+		DA7C2ADA1165EB8B00B42727 /* jcapimin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcapimin.c; path = libjpeg/jcapimin.c; sourceTree = "<group>"; };
+		DA7C2ADB1165EB8B00B42727 /* jcapistd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcapistd.c; path = libjpeg/jcapistd.c; sourceTree = "<group>"; };
+		DA7C2ADC1165EB8B00B42727 /* jccoefct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jccoefct.c; path = libjpeg/jccoefct.c; sourceTree = "<group>"; };
+		DA7C2ADD1165EB8B00B42727 /* jccolor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jccolor.c; path = libjpeg/jccolor.c; sourceTree = "<group>"; };
+		DA7C2ADE1165EB8B00B42727 /* jcdctmgr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcdctmgr.c; path = libjpeg/jcdctmgr.c; sourceTree = "<group>"; };
+		DA7C2ADF1165EB8B00B42727 /* jchuff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jchuff.c; path = libjpeg/jchuff.c; sourceTree = "<group>"; };
+		DA7C2AE01165EB8B00B42727 /* jcinit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcinit.c; path = libjpeg/jcinit.c; sourceTree = "<group>"; };
+		DA7C2AE11165EB8B00B42727 /* jcmainct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcmainct.c; path = libjpeg/jcmainct.c; sourceTree = "<group>"; };
+		DA7C2AE21165EB8B00B42727 /* jcmarker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcmarker.c; path = libjpeg/jcmarker.c; sourceTree = "<group>"; };
+		DA7C2AE31165EB8B00B42727 /* jcmaster.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcmaster.c; path = libjpeg/jcmaster.c; sourceTree = "<group>"; };
+		DA7C2AE41165EB8B00B42727 /* jcomapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcomapi.c; path = libjpeg/jcomapi.c; sourceTree = "<group>"; };
+		DA7C2AE51165EB8B00B42727 /* jconfig.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = jconfig.cfg; path = libjpeg/jconfig.cfg; sourceTree = "<group>"; };
+		DA7C2AE61165EB8B00B42727 /* jcparam.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcparam.c; path = libjpeg/jcparam.c; sourceTree = "<group>"; };
+		DA7C2AE71165EB8B00B42727 /* jcphuff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcphuff.c; path = libjpeg/jcphuff.c; sourceTree = "<group>"; };
+		DA7C2AE81165EB8B00B42727 /* jcprepct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcprepct.c; path = libjpeg/jcprepct.c; sourceTree = "<group>"; };
+		DA7C2AE91165EB8B00B42727 /* jcsample.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcsample.c; path = libjpeg/jcsample.c; sourceTree = "<group>"; };
+		DA7C2AEA1165EB8B00B42727 /* jctrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jctrans.c; path = libjpeg/jctrans.c; sourceTree = "<group>"; };
+		DA7C2AEB1165EB8B00B42727 /* jdapimin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdapimin.c; path = libjpeg/jdapimin.c; sourceTree = "<group>"; };
+		DA7C2AEC1165EB8B00B42727 /* jdapistd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdapistd.c; path = libjpeg/jdapistd.c; sourceTree = "<group>"; };
+		DA7C2AED1165EB8B00B42727 /* jdatadst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdatadst.c; path = libjpeg/jdatadst.c; sourceTree = "<group>"; };
+		DA7C2AEE1165EB8B00B42727 /* jdatasrc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdatasrc.c; path = libjpeg/jdatasrc.c; sourceTree = "<group>"; };
+		DA7C2AEF1165EB8B00B42727 /* jdcoefct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdcoefct.c; path = libjpeg/jdcoefct.c; sourceTree = "<group>"; };
+		DA7C2AF01165EB8B00B42727 /* jdcolor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdcolor.c; path = libjpeg/jdcolor.c; sourceTree = "<group>"; };
+		DA7C2AF11165EB8B00B42727 /* jddctmgr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jddctmgr.c; path = libjpeg/jddctmgr.c; sourceTree = "<group>"; };
+		DA7C2AF21165EB8B00B42727 /* jdhuff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdhuff.c; path = libjpeg/jdhuff.c; sourceTree = "<group>"; };
+		DA7C2AF31165EB8B00B42727 /* jdinput.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdinput.c; path = libjpeg/jdinput.c; sourceTree = "<group>"; };
+		DA7C2AF41165EB8B00B42727 /* jdmainct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdmainct.c; path = libjpeg/jdmainct.c; sourceTree = "<group>"; };
+		DA7C2AF51165EB8B00B42727 /* jdmarker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdmarker.c; path = libjpeg/jdmarker.c; sourceTree = "<group>"; };
+		DA7C2AF61165EB8B00B42727 /* jdmaster.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdmaster.c; path = libjpeg/jdmaster.c; sourceTree = "<group>"; };
+		DA7C2AF71165EB8B00B42727 /* jdmerge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdmerge.c; path = libjpeg/jdmerge.c; sourceTree = "<group>"; };
+		DA7C2AF81165EB8B00B42727 /* jdphuff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdphuff.c; path = libjpeg/jdphuff.c; sourceTree = "<group>"; };
+		DA7C2AF91165EB8B00B42727 /* jdpostct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdpostct.c; path = libjpeg/jdpostct.c; sourceTree = "<group>"; };
+		DA7C2AFA1165EB8B00B42727 /* jdsample.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdsample.c; path = libjpeg/jdsample.c; sourceTree = "<group>"; };
+		DA7C2AFB1165EB8B00B42727 /* jdtrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdtrans.c; path = libjpeg/jdtrans.c; sourceTree = "<group>"; };
+		DA7C2AFC1165EB8B00B42727 /* jerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jerror.c; path = libjpeg/jerror.c; sourceTree = "<group>"; };
+		DA7C2AFD1165EB8B00B42727 /* jfdctflt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jfdctflt.c; path = libjpeg/jfdctflt.c; sourceTree = "<group>"; };
+		DA7C2AFE1165EB8B00B42727 /* jfdctfst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jfdctfst.c; path = libjpeg/jfdctfst.c; sourceTree = "<group>"; };
+		DA7C2AFF1165EB8B00B42727 /* jfdctint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jfdctint.c; path = libjpeg/jfdctint.c; sourceTree = "<group>"; };
+		DA7C2B001165EB8B00B42727 /* jidctflt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jidctflt.c; path = libjpeg/jidctflt.c; sourceTree = "<group>"; };
+		DA7C2B011165EB8B00B42727 /* jidctfst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jidctfst.c; path = libjpeg/jidctfst.c; sourceTree = "<group>"; };
+		DA7C2B021165EB8B00B42727 /* jidctint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jidctint.c; path = libjpeg/jidctint.c; sourceTree = "<group>"; };
+		DA7C2B031165EB8B00B42727 /* jidctred.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jidctred.c; path = libjpeg/jidctred.c; sourceTree = "<group>"; };
+		DA7C2B071165EB8B00B42727 /* jmemmgr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jmemmgr.c; path = libjpeg/jmemmgr.c; sourceTree = "<group>"; };
+		DA7C2B091165EB8B00B42727 /* jmemnobs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jmemnobs.c; path = libjpeg/jmemnobs.c; sourceTree = "<group>"; };
+		DA7C2B0B1165EB8B00B42727 /* jquant1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jquant1.c; path = libjpeg/jquant1.c; sourceTree = "<group>"; };
+		DA7C2B0C1165EB8B00B42727 /* jquant2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jquant2.c; path = libjpeg/jquant2.c; sourceTree = "<group>"; };
+		DA7C2B0D1165EB8B00B42727 /* jutils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jutils.c; path = libjpeg/jutils.c; sourceTree = "<group>"; };
+		DA7C2B0E1165EB8B00B42727 /* makefile.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = makefile.cfg; path = libjpeg/makefile.cfg; sourceTree = "<group>"; };
+		DA7C2B0F1165EB8B00B42727 /* rdbmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdbmp.c; path = libjpeg/rdbmp.c; sourceTree = "<group>"; };
+		DA7C2B101165EB8B00B42727 /* rdcolmap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdcolmap.c; path = libjpeg/rdcolmap.c; sourceTree = "<group>"; };
+		DA7C2B111165EB8B00B42727 /* rdgif.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdgif.c; path = libjpeg/rdgif.c; sourceTree = "<group>"; };
+		DA7C2B131165EB8B00B42727 /* rdppm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdppm.c; path = libjpeg/rdppm.c; sourceTree = "<group>"; };
+		DA7C2B141165EB8B00B42727 /* rdrle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdrle.c; path = libjpeg/rdrle.c; sourceTree = "<group>"; };
+		DA7C2B151165EB8B00B42727 /* rdswitch.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdswitch.c; path = libjpeg/rdswitch.c; sourceTree = "<group>"; };
+		DA7C2B161165EB8B00B42727 /* rdtarga.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdtarga.c; path = libjpeg/rdtarga.c; sourceTree = "<group>"; };
+		DA7C2B171165EB8B00B42727 /* transupp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = transupp.c; path = libjpeg/transupp.c; sourceTree = "<group>"; };
+		DA7C2B181165EB8B00B42727 /* wrbmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrbmp.c; path = libjpeg/wrbmp.c; sourceTree = "<group>"; };
+		DA7C2B191165EB8B00B42727 /* wrgif.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrgif.c; path = libjpeg/wrgif.c; sourceTree = "<group>"; };
+		DA7C2B1B1165EB8B00B42727 /* wrppm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrppm.c; path = libjpeg/wrppm.c; sourceTree = "<group>"; };
+		DA7C2B1C1165EB8B00B42727 /* wrrle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrrle.c; path = libjpeg/wrrle.c; sourceTree = "<group>"; };
+		DA7C2B1D1165EB8B00B42727 /* wrtarga.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrtarga.c; path = libjpeg/wrtarga.c; sourceTree = "<group>"; };
+		DA7C2B7B1165EC8700B42727 /* NSString_VNCPasswordCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSString_VNCPasswordCrypto.m; sourceTree = "<group>"; };
+		DA7C2B7C1165EC8700B42727 /* VNCBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNCBackgroundView.m; sourceTree = "<group>"; };
+		DA7C2B7D1165EC8700B42727 /* VNCContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNCContentView.m; sourceTree = "<group>"; };
+		DA7C2B7E1165EC8700B42727 /* VNCMouseTracks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNCMouseTracks.m; sourceTree = "<group>"; };
+		DA7C2B7F1165EC8700B42727 /* VNCPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNCPreferences.m; sourceTree = "<group>"; };
+		DA7C2B801165EC8700B42727 /* VNCScrollerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNCScrollerView.m; sourceTree = "<group>"; };
+		DA7C2B811165EC8700B42727 /* VNCView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNCView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DA7C29081165E91000B42727 /* cotvnc.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				DA7C2B7A1165EC6400B42727 /* vnc */,
+				DA7C2AD31165EB5300B42727 /* libjpeg */,
+				DA7C29121165E93D00B42727 /* cotvnc */,
+				DA7C290A1165E93700B42727 /* cotvnc-iphone.m */,
+				DA7C290B1165E93700B42727 /* viewtestAppDelegate.m */,
+				DA7C290C1165E93700B42727 /* viewtestViewController.m */,
+				DA7C290D1165E93700B42727 /* viewtestViewController.xib */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DA7C29121165E93D00B42727 /* cotvnc */ = {
+			isa = PBXGroup;
+			children = (
+				DA7C2A361165EB2900B42727 /* ByteBlockReader.h */,
+				DA7C2A371165EB2900B42727 /* ByteBlockReader.m */,
+				DA7C2A381165EB2900B42727 /* ByteReader.h */,
+				DA7C2A391165EB2900B42727 /* ByteReader.m */,
+				DA7C2A3A1165EB2900B42727 /* CARD8Reader.h */,
+				DA7C2A3B1165EB2900B42727 /* CARD8Reader.m */,
+				DA7C2A3C1165EB2900B42727 /* CARD16Reader.h */,
+				DA7C2A3D1165EB2900B42727 /* CARD16Reader.m */,
+				DA7C2A3E1165EB2900B42727 /* CARD32Reader.h */,
+				DA7C2A3F1165EB2900B42727 /* CARD32Reader.m */,
+				DA7C2A401165EB2900B42727 /* CopyFilter.h */,
+				DA7C2A411165EB2900B42727 /* CopyFilter.m */,
+				DA7C2A421165EB2900B42727 /* CopyRectangleEncodingReader.h */,
+				DA7C2A431165EB2900B42727 /* CopyRectangleEncodingReader.m */,
+				DA7C2A441165EB2900B42727 /* CoRREEncodingReader.h */,
+				DA7C2A451165EB2900B42727 /* CoRREEncodingReader.m */,
+				DA7C2A461165EB2900B42727 /* d3des.c */,
+				DA7C2A471165EB2900B42727 /* d3des.h */,
+				DA7C2A481165EB2900B42727 /* debug.h */,
+				DA7C2A491165EB2900B42727 /* debug.m */,
+				DA7C2A4A1165EB2900B42727 /* EncodingReader.h */,
+				DA7C2A4B1165EB2900B42727 /* EncodingReader.m */,
+				DA7C2A4C1165EB2900B42727 /* EventFilter.h */,
+				DA7C2A4D1165EB2900B42727 /* EventFilter.m */,
+				DA7C2A4E1165EB2900B42727 /* FilterReader.h */,
+				DA7C2A4F1165EB2900B42727 /* FilterReader.m */,
+				DA7C2A501165EB2900B42727 /* FrameBuffer.h */,
+				DA7C2A511165EB2900B42727 /* FrameBuffer.m */,
+				DA7C2A521165EB2900B42727 /* FrameBufferDrawing.h */,
+				DA7C2A531165EB2900B42727 /* FrameBufferUpdateReader.h */,
+				DA7C2A541165EB2900B42727 /* FrameBufferUpdateReader.m */,
+				DA7C2A551165EB2900B42727 /* GradientFilter.h */,
+				DA7C2A561165EB2900B42727 /* GradientFilter.m */,
+				DA7C2A571165EB2900B42727 /* GrayScaleFrameBuffer.h */,
+				DA7C2A581165EB2900B42727 /* GrayScaleFrameBuffer.m */,
+				DA7C2A591165EB2900B42727 /* HextileEncodingReader.h */,
+				DA7C2A5A1165EB2900B42727 /* HextileEncodingReader.m */,
+				DA7C2A5B1165EB2900B42727 /* HighColorFrameBuffer.h */,
+				DA7C2A5C1165EB2900B42727 /* HighColorFrameBuffer.m */,
+				DA7C2A5D1165EB2900B42727 /* IServerData.h */,
+				DA7C2A5E1165EB2900B42727 /* KeyChain.h */,
+				DA7C2A5F1165EB2900B42727 /* KeyChain.m */,
+				DA7C2A601165EB2900B42727 /* LowColorFrameBuffer.h */,
+				DA7C2A611165EB2900B42727 /* LowColorFrameBuffer.m */,
+				DA7C2A621165EB2900B42727 /* NLTStringReader.h */,
+				DA7C2A631165EB2900B42727 /* NLTStringReader.m */,
+				DA7C2A641165EB2900B42727 /* NSObject_Chicken.h */,
+				DA7C2A651165EB2900B42727 /* NSObject_Chicken.m */,
+				DA7C2A661165EB2900B42727 /* PaletteFilter.h */,
+				DA7C2A671165EB2900B42727 /* PaletteFilter.m */,
+				DA7C2A681165EB2900B42727 /* PrefController_private.h */,
+				DA7C2A691165EB2900B42727 /* PrefController_private.m */,
+				DA7C2A6A1165EB2900B42727 /* PrefController.h */,
+				DA7C2A6B1165EB2900B42727 /* PrefController.m */,
+				DA7C2A6C1165EB2900B42727 /* Profile.h */,
+				DA7C2A6D1165EB2900B42727 /* Profile.m */,
+				DA7C2A6E1165EB2900B42727 /* QueuedEvent.h */,
+				DA7C2A6F1165EB2900B42727 /* QueuedEvent.m */,
+				DA7C2A701165EB2900B42727 /* RawEncodingReader.h */,
+				DA7C2A711165EB2900B42727 /* RawEncodingReader.m */,
+				DA7C2A721165EB2900B42727 /* RectangleList.h */,
+				DA7C2A731165EB2900B42727 /* RectangleList.m */,
+				DA7C2A741165EB2900B42727 /* RFBConnection.h */,
+				DA7C2A751165EB2900B42727 /* RFBConnection.m */,
+				DA7C2A761165EB2900B42727 /* RFBHandshaker.h */,
+				DA7C2A771165EB2900B42727 /* RFBHandshaker.m */,
+				DA7C2A781165EB2900B42727 /* rfbproto.h */,
+				DA7C2A791165EB2900B42727 /* RFBProtocol.h */,
+				DA7C2A7A1165EB2900B42727 /* RFBProtocol.m */,
+				DA7C2A7B1165EB2900B42727 /* RFBServerInitReader.h */,
+				DA7C2A7C1165EB2900B42727 /* RFBServerInitReader.m */,
+				DA7C2A7D1165EB2900B42727 /* RFBStringReader.h */,
+				DA7C2A7E1165EB2900B42727 /* RFBStringReader.m */,
+				DA7C2A7F1165EB2900B42727 /* RREEncodingReader.h */,
+				DA7C2A801165EB2900B42727 /* RREEncodingReader.m */,
+				DA7C2A811165EB2900B42727 /* ServerBase.h */,
+				DA7C2A821165EB2900B42727 /* ServerBase.m */,
+				DA7C2A831165EB2900B42727 /* ServerCutTextReader.h */,
+				DA7C2A841165EB2900B42727 /* ServerCutTextReader.m */,
+				DA7C2A851165EB2900B42727 /* ServerFromPrefs.h */,
+				DA7C2A861165EB2900B42727 /* ServerFromPrefs.m */,
+				DA7C2A871165EB2900B42727 /* ServerStandAlone.h */,
+				DA7C2A881165EB2900B42727 /* ServerStandAlone.m */,
+				DA7C2A891165EB2900B42727 /* SetColorMapEntriesReader.h */,
+				DA7C2A8A1165EB2900B42727 /* SetColorMapEntriesReader.m */,
+				DA7C2A8B1165EB2900B42727 /* TightEncodingReader.h */,
+				DA7C2A8C1165EB2900B42727 /* TightEncodingReader.m */,
+				DA7C2A8D1165EB2900B42727 /* TrueColorFrameBuffer.h */,
+				DA7C2A8E1165EB2900B42727 /* TrueColorFrameBuffer.m */,
+				DA7C2A8F1165EB2900B42727 /* vncauth.c */,
+				DA7C2A901165EB2900B42727 /* vncauth.h */,
+				DA7C2A911165EB2900B42727 /* ZipLengthReader.h */,
+				DA7C2A921165EB2900B42727 /* ZipLengthReader.m */,
+				DA7C2A931165EB2900B42727 /* ZlibEncodingReader.h */,
+				DA7C2A941165EB2900B42727 /* ZlibEncodingReader.m */,
+				DA7C2A951165EB2900B42727 /* ZlibHexEncodingReader.h */,
+				DA7C2A961165EB2900B42727 /* ZlibHexEncodingReader.m */,
+				DA7C2A971165EB2900B42727 /* ZRLEEncodingReader.h */,
+				DA7C2A981165EB2900B42727 /* ZRLEEncodingReader.m */,
+			);
+			name = cotvnc;
+			sourceTree = "<group>";
+		};
+		DA7C2AD31165EB5300B42727 /* libjpeg */ = {
+			isa = PBXGroup;
+			children = (
+				DA7C2ADA1165EB8B00B42727 /* jcapimin.c */,
+				DA7C2ADB1165EB8B00B42727 /* jcapistd.c */,
+				DA7C2ADC1165EB8B00B42727 /* jccoefct.c */,
+				DA7C2ADD1165EB8B00B42727 /* jccolor.c */,
+				DA7C2ADE1165EB8B00B42727 /* jcdctmgr.c */,
+				DA7C2ADF1165EB8B00B42727 /* jchuff.c */,
+				DA7C2AE01165EB8B00B42727 /* jcinit.c */,
+				DA7C2AE11165EB8B00B42727 /* jcmainct.c */,
+				DA7C2AE21165EB8B00B42727 /* jcmarker.c */,
+				DA7C2AE31165EB8B00B42727 /* jcmaster.c */,
+				DA7C2AE41165EB8B00B42727 /* jcomapi.c */,
+				DA7C2AE51165EB8B00B42727 /* jconfig.cfg */,
+				DA7C2AE61165EB8B00B42727 /* jcparam.c */,
+				DA7C2AE71165EB8B00B42727 /* jcphuff.c */,
+				DA7C2AE81165EB8B00B42727 /* jcprepct.c */,
+				DA7C2AE91165EB8B00B42727 /* jcsample.c */,
+				DA7C2AEA1165EB8B00B42727 /* jctrans.c */,
+				DA7C2AEB1165EB8B00B42727 /* jdapimin.c */,
+				DA7C2AEC1165EB8B00B42727 /* jdapistd.c */,
+				DA7C2AED1165EB8B00B42727 /* jdatadst.c */,
+				DA7C2AEE1165EB8B00B42727 /* jdatasrc.c */,
+				DA7C2AEF1165EB8B00B42727 /* jdcoefct.c */,
+				DA7C2AF01165EB8B00B42727 /* jdcolor.c */,
+				DA7C2AF11165EB8B00B42727 /* jddctmgr.c */,
+				DA7C2AF21165EB8B00B42727 /* jdhuff.c */,
+				DA7C2AF31165EB8B00B42727 /* jdinput.c */,
+				DA7C2AF41165EB8B00B42727 /* jdmainct.c */,
+				DA7C2AF51165EB8B00B42727 /* jdmarker.c */,
+				DA7C2AF61165EB8B00B42727 /* jdmaster.c */,
+				DA7C2AF71165EB8B00B42727 /* jdmerge.c */,
+				DA7C2AF81165EB8B00B42727 /* jdphuff.c */,
+				DA7C2AF91165EB8B00B42727 /* jdpostct.c */,
+				DA7C2AFA1165EB8B00B42727 /* jdsample.c */,
+				DA7C2AFB1165EB8B00B42727 /* jdtrans.c */,
+				DA7C2AFC1165EB8B00B42727 /* jerror.c */,
+				DA7C2AFD1165EB8B00B42727 /* jfdctflt.c */,
+				DA7C2AFE1165EB8B00B42727 /* jfdctfst.c */,
+				DA7C2AFF1165EB8B00B42727 /* jfdctint.c */,
+				DA7C2B001165EB8B00B42727 /* jidctflt.c */,
+				DA7C2B011165EB8B00B42727 /* jidctfst.c */,
+				DA7C2B021165EB8B00B42727 /* jidctint.c */,
+				DA7C2B031165EB8B00B42727 /* jidctred.c */,
+				DA7C2B071165EB8B00B42727 /* jmemmgr.c */,
+				DA7C2B091165EB8B00B42727 /* jmemnobs.c */,
+				DA7C2B0B1165EB8B00B42727 /* jquant1.c */,
+				DA7C2B0C1165EB8B00B42727 /* jquant2.c */,
+				DA7C2B0D1165EB8B00B42727 /* jutils.c */,
+				DA7C2B0E1165EB8B00B42727 /* makefile.cfg */,
+				DA7C2B0F1165EB8B00B42727 /* rdbmp.c */,
+				DA7C2B101165EB8B00B42727 /* rdcolmap.c */,
+				DA7C2B111165EB8B00B42727 /* rdgif.c */,
+				DA7C2B131165EB8B00B42727 /* rdppm.c */,
+				DA7C2B141165EB8B00B42727 /* rdrle.c */,
+				DA7C2B151165EB8B00B42727 /* rdswitch.c */,
+				DA7C2B161165EB8B00B42727 /* rdtarga.c */,
+				DA7C2B171165EB8B00B42727 /* transupp.c */,
+				DA7C2B181165EB8B00B42727 /* wrbmp.c */,
+				DA7C2B191165EB8B00B42727 /* wrgif.c */,
+				DA7C2B1B1165EB8B00B42727 /* wrppm.c */,
+				DA7C2B1C1165EB8B00B42727 /* wrrle.c */,
+				DA7C2B1D1165EB8B00B42727 /* wrtarga.c */,
+			);
+			name = libjpeg;
+			sourceTree = "<group>";
+		};
+		DA7C2B7A1165EC6400B42727 /* vnc */ = {
+			isa = PBXGroup;
+			children = (
+				DA7C2B7B1165EC8700B42727 /* NSString_VNCPasswordCrypto.m */,
+				DA7C2B7C1165EC8700B42727 /* VNCBackgroundView.m */,
+				DA7C2B7D1165EC8700B42727 /* VNCContentView.m */,
+				DA7C2B7E1165EC8700B42727 /* VNCMouseTracks.m */,
+				DA7C2B7F1165EC8700B42727 /* VNCPreferences.m */,
+				DA7C2B801165EC8700B42727 /* VNCScrollerView.m */,
+				DA7C2B811165EC8700B42727 /* VNCView.m */,
+			);
+			name = vnc;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* cotvnc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "cotvnc" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = cotvnc;
+			productName = cotvnc;
+			productReference = DA7C29081165E91000B42727 /* cotvnc.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cotvnc" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* cotvnc */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				DA7C29111165E93700B42727 /* viewtestViewController.xib in Resources */,
+				DA7C2B2F1165EB8B00B42727 /* jconfig.cfg in Resources */,
+				DA7C2B581165EB8B00B42727 /* makefile.cfg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA7C290E1165E93700B42727 /* cotvnc-iphone.m in Sources */,
+				DA7C290F1165E93700B42727 /* viewtestAppDelegate.m in Sources */,
+				DA7C29101165E93700B42727 /* viewtestViewController.m in Sources */,
+				DA7C2A991165EB2900B42727 /* ByteBlockReader.m in Sources */,
+				DA7C2A9A1165EB2900B42727 /* ByteReader.m in Sources */,
+				DA7C2A9B1165EB2900B42727 /* CARD8Reader.m in Sources */,
+				DA7C2A9C1165EB2900B42727 /* CARD16Reader.m in Sources */,
+				DA7C2A9D1165EB2900B42727 /* CARD32Reader.m in Sources */,
+				DA7C2A9E1165EB2900B42727 /* CopyFilter.m in Sources */,
+				DA7C2A9F1165EB2900B42727 /* CopyRectangleEncodingReader.m in Sources */,
+				DA7C2AA01165EB2900B42727 /* CoRREEncodingReader.m in Sources */,
+				DA7C2AA11165EB2900B42727 /* d3des.c in Sources */,
+				DA7C2AA21165EB2900B42727 /* debug.m in Sources */,
+				DA7C2AA31165EB2900B42727 /* EncodingReader.m in Sources */,
+				DA7C2AA41165EB2900B42727 /* EventFilter.m in Sources */,
+				DA7C2AA51165EB2900B42727 /* FilterReader.m in Sources */,
+				DA7C2AA61165EB2900B42727 /* FrameBuffer.m in Sources */,
+				DA7C2AA71165EB2900B42727 /* FrameBufferUpdateReader.m in Sources */,
+				DA7C2AA81165EB2900B42727 /* GradientFilter.m in Sources */,
+				DA7C2AA91165EB2900B42727 /* GrayScaleFrameBuffer.m in Sources */,
+				DA7C2AAA1165EB2900B42727 /* HextileEncodingReader.m in Sources */,
+				DA7C2AAB1165EB2900B42727 /* HighColorFrameBuffer.m in Sources */,
+				DA7C2AAC1165EB2900B42727 /* KeyChain.m in Sources */,
+				DA7C2AAD1165EB2900B42727 /* LowColorFrameBuffer.m in Sources */,
+				DA7C2AAE1165EB2900B42727 /* NLTStringReader.m in Sources */,
+				DA7C2AAF1165EB2900B42727 /* NSObject_Chicken.m in Sources */,
+				DA7C2AB01165EB2900B42727 /* PaletteFilter.m in Sources */,
+				DA7C2AB11165EB2900B42727 /* PrefController_private.m in Sources */,
+				DA7C2AB21165EB2900B42727 /* PrefController.m in Sources */,
+				DA7C2AB31165EB2900B42727 /* Profile.m in Sources */,
+				DA7C2AB41165EB2900B42727 /* QueuedEvent.m in Sources */,
+				DA7C2AB51165EB2900B42727 /* RawEncodingReader.m in Sources */,
+				DA7C2AB61165EB2900B42727 /* RectangleList.m in Sources */,
+				DA7C2AB71165EB2900B42727 /* RFBConnection.m in Sources */,
+				DA7C2AB81165EB2900B42727 /* RFBHandshaker.m in Sources */,
+				DA7C2AB91165EB2900B42727 /* RFBProtocol.m in Sources */,
+				DA7C2ABA1165EB2900B42727 /* RFBServerInitReader.m in Sources */,
+				DA7C2ABB1165EB2900B42727 /* RFBStringReader.m in Sources */,
+				DA7C2ABC1165EB2900B42727 /* RREEncodingReader.m in Sources */,
+				DA7C2ABD1165EB2900B42727 /* ServerBase.m in Sources */,
+				DA7C2ABE1165EB2900B42727 /* ServerCutTextReader.m in Sources */,
+				DA7C2ABF1165EB2900B42727 /* ServerFromPrefs.m in Sources */,
+				DA7C2AC01165EB2900B42727 /* ServerStandAlone.m in Sources */,
+				DA7C2AC11165EB2900B42727 /* SetColorMapEntriesReader.m in Sources */,
+				DA7C2AC21165EB2900B42727 /* TightEncodingReader.m in Sources */,
+				DA7C2AC31165EB2900B42727 /* TrueColorFrameBuffer.m in Sources */,
+				DA7C2AC41165EB2900B42727 /* vncauth.c in Sources */,
+				DA7C2AC51165EB2900B42727 /* ZipLengthReader.m in Sources */,
+				DA7C2AC61165EB2900B42727 /* ZlibEncodingReader.m in Sources */,
+				DA7C2AC71165EB2900B42727 /* ZlibHexEncodingReader.m in Sources */,
+				DA7C2AC81165EB2900B42727 /* ZRLEEncodingReader.m in Sources */,
+				DA7C2B241165EB8B00B42727 /* jcapimin.c in Sources */,
+				DA7C2B251165EB8B00B42727 /* jcapistd.c in Sources */,
+				DA7C2B261165EB8B00B42727 /* jccoefct.c in Sources */,
+				DA7C2B271165EB8B00B42727 /* jccolor.c in Sources */,
+				DA7C2B281165EB8B00B42727 /* jcdctmgr.c in Sources */,
+				DA7C2B291165EB8B00B42727 /* jchuff.c in Sources */,
+				DA7C2B2A1165EB8B00B42727 /* jcinit.c in Sources */,
+				DA7C2B2B1165EB8B00B42727 /* jcmainct.c in Sources */,
+				DA7C2B2C1165EB8B00B42727 /* jcmarker.c in Sources */,
+				DA7C2B2D1165EB8B00B42727 /* jcmaster.c in Sources */,
+				DA7C2B2E1165EB8B00B42727 /* jcomapi.c in Sources */,
+				DA7C2B301165EB8B00B42727 /* jcparam.c in Sources */,
+				DA7C2B311165EB8B00B42727 /* jcphuff.c in Sources */,
+				DA7C2B321165EB8B00B42727 /* jcprepct.c in Sources */,
+				DA7C2B331165EB8B00B42727 /* jcsample.c in Sources */,
+				DA7C2B341165EB8B00B42727 /* jctrans.c in Sources */,
+				DA7C2B351165EB8B00B42727 /* jdapimin.c in Sources */,
+				DA7C2B361165EB8B00B42727 /* jdapistd.c in Sources */,
+				DA7C2B371165EB8B00B42727 /* jdatadst.c in Sources */,
+				DA7C2B381165EB8B00B42727 /* jdatasrc.c in Sources */,
+				DA7C2B391165EB8B00B42727 /* jdcoefct.c in Sources */,
+				DA7C2B3A1165EB8B00B42727 /* jdcolor.c in Sources */,
+				DA7C2B3B1165EB8B00B42727 /* jddctmgr.c in Sources */,
+				DA7C2B3C1165EB8B00B42727 /* jdhuff.c in Sources */,
+				DA7C2B3D1165EB8B00B42727 /* jdinput.c in Sources */,
+				DA7C2B3E1165EB8B00B42727 /* jdmainct.c in Sources */,
+				DA7C2B3F1165EB8B00B42727 /* jdmarker.c in Sources */,
+				DA7C2B401165EB8B00B42727 /* jdmaster.c in Sources */,
+				DA7C2B411165EB8B00B42727 /* jdmerge.c in Sources */,
+				DA7C2B421165EB8B00B42727 /* jdphuff.c in Sources */,
+				DA7C2B431165EB8B00B42727 /* jdpostct.c in Sources */,
+				DA7C2B441165EB8B00B42727 /* jdsample.c in Sources */,
+				DA7C2B451165EB8B00B42727 /* jdtrans.c in Sources */,
+				DA7C2B461165EB8B00B42727 /* jerror.c in Sources */,
+				DA7C2B471165EB8B00B42727 /* jfdctflt.c in Sources */,
+				DA7C2B481165EB8B00B42727 /* jfdctfst.c in Sources */,
+				DA7C2B491165EB8B00B42727 /* jfdctint.c in Sources */,
+				DA7C2B4A1165EB8B00B42727 /* jidctflt.c in Sources */,
+				DA7C2B4B1165EB8B00B42727 /* jidctfst.c in Sources */,
+				DA7C2B4C1165EB8B00B42727 /* jidctint.c in Sources */,
+				DA7C2B4D1165EB8B00B42727 /* jidctred.c in Sources */,
+				DA7C2B511165EB8B00B42727 /* jmemmgr.c in Sources */,
+				DA7C2B531165EB8B00B42727 /* jmemnobs.c in Sources */,
+				DA7C2B551165EB8B00B42727 /* jquant1.c in Sources */,
+				DA7C2B561165EB8B00B42727 /* jquant2.c in Sources */,
+				DA7C2B571165EB8B00B42727 /* jutils.c in Sources */,
+				DA7C2B591165EB8B00B42727 /* rdbmp.c in Sources */,
+				DA7C2B5A1165EB8B00B42727 /* rdcolmap.c in Sources */,
+				DA7C2B5B1165EB8B00B42727 /* rdgif.c in Sources */,
+				DA7C2B5D1165EB8B00B42727 /* rdppm.c in Sources */,
+				DA7C2B5E1165EB8B00B42727 /* rdrle.c in Sources */,
+				DA7C2B5F1165EB8B00B42727 /* rdswitch.c in Sources */,
+				DA7C2B601165EB8B00B42727 /* rdtarga.c in Sources */,
+				DA7C2B611165EB8B00B42727 /* transupp.c in Sources */,
+				DA7C2B621165EB8B00B42727 /* wrbmp.c in Sources */,
+				DA7C2B631165EB8B00B42727 /* wrgif.c in Sources */,
+				DA7C2B651165EB8B00B42727 /* wrppm.c in Sources */,
+				DA7C2B661165EB8B00B42727 /* wrrle.c in Sources */,
+				DA7C2B671165EB8B00B42727 /* wrtarga.c in Sources */,
+				DA7C2B821165EC8700B42727 /* NSString_VNCPasswordCrypto.m in Sources */,
+				DA7C2B831165EC8700B42727 /* VNCBackgroundView.m in Sources */,
+				DA7C2B841165EC8700B42727 /* VNCContentView.m in Sources */,
+				DA7C2B851165EC8700B42727 /* VNCMouseTracks.m in Sources */,
+				DA7C2B861165EC8700B42727 /* VNCPreferences.m in Sources */,
+				DA7C2B871165EC8700B42727 /* VNCScrollerView.m in Sources */,
+				DA7C2B881165EC8700B42727 /* VNCView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = cotvnc_Prefix.pch;
+				INFOPLIST_FILE = "cotvnc-Info.plist";
+				PRODUCT_NAME = cotvnc;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = cotvnc_Prefix.pch;
+				INFOPLIST_FILE = "cotvnc-Info.plist";
+				PRODUCT_NAME = cotvnc;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "**";
+				OTHER_LDFLAGS = "-lz";
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.1.3;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "**";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-lz";
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.1.3;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "cotvnc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cotvnc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
