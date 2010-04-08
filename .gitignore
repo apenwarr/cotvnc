@@ -1,9 +1,9 @@
 build
 *.o
-/*.app
-/*.app.dSYM
+iPhone/*.app
+*.app.dSYM
 *~
 *.nib
-/cotvnc-iphone
+iPhone/cotvnc-iphone
 *.xcodeproj/*.mode1v3
 *.xcodeproj/*.pbxuser
