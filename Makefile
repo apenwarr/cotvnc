@@ -7,7 +7,7 @@ export IBC_MINIMUM_COMPATIBILITY_VERSION
 
 CC=${PLATFORM}/usr/bin/gcc
 CFLAGS=-Wall -g -std=c99 -arch i386 \
-	-I${SDK}/usr/include -I. -Icotvnc \
+	-I${SDK}/usr/include -I. -ISource \
 	-F$(SDK)/System/Library/Frameworks \
 	-miphoneos-version-min=3.1
 LDFLAGS=-g \
@@ -34,8 +34,8 @@ clean:
 cotvnc-iphone: \
 	$(patsubst %.c,%.o, \
 		$(shell cat libjpeg/FILES | sed 's,^,libjpeg/,')) \
-	$(patsubst %.c,%.o, $(wildcard cotvnc/*.c)) \
-	$(patsubst %.m,%.o, $(wildcard cotvnc/*.m)) \
+	$(patsubst %.c,%.o, $(wildcard Source/*.c)) \
+	$(patsubst %.m,%.o, $(wildcard Source/*.m)) \
 	$(patsubst %.m,%.o, $(wildcard *.m))
 
 cotvnc-iphone.app: cotvnc-iphone \
