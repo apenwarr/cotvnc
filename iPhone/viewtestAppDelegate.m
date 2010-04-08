@@ -18,6 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
     // Override point for customization after app launch    
+    [window setMultipleTouchEnabled:YES];
     [window addSubview:viewController.view];
     [window makeKeyAndVisible];
 	

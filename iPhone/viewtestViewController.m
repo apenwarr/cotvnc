@@ -33,10 +33,12 @@
     UIView *v = [[VNCView alloc] initWithFrame:rect];
     self.view = v;
     [v setBackgroundColor:[UIColor redColor]];
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	#if 0
+	UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = CGRectMake(100,300,100,50);
     [button setTitle:@"Hello World" forState:UIControlStateNormal];
     [self.view addSubview:button];
+	#endif
     
     ServerBase *serv = [ServerBase alloc];
     [serv setName:@"myserver"];
@@ -59,7 +61,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-#if 1
+#if 0
     //[self urlChanged:self];
     UIScrollView *sv = (UIScrollView *)self.view;
     [sv setContentSize:CGSizeMake(2048,2048)];

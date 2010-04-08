@@ -23,7 +23,6 @@
 		DA7C290E1165E93700B42727 /* cotvnc-iphone.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C290A1165E93700B42727 /* cotvnc-iphone.m */; };
 		DA7C290F1165E93700B42727 /* viewtestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C290B1165E93700B42727 /* viewtestAppDelegate.m */; };
 		DA7C29101165E93700B42727 /* viewtestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA7C290C1165E93700B42727 /* viewtestViewController.m */; };
-		DA7C29111165E93700B42727 /* viewtestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA7C290D1165E93700B42727 /* viewtestViewController.xib */; };
 		DA7C2B241165EB8B00B42727 /* jcapimin.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2ADA1165EB8B00B42727 /* jcapimin.c */; };
 		DA7C2B251165EB8B00B42727 /* jcapistd.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2ADB1165EB8B00B42727 /* jcapistd.c */; };
 		DA7C2B261165EB8B00B42727 /* jccoefct.c in Sources */ = {isa = PBXBuildFile; fileRef = DA7C2ADC1165EB8B00B42727 /* jccoefct.c */; };
@@ -151,7 +150,6 @@
 		DA7C290A1165E93700B42727 /* cotvnc-iphone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "cotvnc-iphone.m"; sourceTree = "<group>"; };
 		DA7C290B1165E93700B42727 /* viewtestAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = viewtestAppDelegate.m; sourceTree = "<group>"; };
 		DA7C290C1165E93700B42727 /* viewtestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = viewtestViewController.m; sourceTree = "<group>"; };
-		DA7C290D1165E93700B42727 /* viewtestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = viewtestViewController.xib; sourceTree = "<group>"; };
 		DA7C2ADA1165EB8B00B42727 /* jcapimin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcapimin.c; path = ../libjpeg/jcapimin.c; sourceTree = "<group>"; };
 		DA7C2ADB1165EB8B00B42727 /* jcapistd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcapistd.c; path = ../libjpeg/jcapistd.c; sourceTree = "<group>"; };
 		DA7C2ADC1165EB8B00B42727 /* jccoefct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jccoefct.c; path = ../libjpeg/jccoefct.c; sourceTree = "<group>"; };
@@ -309,7 +307,6 @@
 				DA084D51116DA0BE008BC8CC /* VNCView.m */,
 				DA7C290B1165E93700B42727 /* viewtestAppDelegate.m */,
 				DA7C290C1165E93700B42727 /* viewtestViewController.m */,
-				DA7C290D1165E93700B42727 /* viewtestViewController.xib */,
 			);
 			name = iPhone;
 			sourceTree = "<group>";
@@ -498,7 +495,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				DA7C29111165E93700B42727 /* viewtestViewController.xib in Resources */,
 				DA7C2B2F1165EB8B00B42727 /* jconfig.cfg in Resources */,
 				DA7C2B581165EB8B00B42727 /* makefile.cfg in Resources */,
 			);

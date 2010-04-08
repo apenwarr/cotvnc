@@ -77,6 +77,8 @@
 	{
 		CGRect subframe = frame;
 		subframe.origin = CGPointMake(0, 0);
+	    
+	    [self setMultipleTouchEnabled:YES];
 		
 		// Create scroller view.
 		_scroller = [[VNCScrollerView alloc] initWithFrame:subframe];
@@ -930,8 +932,8 @@
 		[_filter setBackToVNCTransform: CGAffineTransformInvert(matrix)];
 		[_filter setOrientation: wOrientation];
 
-		newRemoteSize.width = newRemoteSize.width * [_screenView getScalePercent];
-		newRemoteSize.height = newRemoteSize.height  * [_screenView getScalePercent];
+		//newRemoteSize.width = newRemoteSize.width * [_screenView getScalePercent];
+		//newRemoteSize.height = newRemoteSize.height  * [_screenView getScalePercent];
 
 //		NSLog(@"New Screen View = %f %f", newRemoteSize.width, newRemoteSize.height);
 //		Animate if special double click zoom
@@ -954,13 +956,16 @@
 	//	NSLog(@"Setting VNC screen size %f %f", remoteSize.width, remoteSize.height);
 
 	// ******************************************************************************
-	// BAD BAD BAD IPHONE BUG WITH DEVICE CONTEXT ONLY ABLE to reach 1024 then crash 
+	// BAD BAD BAD IPHONE BUG WITH DEVICE CONTEXT ONLY ABLE to reach 1024 then crash
 	// ******************************************************************************
 	_vncScreenSize = CGSizeMake(remoteSize.width, MIN(((2*1024*1024) / remoteSize.width), remoteSize.height));
 	[self setScaleState: kScaleFitNone];
     [_screenView setRemoteDisplaySize:remoteSize animate:NO];
         [self setContentSize:remoteSize];
 //	[self setOrientation: kOrientationVertical bForce:false];
+    [self setMaximumZoomScale:10.0];
+    [self setMinimumZoomScale:0.1];
+    [self setZoomScale:1.0 animated:YES];
 }
 
 //! The connection object is telling us that a region of the framebuffer

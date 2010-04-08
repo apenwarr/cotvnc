@@ -19,7 +19,7 @@
 		[self setAlpha:1.0f];
 	}
 	_scalePercent = 1.00f;
-        _orientationDeg = 180;
+	_orientationDeg = 180;
 	[self setBackgroundColor:[UIColor blueColor]];
 	return self;
 }

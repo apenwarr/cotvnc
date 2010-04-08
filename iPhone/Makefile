@@ -42,7 +42,6 @@ cotvnc-iphone: \
 
 cotvnc-iphone.app: cotvnc-iphone \
 	MainWindow.nib \
-	viewtestViewController.nib \
 	Info.plist
 
 $(SIM): $(wildcard ../iphonesim/Source/*.h ../iphonesim/Source/*.m)

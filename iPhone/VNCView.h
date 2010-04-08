@@ -80,8 +80,8 @@ typedef enum
 }
 //! @name Delegate
 //@{
-- (id)delegate;
-- (void)setDelegate:(id)theDelegate;
+//- (id)delegate;
+//- (void)setDelegate:(id)theDelegate;
 //@}
 
 -(void)toggleViewOnly;
