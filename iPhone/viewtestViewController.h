@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface viewtestViewController : UIViewController {
-	UIWebView *web;
-	UITextField *urlbox;
-	UILabel *testlabel;
+//	UIWebView *web;
+//	UITextField *urlbox;
+//	UILabel *testlabel;
 }
 
-@property (nonatomic, retain) IBOutlet UIWebView *web;
-@property (nonatomic, retain) IBOutlet UITextField *urlbox;
-@property (nonatomic, retain) IBOutlet UILabel *testlabel;
+//@property (nonatomic, retain) IBOutlet UIWebView *web;
+//@property (nonatomic, retain) IBOutlet UITextField *urlbox;
+//@property (nonatomic, retain) IBOutlet UILabel *testlabel;
 
 @end
 

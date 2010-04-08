@@ -5,11 +5,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>EQL Data</string>
+	<string>VNC</string>
 	<key>CFBundleExecutable</key>
 	<string>cotvnc-iphone</string>
 	<key>CFBundleIconFile</key>
-	<string>/Users/apenwarr/Desktop/calc-icon.png</string>
+	<string>icon.png</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.eqldata.eqltest</string>
 	<key>CFBundleInfoDictionaryVersion</key>

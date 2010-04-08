@@ -11,7 +11,7 @@
 
 @implementation viewtestViewController
 
-@synthesize web, urlbox, testlabel;
+//@synthesize web, urlbox, testlabel;
 
 
 
@@ -27,37 +27,65 @@
 
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
+#if 0
 - (void)loadView {
-	CGRect rect = CGRectMake(0,0,480,320);
-	UIView *v = [[VNCView alloc] initWithFrame:rect];
-	self.view = v;
-	[v setBackgroundColor:[UIColor redColor]];
-	UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	button.frame = CGRectMake(100,300,100,50);
-	[button setTitle:@"Hello World" forState:UIControlStateNormal];
-	[self.view addSubview:button];
-	
-	ServerBase *serv = [ServerBase alloc];
-	[serv setName:@"myserver"];
-	[serv setHost:@"192.168.1.107"];
-	[serv setPassword:@"scsscs"];
-	[serv setDisplay:0];
-	[serv setPort:5900];
-#if 1
-	RFBConnection *conn = [[RFBConnection alloc] initWithServer:serv profile:[Profile defaultProfile] view:v];
-	NSString *msg = nil;
-	[conn openConnectionReturningError:&msg];
-	[conn setDelegate:self];
-	[conn startTalking];
-#endif
+    CGRect rect = CGRectMake(0,0,480,320);
+    UIView *v = [[VNCView alloc] initWithFrame:rect];
+    self.view = v;
+    [v setBackgroundColor:[UIColor redColor]];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = CGRectMake(100,300,100,50);
+    [button setTitle:@"Hello World" forState:UIControlStateNormal];
+    [self.view addSubview:button];
+    
+    ServerBase *serv = [ServerBase alloc];
+    [serv setName:@"myserver"];
+    [serv setHost:@"192.168.1.107"];
+    [serv setPassword:@"scsscs"];
+    [serv setDisplay:0];
+    [serv setPort:5900];
+    
+    RFBConnection *conn = [[RFBConnection alloc] initWithServer:serv profile:[Profile defaultProfile] view:v];
+    NSString *msg = nil;
+    [conn openConnectionReturningError:&msg];
+    [conn setDelegate:self];
+    [conn startTalking];
 }
+#endif
 
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	//[self urlChanged:self];
+
+    //[self urlChanged:self];
+    UIScrollView *sv = (UIScrollView *)self.view;
+    [sv setContentSize:CGSizeMake(2048,2048)];
+    
+#if 1
+    CGRect rect = CGRectMake(0,0,100,100);
+    UIView *v = [[VNCView alloc] initWithFrame:rect];
+    [sv addSubview:v];
+    [v setBackgroundColor:[UIColor redColor]];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = CGRectMake(100,300,100,50);
+    //[button setTitle:@"Hello World" forState:UIControlStateNormal];
+    //[self.view addSubview:button];
+    
+    ServerBase *serv = [ServerBase alloc];
+    [serv setName:@"myserver"];
+    [serv setHost:@"192.168.1.107"];
+    [serv setPassword:@"scsscs"];
+    [serv setDisplay:0];
+    [serv setPort:5900];
+    
+    RFBConnection *conn = [[RFBConnection alloc] initWithServer:serv profile:[Profile defaultProfile] view:v];
+    NSString *msg = nil;
+    [conn openConnectionReturningError:&msg];
+    [conn setDelegate:self];
+    [conn startTalking];
+#endif
 }
 
 
@@ -70,27 +98,19 @@
 */
 
 - (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
+    // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
 	
-	// Release any cached data, images, etc that aren't in use.
+    // Release any cached data, images, etc that aren't in use.
 }
 
 - (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return YES;
-}
-
-- (IBAction)urlChanged: (id)sender {
-	NSURL *url = [NSURL URLWithString:[urlbox text]];
-	[testlabel setText:[url absoluteString]];
-	NSURLRequest *req = [NSURLRequest requestWithURL:url];
-	[web loadRequest:req];
-	return;
+    return YES;
 }
 
 - (void)dealloc {
