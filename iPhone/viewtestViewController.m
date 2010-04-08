@@ -27,9 +27,9 @@
 
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
-#if 0
+#if 1
 - (void)loadView {
-    CGRect rect = CGRectMake(0,0,480,320);
+    CGRect rect = [[UIScreen mainScreen] bounds]; //CGRectMake(0,0,100,100);
     UIView *v = [[VNCView alloc] initWithFrame:rect];
     self.view = v;
     [v setBackgroundColor:[UIColor redColor]];
@@ -59,11 +59,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+#if 1
     //[self urlChanged:self];
     UIScrollView *sv = (UIScrollView *)self.view;
     [sv setContentSize:CGSizeMake(2048,2048)];
     
-#if 1
     CGRect rect = CGRectMake(0,0,100,100);
     UIView *v = [[VNCView alloc] initWithFrame:rect];
     [sv addSubview:v];

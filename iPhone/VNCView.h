@@ -45,9 +45,8 @@ typedef enum
  *
  * 
  */
-@interface VNCView : UIView <RFBViewProtocol>
+@interface VNCView : UIScrollView <RFBViewProtocol>
 {
-	id _delegate;
     RFBConnection * _connection;	//!< The connection object, nil if not currently connected.
 	EventFilter * _filter;			//!< Event filter for the current connection.
 	VNCScrollerView * _scroller;	//!< Scroller subview.

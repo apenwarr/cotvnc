@@ -878,7 +878,7 @@
 #if 0
 - (void)setOrientation:(UIHardwareOrientation)wOrientation bForce:(int)bForce
 {
-#if 0
+#if 1
 	CGSize vncScreenSize = _vncScreenSize;
 	CGSize newRemoteSize;
 
@@ -958,6 +958,8 @@
 	// ******************************************************************************
 	_vncScreenSize = CGSizeMake(remoteSize.width, MIN(((2*1024*1024) / remoteSize.width), remoteSize.height));
 	[self setScaleState: kScaleFitNone];
+    [_screenView setRemoteDisplaySize:remoteSize animate:NO];
+        [self setContentSize:remoteSize];
 //	[self setOrientation: kOrientationVertical bForce:false];
 }
 

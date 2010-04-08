@@ -18,7 +18,8 @@
 		[self setOpaque:YES];
 		[self setAlpha:1.0f];
 	}
-	_scalePercent = 0.50f;
+	_scalePercent = 1.00f;
+        _orientationDeg = 180;
 	[self setBackgroundColor:[UIColor blueColor]];
 	return self;
 }
@@ -112,7 +113,7 @@
 
 - (CGPoint)getIPodScreenPoint:(CGRect)r bounds:(CGRect)bounds
 {
-	CGPoint ptIPod = CGPointApplyAffineTransform(r.origin, _matrixPreviousTransform);
+	CGPoint ptIPod = r.origin; // CGPointApplyAffineTransform(r.origin, _matrixPreviousTransform);
 	CGRect rcFrame = _frame;
 
 #if 0
