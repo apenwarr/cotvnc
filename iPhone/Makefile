@@ -1,3 +1,4 @@
+VERBOSE=0
 SDKVER=3.1
 PLATFORM=/Developer/Platforms/iPhoneSimulator.platform/Developer
 SDK=$(PLATFORM)/SDKs/iPhoneSimulator$(SDKVER).sdk
@@ -55,10 +56,31 @@ $(SIM): $(wildcard ../iphonesim/Source/*.h ../iphonesim/Source/*.m)
 		$<
 	
 
-%: %.o
-	@echo "Linking $@..."
-	@$(CC) $(LDFLAGS) -o $@ $^
+ifeq (${VERBOSE},1)
+define compile
+	$(CC) $(CFLAGS) -c -o $@ $<
+endef
+else
+define compile
+	@echo " CC  $@"
+	@$(CC) $(CFLAGS) -c -o $@ $<
+endef
+endif
 
+%.o: %.m
+	$(compile)
+
+%.o: %.c
+	$(compile)
+
+%: %.o
+ifeq (${VERBOSE},1)
+	$(CC) $(LDFLAGS) -o $@ $^
+else
+	@echo "LINK $@"
+	@$(CC) $(LDFLAGS) -o $@ $^
+endif
+	
 %.app: %
 	rm -rf $@ $@.new $@.dSYM
 	mkdir $@.new $@.dSYM
