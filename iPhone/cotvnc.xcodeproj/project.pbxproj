@@ -146,6 +146,16 @@
 		DA084D51116DA0BE008BC8CC /* VNCView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNCView.m; sourceTree = "<group>"; };
 		DA2689CD116D8D1800C29C90 /* vncauth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vncauth.c; path = ../Source/vncauth.c; sourceTree = SOURCE_ROOT; };
 		DA2689D1116D8D4500C29C90 /* d3des.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d3des.c; path = ../Source/d3des.c; sourceTree = SOURCE_ROOT; };
+		DA635FA8116FD94B00BC92DD /* NSString_VNCPasswordCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSString_VNCPasswordCrypto.h; sourceTree = "<group>"; };
+		DA635FA9116FD94B00BC92DD /* RFBViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFBViewProtocol.h; sourceTree = "<group>"; };
+		DA635FAA116FD94B00BC92DD /* viewtestAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = viewtestAppDelegate.h; sourceTree = "<group>"; };
+		DA635FAB116FD94B00BC92DD /* viewtestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = viewtestViewController.h; sourceTree = "<group>"; };
+		DA635FAC116FD94B00BC92DD /* VNCBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCBackgroundView.h; sourceTree = "<group>"; };
+		DA635FAD116FD94B00BC92DD /* VNCContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCContentView.h; sourceTree = "<group>"; };
+		DA635FAE116FD94B00BC92DD /* VNCMouseTracks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCMouseTracks.h; sourceTree = "<group>"; };
+		DA635FAF116FD94B00BC92DD /* VNCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCPreferences.h; sourceTree = "<group>"; };
+		DA635FB0116FD94B00BC92DD /* VNCScrollerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCScrollerView.h; sourceTree = "<group>"; };
+		DA635FB1116FD94B00BC92DD /* VNCView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNCView.h; sourceTree = "<group>"; };
 		DA7C29081165E91000B42727 /* cotvnc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cotvnc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7C290A1165E93700B42727 /* cotvnc-iphone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "cotvnc-iphone.m"; sourceTree = "<group>"; };
 		DA7C290B1165E93700B42727 /* viewtestAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = viewtestAppDelegate.m; sourceTree = "<group>"; };
@@ -297,6 +307,16 @@
 		29B97315FDCFA39411CA2CEA /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				DA635FA8116FD94B00BC92DD /* NSString_VNCPasswordCrypto.h */,
+				DA635FA9116FD94B00BC92DD /* RFBViewProtocol.h */,
+				DA635FAA116FD94B00BC92DD /* viewtestAppDelegate.h */,
+				DA635FAB116FD94B00BC92DD /* viewtestViewController.h */,
+				DA635FAC116FD94B00BC92DD /* VNCBackgroundView.h */,
+				DA635FAD116FD94B00BC92DD /* VNCContentView.h */,
+				DA635FAE116FD94B00BC92DD /* VNCMouseTracks.h */,
+				DA635FAF116FD94B00BC92DD /* VNCPreferences.h */,
+				DA635FB0116FD94B00BC92DD /* VNCScrollerView.h */,
+				DA635FB1116FD94B00BC92DD /* VNCView.h */,
 				DA7C290A1165E93700B42727 /* cotvnc-iphone.m */,
 				DA084D4B116DA0BE008BC8CC /* NSString_VNCPasswordCrypto.m */,
 				DA084D4C116DA0BE008BC8CC /* VNCBackgroundView.m */,

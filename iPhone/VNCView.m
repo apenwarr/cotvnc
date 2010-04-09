@@ -79,6 +79,7 @@
 		subframe.origin = CGPointMake(0, 0);
 	    
 	    [self setMultipleTouchEnabled:YES];
+	    [self setDelegate:self];
 		
 		// Create scroller view.
 		_scroller = [[VNCScrollerView alloc] initWithFrame:subframe];
@@ -225,6 +226,11 @@
 - (bool)areControlsVisible
 {
 	return _areControlsVisible;
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return _screenView;
 }
 
 //! Either hides or shows the controls bar at the bottom of the screen
@@ -619,11 +625,12 @@
 	{
 		[self toggleKeyboard:nil];
 	}
-	
-	if (_delegate && [_delegate respondsToSelector:@selector(closeConnection)])
+#if 0
+	if ([self delegate] && [[self delegate] respondsToSelector:@selector(closeConnection)])
 	{
-		[_delegate closeConnection];
+		[[self delegate] closeConnection];
 	}
+#endif
 }
 
 //! Handle the right mouse button being pressed.
@@ -689,15 +696,20 @@
 	return _isFirstDisplay;
 }
 
+
+#if 0
 - (id)delegate
 {
-	return _delegate;
+	return [self delegate];
 }
+
 
 - (void)setDelegate:(id)theDelegate
 {
-	_delegate = theDelegate;
+	[self delegate] = theDelegate;
 }
+#endif
+
 
 - (RFBConnection *)connection;
 {
@@ -725,7 +737,7 @@
 		[_optionButton removeFromSuperview];
 		[_controlButton removeFromSuperview];
 		[_rightMouseButton removeFromSuperview];
-		[_delegate setStatusBarMode: kUIStatusBarBlack duration:0];
+		[[self delegate] setStatusBarMode: kUIStatusBarBlack duration:0];
 		}
 	else
 		{
@@ -735,7 +747,7 @@
 		[_controlsView addSubview: _optionButton];
 		[_controlsView addSubview: _controlButton];
 		[_controlsView addSubview: _rightMouseButton];
-		[_delegate setStatusBarMode: kUIStatusBarWhite duration:0];
+		[[self delegate] setStatusBarMode: kUIStatusBarWhite duration:0];
 		}
 #endif
 /*	
@@ -979,7 +991,7 @@
 	{
 		_isFirstDisplay = true;
 //		[_scroller scrollPointVisibleAtTopLeft:_ptStartupTopLeft];
-//		[_delegate gotFirstFullScreenTransitionNow];
+//		[[self delegate] gotFirstFullScreenTransitionNow];
 	}
 }
 
@@ -1264,7 +1276,7 @@
 #endif
 
 /*
-//These Methods track delegate calls made to the application
+//These Methods track [self delegate] calls made to the application
 - (NSMethodSignature*)methodSignatureForSelector:(SEL)selector 
 {
 	NSLog(@"Requested method for selector: %@", NSStringFromSelector(selector));
