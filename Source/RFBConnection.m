@@ -397,7 +397,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 - (void)setDisplayName:(NSString *)name
 {
-	[rfbView setRemoteComputerName: name];
+//	[rfbView setRemoteComputerName: name];
 }
 
 - (void)setDisplaySize:(CGSize)aSize andPixelFormat:(rfbPixelFormat*)pixf
@@ -415,7 +415,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	[frameBuffer setServerMajorVersion: serverMajorVersion minorVersion: serverMinorVersion];
 	
     [rfbView setFrameBuffer:frameBuffer];
-	[rfbView setRemoteDisplaySize:aSize];
+//	[rfbView setRemoteDisplaySize:aSize];
 	
 	[self setFrameBufferUpdateSeconds: [[PrefController sharedController] frontFrameBufferUpdateSeconds]];
 	[self queueUpdateRequest];
@@ -464,7 +464,7 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 
 - (CGRect)visibleRect
 {
-    return [rfbView contentRect];
+    return [rfbView bounds]; //[rfbView contentRect];
 }
 
 - (void)drawRectFromBuffer:(CGRect)aRect
