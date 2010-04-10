@@ -24,9 +24,12 @@
     [sv setBackgroundColor:[UIColor blackColor]];
     [sv setDelegate:self];
     [sv setMultipleTouchEnabled:YES];
+    [sv setAutoresizingMask:(UIViewAutoresizingFlexibleWidth |
+			     UIViewAutoresizingFlexibleHeight)];
+    [sv setAutoresizesSubviews:NO];
     self.view = sv;
     
-    VNCContentView *v = [[VNCContentView alloc] initWithFrame:rect];
+    VNCContentView *v = [[VNCContentView alloc] initWithFrame:[sv bounds]];
     [v setBackgroundColor:[UIColor redColor]];
     [v setDelegate:self];
     [sv addSubview:v];
@@ -52,8 +55,12 @@
 - (void)fixScale
 {
     UIScrollView *sv = (UIScrollView *)self.view;
-    CGSize vncsize = [sv contentSize];
-    CGRect bounds = [sv frame];
+    NSLog(@"sv:%@ v:%@",
+	 NSStringFromCGRect([sv frame]),
+	 NSStringFromCGSize(_contentSize));
+    
+    CGSize vncsize = _contentSize;
+    CGRect bounds = [sv bounds];
     double xmax = bounds.size.width, ymax = bounds.size.height;
     double xscale = xmax/vncsize.width, yscale = ymax/vncsize.height;
     double minscale = (xscale < yscale) ? xscale : yscale;
@@ -66,6 +73,7 @@
 - (void)connection:(RFBConnection *)conn sizeChanged:(CGSize)vncsize
 {
     UIScrollView *sv = (UIScrollView *)self.view;
+    _contentSize = vncsize;
     [sv setContentSize:vncsize];
     [self fixScale];
 }

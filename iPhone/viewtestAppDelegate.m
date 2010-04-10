@@ -21,8 +21,7 @@
     [window setMultipleTouchEnabled:YES];
     [window addSubview:viewController.view];
     [window makeKeyAndVisible];
-	
-	return YES;
+    return YES;
 }
 
 

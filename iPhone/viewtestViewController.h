@@ -10,6 +10,7 @@
 #import "VNCContentView.h"
 
 @interface viewtestViewController : UIViewController<UIScrollViewDelegate> {
+    CGSize _contentSize;
     VNCContentView *vncView;
 }
 

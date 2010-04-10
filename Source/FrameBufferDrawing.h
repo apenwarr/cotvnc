@@ -262,7 +262,7 @@ NSLog(@"copy x=%f y=%f w=%f h=%f -> x=%f y=%f\n", aRect.origin.x, aRect.origin.y
     #ifdef DEBUG_DRAW
     NSLog(@"put x=%f y=%f w=%f h=%f\n", aRect.origin.x, aRect.origin.y, aRect.size.width, aRect.size.height);
     #endif
-    NSLog(@"Put Rect XX");
+    //NSLog(@"Put Rect XX");
 
     #ifdef PINFO
         putRectCount++;
