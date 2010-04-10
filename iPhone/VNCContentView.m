@@ -21,6 +21,15 @@
 	[self setAlpha:1.0f];
     }
     [self setBackgroundColor:[UIColor blueColor]];
+    
+    // The CotVNC code gives us output with the y-coordinates reversed from
+    // how the iPhone likes to think about them.  Flip it vertically to fix
+    // things up.
+    CGAffineTransform matrix = 
+	CGAffineTransformRotate(CGAffineTransformMakeScale(-1.0, 1.0),
+				M_PI);
+    [self setTransform:matrix];
+    
     return self;
 }
 
