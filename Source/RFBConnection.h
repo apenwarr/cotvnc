@@ -157,6 +157,7 @@
 @interface RFBConnection (DelegateMethods)
 
 - (void)connection:(RFBConnection *)connection hasTerminatedWithReason:(NSString *)reason;
+- (void)connection:(RFBConnection *)connection sizeChanged:(CGSize)size;
 
 @end
 

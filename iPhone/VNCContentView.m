@@ -7,26 +7,28 @@
 //  Modified by: Glenn Kreisel
 
 #import "VNCContentView.h"
-//#import "VnseaApp.h"
 
 @implementation VNCContentView
 
+@synthesize delegate;
+
+
 - (id)initWithFrame:(CGRect)frame
 {
-	if ([super initWithFrame:frame])
-	{
-		[self setOpaque:YES];
-		[self setAlpha:1.0f];
-	}
-	[self setBackgroundColor:[UIColor blueColor]];
-	return self;
+    if ([super initWithFrame:frame])
+    {
+	[self setOpaque:YES];
+	[self setAlpha:1.0f];
+    }
+    [self setBackgroundColor:[UIColor blueColor]];
+    return self;
 }
 
 
 - (void)dealloc
 {
-	[_frameBuffer release];
-	[super dealloc];
+    [_frameBuffer release];
+    [super dealloc];
 }
 
 

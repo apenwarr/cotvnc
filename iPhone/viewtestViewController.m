@@ -9,11 +9,10 @@
 #import "viewtestViewController.h"
 #import "ServerBase.h"
 #import "RFBConnection.h"
-#import "VNCContentView.h"
 
 @implementation viewtestViewController
 
-//@synthesize web, urlbox, testlabel;
+@synthesize vncView;
 
 
 
@@ -21,15 +20,22 @@
 // without using a nib.
 - (void)loadView {
     CGRect rect = [[UIScreen mainScreen] bounds]; //CGRectMake(0,0,100,100);
-    UIView *v = [[VNCContentView alloc] initWithFrame:rect];
-    self.view = v;
+    UIScrollView *sv = [[UIScrollView alloc] initWithFrame:rect];
+    [sv setBackgroundColor:[UIColor blackColor]];
+    [sv setDelegate:self];
+    [sv setMultipleTouchEnabled:YES];
+    self.view = sv;
+    
+    VNCContentView *v = [[VNCContentView alloc] initWithFrame:rect];
     [v setBackgroundColor:[UIColor redColor]];
+    [v setDelegate:self];
+    [sv addSubview:v];
+    self.vncView = v;
     
     ServerBase *serv = [ServerBase alloc];
     [serv setName:@"myserver"];
     [serv setHost:@"192.168.1.107"];
     [serv setPassword:@"scsscs"];
-    [serv setDisplay:0];
     [serv setPort:5900];
     
     RFBConnection *conn = [[RFBConnection alloc] 
@@ -43,6 +49,34 @@
 }
 
 
+- (void)fixScale
+{
+    UIScrollView *sv = (UIScrollView *)self.view;
+    CGSize vncsize = [sv contentSize];
+    CGRect bounds = [sv frame];
+    double xmax = bounds.size.width, ymax = bounds.size.height;
+    double xscale = xmax/vncsize.width, yscale = ymax/vncsize.height;
+    double minscale = (xscale < yscale) ? xscale : yscale;
+    [sv setMaximumZoomScale:1.0];
+    [sv setMinimumZoomScale:minscale];
+    [sv setZoomScale:minscale animated:YES];
+}
+
+
+- (void)connection:(RFBConnection *)conn sizeChanged:(CGSize)vncsize
+{
+    UIScrollView *sv = (UIScrollView *)self.view;
+    [sv setContentSize:vncsize];
+    [self fixScale];
+}
+
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return [self vncView];
+}
+
+    
 // Implement viewDidLoad to do additional setup after loading the
 // view, typically from a nib.
 - (void)viewDidLoad {
@@ -67,6 +101,12 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)o {
     //return (o == UIInterfaceOrientationPortrait);
     return YES;
+}
+
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)old
+{
+    [self fixScale];
 }
 
 

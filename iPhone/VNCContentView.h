@@ -8,16 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import "FrameBuffer.h"
+#import "RFBViewProtocol.h"
 
 /*!
  * @brief Subview of VNCView that draws the screen.
  */
-@interface VNCContentView : UIView
+@interface VNCContentView : UIView<RFBViewProtocol>
 {
+    id delegate;
     FrameBuffer * _frameBuffer;
     CGAffineTransform _matrixPreviousTransform;
     CGRect _frame;
 }
+
+@property (nonatomic, assign) IBOutlet id delegate;
 
 - (void)setFrameBuffer:(FrameBuffer *)buffer;
 - (void)setRemoteDisplaySize:(CGSize)remoteSize animate:(BOOL)bAnimate;

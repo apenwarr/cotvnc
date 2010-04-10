@@ -415,6 +415,10 @@ static void socket_address(struct sockaddr_in *addr, NSString* host, int port)
 	[frameBuffer setServerMajorVersion: serverMajorVersion minorVersion: serverMinorVersion];
 	
     [rfbView setFrameBuffer:frameBuffer];
+    if (_delegate && [_delegate respondsToSelector:@selector(connection:sizeChanged:)])
+    {
+	[_delegate connection:self sizeChanged:aSize];
+    }
 //	[rfbView setRemoteDisplaySize:aSize];
 	
 	[self setFrameBufferUpdateSeconds: [[PrefController sharedController] frontFrameBufferUpdateSeconds]];

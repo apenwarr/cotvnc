@@ -7,16 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VNCContentView.h"
 
-@interface viewtestViewController : UIViewController {
-//	UIWebView *web;
-//	UITextField *urlbox;
-//	UILabel *testlabel;
+@interface viewtestViewController : UIViewController<UIScrollViewDelegate> {
+    VNCContentView *vncView;
 }
 
-//@property (nonatomic, retain) IBOutlet UIWebView *web;
-//@property (nonatomic, retain) IBOutlet UITextField *urlbox;
-//@property (nonatomic, retain) IBOutlet UILabel *testlabel;
+@property (nonatomic, retain) IBOutlet VNCContentView *vncView;
 
 @end
 
