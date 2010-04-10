@@ -27,6 +27,10 @@
     [sv setAutoresizingMask:(UIViewAutoresizingFlexibleWidth |
 			     UIViewAutoresizingFlexibleHeight)];
     [sv setAutoresizesSubviews:NO];
+    [sv setScrollsToTop:NO];
+    [sv setBouncesZoom:YES];
+    [sv setAlwaysBounceHorizontal:YES];
+    [sv setAlwaysBounceVertical:YES];
     self.view = sv;
     
     VNCContentView *v = [[VNCContentView alloc] initWithFrame:[sv bounds]];
